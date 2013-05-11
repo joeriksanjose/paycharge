@@ -1,0 +1,39 @@
+
+/* MISC STYLES */
+.topmargin {
+    height: 50px;
+}
+
+.centerDiv {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.titles {
+    margin-left: 20px;
+}
+
+th {
+    cursor: pointer !important;
+}
+/* END MISC STYLES */
+
+/* LOGIN STYLES */
+.loginBox {
+    width: 500px;
+    height: auto;
+}
+/* END LOGIN STYLES */
+
+/* NAV */
+.activeNav {
+    border-bottom: 3px #808080 solid;
+}
+/* END NAV */
+
+/* TABLE SELECTION MODERN AWARD */
+.tblCheckbox {
+    margin-top: -2px !important;
+    margin-right: 2px !important;
+}
+/* END TABLE SELECTION MODERN AWARD */
