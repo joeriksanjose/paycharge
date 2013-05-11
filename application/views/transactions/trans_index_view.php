@@ -1,6 +1,24 @@
 <?php echo $header ?>
 <script type="text/javascript" src="<?php echo base_url("public/js/paycharge.js") ?>"></script>
 <script type="text/javascript" src="<?php echo base_url("public/js/transaction/modern_award.js") ?>"></script>
+<input type="hidden" value="<?php echo base_url() ?>" id="base_url">
+
+<!-- DELETE MODAL -->
+<div id="deleteModal" class="modal hide fade" tabindex="-1" role="dialog">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Delete Confirmation</h3>
+    </div>
+    <div class="modal-body">
+        <p>Are you sure you want to delete this modern award?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-danger" id="delete-award-btn-modal">Delete</button>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    </div>
+</div>
+<!-- END DELETE MODAL -->
+
 <div class="topmargin"></div>
 <div class="row">
 	<div class="span12">
@@ -8,11 +26,11 @@
 		<hr>
 	</div>
 	<div class="span12">	
-		<form class="form-horizontal" action="<?php echo base_url("transactions/save") ?>" method="post">
+		<form class="form-horizontal" id="frm-modern" action="<?php echo base_url("transactions/save") ?>" method="post">
 		    <div class="navbar navbar-fixed-bottom" id="nav-tabs" style="display: none;">
             <div class="navbar-inner">
                 <div class="container">
-                <ul class="nav pull-right">
+                <ul class="nav">
                     <li class="active"><a href="#" id="show-tab-1">TAB 1</a></li>
                     <li><a href="#" id="show-tab-2">TAB 2</a></li>
                     <li><a href="#" id="show-tab-3">TAB 3</a></li>
@@ -20,7 +38,7 @@
                     <li class="divider-vertical"></li>
                     <li class="pull-right">
                         <button type="button" class="btn pull-right" style="margin-left: 3px;" id="close-modern-form">Cancel</button>
-                        <input type="submit" class="btn btn-inverse pull-right" value="SAVE">
+                        <input type="submit" id="btn-save-update" class="btn btn-inverse pull-right" value="SAVE">
                     </li>
                 </ul>
                 </div>
@@ -515,34 +533,34 @@
                   <h4>Grade</h4>
                   <div class="form-inline breadcrumb">
                       <label class="checkbox">
-                          <input type="checkbox" checked="true" name="grade1"> Grade 1                  
+                          <input type="checkbox" checked="true" id="grade1" name="grade1" value="1"> Grade 1                  
                       </label>
                       <label style="margin-left: 10px;" class="checkbox">
-                          <input type="checkbox" checked="true" name="grade2"> Grade 2                  
+                          <input type="checkbox" checked="true" id="grade2" name="grade2" value="1"> Grade 2                  
                       </label>
                       <label style="margin-left: 10px;" class="checkbox">
-                          <input type="checkbox" checked="true" name="grade3"> Grade 3                  
+                          <input type="checkbox" checked="true" id="grade3" name="grade3" value="1"> Grade 3                  
                       </label>
                       <label style="margin-left: 10px;" class="checkbox">
-                          <input type="checkbox" checked="true" name="grade4"> Grade 4                  
+                          <input type="checkbox" checked="true" id="grade4" name="grade4" value="1"> Grade 4                  
                       </label>
                       <label style="margin-left: 10px;" class="checkbox">
-                          <input type="checkbox" checked="true" name="grade5"> Grade 5                 
+                          <input type="checkbox" checked="true" id="grade5" name="grade5" value="1"> Grade 5                 
                       </label>
                       <label style="margin-left: 10px;" class="checkbox">
-                          <input type="checkbox" checked="true" name="grade6"> Grade 6                 
+                          <input type="checkbox" checked="true" id="grade6" name="grade6" value="1"> Grade 6                 
                       </label>
                       <label style="margin-left: 10px;" class="checkbox">
-                          <input type="checkbox" checked="true" name="grade7"> Grade 7                  
+                          <input type="checkbox" checked="true" id="grade7" name="grade7" value="1"> Grade 7                  
                       </label>
                       <label style="margin-left: 10px;" class="checkbox">
-                          <input type="checkbox" checked="true" name="grade8"> Grade 8                  
+                          <input type="checkbox" checked="true" id="grade8" name="grade8" value="1"> Grade 8                  
                       </label>
                       <label style="margin-left: 10px;" class="checkbox">
-                          <input type="checkbox" checked="true" name="grade9"> Grade 9                  
+                          <input type="checkbox" checked="true" id="grade9" name="grade9" value="1"> Grade 9                  
                       </label>
                       <label style="margin-left: 10px;" class="checkbox">
-                          <input type="checkbox" checked="true" name="grade10"> Grade 10                  
+                          <input type="checkbox" checked="true" id="grade10" name="grade10" value="1"> Grade 10                  
                       </label>
                   </div>
               </div>
@@ -550,16 +568,16 @@
                   <h4>Charge Rate</h4>
                   <table class="table table-bordered">
                       <tr>
-                          <th><input type="checkbox" class="tblCheckbox" checked="true" name="normal"> Normal</th>
-                          <th><input type="checkbox" class="tblCheckbox" checked="true" name="early"> Early</th>
-                          <th><input type="checkbox" class="tblCheckbox" checked="true" name="afternoon"> Afternoon</th>
-                          <th><input type="checkbox" class="tblCheckbox" checked="true" name="night"> Night</th>
-                          <th><input type="checkbox" class="tblCheckbox" checked="true" name="50_shift"> 50% Shift</th>
-                          <th><input type="checkbox" class="tblCheckbox" checked="true" name="t_14"> T1/4</th>
-                          <th><input type="checkbox" class="tblCheckbox" checked="true" name="t_12"> T1/2</th>
-                          <th><input type="checkbox" class="tblCheckbox" checked="true" name="double"> Double</th>
-                          <th><input type="checkbox" class="tblCheckbox" checked="true" name="dt_12"> DT1/2</th>
-                          <th><input type="checkbox" class="tblCheckbox" checked="true" name="triple"> Triple</th>
+                          <th><input type="checkbox" class="tblCheckbox" checked="true" id="normal" name="normal" value="1"> Normal</th>
+                          <th><input type="checkbox" class="tblCheckbox" checked="true" id="early" name="early" value="1"> Early</th>
+                          <th><input type="checkbox" class="tblCheckbox" checked="true" id="afternoon" name="afternoon" value="1"> Afternoon</th>
+                          <th><input type="checkbox" class="tblCheckbox" checked="true" id="night" name="night" value="1"> Night</th>
+                          <th><input type="checkbox" class="tblCheckbox" checked="true" id="50_shift" name="50_shift" value="1"> 50% Shift</th>
+                          <th><input type="checkbox" class="tblCheckbox" checked="true" id="t_14" name="t_14" value="1"> T1/4</th>
+                          <th><input type="checkbox" class="tblCheckbox" checked="true" id="t_12" name="t_12" value="1"> T1/2</th>
+                          <th><input type="checkbox" class="tblCheckbox" checked="true" id="double" name="double" value="1"> Double</th>
+                          <th><input type="checkbox" class="tblCheckbox" checked="true" id="dt_12" name="dt_12" value="1"> DT1/2</th>
+                          <th><input type="checkbox" class="tblCheckbox" checked="true" id="triple" name="triple" value="1"> Triple</th>
                       </tr>
                       <tr class="warning">
                           <td>$ 13.16</td>
@@ -736,15 +754,15 @@
                   <table class="table table-bordered" style="font-size: 12px;">
                       <tr>
                           <th>Classification</th>
-                          <th colspan="2"><input type="checkbox" class="tblCheckbox" checked="true" name="p_normal_time"> Normal Time</th>
-                          <th colspan="2"><input type="checkbox" class="tblCheckbox" checked="true" name="p_t_14"> T1/4</th>
-                          <th colspan="2"><input type="checkbox" class="tblCheckbox" checked="true" name="p_time_and_half"> Time and Half</th>
-                          <th colspan="2"><input type="checkbox" class="tblCheckbox" checked="true" name="p_double_time"> Double Time</th>
-                          <th colspan="2"><input type="checkbox" class="tblCheckbox" checked="true" name="p_double_and_half"> Double and a Half</th>
-                          <th colspan="2"><input type="checkbox" class="tblCheckbox" checked="true" name="p_triple"> Triple Time</th>
+                          <th colspan="2"><input type="checkbox" class="tblCheckbox" checked="true" value="1" id="p_normal_time" name="p_normal_time"> Normal Time</th>
+                          <th colspan="2"><input type="checkbox" class="tblCheckbox" checked="true" value="1" id="p_t_14" name="p_t_14"> T1/4</th>
+                          <th colspan="2"><input type="checkbox" class="tblCheckbox" checked="true" value="1" id="p_time_and_half" name="p_time_and_half"> Time and Half</th>
+                          <th colspan="2"><input type="checkbox" class="tblCheckbox" checked="true" value="1" id="p_double_time" name="p_double_time"> Double Time</th>
+                          <th colspan="2"><input type="checkbox" class="tblCheckbox" checked="true" value="1" id="p_double_and_half" name="p_double_and_half"> Double and a Half</th>
+                          <th colspan="2"><input type="checkbox" class="tblCheckbox" checked="true" value="1" id="p_triple" name="p_triple"> Triple Time</th>
                       </tr>
                       <tr>
-                          <td><input type="checkbox" class="tblCheckbox" checked="true" name="p_day"> Day Shift</td>
+                          <td><input type="checkbox" class="tblCheckbox" checked="true" value="1" id="p_day" name="p_day"> Day Shift</td>
                           <td>$ 0.04</td><td>$ 7.14</td>
                           <td>$ 0.09</td><td>$ 7.19</td>
                           <td>$ 0.12</td><td>$ 7.23</td>
@@ -753,7 +771,7 @@
                           <td>$ 0.08</td><td>$ 7.18</td>
                       </tr>
                       <tr>
-                          <td><input type="checkbox" class="tblCheckbox" checked="true" name="p_early"> Early Shift</td>
+                          <td><input type="checkbox" class="tblCheckbox" checked="true" value="1" id="p_early" name="p_early"> Early Shift</td>
                           <td>$ 0.05</td><td>$ 7.16</td>
                           <td>$ 0.09</td><td>$ 7.19</td>
                           <td>$ 0.12</td><td>$ 7.23</td>
@@ -762,7 +780,7 @@
                           <td>$ 0.08</td><td>$ 7.18</td>
                       </tr>
                       <tr>
-                          <td><input type="checkbox" class="tblCheckbox" checked="true" name="p_afternoon"> Afternoon Shift</td>
+                          <td><input type="checkbox" class="tblCheckbox" checked="true" value="1" id="p_afternoon" name="p_afternoon"> Afternoon Shift</td>
                           <td>$ 0.08</td><td>$ 7.19</td>
                           <td>$ 0.09</td><td>$ 7.19</td>
                           <td>$ 0.12</td><td>$ 7.23</td>
@@ -771,7 +789,7 @@
                           <td>$ 0.08</td><td>$ 7.18</td>
                       </tr>
                       <tr>
-                          <td><input type="checkbox" class="tblCheckbox" checked="true" name="p_night"> Night Shift</td>
+                          <td><input type="checkbox" class="tblCheckbox" checked="true" value="1" id="p_night" name="p_night"> Night Shift</td>
                           <td>$ 0.04</td><td>$ 7.14</td>
                           <td>$ 0.09</td><td>$ 7.19</td>
                           <td>$ 0.12</td><td>$ 7.23</td>
@@ -780,7 +798,7 @@
                           <td>$ 0.08</td><td>$ 7.18</td>
                       </tr>
                       <tr>
-                          <td><input type="checkbox" class="tblCheckbox" checked="true" name="p_half"> 50% Shift</td>
+                          <td><input type="checkbox" class="tblCheckbox" checked="true" value="1" id="p_half" name="p_half"> 50% Shift</td>
                           <td>$ 0.04</td><td>$ 7.146</td>
                           <td>$ 0.09</td><td>$ 7.19</td>
                           <td>$ 0.12</td><td>$ 7.23</td>
@@ -797,33 +815,42 @@
         <!-- END TAB 4 -->
 		</form>
 
-	<div class="span12">
+	<div class="span12" id="search-modern">
 		<button type="button" id="add-new-modern" class="btn"><i class="icon-plus"></i> Add new modern award</button>
 	    <form class="form-search pull-right">
 	        <input type="text" class="input-xlarge search-query">
 	        <button type="submit" class="btn"><i class="icon-search"></i></button>
 	    </form>
 	</div>
-	<div class="span12" style="max-height: 400px; overflow: auto;">
+	<div class="span12" id="modern-body" style="max-height: 400px; overflow: auto;">
 		<table class="table table-bordered table-striped">
+		    <thead>
 			<tr>
 				<th>Modern Award No</th>
 				<th>Modern Award Name</th>
 				<th>Date Created</th>
+				<th>Action</th>
 			</tr>
+			</thead>
+			<tbody>
 			<?php if(count($modern_awards)) : ?>
 			<?php foreach ($modern_awards as $modern_award) : ?>
 			<tr>
 				<td><?php echo $modern_award["modern_award_no"] ?></td>
 				<td><?php echo $modern_award["modern_award_name"] ?></td>
 				<td><?php echo $modern_award["created_at"] ?></td>
+				<td>
+				    <button type="button" class="btn edit-award-btn" edit-id="<?php echo $modern_award["modern_award_no"] ?>"><i class="icon-edit"></i></button>
+				    <button type="button" class="btn btn-danger delete-award-btn" del-id="<?php echo $modern_award["modern_award_no"] ?>"><i class="icon-trash icon-white"></i></button>
+				</td>
 			</tr>
 			<?php endforeach ; ?>
 			<?php else : ?>
 			<tr>
-				<td colspan="3">Empty Record</td>
+				<td colspan="4">Empty Record</td>
 			</tr>	
 			<?php endif ; ?>
+			</tbody>
 		</table>
 	</div>
 </div>

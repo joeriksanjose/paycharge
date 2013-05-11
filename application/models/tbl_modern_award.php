@@ -30,4 +30,22 @@ class Tbl_modern_award extends CI_Model
     {
         return $this->db->insert($this->table_name, $data);
     }
+    
+    public function getAwardByAwardNo($award_no)
+    {
+        $this->db->where(array("modern_award_no" => $award_no));
+        return $this->db->get($this->table_name)->row_array();
+    }
+    
+    public function update($award_no, $data)
+    {
+        $this->db->where(array("modern_award_no" => $award_no));
+        return $this->db->update($this->table_name, $data);
+    }
+    
+    public function delete($award_no)
+    {
+        $this->db->where(array("modern_award_no" => $award_no));
+        return $this->db->delete($this->table_name);
+    } 
 }
