@@ -153,7 +153,18 @@ class Transactions extends CI_Controller
         return;
     }
     
-    /* UPCOMING RATE INCREASE */
+    /* RATE INCREASE */
+    
+    public function rate_increase_history($modern_award_no)
+    {
+        $award_info = $this->md->getAwardByAwardNo($modern_award_no);
+        $this->data["award_info"] = $award_info;
+        $this->data["rate_increase_history"] = $this->md->getRateIncreaseHistory($award_info["modern_award_name"]);
+        $this->data["header"] = $this->load->view("header", $this->data, true);
+        $this->data["footer"] = $this->load->view("footer", $this->data, true);
+        
+        $this->load->view("transactions/rate_history_view", $this->data);
+    }
     
     public function upcoming_rate_increase($modern_award_no)
     {
@@ -162,6 +173,10 @@ class Transactions extends CI_Controller
         $this->data["upcoming_rate_increase"] = $this->md->getUpcomingRateIncrease($award_info["modern_award_name"]);
         $this->data["header"] = $this->load->view("header", $this->data, true);
         $this->data["footer"] = $this->load->view("footer", $this->data, true);
+        $this->data["status"] = $this->session->userdata("status");
+        $this->data["status_msg"] = $this->session->userdata("status_msg");
+        $this->session->unset_userdata("status");
+        $this->session->unset_userdata("status_msg");
         
         $this->load->view("transactions/upcoming_rate_view", $this->data);
     }
@@ -169,13 +184,82 @@ class Transactions extends CI_Controller
     public function saveRate()
     {
         $post = $this->input->post(null, true);
+        $award_no = $post["award_no"];
+        $date = DateTime::createFromFormat('d/m/Y', $post["created_at"]);
+        $post["created_at"] = $date->format("Y-m-d");
+        
+        unset($post["award_no"]);
+        unset($post["hid-edit-id"]);
         if (!$this->md->saveRate($post)) {
             $this->session->set_userdata("status", 0);
             $this->session->set_userdata("status_msg", "<b>Error! </b> Cannot save new rate.");
+        } else {
+            $this->session->set_userdata("status", 1);
+            $this->session->set_userdata("status_msg", "<b>Done! </b> New rate was successfully saved.");
         }
+        
+        redirect(base_url("transactions/upcoming_rate_increase/".$award_no));
     }
     
-    /* END UPCOMING RATE INCREASE */
+    public function updateRate()
+    {
+        $post = $this->input->post(null, true);
+        $award_no = $post["award_no"];
+        $id = $post["hid-edit-id"];
+        $date = DateTime::createFromFormat('d/m/Y', $post["created_at"]);
+        $post["created_at"] = $date->format("Y-m-d");
+        
+        unset($post["award_no"]);
+        unset($post["hid-edit-id"]);
+        if (!$this->md->updateRate($id, $post)) {
+            $this->session->set_userdata("status", 0);
+            $this->session->set_userdata("status_msg", "<b>Error! </b> Cannot update new rate.");
+        } else {
+            $this->session->set_userdata("status", 1);
+            $this->session->set_userdata("status_msg", "<b>Done! </b> New rate was successfully updated.");
+        }
+        
+        redirect(base_url("transactions/upcoming_rate_increase/".$award_no));
+    }
+    
+    public function ajaxDeleteRate()
+    {
+        $params = array();
+        $params["status"] = true;
+        $id = $this->input->post("del_id", true);
+        
+        if (!$this->md->deleteRate($id)) {
+            $params["status"] = false;
+            echo json_encode($params);
+            return;
+        }
+        
+        echo json_encode($params);
+        return;
+    }
+    
+    public function ajaxGetRateInfo()
+    {
+        $params = array();
+        $params["status"] = true;
+        $id = $this->input->post("edit_id");
+        
+        $res = $this->md->getRateById($id);
+        if (!$res) {
+            $params["status"] = false;
+            echo json_encode($params);
+            return;
+        }
+        
+        $res["created_at"] = date("d/m/Y", strtotime($res["created_at"]));
+        
+        $params["rate_info"] = $res;
+        
+        echo json_encode($params);
+        return;
+    }
+    
+    /* END RATE INCREASE */
     
     public function getAwardInfo()
     {

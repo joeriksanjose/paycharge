@@ -118,7 +118,8 @@ class Super extends CI_Controller
     public function save()
     {
         $data = $this->input->post(null, true);
-        $data["effective_date"] = date("Y-m-d", strtotime($data["effective_date"]));
+        $date = DateTime::createFromFormat('d/m/Y', $post["created_at"]);
+        $data["effective_date"] = $date->format("Y-m-d");
         $sql = $this->tbl->save($data);
         
         if ($sql) {
