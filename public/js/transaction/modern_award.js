@@ -21,6 +21,69 @@ $(document).ready(function(){
         inputNumbers(evt);
     });
     
+    // search    
+    $("#search-award").keypress(function(evt){
+        if(evt.which==13){
+            $("#btn-search-award").click();
+        }
+    });
+    
+    $("#btn-search-award").live("click" ,function(){
+        $("#div-success").css("display", "none");
+        $.post(base_url+"transactions/ajaxSearchAward", 
+            {key:$("#search-award").val()}, function(data){
+             var result = $.parseJSON(data);
+             var str = "";
+             
+             if (!result.is_error) {
+                 str = str + "<table class='table table-striped table-bordered' id='award-table' style='margin-top: 15px;'>";
+                 str = str + "<thead>"
+                 str = str + "<tr>";
+                 str = str + "<th>Modern Award No</th>";
+                 str = str + "<th>Modern Award Name</th>";
+                 str = str + "<th>Date Created</th>";
+                 str = str + "<th>Action</th>";
+                 str = str + "</tr>";
+                 str = str + "</thead>";
+                 str = str + "<tbody>";
+                 $.each(result, function(i, item){
+                     str = str + "<tr>";
+                     str = str + "<td>"+item.modern_award_no+"</td>";
+                     str = str + "<td>"+item.modern_award_name+"</td>";
+                     str = str + "<td>"+item.created_at+"</td>";
+                     str = str + "<td><button type='button' class='btn edit-award-btn' edit-id='"+item.modern_award_no+"'>";
+                     str = str + "<i class='icon-edit'></i></button> ";
+                     str = str + "<button type='button' class='btn btn-danger delete-award-btn' del-id='"+item.modern_award_no+"'>";
+                     str = str + "<i class='icon-trash icon-white'></i>";
+                     str = str + "</button></td>";
+                     str = str + "</tr>";
+                 });
+                 str = str + "<tbody>";
+                 str = str + "</table>";
+             } else {
+                 str = str + "<table class='table table-striped table-bordered' style='margin-top: 15px;'>";
+                 str = str + "<tr>";
+                 str = str + "<th>Modern Award No</th>";
+                 str = str + "<th>Modern Award Name</th>";
+                 str = str + "<th>Date Created</th>";
+                 str = str + "<th>Action</th>";
+                 str = str + "</tr>";
+                 str = str + "<tr>";
+                 str = str + "<td colspan='4'>";
+                 str = str + "No results found.";
+                 str = str + "</td>";
+                 str = str + "</tr>";
+                 str = str + "</table>";
+             }
+             
+             $("#modern-body").html(str);
+             $("#award-table").tablesorter();
+
+        });
+    });
+    
+    // end searh
+    
     // show add modern award form, tabs
     $("#add-new-modern").click(function(){
         $(this).hide("fast");

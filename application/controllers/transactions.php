@@ -153,6 +153,30 @@ class Transactions extends CI_Controller
         return;
     }
     
+    /* UPCOMING RATE INCREASE */
+    
+    public function upcoming_rate_increase($modern_award_no)
+    {
+        $award_info = $this->md->getAwardByAwardNo($modern_award_no);
+        $this->data["award_info"] = $award_info;
+        $this->data["upcoming_rate_increase"] = $this->md->getUpcomingRateIncrease($award_info["modern_award_name"]);
+        $this->data["header"] = $this->load->view("header", $this->data, true);
+        $this->data["footer"] = $this->load->view("footer", $this->data, true);
+        
+        $this->load->view("transactions/upcoming_rate_view", $this->data);
+    }
+    
+    public function saveRate()
+    {
+        $post = $this->input->post(null, true);
+        if (!$this->md->saveRate($post)) {
+            $this->session->set_userdata("status", 0);
+            $this->session->set_userdata("status_msg", "<b>Error! </b> Cannot save new rate.");
+        }
+    }
+    
+    /* END UPCOMING RATE INCREASE */
+    
     public function getAwardInfo()
     {
         $params = array();
@@ -188,5 +212,28 @@ class Transactions extends CI_Controller
        $params["next_id"] = $this->md->getNextAwardNo();
        echo json_encode($params);
        return;
+    }
+    
+    public function ajaxSearchAward()
+    {
+        $params = array();
+        $params["is_error"] = false;
+        $key = $this->input->post("key", true);
+        $result = $this->md->searchAward($key);
+        
+        if (trim($key) == "%") {
+            $result = $this->md->getModernAwards();
+        } else {
+            $result = $this->md->searchAward($key);    
+        }
+        
+        if (!$result) {
+            $params["is_error"] = true;
+            echo json_encode($params);
+            return;
+        }
+        
+        echo json_encode($result);
+        return;
     }
 }

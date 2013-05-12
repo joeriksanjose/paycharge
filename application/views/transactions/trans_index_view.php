@@ -817,10 +817,10 @@
 
 	<div class="span12" id="search-modern">
 		<button type="button" id="add-new-modern" class="btn"><i class="icon-plus"></i> Add new modern award</button>
-	    <form class="form-search pull-right">
-	        <input type="text" class="input-xlarge search-query">
-	        <button type="submit" class="btn"><i class="icon-search"></i></button>
-	    </form>
+	    <div class="form-search pull-right">
+	        <input type="text" class="input-xlarge search-query" id="search-award">
+	        <button type="button" class="btn" id="btn-search-award"><i class="icon-search"></i></button>
+	    </div>
 	</div>
 	<div class="span12" id="modern-body" style="max-height: 400px; overflow: auto;">
 	    <?php if ($status === 1) : ?>
@@ -834,7 +834,7 @@
                <b>Error!</b> <?php echo $status_msg ?>
            </div>
 	    <?php endif ; ?>
-		<table class="table table-bordered table-striped" id="award-table">
+		<table class="table table-bordered table-striped" id="award-table" style="margin-top: 15px;">
 		    <thead>
 			<tr>
 				<th>Modern Award No</th>
@@ -849,8 +849,10 @@
 			<tr>
 				<td><?php echo $modern_award["modern_award_no"] ?></td>
 				<td><?php echo $modern_award["modern_award_name"] ?></td>
-				<td><?php echo $modern_award["created_at"] ?></td>
+				<td><?php echo date("d/m/Y", strtotime($modern_award["created_at"])) ?></td>
 				<td>
+				    <a target="_blank" href="<?php echo base_url("transactions/upcoming_rate_increase/".$modern_award["modern_award_no"]) ?>" class="btn">Upcoming Rate Increase</a>
+				    <a href="" class="btn">Rate Increase History</a>
 				    <button type="button" class="btn edit-award-btn" edit-id="<?php echo $modern_award["modern_award_no"] ?>"><i class="icon-edit"></i></button>
 				    <button type="button" class="btn btn-danger delete-award-btn" del-id="<?php echo $modern_award["modern_award_no"] ?>"><i class="icon-trash icon-white"></i></button>
 				</td>
