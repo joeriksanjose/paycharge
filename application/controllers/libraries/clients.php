@@ -153,6 +153,7 @@ class Clients extends CI_Controller
         
         echo json_encode($this->data["data"]);
     }
+    
     public function delete_clients()
     {
         $params = array();

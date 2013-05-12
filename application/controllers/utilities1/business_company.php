@@ -18,6 +18,7 @@ class Business_company extends CI_Controller{
 		
 	    $data["username"] = $this->user_session["username"];
         $data["title"] = "System - Business Info";
+        $data["is_admin"] = $this->user_session["is_admin"];
         $data["error"] = false;
         $data["ok"] = false;
         if($this->session->userdata("error")){
