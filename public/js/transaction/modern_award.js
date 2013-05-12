@@ -3,14 +3,17 @@ $(document).ready(function(){
     
     function inputNumbers(event)
     {
-        if ( event.keyCode == 190 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 27 || event.keyCode == 13 || (event.keyCode >=48 && event.keyCode <= 57))
-        {
+        if (
+            event.keyCode == 190 || 
+            event.keyCode == 8 || 
+            event.keyCode == 9 || 
+            event.keyCode == 27 || 
+            event.keyCode == 13 || 
+            (event.keyCode >=48 && event.keyCode <= 57)
+            ) {
             return;
-        }
-        else
-        {
-            
-                event.preventDefault(); 
+        } else {
+            event.preventDefault(); 
         }
     }
     
@@ -22,6 +25,8 @@ $(document).ready(function(){
     $("#add-new-modern").click(function(){
         $(this).hide("fast");
         $("input:text").val("");
+        $("#m_allow_text").val("MARGIN FOR M ALLOWANCE");
+        $("#allowance_txt").val("STANDARD RATE FOR CALS :");
         $.post(base_url+"transactions/ajaxGetNextAwardNo", {}, function(data){
             res = $.parseJSON(data);
             $("#modern_award_no").val(res.next_id);
@@ -221,5 +226,8 @@ $(document).ready(function(){
         });
     });
     // end delete modern award
+    
+    // table sorter
+    $("#award-table").tablesorter();
     
 });

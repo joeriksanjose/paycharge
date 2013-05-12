@@ -18,9 +18,13 @@ class Transactions extends CI_Controller
 	{	
 		$this->data["header"] = $this->load->view("header", $this->data, true);
 		$this->data["footer"] = $this->load->view("footer", $this->data, true);
+        $this->data["status"] = $this->session->userdata("status");
+        $this->data["status_msg"] = $this->session->userdata("status_message");
+        
         $this->data["next_award_no"] = $this->md->getNextAwardNo();
-		
 		$this->data["modern_awards"] = $this->md->getModernAwards();
+        
+        $this->session->unset_userdata("status");
 		
 		$this->load->view("transactions/trans_index_view", $this->data);
 	}
@@ -49,8 +53,13 @@ class Transactions extends CI_Controller
         
         unset($modern_award_data["allowance_caption12"]);
         
-        $this->md->save($modern_award_data);
-        $this->pd->save($print_defaults_data);
+        if ($this->md->save($modern_award_data) && $this->pd->save($print_defaults_data)) {
+            $this->session->set_userdata("status", 1);
+            $this->session->set_userdata("status_message", "Modern award was successfully saved.");
+        } else {
+            $this->session->set_userdata("status", 0);
+            $this->session->set_userdata("status_message", "Error saving modern award.");
+        }
         
         redirect(base_url("transactions"));
     }
@@ -108,8 +117,16 @@ class Transactions extends CI_Controller
         $print_defaults_data["trans_no"] = $modern_award_data["modern_award_no"];
         unset($modern_award_data["allowance_caption12"]);
         
-        $this->md->update($post["modern_award_no"], $modern_award_data);
-        $this->pd->update($post["modern_award_no"], $print_defaults_data);
+        if (
+            $this->md->update($post["modern_award_no"], $modern_award_data) && 
+            $this->pd->update($post["modern_award_no"], $print_defaults_data)
+            ) {
+            $this->session->set_userdata("status", 1);
+            $this->session->set_userdata("status_message", "Modern award was successfully updated.");
+        } else {
+            $this->session->set_userdata("status", 0);
+            $this->session->set_userdata("status_message", "Error updating modern award.");
+        }
         
         redirect(base_url("transactions"));
     }

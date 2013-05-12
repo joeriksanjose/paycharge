@@ -361,7 +361,7 @@
 					<h3>Allowances</h3>
 					<hr>
 					<div class="control-group">
-				      <input type="text" class="input-medium disabled" style="font-size: 10px;" disabled="true" value="STANDARD RATE FOR CALS :">
+				      <input type="text" class="input-medium disabled" id="allowance_txt" style="font-size: 10px;" disabled="true" value="STANDARD RATE FOR CALS :">
 					  <input type="text" class="input-mini" id="allowance_caption12" name="allowance_caption12">
 					  <div class="input-prepend">
                             <span class="add-on">$</span>
@@ -403,7 +403,7 @@
 					        <input type="text" class="input-medium txt"  id="B_56" name="B_56" placeholder="0.00">
 					  </div>
 					  <div style="height: 5px;"></div>
-					  <input type="text" class="input-medium" disabled="true" style="font-size: 10px;" value="MARGIN FOR M ALLOWANCE">
+					  <input type="text" class="input-medium" id="m_allow_text" disabled="true" style="font-size: 10px;" value="MARGIN FOR M ALLOWANCE">
                       <input type="text" class="input-mini" id="m_allow_margin" name="m_allow_margin">
 				    </div>
 				</div>
@@ -823,7 +823,18 @@
 	    </form>
 	</div>
 	<div class="span12" id="modern-body" style="max-height: 400px; overflow: auto;">
-		<table class="table table-bordered table-striped">
+	    <?php if ($status === 1) : ?>
+	        <div class="alert alert-success">
+	            <button type="button" class="close" data-dismiss="alert">&times;</button>
+	            <b>Done!</b> <?php echo $status_msg ?>
+	        </div>
+	    <?php elseif ($status === 0) : ?>
+	       <div class="alert alert-error">
+	           <button type="button" class="close" data-dismiss="alert">&times;</button>
+               <b>Error!</b> <?php echo $status_msg ?>
+           </div>
+	    <?php endif ; ?>
+		<table class="table table-bordered table-striped" id="award-table">
 		    <thead>
 			<tr>
 				<th>Modern Award No</th>
