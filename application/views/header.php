@@ -18,10 +18,30 @@
     <div class="navbar navbar-fixed-top">
         <div class="navbar-inner">
             <div class="container">
-                <a href="<?php echo base_url("transactions") ?>" class="brand pull-right">PCS</a>
+                <?php if ($is_admin) : ?>
+                    <a href="<?php echo base_url("transactions") ?>" class="brand pull-right">PCS</a>
+                <?php else : ?>
+                    <a href="<?php echo base_url("sales_transaction") ?>" class="brand pull-right">PCS</a>
+                <?php endif ; ?>
                 <ul class="nav">
                     <li class="divider-vertical"></li>
+                    <?php if ($is_admin) : ?>
                     <li><a href="<?php echo base_url("transactions") ?>"><i class="icon-retweet"></i> Transaction</a></li>
+                    <?php else : ?>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="icon-folder-open"></i> Transactions <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="<?php echo base_url("sales_transaction") ?>">Modern Award</a>
+                            </li>
+                            <li>
+                                <a href="<?php echo base_url("libraries/contacts") ?>">Client Agreement</a>
+                            </li>
+                        </ul>
+                    </li>  
+                    <?php endif ; ?>
                     <li class="dropdown">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-book"></i> Reports <b class="caret"></b></a>
                         <ul class="dropdown-menu">

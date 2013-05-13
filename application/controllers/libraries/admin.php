@@ -9,6 +9,9 @@ class Admin extends CI_Controller
         $this->load->library("user_session");
         
         $this->user_session = $this->user_session->checkUserSession();
+        if (!$this->user_session["is_admin"]) {
+            redirect("sales_transaction");
+        }
         
         $this->data["title"] = "Libraries - admin";
         $this->data["username"] = $this->user_session["username"];

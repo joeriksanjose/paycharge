@@ -43,7 +43,11 @@ class Home extends CI_Controller {
                 );
                 
             $this->session->set_userdata($user_session);
-            redirect(base_url("transactions"));
+            if ($user_session["is_admin"]) {
+                redirect(base_url("transactions"));
+            } else {
+                redirect(base_url("sales_transaction"));
+            }
         }
     }
     

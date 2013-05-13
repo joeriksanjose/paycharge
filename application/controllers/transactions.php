@@ -9,6 +9,9 @@ class Transactions extends CI_Controller
         $this->load->model("tbl_print_defaults", "pd");
 		$this->load->library("user_session");
 		$this->user_session = $this->user_session->checkUserSession();
+        if (!$this->user_session["is_admin"]) {
+            redirect("sales_transaction");
+        }
 		$this->data["title"] = "System - Transactions";
 		$this->data["username"] = $this->session->userdata("username");
         $this->data["is_admin"] = $this->user_session["is_admin"];
