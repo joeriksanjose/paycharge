@@ -180,15 +180,6 @@ $(document).ready(function(){
 			} else {
 				$("#B_56").removeAttr("disabled");
 			}
-			
-			
-			
-			
-			
-			
-			
-			
-			
 		});
 	});
 	
@@ -230,7 +221,15 @@ $(document).ready(function(){
 			$("#wic_code").val(json_data.work_cover_code);
 		});
 	});
+	
+	$("#close-modern-form").click(function(){
+       $("#modern_form").hide("fast");
+       $(".div-award").show("fast"); 
+    });
+	
 	$("#add-new-modern").click(function(){
+	    $(document).scrollTop(0);
+	    $("#modern_form").show("fast");
         $("#show-tab-1").parent().addClass("active");
         $("#show-tab-2, #show-tab-3, #show-tab-4").parent().removeClass("active");
         $("#nav-tabs").show("fast");
@@ -240,6 +239,7 @@ $(document).ready(function(){
     
     $("#show-tab-1").click(function(){
     	$(this).parent().addClass("active");
+    	$(document).scrollTop(0);
     	$("#show-tab-2, #show-tab-3, #show-tab-4").parent().removeClass("active");
         $("#tab1").show("fast");
         $("#tab2, #tab3, #tab4").hide("fast");
@@ -247,6 +247,7 @@ $(document).ready(function(){
     });
     
     $("#show-tab-2").click(function(){
+        $(document).scrollTop(0);
     	$(this).parent().addClass("active");
     	$("#show-tab-1, #show-tab-3, #show-tab-4").parent().removeClass("active");
         $("#tab2").show("fast");
@@ -255,6 +256,7 @@ $(document).ready(function(){
     });
     
     $("#show-tab-3").click(function(){
+        $(document).scrollTop(0);
     	$(this).parent().addClass("active");
     	$("#show-tab-1, #show-tab-2, #show-tab-4").parent().removeClass("active");
         $("#tab3").show("fast");
@@ -263,6 +265,7 @@ $(document).ready(function(){
     });
     
     $("#show-tab-4").click(function(){
+        $(document).scrollTop(0);
     	$(this).parent().addClass("active");
     	$("#show-tab-1, #show-tab-3, #show-tab-2").parent().removeClass("active");
         $("#tab4").show("fast");

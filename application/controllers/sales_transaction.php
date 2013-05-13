@@ -8,9 +8,10 @@ class Sales_transaction extends CI_Controller
 		$this->load->model("tbl_sales_modern_award", "smd");
         $this->load->model("tbl_print_defaults", "pd");
 		$this->load->library("user_session");
-		$this->user_session->checkUserSession();
+		$this->user_session = $this->user_session->checkUserSession();
 		$this->data["title"] = "System - Transactions";
 		$this->data["username"] = $this->session->userdata("username");
+        $this->data["is_admin"] = $this->user_session["is_admin"];
 	}
 	
 	public function get_modern_info(){
