@@ -235,6 +235,7 @@ $(document).ready(function(){
         $("#nav-tabs").show("fast");
         $("#tab1").show("fast");
         $(".div-award").hide("fast");
+        $("#tab2, #tab3, #tab4").hide("fast");
     });
     
     $("#show-tab-1").click(function(){

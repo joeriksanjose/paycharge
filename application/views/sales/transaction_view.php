@@ -966,8 +966,6 @@
 		</form>
 	</div>
 		
-	</div>
-	
 	<div class="span12 div-award">
 		<button type="button" id="add-new-modern" class="btn"><i class="icon-plus"></i> Add new modern award</button>
 	    <form class="form-search pull-right">
@@ -976,18 +974,26 @@
 	    </form>
 	</div>
 	<div class="span12 div-award" style="max-height: 400px; overflow: auto;">
-		<table class="table table-bordered table-striped">
+		<table class="table table-bordered table-striped" id="sales-modern-table">
+		    <thead>
 			<tr>
 				<th>Modern Award No</th>
 				<th>Modern Award Name</th>
 				<th>Date Created</th>
+				<th>Action</th>
 			</tr>
+			</thead>
+			<tbody>
 			<?php if(count($modern_awards)) : ?>
 			<?php foreach ($modern_awards as $modern_award) : ?>
 			<tr>
 				<td><?php echo $modern_award["modern_award_no"] ?></td>
 				<td><?php echo $modern_award["modern_award_name"] ?></td>
-				<td><?php echo $modern_award["created_at"] ?></td>
+				<td><?php echo date("d/m/Y", strtotime($modern_award["created_at"])) ?></td>
+				<td>
+				    <button type="button" class="btn"><i class="icon-edit"></i></button>
+				    <button type="button" class="btn btn-danger"><i class="icon-trash icon-white"></i></button>
+				</td>
 			</tr>
 			<?php endforeach ; ?>
 			<?php else : ?>
@@ -995,7 +1001,11 @@
 				<td colspan="3">Empty Record</td>
 			</tr>	
 			<?php endif ; ?>
+			</tbody>
 		</table>
 	</div>
 </div>
+<script>
+    $("#sales-modern-table").tablesorter();
+</script>
 <?php echo $footer ?>
