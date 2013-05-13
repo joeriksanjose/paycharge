@@ -67,25 +67,64 @@ class Sales_transaction extends CI_Controller
 		$this->load->view("sales/transaction_view", $this->data);
 	}
     
+	public function getTransNo(){
+		$sql=$this->smd->getTransNo();
+		
+		echo json_encode($sql);
+	}
     public function save()
     {
         $post = $this->input->post(null, true);
         
-        $modern_award_data = array();
-        $print_defaults_data = array();
-        $ctr = 0;
-        foreach ($post as $key => $val) {
-            if ($ctr >= 60) {
-                $print_defaults_data[$key] = $val;
-            } else {
-                $modern_award_data[$key] = $val;
-                $ctr++;   
-            }
+        // $modern_award_data = array();
+        // $print_defaults_data = array();
+        // $ctr = 0;
+        // foreach ($post as $key => $val) {
+            // if ($ctr >= 60) {
+                // $print_defaults_data[$key] = $val;
+            // } else {
+                // $modern_award_data[$key] = $val;
+                // $ctr++;   
+            // }
+        // }
+        $this->db->trans_begin();
+        for ($i = 1; $i <= 10; $i++) {
+        	$trans_no = $post["trans_no"];
+			$grade = "Grade ".$i;
+			$position_name = $this->smd->getPositionNameById($post["position_no".$i]);
+			$grade_and_pos = "Grade ".$i." - ".$position_name;
+			$position_no = $post["position_no".$i];
+        	$payrate = $post["payrate_".$i];
+			$base_rate = $post["base_rate".$i];
+			$casual_rate = $post["casual_rate".$i];
+			
+			$data = array(
+				"trans_no"           => $trans_no,
+				"grade"              => $grade,
+				"grade_and_position" => $grade_and_pos,
+				"position_no"        => $position_no,
+				"payrate"            => $payrate,
+				"base_rate"          => $base_rate,
+				"casual_rate"        => $casual_rate
+			);
+
+			$this->smd->savePayRate($data);
+			unset($post["position_no".$i]);
+			unset($post["payrate_".$i]);
+			unset($post["base_rate".$i]);
+			unset($post["casual_rate".$i]);
         }
         
-        unset($modern_award_data["allowance_caption12"]);
+		
+        unset($post["allowance_caption12"]);
         
-        $this->md->save($modern_award_data);
-        $this->pd->save($print_defaults_data);
+        $this->smd->save($post);
+		
+		if ($this->db->trans_status() === false) {
+			log_message("Transaction failed (tbl_charge_rate, tbl_payrate)");
+    		$this->db->trans_rollback();
+		} else {
+    		$this->db->trans_commit();
+		}
     }
 }

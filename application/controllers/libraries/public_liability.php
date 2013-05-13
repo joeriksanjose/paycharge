@@ -12,7 +12,6 @@ class Public_liability extends CI_Controller
         
         $this->data["title"] = "Libraries - Public Liability";
         $this->data["username"] = $this->user_session["username"];
-        $this->data["is_admin"] = $this->user_session["is_admin"];
     }
     
     public function index()

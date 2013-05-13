@@ -16,7 +16,6 @@ class Utilities extends CI_Controller
     {
         $data["title"] = "System - Utilities";
         $data["username"] = $this->user_session["username"];
-        $data["is_admin"] = $this->user_session["is_admin"];
         
         $data["header"] = $this->load->view("header", $data, true);
         $data["footer"] = $this->load->view("footer", $data, true);

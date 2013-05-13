@@ -18,7 +18,6 @@ class Business_company extends CI_Controller{
 		
 	    $data["username"] = $this->user_session["username"];
         $data["title"] = "System - Business Info";
-        $data["is_admin"] = $this->user_session["is_admin"];
         $data["error"] = false;
         $data["ok"] = false;
         if($this->session->userdata("error")){
@@ -31,7 +30,6 @@ class Business_company extends CI_Controller{
         $this->session->unset_userdata("ok");
         $data["header"] = $this->load->view("header", $data, true);
         $data["footer"] = $this->load->view("footer", $data, true);
-        $data["is_admin"] = $this->user_session["is_admin"];
         
         $data["data"] = $this->setup->select_company1();
         
@@ -69,7 +67,6 @@ class Business_company extends CI_Controller{
 	public function company2(){
 		
 	    $data["username"] = $this->user_session["username"];
-        $data["is_admin"] = $this->user_session["is_admin"];
         $data["title"] = "System - Business Info";
         $data["error"] = false;
         $data["ok"] = false;

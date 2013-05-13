@@ -18,7 +18,7 @@
     <div class="navbar navbar-fixed-top">
         <div class="navbar-inner">
             <div class="container">
-                <a href="<?php echo base_url("transactions") ?>" class="brand pull-right">PCS</a>
+                <a href="<?php echo base_url("Transactions") ?>" class="brand pull-right">PCS</a>
                 <ul class="nav">
                     <li class="divider-vertical"></li>
                     <li><a href="<?php echo base_url("transactions") ?>"><i class="icon-retweet"></i> Transaction</a></li>
@@ -109,7 +109,6 @@
                             </li>
                         </ul>
                     </li>
-                    <?php if ($is_admin) : ?>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="icon-wrench"></i> Utilities <b class="caret"></b>
@@ -126,7 +125,6 @@
                           
                         </ul>
                     </li>
-                    <?php endif ; ?>
                 </ul>
                 <div class="pull-right" style="margin-top: 10px; margin-left: 5px;">
                     <a href="<?php echo base_url("logout") ?>">Logout</a>

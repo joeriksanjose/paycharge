@@ -173,4 +173,53 @@ $(document).ready(function(){
         }
     });
     // end show and updating user
+    
+    // show add modern award form, tabs
+    $("#add-new-modern").click(function(){
+        $("#show-tab-1").parent().addClass("active");
+        $("#show-tab-2, #show-tab-3, #show-tab-4").parent().removeClass("active");
+        $("#nav-tabs").show("fast");
+        $("#tab1").show("fast");
+    });
+    
+    $("#show-tab-1").click(function(){
+        $(this).parent().addClass("active");
+        $("#show-tab-2, #show-tab-3, #show-tab-4").parent().removeClass("active");
+        $("#tab1").show("fast");
+        $("#tab2, #tab3, #tab4").hide("fast");
+        $(document).scrollTop(0);
+        return false;
+    });
+    
+    $("#show-tab-2").click(function(){
+        $(this).parent().addClass("active");
+        $("#show-tab-1, #show-tab-3, #show-tab-4").parent().removeClass("active");
+        $("#tab2").show("fast");
+        $("#tab1, #tab3, #tab4").hide("fast");
+        $(document).scrollTop(0);
+        return false;
+    });
+    
+    $("#show-tab-3").click(function(){
+        $(this).parent().addClass("active");
+        $("#show-tab-1, #show-tab-2, #show-tab-4").parent().removeClass("active");
+        $("#tab3").show("fast");
+        $("#tab1, #tab2, #tab4").hide("fast");
+        $(document).scrollTop(0);
+        return false;
+    });
+    
+    $("#show-tab-4").click(function(){
+        $(this).parent().addClass("active");
+        $("#show-tab-1, #show-tab-2, #show-tab-3").parent().removeClass("active");
+        $("#tab4").show("fast");
+        $("#tab1, #tab2, #tab3").hide("fast");
+        $(document).scrollTop(0);
+        return false;
+    });
+    
+    $("#close-modern-form").click(function(){
+        $("#nav-tabs, #tab4, #tab1, #tab2, #tab3").hide("fast");
+    });
+    // end show add modern award form, tabs
 });
