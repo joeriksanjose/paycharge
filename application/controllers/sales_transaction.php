@@ -2,6 +2,24 @@
 
 class Sales_transaction extends CI_Controller
 {
+    private $ml_description = array(
+            "Full Hourly Pay Rate",
+            "Casual Loading",
+            "Shift Loading",
+            "TOTAL CASUAL HOURLY PAY",
+            "Superannuation:",
+            "Workcover (% on super total)",
+            "Public Liability (% on pay rate)",
+            "Payroll Tax (% on super total)",
+            "Insurace",
+            "Long Service",
+            "Administration (% on super total)",
+            "TOTAL WITH PAY + ONCOSTS:",
+            "$ Margin",
+            "% Margin",
+            "Labourpower Hourly Charge Rates"
+        );
+    
 	function __construct()
 	{
 		parent::__construct();
@@ -69,25 +87,15 @@ class Sales_transaction extends CI_Controller
 	}
     
 	public function getTransNo(){
-		$sql=$this->smd->getTransNo();
+		$sql = $this->smd->getTransNo();
 		
 		echo json_encode($sql);
 	}
+    
     public function save()
     {
         $post = $this->input->post(null, true);
         
-        // $modern_award_data = array();
-        // $print_defaults_data = array();
-        // $ctr = 0;
-        // foreach ($post as $key => $val) {
-            // if ($ctr >= 60) {
-                // $print_defaults_data[$key] = $val;
-            // } else {
-                // $modern_award_data[$key] = $val;
-                // $ctr++;   
-            // }
-        // }
         $this->db->trans_begin();
         for ($i = 1; $i <= 10; $i++) {
         	$trans_no = $post["trans_no"];
@@ -127,5 +135,587 @@ class Sales_transaction extends CI_Controller
 		} else {
     		$this->db->trans_commit();
 		}
+    }
+    
+    private function computeML($post, $index, $comp_type, $calc) 
+    {
+        $full_time = $this->computeFullHourlyPayRate($post, $index, $calc);
+    }
+    
+    private function computeFullHourlyPayRate($post, $index, $calc)
+    {
+        switch ($calc) {
+            case 1:
+            case 2:
+            case 3:
+                $description = $this->ml_description[0];
+                $normal = $post["base_rate".$index];
+                $early = $post["base_rate".$index];
+                $afternoon = $post["base_rate".$index];
+                $night = $post["base_rate".$index];
+                $fifty_shift = $post["base_rate".$index];
+                $t_14 = $post["base_rate".$index];
+                $t_12 = $post["base_rate".$index];
+                $double = $post["base_rate".$index];
+                $dt_12 = $post["base_rate".$index];
+                $triple = $post["base_rate".$index];
+                break;                  
+        }
+        
+        return array(
+            "trans_no"    => $post["trans_no"],
+            "description" => $description,
+            "normal"      => $normal,
+            "early"       => $early,
+            "afternoon"   => $afternoon,
+            "night"       => $night,
+            "50%Shift"    => $fifty_shift,
+            "T1/4"        => $t_14,
+            "T1/2"        => $t_12,
+            "double"      => $double,
+            "DT1/2"       => $dt_12,
+            "triple"      => $triple,
+            "calc_no"     => $calc
+        );
+    }
+
+    private function computeCasualLoading($post, $index, $calc)
+    {
+        $description = $this->ml_description[1];
+        switch ($calc) {
+            case 1:
+            case 2:
+                $normal = $post["base_rate".$index] * ($post["B_27"]/100);
+                $early = $post["base_rate".$index] * ($post["B_27"]/100);
+                $afternoon = $post["base_rate".$index] * ($post["B_27"]/100);
+                $night = $post["base_rate".$index] * ($post["B_27"]/100);
+                $fifty_shift = $post["base_rate".$index] * ($post["B_27"]/100);
+                $t_14 = $post["base_rate".$index] * ($post["B_28"]/100);
+                $t_12 = $post["base_rate".$index] * ($post["B_28"]/100);
+                $double = $post["base_rate".$index] * ($post["B_28"]/100);
+                $dt_12 = $post["base_rate".$index] * ($post["B_28"]/100);
+                $triple = $post["base_rate".$index] * ($post["B_28"]/100);
+                break;
+            case 3:
+                $normal = $post["base_rate".$index] * ($post["B_27"]/100);
+                $early = $post["base_rate".$index] * ($post["B_27"]/100);
+                $afternoon = $post["base_rate".$index] * ($post["B_27"]/100);
+                $night = $post["base_rate".$index] * ($post["B_27"]/100);
+                $fifty_shift = $post["base_rate".$index] * ($post["B_27"]/100);
+                $t_14 = 0;
+                $t_12 = 0;
+                $double = 0;
+                $dt_12 = 0;
+                $triple = 0;
+                break;             
+        }
+        
+        return array(
+            "trans_no"    => $post["trans_no"],
+            "description" => $description,
+            "normal"      => $normal,
+            "early"       => $early,
+            "afternoon"   => $afternoon,
+            "night"       => $night,
+            "50%Shift"    => $fifty_shift,
+            "T1/4"        => $t_14,
+            "T1/2"        => $t_12,
+            "double"      => $double,
+            "DT1/2"       => $dt_12,
+            "triple"      => $triple,
+            "calc_no"     => $calc
+        );
+    }
+    
+    private function computeShiftLoading($full_time, $casual, $post, $index, $calc)
+    {
+        $description = $this->ml_description[2];
+        switch ($calc) {
+            case 1:
+            case 3:
+                $normal = 0;
+                $total_normal = $full_time["normal"] + $casual["normal"];
+                $early = $total_normal * ($post["B_31"]/100);
+                $afternoon = $total_normal * ($post["B_33"]/100);
+                $night = $total_normal * ($post["B_35"]/100);
+                $fifty_shift = $total_normal * ($post["B_37"]/100);
+                $t_14 = 0;
+                $t_12 = 0;
+                $double = 0;
+                $dt_12 = 0;
+                $triple = 0;
+                break;
+            case 2:
+                $normal = 0;
+                $early = $post["base_rate".$index] * ($post["B_31"]/100);
+                $afternoon = $post["base_rate".$index] * ($post["B_33"]/100);
+                $night = $post["base_rate".$index] * ($post["B_35"]/100);
+                $fifty_shift = $post["base_rate".$index] * ($post["B_37"]/100);
+                $t_14 = 0;
+                $t_12 = 0;
+                $double = 0;
+                $dt_12 = 0;
+                $triple = 0;      
+        }
+        
+        return array(
+            "trans_no"    => $post["trans_no"],
+            "description" => $description,
+            "normal"      => $normal,
+            "early"       => $early,
+            "afternoon"   => $afternoon,
+            "night"       => $night,
+            "50%Shift"    => $fifty_shift,
+            "T1/4"        => $t_14,
+            "T1/2"        => $t_12,
+            "double"      => $double,
+            "DT1/2"       => $dt_12,
+            "triple"      => $triple,
+            "calc_no"     => $calc
+        );
+    }
+    
+    private function computeTotalCasualHourlyPay($full_time, $casual, $shift, $post, $index, $calc)
+    {
+        switch ($calc) {
+            case 1:
+                $description = $this->ml_description[3];
+                $normal = $full_time["normal"] + $casual["normal"] + $shift["normal"];
+                $early = $full_time["early"] + $casual["early"] + $shift["early"];
+                $afternoon = $full_time["afternoon"] + $casual["afternoon"] + $shift["afternoon"];
+                $night = $full_time["night"] + $casual["night"] + $shift["night"];
+                $fifty_shift = $full_time["50%Shift"] + $casual["50%Shift"] + $shift["50%Shift"];
+                $t_14 = ($full_time["T1/4"] + $casual["T1/4"]) * 1.25;
+                $t_12 = ($full_time["T1/2"] + $casual["T1/2"]) * 1.5;
+                $double = ($full_time["double"] + $casual["double"]) * 2;
+                $dt_12 = ($full_time["DT1/2"] + $casual["DT1/2"]) * 2.5;
+                $triple = ($full_time["triple"] + $casual["triple"]) * 3;
+                break;
+            case 2:
+                $description = $this->ml_description[3];
+                $normal = $full_time["normal"] + $casual["normal"] + $shift["normal"];
+                $early = $full_time["early"] + $casual["early"] + $shift["early"];
+                $afternoon = $full_time["afternoon"] + $casual["afternoon"] + $shift["afternoon"];
+                $night = $full_time["night"] + $casual["night"] + $shift["night"];
+                $fifty_shift = $full_time["50%Shift"] + $casual["50%Shift"] + $shift["50%Shift"];
+                $t_14 = ($full_time["T1/4"] * 1.25) + $casual["T1/4"] ;
+                $t_12 = ($full_time["T1/2"] * 1.5) + $casual["T1/2"];
+                $double = ($full_time["double"] * 2) + $casual["double"];
+                $dt_12 = ($full_time["DT1/2"] * 2.5) + $casual["DT1/2"];
+                $triple = ($full_time["triple"] * 3) + $casual["triple"];
+                break;
+            case 3:
+                $description = $this->ml_description[3];
+                $normal = $full_time["normal"] + $casual["normal"] + $shift["normal"];
+                $early = $full_time["early"] + $casual["early"] + $shift["early"];
+                $afternoon = $full_time["afternoon"] + $casual["afternoon"] + $shift["afternoon"];
+                $night = $full_time["night"] + $casual["night"] + $shift["night"];
+                $fifty_shift = $full_time["50%Shift"] + $casual["50%Shift"] + $shift["50%Shift"];
+                $t_14 = $full_time["T1/4"] * 1.5;
+                $t_12 = $full_time["T1/2"] * 1.75;
+                $double = $full_time["double"] * 2.25;
+                $dt_12 = $full_time["DT1/2"] * 2.75;
+                $triple = $full_time["triple"] * 3;
+                break;                               
+        }
+        
+        return array(
+            "trans_no"      => $post["trans_no"],
+            "description"   => $description,
+            "normal"        => $normal,
+            "early"         => $early,
+            "afternoon"     => $afternoon,
+            "night"         => $night,
+            "50%Shift"      => $fifty_shift,
+            "T1/4"          => $t_14,
+            "T1/2"          => $t_12,
+            "double"        => $double,
+            "DT1/2"         => $dt_12,
+            "triple"        => $triple,
+            "calc_no"       => $calc
+        );
+    }
+
+    private function computeSuperAnnuation($total_hourly_pay, $post, $index, $calc)
+    {
+        switch ($calc) {
+            case 1:
+            case 2:
+            case 3:
+                $description = $this->ml_description[4];
+                $normal = $total_hourly_pay["normal"] * ($post["B_14"]/100);
+                $early = $total_hourly_pay["early"] * ($post["B_14"]/100);
+                $afternoon = $total_hourly_pay["afternoon"] * ($post["B_14"]/100);
+                $night = $total_hourly_pay["afternoon"] * ($post["B_14"]/100);
+                $fifty_shift = $total_hourly_pay["50%Shift"] * ($post["B_14"]/100);
+                $t_14 = 0;
+                $t_12 = 0;
+                $double = 0;
+                $dt_12 = 0;
+                $triple = 0;
+                break;                  
+        }
+        
+        return array(
+            "trans_no"      => $post["trans_no"],
+            "description"   => $description,
+            "normal"        => $normal,
+            "early"         => $early,
+            "afternoon"     => $afternoon,
+            "night"         => $night,
+            "50%Shift"      => $fifty_shift,
+            "T1/4"          => $t_14,
+            "T1/2"          => $t_12,
+            "double"        => $double,
+            "DT1/2"         => $dt_12,
+            "triple"        => $triple,
+            "calc_no"       => $calc
+        );
+    }
+
+    private function computeWorkCover($total_hourly_pay, $super, $post, $index, $calc)
+    {
+         switch ($calc) {
+            case 1:
+            case 2:
+            case 3:
+                $description = $this->ml_description[5];
+                $normal = ($total_hourly_pay["normal"] + $super["normal"]) * ($post["B_15"]/100);
+                $early = ($total_hourly_pay["early"] + $super["early"]) * ($post["B_15"]/100);
+                $afternoon = ($total_hourly_pay["afternoon"] + $super["afternoon"]) * ($post["B_15"]/100);
+                $night = ($total_hourly_pay["night"] + $super["night"]) * ($post["B_15"]/100);
+                $fifty_shift = ($total_hourly_pay["50%Shift"] + $super["50%Shift"]) * ($post["B_15"]/100);
+                $t_14 = $total_hourly_pay["T1/4"] * ($post["B_15"]/100);
+                $t_12 = $total_hourly_pay["T1/2"] * ($post["B_15"]/100);
+                $double = $total_hourly_pay["double"] * ($post["B_15"]/100);
+                $dt_12 = $total_hourly_pay["DT1/2"] * ($post["B_15"]/100);
+                $triple = $total_hourly_pay["triple"] * ($post["B_15"]/100);
+                break;                  
+        }
+        
+        return array(
+            "trans_no"      => $post["trans_no"],
+            "description"   => $description,
+            "normal"        => $normal,
+            "early"         => $early,
+            "afternoon"     => $afternoon,
+            "night"         => $night,
+            "50%Shift"      => $fifty_shift,
+            "T1/4"          => $t_14,
+            "T1/2"          => $t_12,
+            "double"        => $double,
+            "DT1/2"         => $dt_12,
+            "triple"        => $triple,
+            "calc_no"       => $calc
+        );
+    }
+
+    private function computePublicLiability($total_hourly_pay, $super, $post, $index, $calc)
+    {
+        switch ($calc) {
+            case 1:
+            case 2:
+            case 3:
+                $description = $this->ml_description[6];
+                $normal = ($total_hourly_pay["normal"] + $super["normal"]) * ($post["B_20"]/100);
+                $early = ($total_hourly_pay["early"] + $super["early"]) * ($post["B_20"]/100);
+                $afternoon = ($total_hourly_pay["afternoon"] + $super["afternoon"]) * ($post["B_20"]/100);
+                $night = ($total_hourly_pay["night"] + $super["night"]) * ($post["B_20"]/100);
+                $fifty_shift = ($total_hourly_pay["50%Shift"] + $super["50%Shift"]) * ($post["B_20"]/100);
+                $t_14 = $total_hourly_pay["T1/4"] * ($post["B_20"]/100);
+                $t_12 = $total_hourly_pay["T1/2"] * ($post["B_20"]/100);
+                $double = $total_hourly_pay["double"] * ($post["B_20"]/100);
+                $dt_12 = $total_hourly_pay["DT1/2"] * ($post["B_20"]/100);
+                $triple = $total_hourly_pay["triple"] * ($post["B_20"]/100);
+                break;                  
+        }
+        
+        return array(
+            "trans_no"      => $post["trans_no"],
+            "description"   => $description,
+            "normal"        => $normal,
+            "early"         => $early,
+            "afternoon"     => $afternoon,
+            "night"         => $night,
+            "50%Shift"      => $fifty_shift,
+            "T1/4"          => $t_14,
+            "T1/2"          => $t_12,
+            "double"        => $double,
+            "DT1/2"         => $dt_12,
+            "triple"        => $triple,
+            "calc_no"       => $calc
+        );
+    }
+
+    private function computePayrollTax($total_hourly_pay, $super, $post, $index, $calc)
+    {
+        switch ($calc) {
+            case 1:
+            case 2:
+            case 3:
+                $description = $this->ml_description[7];
+                $normal = ($total_hourly_pay["normal"] + $super["normal"]) * ($post["B_19"]/100);
+                $early = ($total_hourly_pay["early"] + $super["early"]) * ($post["B_19"]/100);
+                $afternoon = ($total_hourly_pay["afternoon"] + $super["afternoon"]) * ($post["B_19"]/100);
+                $night = ($total_hourly_pay["night"] + $super["night"]) * ($post["B_19"]/100);
+                $fifty_shift = ($total_hourly_pay["50%Shift"] + $super["50%Shift"]) * ($post["B_19"]/100);
+                $t_14 = $total_hourly_pay["T1/4"] * ($post["B_19"]/100);
+                $t_12 = $total_hourly_pay["T1/2"] * ($post["B_19"]/100);
+                $double = $total_hourly_pay["double"] * ($post["B_19"]/100);
+                $dt_12 = $total_hourly_pay["DT1/2"] * ($post["B_19"]/100);
+                $triple = $total_hourly_pay["triple"] * ($post["B_19"]/100);
+                break;                  
+        }
+        
+        return array(
+            "trans_no"      => $post["trans_no"],
+            "description"   => $description,
+            "normal"        => $normal,
+            "early"         => $early,
+            "afternoon"     => $afternoon,
+            "night"         => $night,
+            "50%Shift"      => $fifty_shift,
+            "T1/4"          => $t_14,
+            "T1/2"          => $t_12,
+            "double"        => $double,
+            "DT1/2"         => $dt_12,
+            "triple"        => $triple,
+            "calc_no"       => $calc
+        );
+    }
+
+    private function computeInsurance($post, $calc)
+    { 
+        return array(
+            "trans_no"      => $post["trans_no"],
+            "description"   => $this->ml_description[8],
+            "normal"        => $post["B_21"],
+            "early"         => $post["B_21"],
+            "afternoon"     => $post["B_21"],
+            "night"         => $post["B_21"],
+            "50%Shift"      => $post["B_21"],
+            "T1/4"          => $post["B_21"],
+            "T1/2"          => $post["B_21"],
+            "double"        => $post["B_21"],
+            "DT1/2"         => $post["B_21"],
+            "triple"        => $post["B_21"],
+            "calc_no"       => $calc
+        );
+    }
+    
+    private function computeAdmin($total_hourly_pay, $super, $post, $index, $calc)
+    {
+        switch ($calc) {
+            case 1:
+            case 2:
+            case 3:
+                $description = $this->ml_description[9];
+                $normal = ($total_hourly_pay["normal"] + $super["normal"]) * ($post["B_22"]/100);
+                $early = ($total_hourly_pay["early"] + $super["early"]) * ($post["B_22"]/100);
+                $afternoon = ($total_hourly_pay["afternoon"] + $super["afternoon"]) * ($post["B_22"]/100);
+                $night = ($total_hourly_pay["night"] + $super["night"]) * ($post["B_22"]/100);
+                $fifty_shift = ($total_hourly_pay["50%Shift"] + $super["50%Shift"]) * ($post["B_22"]/100);
+                $t_14 = $total_hourly_pay["T1/4"] * ($post["B_22"]/100);
+                $t_12 = $total_hourly_pay["T1/2"] * ($post["B_22"]/100);
+                $double = $total_hourly_pay["double"] * ($post["B_22"]/100);
+                $dt_12 = $total_hourly_pay["DT1/2"] * ($post["B_22"]/100);
+                $triple = $total_hourly_pay["triple"] * ($post["B_22"]/100);
+                break;                  
+        }
+        
+        return array(
+            "trans_no"      => $post["trans_no"],
+            "description"   => $description,
+            "normal"        => $normal,
+            "early"         => $early,
+            "afternoon"     => $afternoon,
+            "night"         => $night,
+            "50%Shift"      => $fifty_shift,
+            "T1/4"          => $t_14,
+            "T1/2"          => $t_12,
+            "double"        => $double,
+            "DT1/2"         => $dt_12,
+            "triple"        => $triple,
+            "calc_no"       => $calc
+        );
+    }
+
+    private function computeTotalWithPay(
+        $total_hourly_pay, 
+        $super, 
+        $work_cover, 
+        $public_liability, 
+        $payroll_tax,
+        $insurance,
+        $admin,
+        $post,
+        $index,
+        $calc
+    ) {        
+        switch ($calc) {
+            case 1:
+            case 2:
+            case 3:
+                $description = $this->ml_description[10];
+                $normal = $total_hourly_pay["normal"] + $super["normal"] + $work_cover["normal"] + $public_liability["normal"] + $payroll_tax["normal"] + $insurance["normal"] + $admin["normal"];
+                $early = $total_hourly_pay["early"] + $super["early"] + $work_cover["early"] + $public_liability["early"] + $payroll_tax["early"] + $insurance["early"] + $admin["early"];
+                $afternoon = $total_hourly_pay["afternoon"] + $super["afternoon"] + $work_cover["afternoon"] + $public_liability["afternoon"] + $payroll_tax["afternoon"] + $insurance["afternoon"] + $admin["afternoon"];
+                $night = $total_hourly_pay["night"] + $super["night"] + $work_cover["night"] + $public_liability["night"] + $payroll_tax["night"] + $insurance["night"] + $admin["night"];
+                $fifty_shift = $total_hourly_pay["50%Shift"] + $super["50%Shift"] + $work_cover["50%Shift"] + $public_liability["50%Shift"] + $payroll_tax["50%Shift"] + $insurance["50%Shift"] + $admin["50%Shift"];
+                $t_14 = $total_hourly_pay["T1/4"] + $super["T1/4"] + $work_cover["T1/4"] + $public_liability["T1/4"] + $payroll_tax["T1/4"] + $insurance["T1/4"] + $admin["T1/4"];
+                $t_12 = $total_hourly_pay["T1/2"] + $super["T1/2"] + $work_cover["T1/2"] + $public_liability["T1/2"] + $payroll_tax["T1/2"] + $insurance["T1/2"] + $admin["T1/2"];
+                $double = $total_hourly_pay["double"] + $super["double"] + $work_cover["double"] + $public_liability["double"] + $payroll_tax["double"] + $insurance["double"] + $admin["double"];
+                $dt_12 = $total_hourly_pay["DT1/2"] + $super["DT1/2"] + $work_cover["DT1/2"] + $public_liability["DT1/2"] + $payroll_tax["DT1/2"] + $insurance["DT1/2"] + $admin["DT1/2"];
+                $triple = $total_hourly_pay["triple"] + $super["triple"] + $work_cover["triple"] + $public_liability["triple"] + $payroll_tax["triple"] + $insurance["triple"] + $admin["triple"];
+                break;                  
+        }
+        
+        return array(
+            "trans_no"      => $post["trans_no"],
+            "description"   => $description,
+            "normal"        => $normal,
+            "early"         => $early,
+            "afternoon"     => $afternoon,
+            "night"         => $night,
+            "50%Shift"      => $fifty_shift,
+            "T1/4"          => $t_14,
+            "T1/2"          => $t_12,
+            "double"        => $double,
+            "DT1/2"         => $dt_12,
+            "triple"        => $triple,
+            "calc_no"       => $calc
+        );
+    }
+
+    private function computeHourlyChargeRates($total_with_pay, $post, $index)
+    {
+        $description = $this->ml_description[13];
+        if ($post["swi_peror_cur"] == "$") {
+            $normal = $total_with_pay["normal"] + $post["B_24"];
+            $early = $total_with_pay["early"] + $post["B_24"];
+            $afternoon = $total_with_pay["afternoon"] + $post["B_24"];
+            $night = $total_with_pay["night"] + $post["B_24"];
+            $fifty_shift = $total_with_pay["50%Shift"] + $post["B_24"];
+            $t_14 = $total_with_pay["T1/4"] + $post["B_24"];
+            $t_12 = $total_with_pay["T1/2"] + $post["B_24"];
+            $double = $total_with_pay["double"] + $post["B_24"];
+            $dt_12 = $total_with_pay["DT1/2"] + $post["B_24"];
+            $triple = $total_with_pay["triple"] + $post["B_24"];
+        } else {
+            $normal = $total_with_pay["normal"] / (0.01 - ($post["B_24"]/100));
+            $early = $total_with_pay["early"] / (0.01 - ($post["B_24"]/100));
+            $afternoon = $total_with_pay["afternoon"] / (0.01 - ($post["B_24"]/100));
+            $night = $total_with_pay["night"] / (0.01 - ($post["B_24"]/100));
+            $fifty_shift = $total_with_pay["50%Shift"] / (0.01 - ($post["B_24"]/100));
+            $t_14 = $total_with_pay["T1/4"] / (0.01 - ($post["B_24"]/100));
+            $t_12 = $total_with_pay["T1/2"] / (0.01 - ($post["B_24"]/100));
+            $double = $total_with_pay["double"] / (0.01 - ($post["B_24"]/100));
+            $dt_12 = $total_with_pay["DT1/2"] / (0.01 - ($post["B_24"]/100));
+            $triple = $total_with_pay["triple"] / (0.01 - ($post["B_24"]/100));
+        }
+        
+        return array(
+            "trans_no"      => $post["trans_no"],
+            "description"   => $description,
+            "normal"        => $normal,
+            "early"         => $early,
+            "afternoon"     => $afternoon,
+            "night"         => $night,
+            "50%Shift"      => $fifty_shift,
+            "T1/4"          => $t_14,
+            "T1/2"          => $t_12,
+            "double"        => $double,
+            "DT1/2"         => $dt_12,
+            "triple"        => $triple,
+            "calc_no"       => $calc
+        );
+    }
+
+    private function computeDollarMargin($hourly_charge_rate, $total_with_pay, $post, $index)
+    {
+        $description = $this->ml_description[11];
+        if ($post == "$") {
+            $normal = $post["B_24"];
+            $early = $post["B_24"];
+            $afternoon = $post["B_24"];
+            $night = $post["B_24"];
+            $fifty_shift = $post["B_24"];
+            $t_14 = $post["B_24"];
+            $t_12 = $post["B_24"];
+            $double = $post["B_24"];
+            $dt_12 = $post["B_24"];
+            $triple = $post["B_24"];
+        } else {
+            $normal = $hourly_charge_rate["normal"] - $total_with_pay["normal"];
+            $early = $hourly_charge_rate["early"] - $total_with_pay["early"];
+            $afternoon = $hourly_charge_rate["afternoon"] - $total_with_pay["afternoon"];
+            $night = $hourly_charge_rate["night"] - $total_with_pay["night"];
+            $fifty_shift = $hourly_charge_rate["50%Shift"] - $total_with_pay["50%Shift"];
+            $t_14 = $hourly_charge_rate["T1/4"] - $total_with_pay["T1/4"];
+            $t_12 = $hourly_charge_rate["T1/2"] - $total_with_pay["T1/2"];
+            $double = $hourly_charge_rate["double"] - $total_with_pay["double"];
+            $dt_12 = $hourly_charge_rate["DT1/2"] - $total_with_pay["DT1/2"];
+            $triple = $hourly_charge_rate["triple"] - $total_with_pay["triple"];
+        }
+        
+        return array(
+            "trans_no"      => $post["trans_no"],
+            "description"   => $description,
+            "normal"        => $normal,
+            "early"         => $early,
+            "afternoon"     => $afternoon,
+            "night"         => $night,
+            "50%Shift"      => $fifty_shift,
+            "T1/4"          => $t_14,
+            "T1/2"          => $t_12,
+            "double"        => $double,
+            "DT1/2"         => $dt_12,
+            "triple"        => $triple,
+            "calc_no"       => $calc
+        );
+    }
+
+    private function computeDollarMargin($hourly_charge_rate, $post, $index)
+    {
+        $description = $this->ml_description[11];
+        if ($post == "$") {
+            $normal = ($post["B_24"]/$hourly_charge_rate["normal"])/100;
+            $early = ($post["B_24"]/$hourly_charge_rate["early"])/100;
+            $afternoon = ($post["B_24"]/$hourly_charge_rate["afternoon"])/100;
+            $night = ($post["B_24"]/$hourly_charge_rate["night"])/100;
+            $fifty_shift = ($post["B_24"]/$hourly_charge_rate["50%Shift"])/100;
+            $t_14 = ($post["B_24"]/$hourly_charge_rate["T1/4"])/100;
+            $t_12 = ($post["B_24"]/$hourly_charge_rate["T1/2"])/100;
+            $double = ($post["B_24"]/$hourly_charge_rate["double"])/100;
+            $dt_12 = ($post["B_24"]/$hourly_charge_rate["DT1/2"])/100;
+            $triple = ($post["B_24"]/$hourly_charge_rate["triple"])/100;
+        } else {
+            $normal = $post["B_24"];
+            $early = $post["B_24"];
+            $afternoon = $post["B_24"];
+            $night = $post["B_24"];
+            $fifty_shift = $post["B_24"];
+            $t_14 = $post["B_24"];
+            $t_12 = $post["B_24"];
+            $double = $post["B_24"];
+            $dt_12 = $post["B_24"];
+            $triple = $post["B_24"];
+        }
+        
+        return array(
+            "trans_no"      => $post["trans_no"],
+            "description"   => $description,
+            "normal"        => $normal,
+            "early"         => $early,
+            "afternoon"     => $afternoon,
+            "night"         => $night,
+            "50%Shift"      => $fifty_shift,
+            "T1/4"          => $t_14,
+            "T1/2"          => $t_12,
+            "double"        => $double,
+            "DT1/2"         => $dt_12,
+            "triple"        => $triple,
+            "calc_no"       => $calc
+        );
     }
 }

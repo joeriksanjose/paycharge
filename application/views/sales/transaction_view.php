@@ -398,12 +398,13 @@
 					<label class="control-label">Margin</label>
 					<div class="controls">
 						<label class="radio">
-							%
-							<input type="radio" name="B_24"/>
+							%<input type="radio" id="swi_peror_cur" name="swi_peror_cur" value="1"/>
 						</label>
 						<label class="radio">
-							$
-							<input type="radio" name="B_24"/>
+							$<input type="radio" id="swi_peror_cur" name="swi_peror_cur" value="2"/>
+						</label>
+						<label class="radio">
+						    <input type="text" name="B_24">
 						</label>
 					</div>
 				</div>

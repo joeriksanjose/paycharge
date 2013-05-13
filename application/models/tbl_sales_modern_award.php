@@ -119,4 +119,9 @@ class Tbl_sales_modern_award extends CI_Model
 	{
 		return $this->db->insert("tbl_payrate", $data);
 	}
+    
+    public function saveTblMl($index, $data)
+    {
+        return $this->db->insert("tbl_ml".$index, $data);
+    }
 }
