@@ -84,8 +84,8 @@ class Tbl_modern_award extends CI_Model
     public function getRateIncreaseHistory($modern_award_name)
     {
         $now = time();
-        $this->db->where(array("modern_award_name" => $modern_award_name));
-        $rates = $this->db->get($this->table_rate_increase);
+        $this->db->where(array("transaction_name" => $modern_award_name));
+        $rates = $this->db->get($this->table_rate_increase)->result_array();
         
         if (!$rates) {
             return false;
@@ -104,6 +104,24 @@ class Tbl_modern_award extends CI_Model
     public function saveRate($data)
     {
         return $this->db->insert($this->table_rate_increase, $data);
+    }
+    
+    public function updateRate($id, $data)
+    {
+        $this->db->where(array("id" => $id));
+        return $this->db->update($this->table_rate_increase, $data);
+    }
+    
+    public function deleteRate($id)
+    {
+        $this->db->where(array("id" => $id));
+        return $this->db->delete($this->table_rate_increase);
+    }
+    
+    public function getRateById($id)
+    {
+        $this->db->where(array("id" => $id));
+        return $this->db->get($this->table_rate_increase)->row_array();
     }
     
     /* END RATE INCREASE */

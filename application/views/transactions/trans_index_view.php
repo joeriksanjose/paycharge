@@ -852,7 +852,7 @@
 				<td><?php echo date("d/m/Y", strtotime($modern_award["created_at"])) ?></td>
 				<td>
 				    <a target="_blank" href="<?php echo base_url("transactions/upcoming_rate_increase/".$modern_award["modern_award_no"]) ?>" class="btn">Upcoming Rate Increase</a>
-				    <a href="" class="btn">Rate Increase History</a>
+				    <a target="_blank" href="<?php echo base_url("transactions/rate_increase_history/".$modern_award["modern_award_no"]) ?>" class="btn">Rate Increase History</a>
 				    <button type="button" class="btn edit-award-btn" edit-id="<?php echo $modern_award["modern_award_no"] ?>"><i class="icon-edit"></i></button>
 				    <button type="button" class="btn btn-danger delete-award-btn" del-id="<?php echo $modern_award["modern_award_no"] ?>"><i class="icon-trash icon-white"></i></button>
 				</td>

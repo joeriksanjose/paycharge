@@ -77,6 +77,7 @@
                             <i class="icon-folder-open"></i> Libraries <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
+                            <?php if ($is_admin) : ?>
                             <li>
                                 <a href="<?php echo base_url("libraries/state") ?>">State</a>
                             </li>
@@ -104,9 +105,17 @@
                             <li>
                                 <a href="<?php echo base_url("libraries/clients") ?>">Clients/Company</a>
                             </li>
+                            <?php else : ?>
                             <li>
                                 <a href="<?php echo base_url("libraries/position") ?>">Position</a>
                             </li>
+                            <li>
+                                <a href="<?php echo base_url("libraries/contacts") ?>">Contacts</a>
+                            </li>
+                            <li>
+                                <a href="<?php echo base_url("libraries/clients") ?>">Clients/Company</a>
+                            </li>
+                            <?php endif ; ?>
                         </ul>
                     </li>
                     <?php if ($is_admin) : ?>

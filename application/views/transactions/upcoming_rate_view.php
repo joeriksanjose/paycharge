@@ -1,6 +1,24 @@
 <?php echo $header ?>
 <script type="text/javascript" src="<?php echo base_url("public/js/transaction/upcoming_rate.js") ?>"></script>
+
+<!-- DELETE MODAL -->
+<div id="deleteModal" class="modal hide fade" tabindex="-1" role="dialog">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Delete Confirmation</h3>
+    </div>
+    <div class="modal-body">
+        <p>Are you sure you want to delete this rate?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-danger" id="delete-btn-modal">Delete</button>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    </div>
+</div>
+<!-- END DELETE MODAL -->
+
 <div class="topmargin"></div>
+
 <div class="row">
     <input type="hidden" id="base_url" value="<?php echo base_url() ?>">
     <div class="span12">
@@ -11,16 +29,16 @@
         <hr>
     </div>
     <div class="span12" id="new-rate" style="display: none;">
-        <div class="alert alert-error" id="error_div" style="display: none;">
-            
-        </div>
-        <form class="form-horizontal" id="frm-new-rate" action="<?php echo base_url("libraries/admin/save_admin"); ?>" method="post">
+        <div class="alert alert-error" id="error_div" style="display: none;"></div>
+        <form class="form-horizontal" id="frm-new-rate" action="<?php echo base_url("transactions/saveRate"); ?>" method="post">
+            <input type="hidden" name="award_no" value="<?php echo $award_info["modern_award_no"] ?>">
+            <input type="hidden" name="transaction_name" value="<?php echo $award_info["modern_award_name"] ?>">
+            <input type="hidden" id="hid-edit-id" name="hid-edit-id">
             <div class="span5">
                 <div class="control-group">
                     <label class="control-label" for="trans_no">Transaction No.</label>
                     <div class="controls controls-row">
                         <input type="text" id="trans_no" name="trans_no">
-                        <input type="button" id="btn_gen" class="btn btn-inverse btn-medium" value="Generate No"/>
                     </div>
                 </div>
                 <div class="control-group">
@@ -116,13 +134,13 @@
                     </div>
                 </div>
                 <div class="control-group">
-                    <label class="control-label" for="rate_3">Pay Rate 8</label>
+                    <label class="control-label" for="rate_8">Pay Rate 8</label>
                     <div class="controls controls-row">
                         <div class="input-prepend">
                             <span class="add-on">
                                 $
                             </span>
-                            <input type="text" id="rate_3" name="rate_8">
+                            <input type="text" id="rate_8" name="rate_8">
                         </div>
                     </div>
                 </div>
@@ -159,12 +177,19 @@
     </div>
     <div class="span12" style="margin-top: 10px;">
         <button type="button" id="add-new-rate" class="btn"><i class="icon-plus"></i> Add new rate</button>
-        <div class="form-search pull-right">
-            <input type="text" class="input-xlarge search-query" id="search-award">
-            <button type="button" class="btn" id="btn-search-award"><i class="icon-search"></i></button>
-        </div>
     </div>
     <div class="span12" style="max-height: 400px; overflow: auto;">
+        <?php if ($status === 1) : ?>
+            <div class="alert alert-success" style="margin-top: 10px;">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <?php echo $status_msg ?>
+            </div>
+        <?php elseif ($status === 0) : ?>
+            <div class="alert alert-error" style="margin-top: 10px;">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <?php echo $status_msg ?>
+            </div>
+        <?php endif ; ?>
         <table class="table table-bordered table-striped" id="rate-table" style="font-size: 11px; margin-top: 15px;">
             <thead>
                 <tr>
@@ -186,7 +211,21 @@
                 <?php if ($upcoming_rate_increase) : ?>
                     <?php foreach($upcoming_rate_increase as $increase) : ?>
                     <tr>
-                        <td><?php echo $increase["created_at"] ?></td>
+                        <td><?php echo date("d/m/Y", strtotime($increase["created_at"])) ?></td>
+                        <td><?php echo $increase["rate_1"] ?></td>
+                        <td><?php echo $increase["rate_2"] ?></td>
+                        <td><?php echo $increase["rate_3"] ?></td>
+                        <td><?php echo $increase["rate_4"] ?></td>
+                        <td><?php echo $increase["rate_5"] ?></td>
+                        <td><?php echo $increase["rate_6"] ?></td>
+                        <td><?php echo $increase["rate_7"] ?></td>
+                        <td><?php echo $increase["rate_8"] ?></td>
+                        <td><?php echo $increase["rate_9"] ?></td>
+                        <td><?php echo $increase["rate_10"] ?></td>
+                        <td>
+                            <button type="button" class="btn btn-mini btn-edit" edit-id="<?php echo $increase["id"] ?>"><i class="icon-edit"></i></button>
+                            <button type="button" class="btn btn-danger btn-mini btn-delete-rate" del-id="<?php echo $increase["id"] ?>"><i class="icon-trash icon-white"></i></button>
+                        </td>
                     </tr>
                     <?php endforeach ; ?>
                 <?php else : ?>
@@ -198,4 +237,7 @@
         </table>
     </div>
 </div>
+<script>
+   $("#rate-table").tablesorter();
+</script>
 <?php echo $footer ?>
