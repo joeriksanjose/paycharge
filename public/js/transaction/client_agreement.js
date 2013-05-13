@@ -1,5 +1,25 @@
 $(document).ready(function(){
 	
+	function inputNumbers(event)
+    {
+        if (
+            event.keyCode == 190 || 
+            event.keyCode == 8 || 
+            event.keyCode == 9 || 
+            event.keyCode == 27 || 
+            event.keyCode == 13 || 
+            (event.keyCode >=48 && event.keyCode <= 57)
+            ) {
+            return;
+        } else {
+            event.preventDefault(); 
+        }
+    }
+    
+    $(".txt, #payrate_1, #payrate_2, #payrate_3, #payrate_4, #payrate_5, #payrate_6, #payrate_7, #payrate_8, #payrate_9, #payrate_10").keydown(function(evt){
+        inputNumbers(evt);
+    });
+    
 	var base_url = $("#base-url").val();
 	
 	$("#btn_gen").click(function(){
@@ -232,41 +252,50 @@ $(document).ready(function(){
 	});
 	$("#add-new-modern").click(function(){
         $("#show-tab-1").parent().addClass("active");
-        $("#show-tab-2, #show-tab-3, #show-tab-4").parent().removeClass("active");
+        $("#show-tab-2, #show-tab-3, #show-tab-4, #show-tab-5").parent().removeClass("active");
         $("#nav-tabs").show("fast");
         $("#tab1").show("fast");
         $(".div-award").hide("fast");
+        $("#tab2, #tab3, #tab4, #tab5").hide("fast");
     });
     
     $("#show-tab-1").click(function(){
     	$(this).parent().addClass("active");
-    	$("#show-tab-2, #show-tab-3, #show-tab-4").parent().removeClass("active");
+    	$("#show-tab-2, #show-tab-3, #show-tab-4, #show-tab-5").parent().removeClass("active");
         $("#tab1").show("fast");
-        $("#tab2, #tab3, #tab4").hide("fast");
+        $("#tab2, #tab3, #tab4, #tab5").hide("fast");
         return false;
     });
     
     $("#show-tab-2").click(function(){
     	$(this).parent().addClass("active");
-    	$("#show-tab-1, #show-tab-3, #show-tab-4").parent().removeClass("active");
+    	$("#show-tab-1, #show-tab-3, #show-tab-4, #show-tab-5").parent().removeClass("active");
         $("#tab2").show("fast");
-        $("#tab1, #tab3, #tab4").hide("fast");
+        $("#tab1, #tab3, #tab4, #tab5").hide("fast");
         return false;
     });
     
     $("#show-tab-3").click(function(){
     	$(this).parent().addClass("active");
-    	$("#show-tab-1, #show-tab-2, #show-tab-4").parent().removeClass("active");
+    	$("#show-tab-1, #show-tab-2, #show-tab-4, #show-tab-5").parent().removeClass("active");
         $("#tab3").show("fast");
-        $("#tab1, #tab2, #tab4").hide("fast");
+        $("#tab1, #tab2, #tab4, #tab5").hide("fast");
         return false;
     });
     
     $("#show-tab-4").click(function(){
     	$(this).parent().addClass("active");
-    	$("#show-tab-1, #show-tab-3, #show-tab-2").parent().removeClass("active");
+    	$("#show-tab-1, #show-tab-3, #show-tab-2, #show-tab-5").parent().removeClass("active");
         $("#tab4").show("fast");
-        $("#tab1, #tab3, #tab2").hide("fast");
+        $("#tab1, #tab3, #tab2, #tab5").hide("fast");
+        return false;
+    });
+    
+    $("#show-tab-5").click(function(){
+    	$(this).parent().addClass("active");
+    	$("#show-tab-1, #show-tab-3, #show-tab-2, #show-tab-4").parent().removeClass("active");
+        $("#tab5").show("fast");
+        $("#tab1, #tab3, #tab2, #tab4").hide("fast");
         return false;
     });
     
@@ -369,9 +398,22 @@ $(document).ready(function(){
 	    	
 	    	var casual_rate = (((normal / 100) * parseFloat(base_rate_10)) + parseFloat(base_rate_10)).toFixed(2);
 			$("#txt-casual-rate-10").val(casual_rate);
-    	}
-    	
-			
-			
+    	}	
     }
+    
+    $("#B_51, #allowance_rate2").change(function(){
+    	compute_allow();
+    });
+    
+    function compute_allow(){
+    	
+    	var rate = parseFloat($("#B_51").val()).toFixed(2);
+    	var first_aid = parseFloat($("#allowance_rate2").val()).toFixed(2);
+    	
+    	var allow = (first_aid / 100) * rate;
+    	if($("#B_51").val() != "" && $("#allowance_rate2").val() != ""){
+    		$("#B_53").val(allow.toFixed(2));
+    	}
+    }
+    
 });

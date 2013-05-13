@@ -11,6 +11,7 @@ class Client_agreement extends CI_Controller
 		$this->data["title"] = "System - Transactions";
 		$this->data["username"] = $this->session->userdata("username");
 		$this->data["is_admin"] = $this->user_session["is_admin"];
+		$this->data["date_slash"] = mdate("%d/%m/%Y");
 	}
 	
 	public function get_modern_info(){
@@ -74,6 +75,19 @@ class Client_agreement extends CI_Controller
     public function save()
     {
         $post = $this->input->post(null, true);
+		
+		$charge_rate_data = array();
+		$print_defaults_data = array();
+		$ctr = 1;
+		foreach ($post as $key => $v) {
+			if ($ctr > 127) {
+				$print_defaults_data[$key] = $v;
+			} else {
+				$charge_rate_data[$key] = $v;
+			}
+			
+			$ctr++;
+		}
         
         $this->db->trans_begin();
         for ($i = 1; $i <= 10; $i++) {
@@ -97,17 +111,19 @@ class Client_agreement extends CI_Controller
 			);
 
 			$this->ca->savePayRate($data);
-			unset($post["position_no".$i]);
-			unset($post["payrate_".$i]);
-			unset($post["base_rate".$i]);
-			unset($post["casual_rate".$i]);
+			unset($charge_rate_data["position_no".$i]);
+			unset($charge_rate_data["payrate_".$i]);
+			unset($charge_rate_data["base_rate".$i]);
+			unset($charge_rate_data["casual_rate".$i]);
         }
         
 		
         unset($post["allowance_caption12"]);
-        
-        $this->ca->save($post);
-		
+        $charge_rate_data["trans_type"] = '2';
+		$print_defaults_data["trans_type"] = 'Client';
+		$print_defaults_data["trans_no"] = $charge_rate_data["trans_no"];
+        $this->ca->save($charge_rate_data);
+		$this->ca->savePrint($print_defaults_data);
 		if ($this->db->trans_status() === false) {
 			log_message("Transaction failed (tbl_charge_rate, tbl_payrate)");
     		$this->db->trans_rollback();

@@ -29,8 +29,16 @@ class Tbl_client_agreement extends CI_Model
 	
 	public function getModernAwards()
 	{
-		$this->db->where(array("trans_type" => 2));		
-		return $this->db->get("tbl_charge_rate")->result_array();
+		$sql = 'SELECT ch.*, co.company_name '
+              .'FROM tbl_charge_rate as ch '
+              .'INNER JOIN tbl_company as co '
+              .'ON ch.company_no = co.client_no '
+              .'WHERE ch.trans_type = 2';
+              
+        $result = $this->db->query($sql)->result_array();
+        
+               
+        return $result;
 	}
 	
 	public function get_modern_info($where)
@@ -119,5 +127,10 @@ class Tbl_client_agreement extends CI_Model
 	public function savePayRate($data)
 	{
 		return $this->db->insert("tbl_payrate", $data);
+	}
+	
+	public function savePrint($data)
+	{
+		return $this->db->insert("tbl_print_dialog_default_values", $data);
 	}
 }
