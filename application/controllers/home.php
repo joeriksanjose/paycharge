@@ -75,7 +75,7 @@ class Home extends CI_Controller {
                 "post_values"  => $post
             );
             $this->session->set_userdata($add_session_error);
-            redirect(base_url("pcs/utilities/user-access"));
+            redirect(base_url("utilities/user_access"));
         }
         
         if ($post["password"] != $post["c_password"]) {
@@ -86,7 +86,7 @@ class Home extends CI_Controller {
                 "post_values"  => $post
             );
             $this->session->set_userdata($add_session_error);
-            redirect(base_url("pcs/utilities/user-access"));
+            redirect(base_url("utilities/user_access"));
         }
         
         if ($this->users->isUsernameExist($post["username"])) {
@@ -97,7 +97,7 @@ class Home extends CI_Controller {
                 "post_values"  => $post
             );
             $this->session->set_userdata($add_session_error);
-            redirect(base_url("pcs/utilities/user-access"));
+            redirect(base_url("utilities/user_access"));
         }
         
         $is_added = $this->users->addUser($post);
@@ -118,7 +118,7 @@ class Home extends CI_Controller {
             $this->session->set_userdata($add_session_error);
         }
         
-        redirect(base_url("pcs/utilities/user-access"));
+        redirect(base_url("utilities/user_access"));
     }
 
     public function ajaxDeleteUser()

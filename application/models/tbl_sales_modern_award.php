@@ -56,18 +56,6 @@ class Tbl_sales_modern_award extends CI_Model
 		return $this->db->get("tbl_state")->row_array();
 	}
 	
-	public function getPositionNameById($id)
-	{
-		$this->db->where(array("id" => $id));
-		$pos = $this->db->get("tbl_position")->row_array();
-		
-		if (!$pos) {
-			return "";
-		}
-		
-		return $pos["position"];
-	}
-	
 	public function getPublicLiability()
 	{
 		return $this->db->get("tbl_public")->result_array();
@@ -98,13 +86,13 @@ class Tbl_sales_modern_award extends CI_Model
 		return $this->db->get("tbl_admin")->result_array();
 	}
 	
-    public function getTransNo()
+    public function getNextAwardNo()
     {
-        $this->db->order_by("trans_no desc");
-        $res = $this->db->get("tbl_charge_rate")->row_array();
+        $this->db->order_by("modern_award_no desc");
+        $res = $this->db->get($this->table_name)->row_array();
         
         if ($res) {
-            return $res["trans_no"] + 1;
+            return $res["modern_award_no"] + 1;
         }
         
         return 1;
@@ -112,11 +100,6 @@ class Tbl_sales_modern_award extends CI_Model
     
     public function save($data)
     {
-        return $this->db->insert("tbl_charge_rate", $data);
+        return $this->db->insert($this->table_name, $data);
     }
-	
-	public function savePayRate($data)
-	{
-		return $this->db->insert("tbl_payrate", $data);
-	}
 }

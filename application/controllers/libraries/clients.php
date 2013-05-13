@@ -15,6 +15,7 @@ class Clients extends CI_Controller
         
         $this->data["title"] = "Libraries - Clients";
         $this->data["username"] = $this->user_session["username"];
+        $this->data["is_admin"] = $this->user_session["is_admin"];
     }
     
     public function saveContactInfo()
@@ -152,6 +153,7 @@ class Clients extends CI_Controller
         
         echo json_encode($this->data["data"]);
     }
+    
     public function delete_clients()
     {
         $params = array();

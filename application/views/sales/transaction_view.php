@@ -9,7 +9,7 @@
 	</div>
 	
 	<div class="span12">
-		<form class="form-horizontal" action="<?php echo base_url("sales_transaction/save")?>" method="post">
+		<form class="form-horizontal">
 			<div class="navbar navbar-fixed-bottom" id="nav-tabs" style="display: none;">
 	            <div class="navbar-inner">
 	                <div class="container">
@@ -30,20 +30,19 @@
 	    	
 	    	<!-- TAB 1 -->
 			<div class="span12" id="tab1" style="display:none;">
-				<h4>Client Details</h4>
+				<h3>Client Details</h4>
 					<hr>
 				<div style="height: 20px;"></div>
 				  <div class="control-group">
 				    <label class="control-label" for="modern_award_no">Transaction No.</label>
 				    <div class="controls controls-row">
-				      <input type="text" class="input-medium disabled" readonly="true" id="trans_no" name="trans_no">
-				      <input type="button" id="btn_gen" class="btn btn-inverse btn-medium" value="Generate No"/>
+				      <input type="text" class="input-medium disabled" readonly="true" id="modern_award_no" name="modern_award_no">
 				    </div>
 				  </div>
 				  <div class="control-group">
 				    <label class="control-label" for="modern_award_name">Modern Award Name</label>
 				    <div class="controls">
-				      <select class="input-medium" id="cmb-modern" name="modern_award_no">
+				      <select class="input-medium" id="cmb-modern">
 				      	<option></option>
 				      	<?php foreach ($modern_awards as $value) : ?>
 							<option value="<?php echo $value["modern_award_no"]?>"><?php echo $value["modern_award_name"]?></option>
@@ -54,7 +53,7 @@
 				  <div class="control-group">
 				    <label class="control-label" for="modern_award_name">Company</label>
 				    <div class="controls">
-				      <select class="input-medium disabled" id="cmb-company" name="company_no">
+				      <select class="input-medium disabled" id="cmb-company">
 				      	<option></option>
 				      	<?php foreach ($company as $value) : ?>
 							<option value="<?php echo $value["client_no"]?>"><?php echo $value["company_name"]?></option>
@@ -66,54 +65,53 @@
 				  <div class="control-group">
 				    <label class="control-label" for="modern_award_no">Department</label>
 				    <div class="controls controls-row">
-				      <input type="text" class="input-medium" id="department">
+				      <input type="text" class="input-medium" id="department" name="modern_award_no">
 				    </div>
 				  </div>
 				  <div class="control-group">
 				    <label class="control-label" for="modern_award_no">Address Line 1</label>
 				    <div class="controls controls-row">
-				      <input type="text" class="input-medium" id="add1">
+				      <input type="text" class="input-medium" id="add1" name="modern_award_no">
 				    </div>
 				  </div>
 				  <div class="control-group">
 				    <label class="control-label" for="modern_award_no">Address Line 2</label>
 				    <div class="controls controls-row">
-				      <input type="text" class="input-medium" id="add2">
+				      <input type="text" class="input-medium" id="add2" name="modern_award_no">
 				    </div>
 				  </div>
 				  <div class="control-group">
 				    <label class="control-label" for="modern_award_no">Contact First Name</label>
 				    <div class="controls controls-row">
-				      <input type="text" class="input-medium" id="c_first_name">
+				      <input type="text" class="input-medium" id="c_first_name" name="modern_award_no">
 				    </div>
 				  </div>
 				  <div class="control-group">
 				    <label class="control-label" for="modern_award_no">Contact Full Name</label>
 				    <div class="controls controls-row">
-				      <input type="text" class="input-medium" id="c_full_name">
+				      <input type="text" class="input-medium" id="c_full_name" name="modern_award_no">
 				    </div>
 				  </div>
 				  <div class="control-group">
 				    <label class="control-label" for="modern_award_no">Contact Title</label>
 				    <div class="controls controls-row">
-				      <input type="text" class="input-medium" id="c_title">
+				      <input type="text" class="input-medium" id="c_title" name="modern_award_no">
 				    </div>
 				  </div>
 				  <div class="control-group">
 				    <label class="control-label" for="modern_award_no">Date of Quotation</label>
 				    <div class="controls controls-row">
-				      <input type="text" class="input-medium" id="date_of_quotation" name="date_of_quotation">
+				      <input type="text" class="input-medium" id="modern_award_no" name="modern_award_no">
 				    </div>
 				  </div>
 				  
-				  <h4>On Cost</h4>
+				  <h3>On Cost</h4>
 					<hr>
 				<div style="height: 20px;"></div>
-				<div class="span6">
 				  <div class="control-group">
 				    <label class="control-label" for="modern_award_no">Super %</label>
 				    <div class="controls controls-row">
-				      <select class="input-medium" id="cmb-super" name="B_14">
+				      <select class="input-medium" id="cmb-super">
 				      	<option></option>
 				      	<?php foreach ($super as $value) : ?>
 							<option value="<?php echo $value["super_no"]?>"><?php echo $value["super"]?></option>
@@ -125,7 +123,7 @@
 				  <div class="control-group">
 				    <label class="control-label" for="modern_award_name">Workcover %</label>
 				    <div class="controls">
-				      <select class="input-medium" id="cmb-workcover" name="B_15">
+				      <select class="input-medium" id="cmb-workcover">
 				      	<option></option>
 				      	<?php foreach ($workcover as $value) : ?>
 							<option value="<?php echo $value["work_cover_no"]?>"><?php echo $value["work_cover"]?></option>
@@ -136,34 +134,31 @@
 				  <div class="control-group">
 				    <label class="control-label" for="modern_award_no">Industry Rate</label>
 				    <div class="controls controls-row">
-				      <input type="text" class="input-medium" id="modern_award_no" name="B_16">
+				      <input type="text" class="input-medium" id="modern_award_no" name="modern_award_no">
 				    </div>
 				  </div>
 				  <div class="control-group">
 				    <label class="control-label" for="modern_award_no">WIC Code and Description</label>
 				    <div class="controls controls-row">
-				      <input type="text" class="input-medium" id="wic_code" name="B_17">
+				      <input type="text" class="input-medium" id="wic_code" name="wic_code">
 				    </div>
 				  </div>
 				  <div class="control-group">
 				    <label class="control-label" for="modern_award_no">Labour Power WC</label>
 				    <div class="controls controls-row">
-				      <input type="text" class="input-medium" id="modern_award_no" name="B_18">
+				      <input type="text" class="input-medium" id="modern_award_no" name="modern_award_no">
 				    </div>
 				  </div>
-				 </div>
-				 
-				 <div class="span5">
 				  <div class="control-group">
 				    <label class="control-label" for="modern_award_no">Payroll Tax %</label>
 				    <div class="controls controls-row">
-				      <input type="text" class="input-medium" id="tax" name="B_19">
+				      <input type="text" class="input-medium" id="tax" name="tax">
 				    </div>
 				  </div>
 				  <div class="control-group">
 				    <label class="control-label" for="modern_award_name">Public Liability %</label>
 				    <div class="controls">
-				      <select class="input-medium" name="B_20">
+				      <select class="input-medium">
 				      	<option></option>
 				      	<?php foreach ($public_liability as $value) : ?>
 							<option value="<?php echo $value["public_no"]?>"><?php echo $value["public_value"]?></option>
@@ -174,7 +169,7 @@
 				  <div class="control-group">
 				    <label class="control-label" for="modern_award_name">Insurance $</label>
 				    <div class="controls">
-				      <select class="input-medium" name="B_21">
+				      <select class="input-medium">
 				      	<option></option>
 				      	<?php foreach ($insurance as $value) : ?>
 							<option value="<?php echo $value["insurance_no"]?>"><?php echo $value["insurance"]?></option>
@@ -185,7 +180,7 @@
 				  <div class="control-group">
 				    <label class="control-label" for="modern_award_name">Long Service</label>
 				    <div class="controls">
-				      <select class="input-medium" name="long_service">
+				      <select class="input-medium">
 				      	<option></option>
 				      	<?php foreach ($long_service as $value) : ?>
 							<option value="<?php echo $value["long_services_no"]?>"><?php echo $value["long_services"]?></option>
@@ -196,7 +191,7 @@
 				  <div class="control-group">
 				    <label class="control-label" for="modern_award_name">Admin %</label>
 				    <div class="controls">
-				      <select class="input-medium" name="B_22">
+				      <select class="input-medium">
 				      	<option></option>
 				      	<?php foreach ($admin as $value) : ?>
 							<option value="<?php echo $value["admin_no"]?>"><?php echo $value["admin"]?></option>
@@ -204,26 +199,26 @@
 				      </select>
 				    </div>
 				  </div>
-				 </div>
-				   <h4>Payroll Information</h4>
+				  
+				   <h3>Payroll Information</h3>
 					<hr>
 				<div style="height: 20px;"></div>
 				  <div class="control-group">
 				    <label class="control-label" for="modern_award_no">Standard Labour Hire/Transition/Limited Tenure</label>
 				    <div class="controls controls-row">
-				      <input type="text" class="input-medium" id="modern_award_no" name="D_4">
+				      <input type="text" class="input-medium" id="modern_award_no" name="modern_award_no">
 				    </div>
 				  </div>
 				  <div class="control-group">
 				    <label class="control-label" for="modern_award_name">Which level do you want set up in FT</label>
 				    <div class="controls">
-				      <input type="text" class="input-medium" id="modern_award_no" name="D_5">
+				      <input type="text" class="input-medium" id="modern_award_no" name="modern_award_no">
 				    </div>
 				  </div>
 				  <div class="control-group">
 				    <label class="control-label" for="modern_award_name">What Position titles Level 1</label>
 				    <div class="controls">
-				      <select class="input-medium" name="position_no1">
+				      <select class="input-medium">
 				      	<option></option>
 				      	<?php foreach ($position as $value) : ?>
 							<option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
@@ -234,7 +229,7 @@
 				  <div class="control-group">
 				    <label class="control-label" for="modern_award_name">What Position titles Level 2</label>
 				    <div class="controls">
-				      <select class="input-medium" name="position_no2">
+				      <select class="input-medium">
 				      	<option></option>
 				      	<?php foreach ($position as $value) : ?>
 							<option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
@@ -245,7 +240,7 @@
 				  <div class="control-group">
 				    <label class="control-label" for="modern_award_name">What Position titles Level 3</label>
 				    <div class="controls">
-				      <select class="input-medium" name="position_no3">
+				      <select class="input-medium">
 				      	<option></option>
 				      	<?php foreach ($position as $value) : ?>
 							<option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
@@ -256,7 +251,7 @@
 				  <div class="control-group">
 				    <label class="control-label" for="modern_award_name">What Position titles Level 4</label>
 				    <div class="controls">
-				      <select class="input-medium" name="position_no4">
+				      <select class="input-medium">
 				      	<option></option>
 				      	<?php foreach ($position as $value) : ?>
 							<option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
@@ -267,7 +262,7 @@
 				  <div class="control-group">
 				    <label class="control-label" for="modern_award_name">What Position titles Level 5</label>
 				    <div class="controls">
-				      <select class="input-medium" name="position_no5">
+				      <select class="input-medium">
 				      	<option></option>
 				      	<?php foreach ($position as $value) : ?>
 							<option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
@@ -278,7 +273,7 @@
 				  <div class="control-group">
 				    <label class="control-label" for="modern_award_name">What Position titles Level 6</label>
 				    <div class="controls">
-				      <select class="input-medium" name="position_no6">
+				      <select class="input-medium">
 				      	<option></option>
 				      	<?php foreach ($position as $value) : ?>
 							<option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
@@ -289,7 +284,7 @@
 				  <div class="control-group">
 				    <label class="control-label" for="modern_award_name">What Position titles Level 7</label>
 				    <div class="controls">
-				      <select class="input-medium" name="position_no7">
+				      <select class="input-medium">
 				      	<option></option>
 				      	<?php foreach ($position as $value) : ?>
 							<option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
@@ -300,7 +295,7 @@
 				  <div class="control-group">
 				    <label class="control-label" for="modern_award_name">What Position titles Level 8</label>
 				    <div class="controls">
-				      <select class="input-medium" name="position_no8">
+				      <select class="input-medium">
 				      	<option></option>
 				      	<?php foreach ($position as $value) : ?>
 							<option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
@@ -311,7 +306,7 @@
 				  <div class="control-group">
 				    <label class="control-label" for="modern_award_name">What Position titles Level 9</label>
 				    <div class="controls">
-				      <select class="input-medium" name="position_no9">
+				      <select class="input-medium">
 				      	<option></option>
 				      	<?php foreach ($position as $value) : ?>
 							<option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
@@ -322,7 +317,7 @@
 				  <div class="control-group">
 				    <label class="control-label" for="modern_award_name">What Position titles Level 10</label>
 				    <div class="controls">
-				      <select class="input-medium" name="position_no10">
+				      <select class="input-medium">
 				      	<option></option>
 				      	<?php foreach ($position as $value) : ?>
 							<option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
@@ -334,49 +329,49 @@
 				  <div class="control-group">
 				    <label class="control-label" for="modern_award_no">Do you want shifts set up?</label>
 				    <div class="controls controls-row">
-				      <input type="text" class="input-medium" id="modern_award_no" name="D_15">
+				      <input type="text" class="input-medium" id="modern_award_no" name="modern_award_no">
 				    </div>
 				  </div>
 				  <div class="control-group">
 				    <label class="control-label" for="modern_award_no">How are you paying ordinary hours?</label>
 				    <div class="controls controls-row">
-				      <input type="text" class="input-medium" id="modern_award_no" name="D_16">
+				      <input type="text" class="input-medium" id="modern_award_no" name="modern_award_no">
 				    </div>
 				  </div>
 				  <div class="control-group">
 				    <label class="control-label" for="modern_award_no">Are lunch breaks deducted, what are they?</label>
 				    <div class="controls controls-row">
-				      <input type="text" class="input-medium" id="modern_award_no" name="D_17">
+				      <input type="text" class="input-medium" id="modern_award_no" name="modern_award_no">
 				    </div>
 				  </div>
 				  <div class="control-group">
 				    <label class="control-label" for="modern_award_no">Are there any exemptions to OT as above?</label>
 				    <div class="controls controls-row">
-				      <input type="text" class="input-medium" id="modern_award_no" name="D_18">
+				      <input type="text" class="input-medium" id="modern_award_no" name="modern_award_no">
 				    </div>
 				  </div>
 				  <div class="control-group">
 				    <label class="control-label" for="modern_award_no">Are there any exemptions to Saturday?</label>
 				    <div class="controls controls-row">
-				      <input type="text" class="input-medium" id="modern_award_no" name="D_19">
+				      <input type="text" class="input-medium" id="modern_award_no" name="modern_award_no">
 				    </div>
 				  </div>
 				  <div class="control-group">
 				    <label class="control-label" for="modern_award_no">Are there any exemptions to Sunday?</label>
 				    <div class="controls controls-row">
-				      <input type="text" class="input-medium" id="modern_award_no" name="D_20">
+				      <input type="text" class="input-medium" id="modern_award_no" name="modern_award_no">
 				    </div>
 				  </div>
 				  <div class="control-group">
 				    <label class="control-label" for="modern_award_no">Are there any exemptions to Public Holidays?</label>
 				    <div class="controls controls-row">
-				      <input type="text" class="input-medium" id="modern_award_no" name="D_21">
+				      <input type="text" class="input-medium" id="modern_award_no" name="modern_award_no">
 				    </div>
 				  </div>
 				  <div class="control-group">
 				    <label class="control-label" for="modern_award_no">Other Information</label>
 				    <div class="controls controls-row">
-				      <input type="text" class="input-medium" id="modern_award_no" name="D_22">
+				      <input type="text" class="input-medium" id="modern_award_no" name="modern_award_no">
 				    </div>
 				  </div>
 			</div>		<!-- END TAB 1 -->	
@@ -389,11 +384,11 @@
 					<div class="controls">
 						<label class="radio">
 							%
-							<input type="radio" name="B_24"/>
+							<input type="radio" name="margin"/>
 						</label>
 						<label class="radio">
 							$
-							<input type="radio" name="B_24"/>
+							<input type="radio" name="margin"/>
 						</label>
 					</div>
 				</div>
@@ -404,43 +399,43 @@
 				  <div class="control-group">
 				    <label class="control-label" for="B_26">Weekly Hours</label>
 				    <div class="controls controls-row">
-				      <input type="text" class="input-medium" readonly="true" id="B_26" name="B_26">
+				      <input type="text" class="input-medium" id="B_26" name="B_26">
 				    </div>
 				  </div>
 				  <div class="control-group">
 				    <label class="control-label" for="B_27">Normal Time Loading %</label>
 				    <div class="controls controls-row">
-				      <input type="text" class="input-medium" readonly="true" id="B_27" name="B_27">
+				      <input type="text" class="input-medium" id="B_27" name="B_27">
 				    </div>
 				  </div>
 				  <div class="control-group">
 				    <label class="control-label" for="B_28">Overtime Loading %</label>
 				    <div class="controls controls-row">
-				      <input type="text" class="input-medium" readonly="true" id="B_28" name="B_28">
+				      <input type="text" class="input-medium" id="B_28" name="B_28">
 				    </div>
 				  </div>
 				  <div class="control-group">
 				    <label class="control-label" for="B_29">Hol Loading $amount</label>
 				    <div class="controls controls-row">
-				      <input type="text" class="input-medium" readonly="true" id="B_29" name="B_29">
+				      <input type="text" class="input-medium" id="B_29" name="B_29">
 				    </div>
 				  </div>
 				  <div class="control-group">
 				    <label class="control-label" for="B_30">Hol Loading %</label>
 				    <div class="controls controls-row">
-				      <input type="text" class="input-medium" readonly="true" id="B_30" name="B_30">
+				      <input type="text" class="input-medium" id="B_30" name="B_30">
 				    </div>
 				  </div>
 				  <div class="control-group">
 				    <label class="control-label" for="B_31">Early Shift %</label>
 				    <div class="controls controls-row">
-				      <input type="text" class="input-medium" readonly="true" id="B_31" name="B_31">
+				      <input type="text" class="input-medium" id="B_31" name="B_31">
 				    </div>
 				  </div>
 				  <div class="control-group">
 				    <label class="control-label" for="B_32">Early Shift Rule</label>
 				    <div class="controls controls-row">
-				      <input type="text" class="input-medium" readonly="true" id="B_32" name="B_32">
+				      <input type="text" class="input-medium" id="B_32" name="B_32">
 				    </div>
 				  </div>
 			  </div>
@@ -448,37 +443,37 @@
 				  <div class="control-group">
 				    <label class="control-label" for="B_33">Aft Shift Loading %</label>
 				    <div class="controls controls-row">
-				      <input type="text" class="input-medium" readonly="true" id="B_33" name="B_33">
+				      <input type="text" class="input-medium" id="B_33" name="B_33">
 				    </div>
 				  </div>
 				  <div class="control-group">
 				    <label class="control-label" for="B_34">Aft Shift Rule</label>
 				    <div class="controls controls-row">
-				      <input type="text" class="input-medium" readonly="true" id="B_34" name="B_34">
+				      <input type="text" class="input-medium" id="B_34" name="B_34">
 				    </div>
 				  </div>
 				  <div class="control-group">
 				    <label class="control-label" for="B_35">Night Shift Loading %</label>
 				    <div class="controls controls-row">
-				      <input type="text" class="input-medium" readonly="true" id="B_35" name="B_35">
+				      <input type="text" class="input-medium" id="B_35" name="B_35">
 				    </div>
 				  </div>
 				  <div class="control-group">
 				    <label class="control-label" for="B_36">Night Shift Rule</label>
 				    <div class="controls controls-row">
-				      <input type="text" class="input-medium" readonly="true" id="B_36" name="B_36">
+				      <input type="text" class="input-medium" id="B_36" name="B_36">
 				    </div>
 				  </div>
 				  <div class="control-group">
 				    <label class="control-label" for="B_37">50% Shift Loading</label>
 				    <div class="controls controls-row">
-				      <input type="text" class="input-medium" readonly="true" id="B_37" name="B_37">
+				      <input type="text" class="input-medium" id="B_37" name="B_37">
 				    </div>
 				  </div>
 				  <div class="control-group">
 				    <label class="control-label" for="B_38">50% Shift Rule</label>
 				    <div class="controls controls-row">
-				      <input type="text" class="input-medium" readonly="true" id="B_38" name="B_38">
+				      <input type="text" class="input-medium" id="B_38" name="B_38">
 				    </div>
 				  </div>
 			  </div>
@@ -487,35 +482,35 @@
 				  <div class="span4 pull-left" style="margin-left: 200px;">
 				  	<h2><small>Migration Period of Service</small></h2><hr>
 				  	<div class="control-group">
-					            <input type="text" class="input-medium txt" name="C_25">
+					            <input type="text" class="input-medium txt">
 	                      <div style="height: 3px;"></div>
-	                            <input type="text" class="input-medium txt" name="C_26">
+	                            <input type="text" class="input-medium txt">
 	                      <div style="height: 3px;"></div>
-	                            <input type="text" class="input-medium txt" name="C_27">
+	                            <input type="text" class="input-medium txt">
 	                      <div style="height: 3px;"></div>
-	                            <input type="text" class="input-medium txt" name="C_28">
+	                            <input type="text" class="input-medium txt">
 					  </div>
 				  </div>
 				  <div class="span4">
 				  	<h2><small>Migration Fee as a%</small></h2><hr>
 				  	<div class="control-group">
 				  	      <div class="input-append">
-	                            <input type="text" class="input-medium txt" placeholder="0.00" name="D_25">
+	                            <input type="text" class="input-medium txt" placeholder="0.00">
 	                            <span class="add-on">%</span>
 					      </div>
 					      <div style="height: 3px;"></div>
 					      <div class="input-append">
-	                            <input type="text" class="input-medium txt" placeholder="0.00" name="D_26">
+	                            <input type="text" class="input-medium txt" placeholder="0.00">
 	                            <span class="add-on">%</span>
 					      </div>
 					      <div style="height: 3px;"></div>
 					      <div class="input-append">
-	                            <input type="text" class="input-medium txt" placeholder="0.00" name="D_27">
+	                            <input type="text" class="input-medium txt" placeholder="0.00">
 	                            <span class="add-on">%</span>
 					      </div>
 					      <div style="height: 3px;"></div>
 					      <div class="input-append">
-	                            <input type="text" class="input-medium txt" placeholder="0.00" name="D_28">
+	                            <input type="text" class="input-medium txt" placeholder="0.00">
 	                            <span class="add-on">%</span>
 					      </div>
 					  </div>
@@ -526,21 +521,21 @@
 				  <div class="span4 pull-left" style="margin-left: 200px;">
 				  	<h2><small>Perm Salary Band</small></h2><hr>
 				  	<div class="control-group">
-					            <input type="text" class="input-medium txt" name="C_30">
+					            <input type="text" class="input-medium txt">
 	                      <div style="height: 3px;"></div>
-	                            <input type="text" class="input-medium txt" name="C_31">
+	                            <input type="text" class="input-medium txt">
 	                      <div style="height: 3px;"></div>
-	                            <input type="text" class="input-medium txt" name="C_32">
+	                            <input type="text" class="input-medium txt">
 	                      <div style="height: 3px;"></div>
-	                            <input type="text" class="input-medium txt" name="C_33">
+	                            <input type="text" class="input-medium txt">
 	                      <div style="height: 3px;"></div>
-	                            <input type="text" class="input-medium txt" name="C_34">
+	                            <input type="text" class="input-medium txt">
 	                      <div style="height: 3px;"></div>
-	                            <input type="text" class="input-medium txt" name="C_35">
+	                            <input type="text" class="input-medium txt">
 	                      <div style="height: 3px;"></div>
-	                            <input type="text" class="input-medium txt" name="C_36">
+	                            <input type="text" class="input-medium txt">
 	                      <div style="height: 3px;"></div>
-	                            <input type="text" class="input-medium txt" name="C_37">
+	                            <input type="text" class="input-medium txt">
 	                      <div style="height: 3px;"></div>
 	                            <input type="text" class="input-medium disabled" style="font-size: 9px;" disabled="true"  value="Permanent Guarantee Period in Days">
 					  </div>
@@ -549,46 +544,46 @@
 				  	<h2><small>Perm Fee as a%</small></h2><hr>
 				  	<div class="control-group">
 				  	      <div class="input-append">
-	                            <input type="text" class="input-medium txt" placeholder="0.00" name="D_30">
+	                            <input type="text" class="input-medium txt" placeholder="0.00">
 	                            <span class="add-on">%</span>
 					      </div>
 					      <div style="height: 3px;"></div>
 					      <div class="input-append">
-	                            <input type="text" class="input-medium txt" placeholder="0.00" name="D_31">
+	                            <input type="text" class="input-medium txt" placeholder="0.00">
 	                            <span class="add-on">%</span>
 					      </div>
 					      <div style="height: 3px;"></div>
 					      <div class="input-append">
-	                            <input type="text" class="input-medium txt" placeholder="0.00" name="D_32">
+	                            <input type="text" class="input-medium txt" placeholder="0.00">
 	                            <span class="add-on">%</span>
 					      </div>
 					      <div style="height: 3px;"></div>
 					      <div class="input-append">
-	                            <input type="text" class="input-medium txt" placeholder="0.00" name="D_33">
+	                            <input type="text" class="input-medium txt" placeholder="0.00">
 	                            <span class="add-on">%</span>
 					      </div>
 					      <div style="height: 3px;"></div>
 					      <div class="input-append">
-	                            <input type="text" class="input-medium txt" placeholder="0.00" name="D_34">
+	                            <input type="text" class="input-medium txt" placeholder="0.00">
 	                            <span class="add-on">%</span>
 					      </div>
 					      <div style="height: 3px;"></div>
 					      <div class="input-append">
-	                            <input type="text" class="input-medium txt" placeholder="0.00" name="D_35">
+	                            <input type="text" class="input-medium txt" placeholder="0.00">
 	                            <span class="add-on">%</span>
 					      </div>
 					      <div style="height: 3px;"></div>
 					      <div class="input-append">
-	                            <input type="text" class="input-medium txt" placeholder="0.00" name="D_36">
+	                            <input type="text" class="input-medium txt" placeholder="0.00">
 	                            <span class="add-on">%</span>
 					      </div>
 					      <div style="height: 3px;"></div>
 					      <div class="input-append">
-	                            <input type="text" class="input-medium txt" placeholder="0.00" name="D_37">
+	                            <input type="text" class="input-medium txt" placeholder="0.00">
 	                            <span class="add-on">%</span>
 					      </div>
 					      <div style="height: 3px;"></div>
-					            <input type="text" class="input-medium txt" name="D_38">
+					            <input type="text" class="input-medium txt">
 	                     
 					  </div>
 				  </div>
@@ -604,7 +599,7 @@
 				    <div class="controls controls-row">
 				        <div class="input-prepend">
 				            <span class="add-on">$</span>
-    				      <input type="text" class="input-medium txt-grade" readonly="true" id="payrate_1" name="payrate_1" placeholder="0.00">
+    				      <input type="text" class="input-medium" id="payrate_1" name="payrate_1" placeholder="0.00">
     				    </div>
 				    </div>
 				  </div>
@@ -613,7 +608,7 @@
 				    <div class="controls controls-row">
 				        <div class="input-prepend">
                             <span class="add-on">$</span>
-				            <input type="text" class="input-medium txt-grade" readonly="true" id="payrate_2" name="payrate_2" placeholder="0.00">
+				            <input type="text" class="input-medium" id="payrate_2" name="payrate_2" placeholder="0.00">
 				        </div>
 				    </div>
 				  </div>
@@ -622,7 +617,7 @@
 				    <div class="controls controls-row">
 				        <div class="input-prepend">
                             <span class="add-on">$</span>
-				            <input type="text" class="input-medium txt-grade" readonly="true" id="payrate_3" name="payrate_3" placeholder="0.00">
+				            <input type="text" class="input-medium" id="payrate_3" name="payrate_3" placeholder="0.00">
 				        </div>
 				    </div>
 				  </div>
@@ -631,7 +626,7 @@
 				    <div class="controls controls-row">
 				        <div class="input-prepend">
                             <span class="add-on">$</span>
-				            <input type="text" class="input-medium txt-grade" readonly="true" id="payrate_4" name="payrate_4" placeholder="0.00">
+				            <input type="text" class="input-medium" id="payrate_4" name="payrate_4" placeholder="0.00">
 				        </div>
 				    </div>
 				  </div>
@@ -640,7 +635,7 @@
 				    <div class="controls controls-row">
 				        <div class="input-prepend">
                             <span class="add-on">$</span>
-				            <input type="text" class="input-medium txt-grade" readonly="true" id="payrate_5" name="payrate_5" placeholder="0.00">
+				            <input type="text" class="input-medium" id="payrate_5" name="payrate_5" placeholder="0.00">
 				        </div>
 				    </div>
 				  </div>
@@ -651,7 +646,7 @@
 				    <div class="controls controls-row">
 				        <div class="input-prepend">
                             <span class="add-on">$</span>
-				            <input type="text" class="input-medium txt-grade" readonly="true" id="payrate_6" name="payrate_6" placeholder="0.00">
+				            <input type="text" class="input-medium" id="payrate_6" name="payrate_6" placeholder="0.00">
 				        </div>
 				    </div>
 				  </div>
@@ -660,7 +655,7 @@
 				    <div class="controls controls-row">
 				        <div class="input-prepend">
                             <span class="add-on">$</span>
-				            <input type="text" class="input-medium txt-grade" readonly="true" id="payrate_7" name="payrate_7" placeholder="0.00">
+				            <input type="text" class="input-medium" id="payrate_7" name="payrate_7" placeholder="0.00">
 				        </div>
 				    </div>
 				  </div>
@@ -669,7 +664,7 @@
 				    <div class="controls controls-row">
 				        <div class="input-prepend">
                             <span class="add-on">$</span>
-				            <input type="text" class="input-medium txt-grade" readonly="true" id="payrate_8" name="payrate_8" placeholder="0.00">
+				            <input type="text" class="input-medium" id="payrate_8" name="payrate_8" placeholder="0.00">
 				        </div>
 				    </div>
 				  </div>
@@ -678,7 +673,7 @@
 				    <div class="controls controls-row">
 				        <div class="input-prepend">
                             <span class="add-on">$</span>
-				            <input type="text" class="input-medium txt-grade" readonly="true" id="payrate_9" name="payrate_9" placeholder="0.00">
+				            <input type="text" class="input-medium" id="payrate_9" name="payrate_9" placeholder="0.00">
 				        </div>
 				    </div>
 				  </div>
@@ -687,7 +682,7 @@
 				    <div class="controls controls-row">
 				        <div class="input-prepend">
                             <span class="add-on">$</span>
-				            <input type="text" class="input-medium txt-grade" readonly="true" id="payrate_10" name="payrate_10" placeholder="0.00">
+				            <input type="text" class="input-medium" id="payrate_10" name="payrate_10" placeholder="0.00">
 				        </div>
 				    </div>
 				  </div>
@@ -700,52 +695,52 @@
 			  	<div class="control-group">
 				      <div class="input-prepend">
                             <span class="add-on">$</span>
-                            <input type="text" class="input-medium txt" name="base_rate1" readonly="true" id="txt-base-rate-1" placeholder="0.00">
+                            <input type="text" class="input-medium txt" placeholder="0.00">
                       </div>
                       <div style="height: 3px;"></div>
                       <div class="input-prepend">
                             <span class="add-on">$</span>
-                            <input type="text" class="input-medium txt" name="base_rate2" readonly="true" id="txt-base-rate-2" placeholder="0.00">
+                            <input type="text" class="input-medium txt" placeholder="0.00">
                       </div>
                       <div style="height: 3px;"></div>
                       <div class="input-prepend">
                             <span class="add-on">$</span>
-                            <input type="text" class="input-medium txt" name="base_rate3" readonly="true" id="txt-base-rate-3" placeholder="0.00">
+                            <input type="text" class="input-medium txt" placeholder="0.00">
                       </div>
                       <div style="height: 3px;"></div>
                       <div class="input-prepend">
                             <span class="add-on">$</span>
-                            <input type="text" class="input-medium txt" name="base_rate4" readonly="true" id="txt-base-rate-4" placeholder="0.00">
+                            <input type="text" class="input-medium txt" placeholder="0.00">
                       </div>
                       <div style="height: 3px;"></div>
                       <div class="input-prepend">
                             <span class="add-on">$</span>
-                            <input type="text" class="input-medium txt" name="base_rate5" readonly="true" id="txt-base-rate-5" placeholder="0.00">
+                            <input type="text" class="input-medium txt" placeholder="0.00">
                       </div>
                       <div style="height: 3px;"></div>
                       <div class="input-prepend">
                             <span class="add-on">$</span>
-                            <input type="text" class="input-medium txt" name="base_rate6" readonly="true" id="txt-base-rate-6" placeholder="0.00">
+                            <input type="text" class="input-medium txt" placeholder="0.00">
                       </div>
                       <div style="height: 3px;"></div>
                       <div class="input-prepend">
                             <span class="add-on">$</span>
-                            <input type="text" class="input-medium txt" name="base_rate7" readonly="true" id="txt-base-rate-7" placeholder="0.00">
+                            <input type="text" class="input-medium txt" placeholder="0.00">
                       </div>
                       <div style="height: 3px;"></div>
                       <div class="input-prepend">
                             <span class="add-on">$</span>
-                            <input type="text" class="input-medium txt" name="base_rate8" readonly="true" id="txt-base-rate-8" placeholder="0.00">
+                            <input type="text" class="input-medium txt" placeholder="0.00">
                       </div>
                       <div style="height: 3px;"></div>
                       <div class="input-prepend">
                             <span class="add-on">$</span>
-                            <input type="text" class="input-medium txt" name="base_rate9" readonly="true" id="txt-base-rate-9" placeholder="0.00">
+                            <input type="text" class="input-medium txt" placeholder="0.00">
                       </div>
                       <div style="height: 3px;"></div>
                       <div class="input-prepend">
                             <span class="add-on">$</span>
-                            <input type="text" class="input-medium txt" name="base_rate10" readonly="true" id="txt-base-rate-10" placeholder="0.00">
+                            <input type="text" class="input-medium txt" placeholder="0.00">
                       </div>
 				  </div>
 			  </div>
@@ -754,52 +749,52 @@
 			  	<div class="control-group">
 			  	      <div class="input-prepend">
                             <span class="add-on">$</span>
-				            <input type="text" class="input-medium txt" name="casual_rate1" id="txt-casual-rate-1" readonly="true" placeholder="0.00">
+				            <input type="text" class="input-medium txt" placeholder="0.00">
 				      </div>
 				      <div style="height: 3px;"></div>
 				      <div class="input-prepend">
                             <span class="add-on">$</span>
-				            <input type="text" class="input-medium txt" name="casual_rate2" id="txt-casual-rate-2" readonly="true" placeholder="0.00">
+				            <input type="text" class="input-medium txt" placeholder="0.00">
 				      </div>
 				      <div style="height: 3px;"></div>
 				      <div class="input-prepend">
                             <span class="add-on">$</span>
-				            <input type="text" class="input-medium txt" name="casual_rate3" id="txt-casual-rate-3" readonly="true" placeholder="0.00">
+				            <input type="text" class="input-medium txt" placeholder="0.00">
 				      </div>
 				      <div style="height: 3px;"></div>
 				      <div class="input-prepend">
                             <span class="add-on">$</span>
-				            <input type="text" class="input-medium txt" name="casual_rate4" id="txt-casual-rate-4" readonly="true" placeholder="0.00">
+				            <input type="text" class="input-medium txt" placeholder="0.00">
 				      </div>
 				      <div style="height: 3px;"></div>
 				      <div class="input-prepend">
                             <span class="add-on">$</span>
-				            <input type="text" class="input-medium txt" name="casual_rate5" id="txt-casual-rate-5" readonly="true" placeholder="0.00">
+				            <input type="text" class="input-medium txt" placeholder="0.00">
 				      </div>
 				      <div style="height: 3px;"></div>
 				      <div class="input-prepend">
                             <span class="add-on">$</span>
-				            <input type="text" class="input-medium txt" name="casual_rate6" id="txt-casual-rate-6" readonly="true" placeholder="0.00">
+				            <input type="text" class="input-medium txt" placeholder="0.00">
 				      </div>
 				      <div style="height: 3px;"></div>
 				      <div class="input-prepend">
                             <span class="add-on">$</span>
-				            <input type="text" class="input-medium txt" name="casual_rate7" id="txt-casual-rate-7" readonly="true" placeholder="0.00">
+				            <input type="text" class="input-medium txt" placeholder="0.00">
 				      </div>
 				      <div style="height: 3px;"></div>
 				      <div class="input-prepend">
                             <span class="add-on">$</span>
-				            <input type="text" class="input-medium txt" name="casual_rate8" id="txt-casual-rate-8" readonly="true" placeholder="0.00">
+				            <input type="text" class="input-medium txt" placeholder="0.00">
 				      </div>
 				      <div style="height: 3px;"></div>
 				      <div class="input-prepend">
                             <span class="add-on">$</span>
-				            <input type="text" class="input-medium txt" name="casual_rate9" id="txt-casual-rate-9" readonly="true" placeholder="0.00">
+				            <input type="text" class="input-medium txt" placeholder="0.00">
 				      </div>
 				      <div style="height: 3px;"></div>
 				      <div class="input-prepend">
                             <span class="add-on">$</span>
-				            <input type="text" class="input-medium txt" name="casual_rate10" id="txt-casual-rate-10" readonly="true" placeholder="0.00">
+				            <input type="text" class="input-medium txt" placeholder="0.00">
 				      </div>
 				  </div>
 			  </div>
@@ -809,65 +804,65 @@
 					<hr>
 					<div class="control-group">
 				      <input type="text" class="input-medium disabled" style="font-size: 10px;" disabled="true" value="STANDARD RATE FOR CALS :">
-					  <input type="text" class="input-mini" id="allowance_caption12" readonly="true" name="allowance_caption12">
+					  <input type="text" class="input-mini" id="allowance_caption12" name="allowance_caption12">
 					  <div class="input-prepend">
                             <span class="add-on">$</span>
-					        <input type="text" class="input-medium txt"  id="B_51" readonly="true" name="B_51" placeholder="0.00">
+					        <input type="text" class="input-medium txt"  id="B_51" name="B_51" placeholder="0.00">
 					  </div>
 					  <div style="height: 5px;"></div>
-				      <input type="text" class="input-medium" id="allowance_caption1" readonly="true" name="allowance_caption1">
-					  <input type="text" class="input-mini" id="allowance_rate1" readonly="true" name="allowance_rate1">
+				      <input type="text" class="input-medium" id="allowance_caption1" name="allowance_caption1">
+					  <input type="text" class="input-mini" id="allowance_rate1" name="allowance_rate1">
 					  <div class="input-prepend">
                             <span class="add-on">$</span>
-					        <input type="text" class="input-medium txt"  id="B_52" readonly="true" name="B_52" placeholder="0.00">
+					        <input type="text" class="input-medium txt"  id="B_52" name="B_52" placeholder="0.00">
 					  </div>
 					  <div style="height: 5px;"></div>
-					  <input type="text" class="input-medium" id="allowance_caption2" readonly="true" name="allowance_caption2">
-					  <input type="text" class="input-mini" id="allowance_rate2" readonly="true" name="allowance_rate2">
+					  <input type="text" class="input-medium" id="allowance_caption2" name="allowance_caption2">
+					  <input type="text" class="input-mini" id="allowance_rate2" name="allowance_rate2">
 					  <div class="input-prepend">
                             <span class="add-on">$</span>
-					        <input type="text" class="input-medium txt"  id="B_53" readonly="true" name="B_53" placeholder="0.00">
+					        <input type="text" class="input-medium txt"  id="B_53" name="B_53" placeholder="0.00">
 					  </div>
 					  <div style="height: 5px;"></div>
-					  <input type="text" class="input-medium" id="allowance_caption3" readonly="true" name="allowance_caption3">
-					  <input type="text" class="input-mini" id="allowance_rate3" readonly="true" name="allowance_rate3">
+					  <input type="text" class="input-medium" id="allowance_caption3" name="allowance_caption3">
+					  <input type="text" class="input-mini" id="allowance_rate3" name="allowance_rate3">
 					  <div class="input-prepend">
                             <span class="add-on">$</span>
-					        <input type="text" class="input-medium txt"  id="B_54" readonly="true" name="B_54" placeholder="0.00">
+					        <input type="text" class="input-medium txt"  id="B_54" name="B_54" placeholder="0.00">
 					  </div>
 					  <div style="height: 5px;"></div>
-					  <input type="text" class="input-medium" id="allowance_caption4" readonly="true" name="allowance_caption4">
-					  <input type="text" class="input-mini" id="allowance_rate4" readonly="true" name="allowance_rate4">
+					  <input type="text" class="input-medium" id="allowance_caption4" name="allowance_caption4">
+					  <input type="text" class="input-mini" id="allowance_rate4" name="allowance_rate4">
 					  <div class="input-prepend">
                             <span class="add-on">$</span>
-					        <input type="text" class="input-medium txt"  id="B_55" readonly="true" name="B_55" placeholder="0.00">
+					        <input type="text" class="input-medium txt"  id="B_55" name="B_55" placeholder="0.00">
 					  </div>
 					  <div style="height: 5px;"></div>
-					  <input type="text" class="input-medium" id="allowance_caption5" readonly="true" name="allowance_caption5">
-					  <input type="text" class="input-mini" id="allowance_rate5" readonly="true" name="allowance_rate5">
+					  <input type="text" class="input-medium" id="allowance_caption5" name="allowance_caption5">
+					  <input type="text" class="input-mini" id="allowance_rate5" name="allowance_rate5">
 					  <div class="input-prepend">
                             <span class="add-on">$</span>
-					        <input type="text" class="input-medium txt"  id="B_56" readonly="true" name="B_56" placeholder="0.00">
+					        <input type="text" class="input-medium txt"  id="B_56" name="B_56" placeholder="0.00">
 					  </div>
 					  <div style="height: 5px;"></div>
-					  <input type="text" class="input-medium" disabled="true" readonly="true" style="font-size: 10px;" value="MARGIN FOR M ALLOWANCE">
-                      <input type="text" class="input-mini" id="m_allow_margin" readonly="true" >
+					  <input type="text" class="input-medium" disabled="true" style="font-size: 10px;" value="MARGIN FOR M ALLOWANCE">
+                      <input type="text" class="input-mini" id="m_allow_margin" name="m_allow_margin">
 				    </div>
 				</div>
 				<div class="span4">
 					<h3>Allowances Rules</h3>
 					<hr>
-					<input type="text" class="input-block-level" id="C_52" readonly="true" name="C_52">
+					<input type="text" class="input-block-level" id="C_52" name="C_52">
 					<div style="height: 5px;"></div>
-					<input type="text" class="input-block-level" id="C_53" readonly="true" name="C_53">
+					<input type="text" class="input-block-level" id="C_53" name="C_53">
 					<div style="height: 5px;"></div>
-					<input type="text" class="input-block-level" id="C_54" readonly="true" name="C_54">
+					<input type="text" class="input-block-level" id="C_54" name="C_54">
 					<div style="height: 5px;"></div>
-					<input type="text" class="input-block-level" id="C_55" readonly="true" name="C_55">
+					<input type="text" class="input-block-level" id="C_55" name="C_55">
 					<div style="height: 5px;"></div>
-					<input type="text" class="input-block-level" id="C_56" readonly="true" name="C_56">
+					<input type="text" class="input-block-level" id="C_56" name="C_56">
 					<div style="height: 5px;"></div>
-					<input type="text" class="input-block-level" id="C_57" readonly="true" name="C_57">
+					<input type="text" class="input-block-level" id="C_57" name="C_57">
 					<div style="height: 5px;"></div>
 				</div>
 				

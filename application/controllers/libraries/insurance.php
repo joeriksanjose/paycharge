@@ -12,6 +12,7 @@ class Insurance extends CI_Controller
         
         $this->data["title"] = "Libraries - Insurance";
         $this->data["username"] = $this->user_session["username"];
+        $this->data["is_admin"] = $this->user_session["is_admin"];
     }
     
     public function index()
