@@ -9,7 +9,7 @@
 	</div>
 	
 	<div class="span12" id="modern_form" style="display: none;">
-		<form class="form-horizontal" action="<?php echo base_url("sales_transaction/save")?>" method="post">
+		<form class="form-horizontal" id="frm" action="<?php echo base_url("sales_transaction/save")?>" method="post">
 			<div class="navbar navbar-fixed-bottom" id="nav-tabs" style="display: none;">
 	            <div class="navbar-inner">
 	                <div class="container">
@@ -21,7 +21,7 @@
 	                    <li class="divider-vertical"></li>
 	                    <li class="pull-right">
 	                        <button type="button" class="btn pull-right" style="margin-left: 3px;" id="close-modern-form">Cancel</button>
-	                        <input type="submit" class="btn btn-inverse pull-right" value="SAVE">
+	                        <input type="submit" class="btn btn-inverse pull-right" id="btn-save-update" value="SAVE">
 	                    </li>
 	                </ul>
 	                </div>
@@ -216,21 +216,21 @@
 				    <div style="height: 20px;"></div>
     				<div class="span6">
         				  <div class="control-group" style="width:200px;">
-        				    <label class="control-label" for="modern_award_no">Standard Labour Hire/Transition/Limited Tenure</label>
+        				    <label class="control-label" for="D_4">Standard Labour Hire/Transition/Limited Tenure</label>
         				    <div class="controls controls-row">
-        				      <input type="text" class="" id="modern_award_no" name="D_4">
+        				      <input type="text" class="" id="D_4" name="D_4">
         				    </div>
         				  </div>
         				  <div class="control-group">
-        				    <label class="control-label" for="modern_award_name">Which level do you want set up in FT</label>
+        				    <label class="control-label" for="D_5">Which level do you want set up in FT</label>
         				    <div class="controls">
-        				      <input type="text" class="" id="modern_award_no" name="D_5">
+        				      <input type="text" class="" id="D_5" name="D_5">
         				    </div>
         				  </div>
         				  <div class="control-group">
-        				    <label class="control-label" for="modern_award_name">Position titles Level 1</label>
+        				    <label class="control-label" for="position_no1">Position titles Level 1</label>
         				    <div class="controls">
-        				      <select class="" name="position_no1">
+        				      <select class="" id="position_no1" name="position_no1">
         				      	<option></option>
         				      	<?php foreach ($position as $value) : ?>
         							<option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
@@ -239,9 +239,9 @@
         				    </div>
         				  </div>
         				  <div class="control-group">
-        				    <label class="control-label" for="modern_award_name">Position titles Level 2</label>
+        				    <label class="control-label" for="position_no2">Position titles Level 2</label>
         				    <div class="controls">
-        				      <select class="" name="position_no2">
+        				      <select class="" id="position_no2" name="position_no2">
         				      	<option></option>
         				      	<?php foreach ($position as $value) : ?>
         							<option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
@@ -250,9 +250,9 @@
         				    </div>
         				  </div>
         				  <div class="control-group">
-        				    <label class="control-label" for="modern_award_name">Position titles Level 3</label>
+        				    <label class="control-label" for="position_no3">Position titles Level 3</label>
         				    <div class="controls">
-        				      <select class="" name="position_no3">
+        				      <select class="" id="position_no3" name="position_no3">
         				      	<option></option>
         				      	<?php foreach ($position as $value) : ?>
         							<option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
@@ -261,9 +261,9 @@
         				    </div>
         				  </div>
         				  <div class="control-group">
-        				    <label class="control-label" for="modern_award_name">Position titles Level 4</label>
+        				    <label class="control-label" for="position_no4">Position titles Level 4</label>
         				    <div class="controls">
-        				      <select class="" name="position_no4">
+        				      <select class="" id="position_no4" name="position_no4">
         				      	<option></option>
         				      	<?php foreach ($position as $value) : ?>
         							<option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
@@ -272,9 +272,9 @@
         				    </div>
         				  </div>
         				  <div class="control-group">
-        				    <label class="control-label" for="modern_award_name">Position titles Level 5</label>
+        				    <label class="control-label" for="position_no5">Position titles Level 5</label>
         				    <div class="controls">
-        				      <select class="" name="position_no5">
+        				      <select class="" id="position_no5" name="position_no5">
         				      	<option></option>
         				      	<?php foreach ($position as $value) : ?>
         							<option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
@@ -283,9 +283,9 @@
         				    </div>
         				  </div>
         				  <div class="control-group">
-        				    <label class="control-label" for="modern_award_name">Position titles Level 6</label>
+        				    <label class="control-label" for="position_no6">Position titles Level 6</label>
         				    <div class="controls">
-        				      <select class="" name="position_no6">
+        				      <select class="" id="position_no6" name="position_no6">
         				      	<option></option>
         				      	<?php foreach ($position as $value) : ?>
         							<option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
@@ -294,9 +294,9 @@
         				    </div>
         				  </div>
         				  <div class="control-group">
-        				    <label class="control-label" for="modern_award_name">Position titles Level 7</label>
+        				    <label class="control-label" for="position_no7">Position titles Level 7</label>
         				    <div class="controls">
-        				      <select class="" name="position_no7">
+        				      <select class="" id="position_no7" name="position_no7">
         				      	<option></option>
         				      	<?php foreach ($position as $value) : ?>
         							<option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
@@ -305,9 +305,9 @@
         				    </div>
         				  </div>
         				  <div class="control-group">
-        				    <label class="control-label" for="modern_award_name">Position titles Level 8</label>
+        				    <label class="control-label" for="position_no8">Position titles Level 8</label>
         				    <div class="controls">
-        				      <select class="" name="position_no8">
+        				      <select class="" id="position_no8" name="position_no8">
         				      	<option></option>
         				      	<?php foreach ($position as $value) : ?>
         							<option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
@@ -316,9 +316,9 @@
         				    </div>
         				  </div>
         				  <div class="control-group">
-        				    <label class="control-label" for="modern_award_name">Position titles Level 9</label>
+        				    <label class="control-label" for="position_no9">Position titles Level 9</label>
         				    <div class="controls">
-        				      <select class="" name="position_no9">
+        				      <select class="" id="position_no9" name="position_no9">
         				      	<option></option>
         				      	<?php foreach ($position as $value) : ?>
         							<option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
@@ -327,9 +327,9 @@
         				    </div>
         				  </div>
         				  <div class="control-group">
-        				    <label class="control-label" for="modern_award_name">Position titles Level 10</label>
+        				    <label class="control-label" for="position_no10">Position titles Level 10</label>
         				    <div class="controls">
-        				      <select class="" name="position_no10">
+        				      <select class="" id="position_no10" name="position_no10">
         				      	<option></option>
         				      	<?php foreach ($position as $value) : ?>
         							<option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
@@ -340,51 +340,51 @@
     				  </div>
     				  <div class="span5">
         				  <div class="control-group">
-        				    <label class="control-label" for="modern_award_no">Do you want shifts set up?</label>
+        				    <label class="control-label" for="D_15">Do you want shifts set up?</label>
         				    <div class="controls controls-row">
-        				      <input type="text" class="" id="modern_award_no" name="D_15">
+        				      <input type="text" class="" id="D_15" name="D_15">
         				    </div>
         				  </div>
         				  <div class="control-group">
-        				    <label class="control-label" for="modern_award_no">How are you paying ordinary hours?</label>
+        				    <label class="control-label" for="D_16">How are you paying ordinary hours?</label>
         				    <div class="controls controls-row">
-        				      <input type="text" class="" id="modern_award_no" name="D_16">
+        				      <input type="text" class="" id="D_16" name="D_16">
         				    </div>
         				  </div>
         				  <div class="control-group">
-        				    <label class="control-label" for="modern_award_no">Are lunch breaks deducted, what are they?</label>
+        				    <label class="control-label" for="D_17">Are lunch breaks deducted, what are they?</label>
         				    <div class="controls controls-row">
-        				      <input type="text" class="" id="modern_award_no" name="D_17">
+        				      <input type="text" class="" id="D_17" name="D_17">
         				    </div>
         				  </div>
         				  <div class="control-group">
-        				    <label class="control-label" for="modern_award_no">Are there any exemptions to OT as above?</label>
+        				    <label class="control-label" for="D_18">Are there any exemptions to OT as above?</label>
         				    <div class="controls controls-row">
-        				      <input type="text" class="" id="modern_award_no" name="D_18">
+        				      <input type="text" class="" id="D_18" name="D_18">
         				    </div>
         				  </div>
         				  <div class="control-group">
-        				    <label class="control-label" for="modern_award_no">Are there any exemptions to Saturday?</label>
+        				    <label class="control-label" for="D_19">Are there any exemptions to Saturday?</label>
         				    <div class="controls controls-row">
-        				      <input type="text" class="" id="modern_award_no" name="D_19">
+        				      <input type="text" class="" id="D_19" name="D_19">
         				    </div>
         				  </div>
         				  <div class="control-group">
-        				    <label class="control-label" for="modern_award_no">Are there any exemptions to Sunday?</label>
+        				    <label class="control-label" for="D_20">Are there any exemptions to Sunday?</label>
         				    <div class="controls controls-row">
-        				      <input type="text" class="" id="modern_award_no" name="D_20">
+        				      <input type="text" class="" id="D_20" name="D_20">
         				    </div>
         				  </div>
         				  <div class="control-group">
-        				    <label class="control-label" for="modern_award_no">Are there any exemptions to Public Holidays?</label>
+        				    <label class="control-label" for="D_21">Are there any exemptions to Public Holidays?</label>
         				    <div class="controls controls-row">
-        				      <input type="text" class="" id="modern_award_no" name="D_21">
+        				      <input type="text" class="" id="D_21" name="D_21">
         				    </div>
         				  </div>
         				  <div class="control-group">
-        				    <label class="control-label" for="modern_award_no">Other Information</label>
+        				    <label class="control-label" for="D_22">Other Information</label>
         				    <div class="controls controls-row">
-        				      <input type="text" class="" id="modern_award_no" name="D_22">
+        				      <input type="text" class="" id="D_22" name="D_22">
         				    </div>
         				  </div>
     				  </div>
@@ -404,7 +404,7 @@
 							$<input type="radio" id="swi_peror_cur" name="swi_peror_cur" value="2"/>
 						</label>
 						<label class="radio">
-						    <input type="text" name="B_24">
+						    <input type="text" id="B_24" name="B_24">
 						</label>
 					</div>
 				</div>
@@ -498,35 +498,35 @@
 				  <div class="span4 pull-left" style="margin-left: 200px;">
 				  	<h2><small>Migration Period of Service</small></h2><hr>
 				  	<div class="control-group">
-					            <input type="text" class="input-medium txt" name="C_25">
+					            <input type="text" class="input-medium txt" id="C_25" name="C_25">
 	                      <div style="height: 3px;"></div>
-	                            <input type="text" class="input-medium txt" name="C_26">
+	                            <input type="text" class="input-medium txt" id="C_26" name="C_26">
 	                      <div style="height: 3px;"></div>
-	                            <input type="text" class="input-medium txt" name="C_27">
+	                            <input type="text" class="input-medium txt" id="C_27" name="C_27">
 	                      <div style="height: 3px;"></div>
-	                            <input type="text" class="input-medium txt" name="C_28">
+	                            <input type="text" class="input-medium txt" id="C_28" name="C_28">
 					  </div>
 				  </div>
 				  <div class="span4">
 				  	<h2><small>Migration Fee as a%</small></h2><hr>
 				  	<div class="control-group">
 				  	      <div class="input-append">
-	                            <input type="text" class="input-medium txt" placeholder="0.00" name="D_25">
+	                            <input type="text" class="input-medium txt" placeholder="0.00" id="D_25" name="D_25">
 	                            <span class="add-on">%</span>
 					      </div>
 					      <div style="height: 3px;"></div>
 					      <div class="input-append">
-	                            <input type="text" class="input-medium txt" placeholder="0.00" name="D_26">
+	                            <input type="text" class="input-medium txt" placeholder="0.00" id="D_26" name="D_26">
 	                            <span class="add-on">%</span>
 					      </div>
 					      <div style="height: 3px;"></div>
 					      <div class="input-append">
-	                            <input type="text" class="input-medium txt" placeholder="0.00" name="D_27">
+	                            <input type="text" class="input-medium txt" placeholder="0.00" id="D_27" name="D_27">
 	                            <span class="add-on">%</span>
 					      </div>
 					      <div style="height: 3px;"></div>
 					      <div class="input-append">
-	                            <input type="text" class="input-medium txt" placeholder="0.00" name="D_28">
+	                            <input type="text" class="input-medium txt" placeholder="0.00" id="D_28" name="D_28">
 	                            <span class="add-on">%</span>
 					      </div>
 					  </div>
@@ -537,21 +537,21 @@
 				  <div class="span4 pull-left" style="margin-left: 200px;">
 				  	<h2><small>Perm Salary Band</small></h2><hr>
 				  	<div class="control-group">
-					            <input type="text" class="input-medium txt" name="C_30">
+					            <input type="text" class="input-medium txt" id="C_30" name="C_30">
 	                      <div style="height: 3px;"></div>
-	                            <input type="text" class="input-medium txt" name="C_31">
+	                            <input type="text" class="input-medium txt" id="C_31" name="C_31">
 	                      <div style="height: 3px;"></div>
-	                            <input type="text" class="input-medium txt" name="C_32">
+	                            <input type="text" class="input-medium txt" id="C_32" name="C_32">
 	                      <div style="height: 3px;"></div>
-	                            <input type="text" class="input-medium txt" name="C_33">
+	                            <input type="text" class="input-medium txt" id="C_33" name="C_33">
 	                      <div style="height: 3px;"></div>
-	                            <input type="text" class="input-medium txt" name="C_34">
+	                            <input type="text" class="input-medium txt" id="C_34" name="C_34">
 	                      <div style="height: 3px;"></div>
-	                            <input type="text" class="input-medium txt" name="C_35">
+	                            <input type="text" class="input-medium txt" id="C_35" name="C_35">
 	                      <div style="height: 3px;"></div>
-	                            <input type="text" class="input-medium txt" name="C_36">
+	                            <input type="text" class="input-medium txt" id="C_36" name="C_36">
 	                      <div style="height: 3px;"></div>
-	                            <input type="text" class="input-medium txt" name="C_37">
+	                            <input type="text" class="input-medium txt" id="C_37" name="C_37">
 	                      <div style="height: 3px;"></div>
 	                            <input type="text" class="input-medium disabled" style="font-size: 9px;" disabled="true"  value="Permanent Guarantee Period in Days">
 					  </div>
@@ -560,17 +560,17 @@
 				  	<h2><small>Perm Fee as a%</small></h2><hr>
 				  	<div class="control-group">
 				  	      <div class="input-append">
-	                            <input type="text" class="input-medium txt" placeholder="0.00" name="D_30">
+	                            <input type="text" class="input-medium txt" placeholder="0.00" id="D_30" name="D_30">
 	                            <span class="add-on">%</span>
 					      </div>
 					      <div style="height: 3px;"></div>
 					      <div class="input-append">
-	                            <input type="text" class="input-medium txt" placeholder="0.00" name="D_31">
+	                            <input type="text" class="input-medium txt" placeholder="0.00" id="D_31" name="D_31">
 	                            <span class="add-on">%</span>
 					      </div>
 					      <div style="height: 3px;"></div>
 					      <div class="input-append">
-	                            <input type="text" class="input-medium txt" placeholder="0.00" name="D_32">
+	                            <input type="text" class="input-medium txt" placeholder="0.00" id="D_32" name="D_32">
 	                            <span class="add-on">%</span>
 					      </div>
 					      <div style="height: 3px;"></div>
@@ -1006,7 +1006,7 @@
 				<td><?php echo date("d/m/Y", strtotime($modern_award["date_of_quotation"])) ?></td>
 				<td><?php echo $modern_award["company_name"] ?></td>
 				<td>
-				    <button type="button" class="btn"><i class="icon-edit"></i></button>
+				    <button type="button" class="btn edit-award-btn" edit-id="<?php echo $modern_award["trans_no"] ?>"><i class="icon-edit"></i></button>
 				    <button type="button" del-id="<?php echo $modern_award["trans_no"] ?>" class="btn btn-danger delete-award-btn"><i class="icon-trash icon-white"></i></button>
 				</td>
 			</tr>

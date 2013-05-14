@@ -69,7 +69,7 @@
 
 
 <div class="row">
-    <div class="span12">Super</h2>
+    <div class="span12"><h2>Super</h2>
         <hr>
     </div>
     

@@ -54,15 +54,12 @@ $(document).ready(function(){
                company_no = res.charge_rate.company_no;
                super1 = res.charge_rate.B_14;
                work_cover = res.charge_rate.B_15;
-               
+
                $("#cmb-company").val(company_no).attr("selected", "selected");
                $("#cmb-super").val(super1).attr("selected", "selected");
                $("#cmb-workcover").val(work_cover).attr("selected", "selected");
                $("#cmb-company").val(company_no).attr("selected", "selected");
-               
-               
-               
-               
+                              
                $("#transaction_name").val(res.charge_rate.transaction_name);
                $("#B_16").val(res.charge_rate.B_16);
                $("#B_18").val(res.charge_rate.B_18);
@@ -332,6 +329,7 @@ $(document).ready(function(){
         
         
     });
+    
     // end edit
     
 	function inputNumbers(event)
@@ -534,15 +532,6 @@ $(document).ready(function(){
 			} else {
 				$("#B_56").removeAttr("disabled");
 			}
-			
-			
-			
-			
-			
-			
-			
-			
-			
 		});
 	});
 	
@@ -589,8 +578,14 @@ $(document).ready(function(){
         $("#show-tab-2, #show-tab-3, #show-tab-4, #show-tab-5").parent().removeClass("active");
         $("#nav-tabs").show("fast");
         $("#tab1").show("fast");
+        $("#frm").show("fast");
         $(".div-award").hide("fast");
         $("#tab2, #tab3, #tab4, #tab5").hide("fast");
+    });
+    
+    $("#close-modern-form").click(function(){
+       $("#frm").hide("fast");
+       $(".div-award").show("fast");
     });
     
     $("#show-tab-1").click(function(){

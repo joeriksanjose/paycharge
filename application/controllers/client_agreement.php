@@ -114,7 +114,7 @@ class Client_agreement extends CI_Controller
 		$print_defaults_data = array();
 		$ctr = 1;
 		foreach ($post as $key => $v) {
-			if ($ctr > 132) {
+			if ($ctr > 131) {
 				$print_defaults_data[$key] = $v;
 			} else {
 				$charge_rate_data[$key] = $v;

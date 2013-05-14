@@ -50,177 +50,184 @@
 			<div class="span12" id="tab1" style="display:none;">
 				<h4>Client Details</h4>
 					<hr>
-				<div style="height: 20px;"></div>
-				  <div class="control-group">
-				    <label class="control-label" for="modern_award_no">Transaction No.</label>
-				    <div class="controls controls-row">
-				      <input type="text" id="trans_no" name="trans_no">
-				      <input type="button" id="btn_gen" class="btn btn-inverse btn-medium" value="Generate No"/>
-				    </div>
+			    <div class="span5">
+    				<div style="height: 20px;"></div>
+    				  <div class="control-group">
+    				    <label class="control-label" for="modern_award_no">Transaction No.</label>
+    				    <div class="controls controls-row">
+    				      <input type="text" id="trans_no" name="trans_no">
+    				      <input type="button" id="btn_gen" class="btn btn-inverse btn-medium" value="Generate No"/>
+    				    </div>
+    				  </div>
+    				  <div class="control-group">
+    				    <label class="control-label" for="modern_award_name">Client Agreement Name</label>
+    				    <div class="controls">
+    				      <input type="text" id="transaction_name" name="transaction_name">
+    				      	
+    				    </div>
+    				  </div>
+    				  <div class="control-group">
+    				    <label class="control-label" for="modern_award_name">Company</label>
+    				    <div class="controls">
+    				      <select id="cmb-company" name="company_no">
+    				      	<option></option>
+    				      	<?php foreach ($company as $value) : ?>
+    							<option value="<?php echo $value["client_no"]?>"><?php echo $value["company_name"]?></option>
+    						<?php endforeach;?>
+    				      </select>
+    				      <input type="hidden" id="state_no"/>
+    				    </div>
+    				  </div>
 				  </div>
-				  <div class="control-group">
-				    <label class="control-label" for="modern_award_name">Client Agreement Name</label>
-				    <div class="controls">
-				      <input type="text" id="transaction_name" name="transaction_name">
-				      	
-				    </div>
+				  <div class="span5">
+    				  <div class="control-group">
+    				    <label class="control-label" for="modern_award_no">Department</label>
+    				    <div class="controls controls-row">
+    				      <input type="text" id="department" readonly="true">
+    				    </div>
+    				  </div>
+    				  <div class="control-group">
+    				    <label class="control-label" for="modern_award_no">Address Line 1</label>
+    				    <div class="controls controls-row">
+    				      <input type="text" id="add1" readonly="true">
+    				    </div>
+    				  </div>
+    				  <div class="control-group">
+    				    <label class="control-label" for="modern_award_no">Address Line 2</label>
+    				    <div class="controls controls-row">
+    				      <input type="text" id="add2" readonly="true">
+    				    </div>
+    				  </div>
+    				  <div class="control-group">
+    				    <label class="control-label" for="modern_award_no">Contact First Name</label>
+    				    <div class="controls controls-row">
+    				      <input type="text" id="c_first_name" readonly="true">
+    				    </div>
+    				  </div>
+    				  <div class="control-group">
+    				    <label class="control-label" for="modern_award_no">Contact Full Name</label>
+    				    <div class="controls controls-row">
+    				      <input type="text" id="c_full_name" readonly="true">
+    				    </div>
+    				  </div>
+    				  <div class="control-group">
+    				    <label class="control-label" for="modern_award_no">Contact Title</label>
+    				    <div class="controls controls-row">
+    				      <input type="text" id="c_title" readonly="true">
+    				    </div>
+    				  </div>
+    				  <div class="control-group">
+    				    <label class="control-label" for="modern_award_no">Date of Quotation</label>
+    				    <div class="controls controls-row">
+    				      <input type="text" id="date_of_quotation" name="date_of_quotation" readonly="true" value="<?php echo $date_slash?>">
+    				    </div>
+    				  </div>
 				  </div>
-				  <div class="control-group">
-				    <label class="control-label" for="modern_award_name">Company</label>
-				    <div class="controls">
-				      <select id="cmb-company" name="company_no">
-				      	<option></option>
-				      	<?php foreach ($company as $value) : ?>
-							<option value="<?php echo $value["client_no"]?>"><?php echo $value["company_name"]?></option>
-						<?php endforeach;?>
-				      </select>
-				      <input type="hidden" id="state_no"/>
+				<div class="span12">
+    				  <h4>On Cost</h4>
+    					<hr>
+    				<div style="height: 20px;"></div>
+    				<div class="span6">
+    				  <div class="control-group">
+    				    <label class="control-label" for="modern_award_no">Super %</label>
+    				    <div class="controls controls-row">
+    				      <select class="" id="cmb-super" name="B_14">
+    				      	<option></option>
+    				      	<?php foreach ($super as $value) : ?>
+    							<option value="<?php echo $value["super_no"]?>"><?php echo $value["super"]?></option>
+    						<?php endforeach;?>
+    				      </select>
+    				      <input type="text" id="effective_date" />
+    				    </div>
+    				  </div>
+    				  <div class="control-group">
+    				    <label class="control-label" for="modern_award_name">Workcover %</label>
+    				    <div class="controls">
+    				      <select id="cmb-workcover" name="B_15">
+    				      	<option></option>
+    				      	<?php foreach ($workcover as $value) : ?>
+    							<option value="<?php echo $value["work_cover_no"]?>"><?php echo $value["work_cover"]?></option>
+    						<?php endforeach;?>
+    				      </select>
+    				    </div>
+    				  </div>
+    				  <div class="control-group">
+    				    <label class="control-label" for="modern_award_no">Industry Rate</label>
+    				    <div class="controls controls-row">
+    				      <input type="text" id="B_16" class="txt" name="B_16">
+    				    </div>
+    				  </div>
+    				  <div class="control-group">
+    				    <label class="control-label" for="modern_award_no">WIC Code and Description</label>
+    				    <div class="controls controls-row">
+    				      <input type="text" id="B_17" readonly="true" name="B_17">
+    				    </div>
+    				  </div>
+    				  <div class="control-group">
+    				    <label class="control-label" for="modern_award_no">Labour Power WC</label>
+    				    <div class="controls controls-row">
+    				      <input type="text" id="B_18" name="B_18">
+    				    </div>
+    				  </div>
+    				 </div>
+    				 
+    				 <div class="span5">
+    				  <div class="control-group">
+    				    <label class="control-label" for="modern_award_no">Payroll Tax %</label>
+    				    <div class="controls controls-row">
+    				      <input type="text" id="B_19" name="B_19" readonly="true">
+    				    </div>
+    				  </div>
+    				  <div class="control-group">
+    				    <label class="control-label" for="modern_award_name">Public Liability %</label>
+    				    <div class="controls">
+    				      <select name="B_20" id="B_20">
+    				      	<option></option>
+    				      	<?php foreach ($public_liability as $value) : ?>
+    							<option value="<?php echo $value["public_no"]?>"><?php echo $value["public_value"]?></option>
+    						<?php endforeach;?>
+    				      </select>
+    				    </div>
+    				  </div>
+    				  <div class="control-group">
+    				    <label class="control-label" for="modern_award_name">Insurance $</label>
+    				    <div class="controls">
+    				      <select name="B_21" id="B_21">
+    				      	<option></option>
+    				      	<?php foreach ($insurance as $value) : ?>
+    							<option value="<?php echo $value["insurance_no"]?>"><?php echo $value["insurance"]?></option>
+    						<?php endforeach;?>
+    				      </select>
+    				    </div>
+    				  </div>
+    				  <div class="control-group">
+    				    <label class="control-label" for="modern_award_name">Long Service</label>
+    				    <div class="controls">
+    				      <select name="long_service" id="long_service">
+    				      	<option></option>
+    				      	<?php foreach ($long_service as $value) : ?>
+    							<option value="<?php echo $value["long_services_no"]?>"><?php echo $value["long_services"]?></option>
+    						<?php endforeach;?>
+    				      </select>
+    				    </div>
+    				  </div>
+    				  <div class="control-group">
+    				    <label class="control-label" for="modern_award_name">Admin %</label>
+    				    <div class="controls">
+    				      <select name="B_22" id="B_22">
+    				      	<option></option>
+    				      	<?php foreach ($admin as $value) : ?>
+    							<option value="<?php echo $value["admin_no"]?>"><?php echo $value["admin"]?></option>
+    						<?php endforeach;?>
+    				      </select>
+    				    </div>
+    				  </div>
 				    </div>
-				  </div>
-				  <div class="control-group">
-				    <label class="control-label" for="modern_award_no">Department</label>
-				    <div class="controls controls-row">
-				      <input type="text" id="department" readonly="true">
-				    </div>
-				  </div>
-				  <div class="control-group">
-				    <label class="control-label" for="modern_award_no">Address Line 1</label>
-				    <div class="controls controls-row">
-				      <input type="text" id="add1" readonly="true">
-				    </div>
-				  </div>
-				  <div class="control-group">
-				    <label class="control-label" for="modern_award_no">Address Line 2</label>
-				    <div class="controls controls-row">
-				      <input type="text" id="add2" readonly="true">
-				    </div>
-				  </div>
-				  <div class="control-group">
-				    <label class="control-label" for="modern_award_no">Contact First Name</label>
-				    <div class="controls controls-row">
-				      <input type="text" id="c_first_name" readonly="true">
-				    </div>
-				  </div>
-				  <div class="control-group">
-				    <label class="control-label" for="modern_award_no">Contact Full Name</label>
-				    <div class="controls controls-row">
-				      <input type="text" id="c_full_name" readonly="true">
-				    </div>
-				  </div>
-				  <div class="control-group">
-				    <label class="control-label" for="modern_award_no">Contact Title</label>
-				    <div class="controls controls-row">
-				      <input type="text" id="c_title" readonly="true">
-				    </div>
-				  </div>
-				  <div class="control-group">
-				    <label class="control-label" for="modern_award_no">Date of Quotation</label>
-				    <div class="controls controls-row">
-				      <input type="text" id="date_of_quotation" name="date_of_quotation" readonly="true" value="<?php echo $date_slash?>">
-				    </div>
-				  </div>
-				  
-				  <h4>On Cost</h4>
-					<hr>
-				<div style="height: 20px;"></div>
-				<div class="span6">
-				  <div class="control-group">
-				    <label class="control-label" for="modern_award_no">Super %</label>
-				    <div class="controls controls-row">
-				      <select class="" id="cmb-super" name="B_14">
-				      	<option></option>
-				      	<?php foreach ($super as $value) : ?>
-							<option value="<?php echo $value["super_no"]?>"><?php echo $value["super"]?></option>
-						<?php endforeach;?>
-				      </select>
-				      <input type="text" id="effective_date" />
-				    </div>
-				  </div>
-				  <div class="control-group">
-				    <label class="control-label" for="modern_award_name">Workcover %</label>
-				    <div class="controls">
-				      <select id="cmb-workcover" name="B_15">
-				      	<option></option>
-				      	<?php foreach ($workcover as $value) : ?>
-							<option value="<?php echo $value["work_cover_no"]?>"><?php echo $value["work_cover"]?></option>
-						<?php endforeach;?>
-				      </select>
-				    </div>
-				  </div>
-				  <div class="control-group">
-				    <label class="control-label" for="modern_award_no">Industry Rate</label>
-				    <div class="controls controls-row">
-				      <input type="text" id="B_16" class="txt" name="B_16">
-				    </div>
-				  </div>
-				  <div class="control-group">
-				    <label class="control-label" for="modern_award_no">WIC Code and Description</label>
-				    <div class="controls controls-row">
-				      <input type="text" id="B_17" readonly="true" name="B_17">
-				    </div>
-				  </div>
-				  <div class="control-group">
-				    <label class="control-label" for="modern_award_no">Labour Power WC</label>
-				    <div class="controls controls-row">
-				      <input type="text" id="B_18" name="B_18">
-				    </div>
-				  </div>
 				 </div>
-				 
-				 <div class="span5">
-				  <div class="control-group">
-				    <label class="control-label" for="modern_award_no">Payroll Tax %</label>
-				    <div class="controls controls-row">
-				      <input type="text" id="B_19" name="B_19" readonly="true">
-				    </div>
-				  </div>
-				  <div class="control-group">
-				    <label class="control-label" for="modern_award_name">Public Liability %</label>
-				    <div class="controls">
-				      <select name="B_20" id="B_20">
-				      	<option></option>
-				      	<?php foreach ($public_liability as $value) : ?>
-							<option value="<?php echo $value["public_no"]?>"><?php echo $value["public_value"]?></option>
-						<?php endforeach;?>
-				      </select>
-				    </div>
-				  </div>
-				  <div class="control-group">
-				    <label class="control-label" for="modern_award_name">Insurance $</label>
-				    <div class="controls">
-				      <select name="B_21" id="B_21">
-				      	<option></option>
-				      	<?php foreach ($insurance as $value) : ?>
-							<option value="<?php echo $value["insurance_no"]?>"><?php echo $value["insurance"]?></option>
-						<?php endforeach;?>
-				      </select>
-				    </div>
-				  </div>
-				  <div class="control-group">
-				    <label class="control-label" for="modern_award_name">Long Service</label>
-				    <div class="controls">
-				      <select name="long_service" id="long_service">
-				      	<option></option>
-				      	<?php foreach ($long_service as $value) : ?>
-							<option value="<?php echo $value["long_services_no"]?>"><?php echo $value["long_services"]?></option>
-						<?php endforeach;?>
-				      </select>
-				    </div>
-				  </div>
-				  <div class="control-group">
-				    <label class="control-label" for="modern_award_name">Admin %</label>
-				    <div class="controls">
-				      <select name="B_22" id="B_22">
-				      	<option></option>
-				      	<?php foreach ($admin as $value) : ?>
-							<option value="<?php echo $value["admin_no"]?>"><?php echo $value["admin"]?></option>
-						<?php endforeach;?>
-				      </select>
-				    </div>
-				  </div>
-				 </div>
+				 <div class="span12">
 				   <h4>Payroll Information</h4>
 					<hr>
+					<div class="span6">
 				<div style="height: 20px;"></div>
 				  <div class="control-group">
 				    <label class="control-label" for="modern_award_no">Standard Labour Hire/Transition/Limited Tenure</label>
@@ -344,56 +351,60 @@
 				      </select>
 				    </div>
 				  </div>
-				  
-				  <div class="control-group">
-				    <label class="control-label" for="modern_award_no">Do you want shifts set up?</label>
-				    <div class="controls controls-row">
-				      <input type="text" class="" id="D_15" name="D_15">
-				    </div>
 				  </div>
-				  <div class="control-group">
-				    <label class="control-label" for="modern_award_no">How are you paying ordinary hours?</label>
-				    <div class="controls controls-row">
-				      <input type="text" class="" id="D_16" name="D_16">
-				    </div>
+				  <div class="span5">
+    				  <div class="control-group">
+    				    <label class="control-label" for="modern_award_no">Do you want shifts set up?</label>
+    				    <div class="controls controls-row">
+    				      <input type="text" class="" id="D_15" name="D_15">
+    				    </div>
+    				  </div>
+    				  <div class="control-group">
+    				    <label class="control-label" for="modern_award_no">How are you paying ordinary hours?</label>
+    				    <div class="controls controls-row">
+    				      <input type="text" class="" id="D_16" name="D_16">
+    				    </div>
+    				  </div>
+    				  <div class="control-group">
+    				    <label class="control-label" for="modern_award_no">Are lunch breaks deducted, what are they?</label>
+    				    <div class="controls controls-row">
+    				      <input type="text" class="" id="D_17" name="D_17">
+    				    </div>
+    				  </div>
+    				  <div class="control-group">
+    				    <label class="control-label" for="modern_award_no">Are there any exemptions to OT as above?</label>
+    				    <div class="controls controls-row">
+    				      <input type="text" class="" id="D_18" name="D_18">
+    				    </div>
+    				  </div>
+    				  <div class="control-group">
+    				    <label class="control-label" for="modern_award_no">Are there any exemptions to Saturday?</label>
+    				    <div class="controls controls-row">
+    				      <input type="text" class="" id="D_19" name="D_19">
+    				    </div>
+    				  </div>
+    				  <div class="control-group">
+    				    <label class="control-label" for="modern_award_no">Are there any exemptions to Sunday?</label>
+    				    <div class="controls controls-row">
+    				      <input type="text" class="" id="D_20" name="D_20">
+    				    </div>
+    				  </div>
+    				  <div class="control-group">
+    				    <label class="control-label" for="modern_award_no">Are there any exemptions to Public Holidays?</label>
+    				    <div class="controls controls-row">
+    				      <input type="text" class="" id="D_21" name="D_21">
+    				    </div>
+    				  </div>
+    				  <div class="control-group">
+    				    <label class="control-label" for="modern_award_no">Other Information</label>
+    				    <div class="controls controls-row">
+    				      <input type="text" class="" id="D_22" name="D_22">
+    				    </div>
+    				  </div>
 				  </div>
-				  <div class="control-group">
-				    <label class="control-label" for="modern_award_no">Are lunch breaks deducted, what are they?</label>
-				    <div class="controls controls-row">
-				      <input type="text" class="" id="D_17" name="D_17">
-				    </div>
 				  </div>
-				  <div class="control-group">
-				    <label class="control-label" for="modern_award_no">Are there any exemptions to OT as above?</label>
-				    <div class="controls controls-row">
-				      <input type="text" class="" id="D_18" name="D_18">
-				    </div>
-				  </div>
-				  <div class="control-group">
-				    <label class="control-label" for="modern_award_no">Are there any exemptions to Saturday?</label>
-				    <div class="controls controls-row">
-				      <input type="text" class="" id="D_19" name="D_19">
-				    </div>
-				  </div>
-				  <div class="control-group">
-				    <label class="control-label" for="modern_award_no">Are there any exemptions to Sunday?</label>
-				    <div class="controls controls-row">
-				      <input type="text" class="" id="D_20" name="D_20">
-				    </div>
-				  </div>
-				  <div class="control-group">
-				    <label class="control-label" for="modern_award_no">Are there any exemptions to Public Holidays?</label>
-				    <div class="controls controls-row">
-				      <input type="text" class="" id="D_21" name="D_21">
-				    </div>
-				  </div>
-				  <div class="control-group">
-				    <label class="control-label" for="modern_award_no">Other Information</label>
-				    <div class="controls controls-row">
-				      <input type="text" class="" id="D_22" name="D_22">
-				    </div>
-				  </div>
-			</div>		<!-- END TAB 1 -->	
+			</div>		
+			<!-- END TAB 1 -->	
 			
 			<!-- TAB 2 -->
 			<div class="span12" id="tab2" style="display:none;">
@@ -1277,12 +1288,8 @@
             </div>
         <!-- END TAB 5-->
         
-			<div class="span11">
-				<hr>
-			</div>
+			
 		</form>
-	</div>
-		
 	</div>
 	
 	<div class="span12 div-award">

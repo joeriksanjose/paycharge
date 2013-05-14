@@ -8,6 +8,17 @@ class Tbl_sales_modern_award extends CI_Model
     {
         parent::__construct();
     }
+    
+    public function get_charge_rate_info($where){
+        $this->db->where($where);
+        return $this->db->get("tbl_charge_rate")->row_array();
+    }
+    
+    public function get_payrate_info($where){
+        
+        $this->db->where($where);
+        return $this->db->get("tbl_payrate")->result_array();
+    }
 	
 	public function get_company_info($where){
 		

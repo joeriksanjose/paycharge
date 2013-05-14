@@ -31,6 +31,16 @@ class Sales_transaction extends CI_Controller
 		$this->data["username"] = $this->session->userdata("username");
         $this->data["is_admin"] = $this->user_session["is_admin"];
 	}
+    
+    public function getAwardInfo(){
+        $post = $this->input->post(null, true);
+        
+        $params["charge_rate"] = $this->smd->get_charge_rate_info($post);
+        $params["payrate"] = $this->smd->get_payrate_info($post);
+        $params["status"] = true;
+        
+        echo json_encode($params);
+    }
 	
 	public function get_modern_info(){
 			
