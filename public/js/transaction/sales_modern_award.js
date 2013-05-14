@@ -77,34 +77,34 @@ $(document).ready(function(){
 			var weekly = parseInt(json_data.B_26);
 			var base_rate;
 			
-			var base_rate_1 = (weekly / json_data.payrate_1).toFixed(2);
+			var base_rate_1 = computeBaseRate(json_data.payrate_1, weekly);
 			$("#txt-base-rate-1").val(base_rate_1);
 			
-			var base_rate_2 = (weekly / json_data.payrate_2).toFixed(2);
+			var base_rate_2 = computeBaseRate(json_data.payrate_2, weekly);
 			$("#txt-base-rate-2").val(base_rate_2);
 			
-			var base_rate_3 = (weekly / json_data.payrate_3).toFixed(2);
+			var base_rate_3 = computeBaseRate(json_data.payrate_3, weekly);
 			$("#txt-base-rate-3").val(base_rate_3);
 			
-			var base_rate_4 = (weekly / json_data.payrate_4).toFixed(2);
+			var base_rate_4 = computeBaseRate(json_data.payrate_4, weekly);
 			$("#txt-base-rate-4").val(base_rate_4);
 			
-			var base_rate_5 = (weekly / json_data.payrate_5).toFixed(2);
+			var base_rate_5 = computeBaseRate(json_data.payrate_5, weekly);
 			$("#txt-base-rate-5").val(base_rate_5);
 			
-			var base_rate_6 = (weekly / json_data.payrate_6).toFixed(2);
+			var base_rate_6 = computeBaseRate(json_data.payrate_6, weekly);
 			$("#txt-base-rate-6").val(base_rate_6);
 			
-			var base_rate_7 = (weekly / json_data.payrate_7).toFixed(2);
+			var base_rate_7 = computeBaseRate(json_data.payrate_7, weekly);
 			$("#txt-base-rate-7").val(base_rate_7);
 			
-			var base_rate_8 = (weekly / json_data.payrate_8).toFixed(2);
+			var base_rate_8 = computeBaseRate(json_data.payrate_8, weekly);
 			$("#txt-base-rate-8").val(base_rate_8);
 			
-			var base_rate_9 = (weekly / json_data.payrate_9).toFixed(2);
+			var base_rate_9 = computeBaseRate(json_data.payrate_9, weekly);
 			$("#txt-base-rate-9").val(base_rate_9);
 			
-			var base_rate_10 = (weekly / json_data.payrate_10).toFixed(2);
+			var base_rate_10 = computeBaseRate(json_data.payrate_10, weekly);
 			$("#txt-base-rate-10").val(base_rate_10);	
 			
 			
@@ -146,40 +146,50 @@ $(document).ready(function(){
 			var rate = parseInt(json_data.B_51);
 			var allow;
 			
-			if($.trim(json_data.allowance_rate1) != null){
+			if($.trim(json_data.allowance_rate1) != "" && $.trim(json_data.B_52) != ""){
 				allow = ((parseFloat(json_data.allowance_rate1) / 100) * rate).toFixed(2);
 				$("#B_52").val(allow);
+			} else if ($.trim(json_data.B_52)) {
+			    $("#B_52").val(json_data.B_52);
 			} else {
 				$("#B_52").removeAttr("disabled");
 			}
 			
-			if($.trim(json_data.allowance_rate2) != null){
-				allow = ((parseFloat(json_data.allowance_rate2) / 100) * rate).toFixed(2);
-				$("#B_53").val(allow);
-			} else {
-				$("#B_53").removeAttr("disabled");
-			}
-			
-			if($.trim(json_data.allowance_rate3) != null){
-				allow = ((parseFloat(json_data.allowance_rate3) / 100) * rate).toFixed(2);
-				$("#B_54").val(allow);
-			} else {
-				$("#B_54").removeAttr("disabled");
-			}
-			
-			if($.trim(json_data.allowance_rate4) != null){
-				allow = ((parseFloat(json_data.allowance_rate4) / 100) * rate).toFixed(2);
-				$("#B_55").val(allow);
-			} else {
-				$("#B_55").removeAttr("disabled");
-			}
-			
-			if($.trim(json_data.allowance_rate5) != ""){
-				allow = ((parseFloat(json_data.allowance_rate5) / 100) * rate).toFixed(2);
-				$("#B_56").val(allow);
-			} else {
-				$("#B_56").removeAttr("disabled");
-			}
+			if($.trim(json_data.allowance_rate2) != "" && $.trim(json_data.B_53) != ""){
+                allow = ((parseFloat(json_data.allowance_rate2) / 100) * rate).toFixed(2);
+                $("#B_53").val(allow);
+            } else if ($.trim(json_data.B_53)) {
+                $("#B_53").val(json_data.B_53);
+            } else {
+                $("#B_53").removeAttr("disabled");
+            }
+            
+            if($.trim(json_data.allowance_rate3) != "" && $.trim(json_data.B_54) != ""){
+                allow = ((parseFloat(json_data.allowance_rate3) / 100) * rate).toFixed(2);
+                $("#B_54").val(allow);
+            } else if ($.trim(json_data.B_54)) {
+                $("#B_54").val(json_data.B_54);
+            } else {
+                $("#B_54").removeAttr("disabled");
+            }
+            
+            if($.trim(json_data.allowance_rate4) != "" && $.trim(json_data.B_55) != ""){
+                allow = ((parseFloat(json_data.allowance_rate4) / 100) * rate).toFixed(2);
+                $("#B_55").val(allow);
+            } else if ($.trim(json_data.B_55)) {
+                $("#B_55").val(json_data.B_55);
+            } else {
+                $("#B_55").removeAttr("disabled");
+            }
+            
+            if($.trim(json_data.allowance_rate5) != "" && $.trim(json_data.B_56) != ""){
+                allow = ((parseFloat(json_data.allowance_rate5) / 100) * rate).toFixed(2);
+                $("#B_56").val(allow);
+            } else if ($.trim(json_data.B_56)) {
+                $("#B_56").val(json_data.B_56);
+            } else {
+                $("#B_56").removeAttr("disabled");
+            }
 		});
 	});
 	
@@ -199,7 +209,7 @@ $(document).ready(function(){
 			var str = "";
 			str = str + "<option></option>";
 			$.each(json_data.work_cover, function(i, item){
-				str = str + "<option value="+item.work_cover_no+">"+item.work_cover+"</option>";
+				str = str + "<option work-cover-no="+item.work_cover_no+" value="+item.work_cover+">"+item.work_cover+"</option>";
 			});
 			
 			$("#cmb-workcover").empty().append(str);
@@ -209,14 +219,14 @@ $(document).ready(function(){
 	});
 	
 	$("#cmb-super").change(function(){
-		$.post(base_url+"sales_transaction/get_effective_date", {super_no:$(this).val()}, function(data){
+		$.post(base_url+"sales_transaction/get_effective_date", {super_no:$(this).find('option:selected').attr('super-no')}, function(data){
 			var json_data = $.parseJSON(data);
 			$("#effective_date").val(json_data.effective_date);
 		});
 	});
 	
 	$("#cmb-workcover").change(function(){
-		$.post(base_url+"sales_transaction/get_workcover_info", {work_cover_no:$(this).val()}, function(data){
+		$.post(base_url+"sales_transaction/get_workcover_info", {work_cover_no:$('option:selected', this).attr('work-cover-no')}, function(data){
 			var json_data = $.parseJSON(data);
 			$("#wic_code").val(json_data.work_cover_code);
 		});
@@ -274,4 +284,99 @@ $(document).ready(function(){
         return false;
     });
     
+    // delete modern award
+    var award_no_del;
+    $(".delete-award-btn").click(function(){
+       award_no_del = $(this).attr("del-id");
+       remove_row = $(this).parent().parent();
+       $("#deleteModal").modal("show"); 
+    });
+    
+    $("#delete-award-btn-modal").click(function(){
+        $.post(base_url+"sales_transaction/deleteSalesModern", {award_no:award_no_del}, function(data){
+           res = $.parseJSON(data);
+           if (res.status) {
+               remove_row.fadeOut("slow", function(){
+                  $(this).remove(); 
+               });
+           } else {
+               alert("Database Error");
+           }
+           
+           $("#deleteModal").modal("hide");
+        });
+    });
+    // end delete modern award
+    
+    // search    
+    $("#search-award").keypress(function(evt){
+        if(evt.which==13){
+            $("#btn-search-award").click();
+        }
+    });
+    
+    $("#btn-search-award").live("click" ,function(){
+        $("#div-success").css("display", "none");
+        $.post(base_url+"sales_transaction/ajaxSearchSalesAward", 
+            {key:$("#search-award").val()}, function(data){
+             var result = $.parseJSON(data);
+             var str = "";
+             
+             if (result.status) {
+                 str = str + "<table class='table table-striped table-bordered' id='award-table'>";
+                 str = str + "<thead>"
+                 str = str + "<tr>";
+                 str = str + "<th>Transaction No</th>";
+                 str = str + "<th>Modern Award Name</th>";
+                 str = str + "<th>Date of Quotation</th>";
+                 str = str + "<th>Company</th>";
+                 str = str + "<th>Action</th>";
+                 str = str + "</tr>";
+                 str = str + "</thead>";
+                 str = str + "<tbody>";
+                 $.each(result.award_info, function(i, item){
+                     str = str + "<tr>";
+                     str = str + "<td>"+item.trans_no+"</td>";
+                     str = str + "<td>"+item.transaction_name+"</td>";
+                     str = str + "<td>"+item.date_of_quotation+"</td>";
+                     str = str + "<td>"+item.company_name+"</td>";
+                     str = str + "<td><button type='button' class='btn edit-award-btn' edit-id='"+item.trans_no+"'>";
+                     str = str + "<i class='icon-edit'></i></button> ";
+                     str = str + "<button type='button' class='btn btn-danger delete-award-btn' del-id='"+item.trans_no+"'>";
+                     str = str + "<i class='icon-trash icon-white'></i>";
+                     str = str + "</button></td>";
+                     str = str + "</tr>";
+                 });
+                 str = str + "<tbody>";
+                 str = str + "</table>";
+             } else {
+                 str = str + "<table class='table table-striped table-bordered'>";
+                 str = str + "<tr>";
+                 str = str + "<th>Transaction No</th>";
+                 str = str + "<th>Modern Award Name</th>";
+                 str = str + "<th>Date of Quotation</th>";
+                 str = str + "<th>Company</th>";
+                 str = str + "<th>Action</th>";
+                 str = str + "</tr>";
+                 str = str + "<tr>";
+                 str = str + "<td colspan='5'>";
+                 str = str + "No results found.";
+                 str = str + "</td>";
+                 str = str + "</tr>";
+                 str = str + "</table>";
+             }
+             
+             $("#modern-body").html(str);
+             $("#award-table").tablesorter();
+
+        });
+    });
+    
+    // end searh
+    
 });
+
+function computeBaseRate(baseRate, weekly)
+{
+    return (baseRate/weekly).toFixed(2);
+}

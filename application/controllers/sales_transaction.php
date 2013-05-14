@@ -12,7 +12,7 @@ class Sales_transaction extends CI_Controller
             "Public Liability (% on pay rate)",
             "Payroll Tax (% on super total)",
             "Insurace",
-            "Long Service",
+            //"Long Service",
             "Administration (% on super total)",
             "TOTAL WITH PAY + ONCOSTS:",
             "$ Margin",
@@ -73,18 +73,58 @@ class Sales_transaction extends CI_Controller
 		$this->data["header"] = $this->load->view("header", $this->data, true);
 		$this->data["footer"] = $this->load->view("footer", $this->data, true);
         
-		$this->data["modern_awards"] = $this->smd->getModernAwards();
+        $this->data["status"] = $this->session->userdata("status");
+        $this->data["status_msg"] = $this->session->userdata("status_msg");
+        
+		$this->data["modern_awards_sales"] = $this->smd->getSalesModernAwards();
+        $this->data["modern_awards"] = $this->smd->getModernAwards();
 		$this->data["company"] = $this->smd->getCompany();
 		$this->data["super"] = $this->smd->getSuper();
-		// $this->data["workcover"] = $this->smd->getWorkcover();
 		$this->data["public_liability"] = $this->smd->getPublicLiability();
 		$this->data["insurance"] = $this->smd->getInsurance();
 		$this->data["long_service"] = $this->smd->getLongService();
 		$this->data["admin"] = $this->smd->getAdmin();
 		$this->data["position"] = $this->smd->getPosition();
+        
+        $this->session->unset_userdata("status");
+        $this->session->unset_userdata("status_msg");
 		
 		$this->load->view("sales/transaction_view", $this->data);
 	}
+	
+	public function ajaxSearchSalesAward()
+	{
+	    $params = array();
+	    $params["status"] = true;
+	    $key = $this->input->post("key", true);
+        
+        $res = $this->smd->searchSalesModernAward($key);
+        
+        if (!$res) {
+            $params["status"] = false;
+            echo json_encode($params);
+            return;
+        }
+        
+        $params["award_info"] = $res;
+        echo json_encode($params);
+        return;
+	}
+	
+	public function deleteSalesModern()
+    {
+        $params = array();
+        $params["status"] = true;
+        $award_no = $this->input->post("award_no");
+        if (!$this->smd->deleteSalesModernAward($award_no)) {
+            $params["status"] = false;
+            echo json_encode($params);
+            return;
+        }
+        
+        echo json_encode($params);
+        return;
+    }
     
 	public function getTransNo(){
 		$sql = $this->smd->getTransNo();
@@ -97,6 +137,7 @@ class Sales_transaction extends CI_Controller
         $post = $this->input->post(null, true);
         
         $this->db->trans_begin();
+        
         for ($i = 1; $i <= 10; $i++) {
         	$trans_no = $post["trans_no"];
 			$grade = "Grade ".$i;
@@ -116,6 +157,16 @@ class Sales_transaction extends CI_Controller
 				"base_rate"          => $base_rate,
 				"casual_rate"        => $casual_rate
 			);
+            
+            $ml_cacl_1 = $this->computeML($post, $i, 1);
+            $ml_cacl_2 = $this->computeML($post, $i, 2);
+            $ml_cacl_3 = $this->computeML($post, $i, 3);
+            
+            foreach ($ml_cacl_1 as $key => $row) {
+                $this->smd->saveTblMl($i, $row);
+                $this->smd->saveTblMl($i, $ml_cacl_2[$key]);
+                $this->smd->saveTblMl($i, $ml_cacl_3[$key]);
+            } 
 
 			$this->smd->savePayRate($data);
 			unset($post["position_no".$i]);
@@ -126,20 +177,61 @@ class Sales_transaction extends CI_Controller
         
 		
         unset($post["allowance_caption12"]);
+        $post["trans_type"] = 1;
+        $award_info = $this->smd->get_modern_info(array("modern_award_no" => $post["modern_award_no"]));
+        $post["transaction_name"] = $award_info["modern_award_name"];
+        $date = DateTime::createFromFormat('d/m/Y', $post["date_of_quotation"]);
+        $post["date_of_quotation"] = $date->format("Y-m-d");
         
         $this->smd->save($post);
 		
 		if ($this->db->trans_status() === false) {
-			log_message("Transaction failed (tbl_charge_rate, tbl_payrate)");
+			log_message("Transaction failed (tbl_charge_rate, tpsbl_payrate)");
     		$this->db->trans_rollback();
+            $this->session->set_userdata("status", 0);
+            $this->session->set_userdata("status_msg", "<b>Error!</b> Cannot create new modern award");
 		} else {
     		$this->db->trans_commit();
+            $this->session->set_userdata("status", 1);
+            $this->session->set_userdata("status_msg", "<b>Done!</b> Modern Award successfully saved");
 		}
+        
+        redirect(base_url("sales_transaction"));
     }
     
-    private function computeML($post, $index, $comp_type, $calc) 
+    private function computeML($post, $index, $calc) 
     {
         $full_time = $this->computeFullHourlyPayRate($post, $index, $calc);
+        $casual = $this->computeCasualLoading($post, $index, $calc);
+        $shift = $this->computeShiftLoading($full_time, $casual, $post, $index, $calc);
+        $total_casual = $this->computeTotalCasualHourlyPay($full_time, $casual, $shift, $post, $index, $calc);
+        $super = $this->computeSuperAnnuation($total_casual, $post, $index, $calc);
+        $work_cover = $this->computeWorkCover($total_casual, $super, $post, $index, $calc);
+        $public = $this->computePublicLiability($total_casual, $super, $post, $index, $calc);
+        $payroll_tax = $this->computePayrollTax($total_casual, $super, $post, $index, $calc);
+        $insurance = $this->computeInsurance($post, $calc);
+        $admin = $this->computeAdmin($total_casual, $super, $post, $index, $calc);
+        $total_with_pay = $this->computeTotalWithPay($total_casual, $super, $work_cover, $public, $payroll_tax, $insurance, $admin, $post, $index, $calc);
+        $hourly_charge_rate = $this->computeHourlyChargeRates($total_with_pay, $post, $index, $calc);
+        $dollar_margin = $this->computeDollarMargin($hourly_charge_rate, $total_with_pay, $post, $index, $calc);
+        $percent_margin = $this->computePercentMargin($hourly_charge_rate, $post, $index, $calc);
+        
+        return array(
+            $full_time,
+            $casual,
+            $shift,
+            $total_casual,
+            $super,
+            $work_cover,
+            $public,
+            $payroll_tax,
+            $insurance,
+            $admin,
+            $total_with_pay,
+            $dollar_margin,
+            $percent_margin,
+            $hourly_charge_rate
+        );
     }
     
     private function computeFullHourlyPayRate($post, $index, $calc)
@@ -315,7 +407,7 @@ class Sales_transaction extends CI_Controller
                 $t_12 = $full_time["T1/2"] * 1.75;
                 $double = $full_time["double"] * 2.25;
                 $dt_12 = $full_time["DT1/2"] * 2.75;
-                $triple = $full_time["triple"] * 3;
+                $triple = $full_time["triple"] * 3.25;
                 break;                               
         }
         
@@ -346,7 +438,7 @@ class Sales_transaction extends CI_Controller
                 $normal = $total_hourly_pay["normal"] * ($post["B_14"]/100);
                 $early = $total_hourly_pay["early"] * ($post["B_14"]/100);
                 $afternoon = $total_hourly_pay["afternoon"] * ($post["B_14"]/100);
-                $night = $total_hourly_pay["afternoon"] * ($post["B_14"]/100);
+                $night = $total_hourly_pay["night"] * ($post["B_14"]/100);
                 $fifty_shift = $total_hourly_pay["50%Shift"] * ($post["B_14"]/100);
                 $t_14 = 0;
                 $t_12 = 0;
@@ -587,10 +679,10 @@ class Sales_transaction extends CI_Controller
         );
     }
 
-    private function computeHourlyChargeRates($total_with_pay, $post, $index)
+    private function computeHourlyChargeRates($total_with_pay, $post, $index, $calc)
     {
         $description = $this->ml_description[13];
-        if ($post["swi_peror_cur"] == "$") {
+        if ($post["swi_peror_cur"] == "2") {
             $normal = $total_with_pay["normal"] + $post["B_24"];
             $early = $total_with_pay["early"] + $post["B_24"];
             $afternoon = $total_with_pay["afternoon"] + $post["B_24"];
@@ -631,10 +723,10 @@ class Sales_transaction extends CI_Controller
         );
     }
 
-    private function computeDollarMargin($hourly_charge_rate, $total_with_pay, $post, $index)
+    private function computeDollarMargin($hourly_charge_rate, $total_with_pay, $post, $index, $calc)
     {
         $description = $this->ml_description[11];
-        if ($post == "$") {
+        if ($post["swi_peror_cur"] == "2") {
             $normal = $post["B_24"];
             $early = $post["B_24"];
             $afternoon = $post["B_24"];
@@ -675,10 +767,10 @@ class Sales_transaction extends CI_Controller
         );
     }
 
-    private function computeDollarMargin($hourly_charge_rate, $post, $index)
+    private function computePercentMargin($hourly_charge_rate, $post, $index, $calc)
     {
-        $description = $this->ml_description[11];
-        if ($post == "$") {
+        $description = $this->ml_description[12];
+        if ($post["swi_peror_cur"] == "2") {
             $normal = ($post["B_24"]/$hourly_charge_rate["normal"])/100;
             $early = ($post["B_24"]/$hourly_charge_rate["early"])/100;
             $afternoon = ($post["B_24"]/$hourly_charge_rate["afternoon"])/100;

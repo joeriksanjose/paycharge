@@ -37,7 +37,7 @@
                                 <a href="<?php echo base_url("sales_transaction") ?>">Modern Award</a>
                             </li>
                             <li>
-                                <a href="<?php echo base_url("libraries/contacts") ?>">Client Agreement</a>
+                                <a href="<?php echo base_url("client_agreement") ?>">Client Agreement</a>
                             </li>
                         </ul>
                     </li>  
