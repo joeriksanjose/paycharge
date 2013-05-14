@@ -124,4 +124,55 @@ class Tbl_sales_modern_award extends CI_Model
     {
         return $this->db->insert("tbl_ml".$index, $data);
     }
+    
+    public function getSalesModernAwards()
+    {
+        $sql = 'SELECT ch.*, co.company_name '
+              .'FROM tbl_charge_rate as ch '
+              .'INNER JOIN tbl_company as co '
+              .'ON ch.company_no = co.client_no '
+              .'WHERE ch.trans_type = 1';
+              
+        $result = $this->db->query($sql)->result_array();
+        
+               
+        return $result;
+    }
+    
+    public function deleteSalesModernAward($trans_no)
+    {
+        $this->db->where(array("trans_no" => $trans_no));
+        if (!$this->db->delete("tbl_charge_rate")) {
+            return false;
+        }
+        
+        for ($i = 1; $i <= 10; $i++) {
+            $this->db->where(array("trans_no" => $trans_no));
+            if (!$this->db->delete("tbl_ml".$i)) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    public function searchSalesModernAward($key)
+    {
+        $sql = 'SELECT ch.*, co.company_name '
+              .'FROM tbl_charge_rate as ch '
+              .'INNER JOIN tbl_company as co '
+              .'ON ch.company_no = co.client_no '
+              .'WHERE ch.trans_no LIKE "'.$key.'%" '
+              .'OR ch.transaction_name LIKE "'.$key.'%"';
+              
+        if (trim($key) == "%") {
+            $sql = 'SELECT ch.*, co.company_name '
+              .'FROM tbl_charge_rate as ch '
+              .'INNER JOIN tbl_company as co '
+              .'ON ch.company_no = co.client_no '
+              .'WHERE ch.trans_type = 1';
+        }
+              
+        return $this->db->query($sql)->result_array();
+    }
 }

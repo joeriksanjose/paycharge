@@ -105,7 +105,7 @@
 				  <div class="control-group">
 				    <label class="control-label" for="date_of_quotation">Date of Quotation</label>
 				    <div class="controls controls-row">
-				      <input type="text" id="date_of_quotation" name="date_of_quotation">
+				      <input type="text" readonly="true" id="date_of_quotation" name="date_of_quotation" value="<?php echo date("d/m/Y", time()) ?>">
 				    </div>
 				  </div>
 				 </div>
@@ -120,7 +120,7 @@
     				      <select id="cmb-super" name="B_14">
     				      	<option></option>
     				      	<?php foreach ($super as $value) : ?>
-    							<option value="<?php echo $value["super_no"]?>"><?php echo $value["super"]?></option>
+    							<option super-no="<?php echo $value["super_no"] ?>" value="<?php echo $value["super"]?>"><?php echo $value["super"]?></option>
     						<?php endforeach;?>
     				      </select>
     				      <input type="text" id="effective_date"/>
@@ -132,7 +132,7 @@
     				      <select id="cmb-workcover" name="B_15">
     				      	<option></option>
     				      	<?php foreach ($workcover as $value) : ?>
-    							<option value="<?php echo $value["work_cover_no"]?>"><?php echo $value["work_cover"]?></option>
+    							<option work-cover-no="<?php echo $value["work_cover_no"] ?>" value="<?php echo $value["work_cover"]?>"><?php echo $value["work_cover"]?></option>
     						<?php endforeach;?>
     				      </select>
     				    </div>
@@ -170,7 +170,7 @@
     				      <select class="" id="p_liability" name="B_20">
     				      	<option></option>
     				      	<?php foreach ($public_liability as $value) : ?>
-    							<option value="<?php echo $value["public_no"]?>"><?php echo $value["public_value"]?></option>
+    							<option value="<?php echo $value["public_value"]?>"><?php echo $value["public_value"]?></option>
     						<?php endforeach;?>
     				      </select>
     				    </div>
@@ -181,7 +181,7 @@
     				      <select class="" id="insurance" name="B_21">
     				      	<option></option>
     				      	<?php foreach ($insurance as $value) : ?>
-    							<option value="<?php echo $value["insurance_no"]?>"><?php echo $value["insurance"]?></option>
+    							<option value="<?php echo $value["insurance"]?>"><?php echo $value["insurance"]?></option>
     						<?php endforeach;?>
     				      </select>
     				    </div>
@@ -192,7 +192,7 @@
     				      <select class="" id="long_service" name="long_service">
     				      	<option></option>
     				      	<?php foreach ($long_service as $value) : ?>
-    							<option value="<?php echo $value["long_services_no"]?>"><?php echo $value["long_services"]?></option>
+    							<option value="<?php echo $value["long_services"]?>"><?php echo $value["long_services"]?></option>
     						<?php endforeach;?>
     				      </select>
     				    </div>
@@ -203,7 +203,7 @@
     				      <select class="" id="admin_txt" name="B_22">
     				      	<option></option>
     				      	<?php foreach ($admin as $value) : ?>
-    							<option value="<?php echo $value["admin_no"]?>"><?php echo $value["admin"]?></option>
+    							<option value="<?php echo $value["admin"]?>"><?php echo $value["admin"]?></option>
     						<?php endforeach;?>
     				      </select>
     				    </div>
@@ -969,43 +969,74 @@
 		
 	<div class="span12 div-award">
 		<button type="button" id="add-new-modern" class="btn"><i class="icon-plus"></i> Add new modern award</button>
-	    <form class="form-search pull-right">
-	        <input type="text" class="input-xlarge search-query">
-	        <button type="submit" class="btn"><i class="icon-search"></i></button>
-	    </form>
+	    <div class="form-search pull-right">
+	        <input type="text" class="input-xlarge search-query" id="search-award">
+	        <button type="button" class="btn" id="btn-search-award"><i class="icon-search"></i></button>
+	    </div>
+	    <?php if ($status === 0) : ?>
+            <div class="alert alert-error">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <?php echo $status_msg ?>
+            </div>
+        <?php elseif ($status === 1) : ?>
+            <div class="alert alert-success">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <?php echo $status_msg ?>
+            </div>
+        <?php endif ; ?>
 	</div>
-	<div class="span12 div-award" style="max-height: 400px; overflow: auto;">
+	<div class="span12 div-award" style="max-height: 400px; overflow: auto; margin-top: 10px;" id="modern-body">
+	    
 		<table class="table table-bordered table-striped" id="sales-modern-table">
 		    <thead>
 			<tr>
-				<th>Modern Award No</th>
+				<th>Transaction No</th>
 				<th>Modern Award Name</th>
-				<th>Date Created</th>
+				<th>Date of Quotation</th>
+				<th>Company</th>
 				<th>Action</th>
 			</tr>
 			</thead>
 			<tbody>
-			<?php if(count($modern_awards)) : ?>
-			<?php foreach ($modern_awards as $modern_award) : ?>
+			<?php if(count($modern_awards_sales)) : ?>
+			<?php foreach ($modern_awards_sales as $modern_award) : ?>
 			<tr>
-				<td><?php echo $modern_award["modern_award_no"] ?></td>
-				<td><?php echo $modern_award["modern_award_name"] ?></td>
-				<td><?php echo date("d/m/Y", strtotime($modern_award["created_at"])) ?></td>
+				<td><?php echo $modern_award["trans_no"] ?></td>
+				<td><?php echo $modern_award["transaction_name"] ?></td>
+				<td><?php echo date("d/m/Y", strtotime($modern_award["date_of_quotation"])) ?></td>
+				<td><?php echo $modern_award["company_name"] ?></td>
 				<td>
 				    <button type="button" class="btn"><i class="icon-edit"></i></button>
-				    <button type="button" class="btn btn-danger"><i class="icon-trash icon-white"></i></button>
+				    <button type="button" del-id="<?php echo $modern_award["trans_no"] ?>" class="btn btn-danger delete-award-btn"><i class="icon-trash icon-white"></i></button>
 				</td>
 			</tr>
 			<?php endforeach ; ?>
 			<?php else : ?>
 			<tr>
-				<td colspan="3">Empty Record</td>
+				<td colspan="5">Empty Record</td>
 			</tr>	
 			<?php endif ; ?>
 			</tbody>
 		</table>
 	</div>
 </div>
+
+<!-- DELETE MODAL -->
+<div id="deleteModal" class="modal hide fade" tabindex="-1" role="dialog">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Delete Confirmation</h3>
+    </div>
+    <div class="modal-body">
+        <p>Are you sure you want to delete this modern award?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-danger" id="delete-award-btn-modal">Delete</button>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    </div>
+</div>
+<!-- END DELETE MODAL -->
+
 <script>
     $("#sales-modern-table").tablesorter();
 </script>
