@@ -9,6 +9,17 @@ class Tbl_client_agreement extends CI_Model
         parent::__construct();
     }
 	
+	public function saveTblMl($index, $data)
+    {
+        return $this->db->insert("tbl_ml".$index, $data);
+    }
+	
+	public function deleteTblMl($index, $data)
+    {
+        $this->db->where(array("trans_no" => $data));
+        return $this->db->delete("tbl_ml".$index);
+    }
+	
 	public function get_charge_rate_info($where){
 		
 		$this->db->where($where);
@@ -188,4 +199,77 @@ class Tbl_client_agreement extends CI_Model
 		$this->db->where(array("trans_no" => $data["trans_no"]));
 		return $this->db->update("tbl_print_dialog_default_values", $data);
 	}
+	
+	public function getAwardByAwardNo($award_no)
+    {
+        $this->db->where(array("trans_no" => $award_no));
+        return $this->db->get("tbl_charge_rate")->row_array();
+    }
+    
+	 /* RATE INCREASE */
+    
+    public function getUpcomingRateIncrease($modern_award_name)
+    {
+        $now = time();
+        $this->db->where(array("transaction_name" => $modern_award_name, "created_at >" => date("d/m/Y")));
+        $rates = $this->db->get("tbl_rate_increase")->result_array();
+        
+        if (!$rates) {
+            return false;
+        }
+        
+        // $upcoming_rate_increase = array();
+        // foreach ($rates as $rate) {
+        	// if (strtotime($rate["created_at"]) > $now) {
+                // $upcoming_rate_increase[] = $rate;
+            // }            
+        // }
+        
+        return $rates;    
+    }
+    
+    public function getRateIncreaseHistory($modern_award_name)
+    {
+        $now = time();
+        $this->db->where(array("transaction_name" => $modern_award_name));
+        $rates = $this->db->get($this->table_rate_increase)->result_array();
+        
+        if (!$rates) {
+            return false;
+        }
+        
+        $rate_increase_history = array();
+        foreach ($rates as $rate) {
+            if (strtotime($rate["created_at"]) < $now) {
+                $rate_increase_history[] = $rate;
+            }            
+        }
+        
+        return $rate_increase_history;    
+    }
+    
+    public function saveRate($data)
+    {
+        return $this->db->insert("tbl_rate_increase", $data);
+    }
+    
+    public function updateRate($id, $data)
+    {
+        $this->db->where(array("id" => $id));
+        return $this->db->update($this->table_rate_increase, $data);
+    }
+    
+    public function deleteRate($id)
+    {
+        $this->db->where(array("id" => $id));
+        return $this->db->delete($this->table_rate_increase);
+    }
+    
+    public function getRateById($id)
+    {
+        $this->db->where(array("id" => $id));
+        return $this->db->get($this->table_rate_increase)->row_array();
+    }
+    
+    /* END RATE INCREASE */
 }
