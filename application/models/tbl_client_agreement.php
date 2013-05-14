@@ -9,6 +9,24 @@ class Tbl_client_agreement extends CI_Model
         parent::__construct();
     }
 	
+	public function get_charge_rate_info($where){
+		
+		$this->db->where($where);
+		return $this->db->get("tbl_charge_rate")->row_array();
+	}
+	
+	public function get_payrate_info($where){
+		
+		$this->db->where($where);
+		return $this->db->get("tbl_payrate")->result_array();
+	}
+	
+	public function get_print_default_info($where){
+		
+		$this->db->where($where);
+		return $this->db->get("tbl_print_dialog_default_values")->row_array();
+	}
+	
 	public function get_company_info($where){
 		
 		$this->db->where($where);
@@ -132,5 +150,42 @@ class Tbl_client_agreement extends CI_Model
 	public function savePrint($data)
 	{
 		return $this->db->insert("tbl_print_dialog_default_values", $data);
+	}
+	
+	
+	public function delete($data)
+    {
+        $this->db->where(array("trans_no" => $data["trans_no"]));
+        return $this->db->delete("tbl_charge_rate", $data);
+    }
+	
+	public function deletePayrate($data)
+	{
+		$this->db->where(array("trans_no" => $data["trans_no"]));
+		return $this->db->delete("tbl_payrate", $data);
+	}
+	
+	public function deletePrint($data)
+	{
+		$this->db->where(array("trans_no" => $data["trans_no"]));
+		return $this->db->delete("tbl_print_dialog_default_values", $data);
+	}
+	
+	public function update($data)
+    {
+        $this->db->where(array("trans_no" => $data["trans_no"]));
+        return $this->db->update("tbl_charge_rate", $data);
+    }
+	
+	public function updatePayrate($data)
+	{
+		$this->db->where(array("trans_no" => $data["trans_no"], "grade" => $data["grade"]));
+		return $this->db->update("tbl_payrate", $data);
+	}
+	
+	public function updatePrint($data)
+	{
+		$this->db->where(array("trans_no" => $data["trans_no"]));
+		return $this->db->update("tbl_print_dialog_default_values", $data);
 	}
 }
