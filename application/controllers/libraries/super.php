@@ -121,8 +121,7 @@ class Super extends CI_Controller
     public function save()
     {
         $data = $this->input->post(null, true);
-        $date = DateTime::createFromFormat('d/m/Y', $data["effective_date"]);
-        $data["effective_date"] = $date->format("Y-m-d");
+        $data["effective_date"] = $this->convertToYMD($data["effective_date"]);
         $sql = $this->tbl->save($data);
         
         if ($sql) {
@@ -137,7 +136,7 @@ class Super extends CI_Controller
     public function update()
     {
         $data = $this->input->post(null, true);
-        $data["effective_date"] = date("Y-m-d", strtotime($data["effective_date"]));
+        $data["effective_date"] = $this->convertToYMD($data["effective_date"]);
         $sql = $this->tbl->update($data);
         
         if ($sql) {
@@ -152,6 +151,17 @@ class Super extends CI_Controller
             $params["success_update"] = false;
         }
         echo json_encode($params);
+    }
+    
+    private function convertToYMD($date)
+    {
+        $tmp = explode("/", $date);
+        
+        $d = $tmp[0];
+        $m = $tmp[1];
+        $y = $tmp[2];
+        
+        return $y."-".$m."-".$d;
     }
 }
 ?>

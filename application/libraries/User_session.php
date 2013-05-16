@@ -25,4 +25,38 @@ class User_session extends CI_Controller
         
         return $client_session;
     }
+    
+    /*
+     * Converts "d/m/Y" to "Y-m-d"
+     * 
+     * @param string $date
+     * @return string
+     */
+    public function convertToYMD($date)
+    {
+        $tmp = explode("/", $date);
+        
+        $d = $tmp[0];
+        $m = $tmp[1];
+        $y = $tmp[2];
+        
+        return $y."-".$m."-".$d;
+    }
+    
+    /*
+     * Converts "Y-m-d" to "d/m/Y"
+     * 
+     * @param string $date
+     * @return string
+     */
+    public function convertToDMY($date)
+    {
+        $tmp = explode("-", $date, 3);
+        
+        $y = $tmp[0];
+        $m = $tmp[1];
+        $d = $tmp[2];
+        
+        return $d."/".$m."/".$y;
+    }
 }

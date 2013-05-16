@@ -66,8 +66,7 @@ class Client_agreement extends CI_Controller
     {
         $post = $this->input->post(null, true);
         $award_no = $post["award_no"];
-        $date = DateTime::createFromFormat('d/m/Y', $post["created_at"]);
-        $post["created_at"] = $date->format("Y-m-d");
+        $post["created_at"] = $this->convertToYMD($post["created_at"]);
         
         unset($post["award_no"]);
         unset($post["hid-edit-id"]);
@@ -87,8 +86,7 @@ class Client_agreement extends CI_Controller
         $post = $this->input->post(null, true);
         $award_no = $post["award_no"];
         $id = $post["hid-edit-id"];
-        $date = DateTime::createFromFormat('d/m/Y', $post["created_at"]);
-        $post["created_at"] = $date->format("Y-m-d");
+        $post["created_at"] = $this->convertToYMD($post["created_at"]);
         
         unset($post["award_no"]);
         unset($post["hid-edit-id"]);
@@ -1150,5 +1148,16 @@ class Client_agreement extends CI_Controller
         );
         
         return array($allowance_pay, $super, $work_cover, $public, $payroll, $admin, $total_with_pay, $percent_margin, $dollar_margin, $labour_allow_charge_rate);
+    }
+    
+    private function convertToYMD($date)
+    {
+        $tmp = explode("/", $date);
+        
+        $d = $tmp[0];
+        $m = $tmp[1];
+        $y = $tmp[2];
+        
+        return $y."-".$m."-".$d;
     }
 }

@@ -199,8 +199,7 @@ class Sales_transaction extends CI_Controller
         $post["trans_type"] = 1;
         $award_info = $this->smd->get_modern_info(array("modern_award_no" => $post["modern_award_no"]));
         $post["transaction_name"] = $award_info["modern_award_name"];
-        $date = DateTime::createFromFormat('d/m/Y', $post["date_of_quotation"]);
-        $post["date_of_quotation"] = $date->format("Y-m-d");
+        $post["date_of_quotation"] = $this->convertToYMD($post["date_of_quotation"]);
         
         $this->smd->save($post);
 		
@@ -276,8 +275,7 @@ class Sales_transaction extends CI_Controller
         $post["trans_type"] = 1;
         $award_info = $this->smd->get_modern_info(array("modern_award_no" => $post["modern_award_no"]));
         $post["transaction_name"] = $award_info["modern_award_name"];
-        $date = DateTime::createFromFormat('d/m/Y', $post["date_of_quotation"]);
-        $post["date_of_quotation"] = $date->format("Y-m-d");
+        $post["date_of_quotation"] = $this->convertToYMD($post["date_of_quotation"]);
         
         $this->smd->update($post["trans_no"], $post);
         
@@ -1042,5 +1040,16 @@ class Sales_transaction extends CI_Controller
         );
         
         return array($allowance_pay, $super, $work_cover, $public, $payroll, $admin, $total_with_pay, $percent_margin, $dollar_margin, $labour_allow_charge_rate);
+    }
+    
+    private function convertToYMD($date)
+    {
+        $tmp = explode("/", $date);
+        
+        $d = $tmp[0];
+        $m = $tmp[1];
+        $y = $tmp[2];
+        
+        return $y."-".$m."-".$d;
     }
 }
