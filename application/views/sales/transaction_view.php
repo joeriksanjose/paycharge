@@ -401,7 +401,7 @@
 							%<input type="radio" id="swi_peror_cur" name="swi_peror_cur" value="1"/>
 						</label>
 						<label class="radio">
-							$<input type="radio" id="swi_peror_cur" name="swi_peror_cur" value="2"/>
+							$<input type="radio" checked="true" id="swi_peror_cur" name="swi_peror_cur" value="0"/>
 						</label>
 						<label class="radio">
 						    <input type="text" id="B_24" name="B_24">
@@ -575,31 +575,31 @@
 					      </div>
 					      <div style="height: 3px;"></div>
 					      <div class="input-append">
-	                            <input type="text" class="input-medium txt" placeholder="0.00" name="D_33">
+	                            <input type="text" class="input-medium txt" placeholder="0.00" id="D_33" name="D_33">
 	                            <span class="add-on">%</span>
 					      </div>
 					      <div style="height: 3px;"></div>
 					      <div class="input-append">
-	                            <input type="text" class="input-medium txt" placeholder="0.00" name="D_34">
+	                            <input type="text" class="input-medium txt" placeholder="0.00" id="D_34" name="D_34">
 	                            <span class="add-on">%</span>
 					      </div>
 					      <div style="height: 3px;"></div>
 					      <div class="input-append">
-	                            <input type="text" class="input-medium txt" placeholder="0.00" name="D_35">
+	                            <input type="text" class="input-medium txt" placeholder="0.00" id="D_35" name="D_35">
 	                            <span class="add-on">%</span>
 					      </div>
 					      <div style="height: 3px;"></div>
 					      <div class="input-append">
-	                            <input type="text" class="input-medium txt" placeholder="0.00" name="D_36">
+	                            <input type="text" class="input-medium txt" placeholder="0.00" id="D_36" name="D_36">
 	                            <span class="add-on">%</span>
 					      </div>
 					      <div style="height: 3px;"></div>
 					      <div class="input-append">
-	                            <input type="text" class="input-medium txt" placeholder="0.00" name="D_37">
+	                            <input type="text" class="input-medium txt" placeholder="0.00" id="D_37" name="D_37">
 	                            <span class="add-on">%</span>
 					      </div>
 					      <div style="height: 3px;"></div>
-					            <input type="text" class="input-medium txt" name="D_38">
+					            <input type="text" class="input-medium txt" id="D_38" name="D_38">
 	                     
 					  </div>
 				  </div>

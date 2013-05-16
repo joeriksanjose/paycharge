@@ -35,11 +35,12 @@ class Workcover extends CI_Controller
             $this->session->unset_userdata("error");
             $this->session->unset_userdata("ok");
             $this->data["data"] = $this->tbl->select_all();
-            $this->data["data_state"] = $this->tbl->get_state();
             $this->data["count"] = count($this->data["data"]);
         } catch (Exception $ex) {
             $this->data["count"] = 0;
         }
+        
+        $this->data["data_state"] = $this->tbl->get_state();
         
         $this->load->view("libraries/workcover_view", $this->data);
     }
@@ -108,7 +109,7 @@ class Workcover extends CI_Controller
         if (!$sql) {
             echo json_encode(0+1);    
         } else {
-            echo json_encode($sql["id"]+1);
+            echo json_encode($sql["work_cover_no"]+1);
         }
         
     }

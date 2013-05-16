@@ -61,8 +61,8 @@ class Tbl_workcover extends CI_model{
     }
     public function get_last_id()
     {
-        $this->db->select("id");
-        $this->db->order_by("id desc");
+        $this->db->select("work_cover_no");
+        $this->db->order_by("work_cover_no desc");
         
         $sql = $this->db->get($this->table_name)->row_array();
         

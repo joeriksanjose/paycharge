@@ -206,48 +206,6 @@ class Tbl_client_agreement extends CI_Model
         return $this->db->get("tbl_charge_rate")->row_array();
     }
     
-	 /* RATE INCREASE */
-    
-    public function getUpcomingRateIncrease($modern_award_name)
-    {
-        $now = time();
-        $this->db->where(array("transaction_name" => $modern_award_name, "created_at >" => date("d/m/Y")));
-        $rates = $this->db->get("tbl_rate_increase")->result_array();
-        
-        if (!$rates) {
-            return false;
-        }
-        
-        // $upcoming_rate_increase = array();
-        // foreach ($rates as $rate) {
-        	// if (strtotime($rate["created_at"]) > $now) {
-                // $upcoming_rate_increase[] = $rate;
-            // }            
-        // }
-        
-        return $rates;    
-    }
-    
-    public function getRateIncreaseHistory($modern_award_name)
-    {
-        $now = time();
-        $this->db->where(array("transaction_name" => $modern_award_name));
-        $rates = $this->db->get($this->table_rate_increase)->result_array();
-        
-        if (!$rates) {
-            return false;
-        }
-        
-        $rate_increase_history = array();
-        foreach ($rates as $rate) {
-            if (strtotime($rate["created_at"]) < $now) {
-                $rate_increase_history[] = $rate;
-            }            
-        }
-        
-        return $rate_increase_history;    
-    }
-    
     public function saveRate($data)
     {
         return $this->db->insert("tbl_rate_increase", $data);

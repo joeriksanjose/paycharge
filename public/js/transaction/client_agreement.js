@@ -33,10 +33,11 @@ $(document).ready(function(){
     $(".edit-award-btn").click(function(){
         $(document).scrollTop(0);
         var edit_id = $(this).attr("edit-id");
-         $("#show-tab-1").parent().addClass("active");
+        $("#show-tab-1").parent().addClass("active");
         $("#show-tab-2, #show-tab-3, #show-tab-4, #show-tab-5").parent().removeClass("active");
         $("#nav-tabs").show("fast");
         $("#tab1").show("fast");
+        $("#frm").show("fast");
         $(".div-award").hide("fast");
         $("#tab2, #tab3, #tab4, #tab5").hide("fast");
         $("#frm").attr("action", base_url+"client_agreement/update");
@@ -550,9 +551,9 @@ $(document).ready(function(){
 			
 			var str = "";
 			str = str + "<option></option>";
-			$.each(json_data.work_cover, function(i, item){
-				str = str + "<option value="+item.work_cover_no+">"+item.work_cover+"</option>";
-			});
+            $.each(json_data.work_cover, function(i, item){
+                str = str + "<option work-cover-no="+item.work_cover_no+" value="+item.work_cover+">"+item.work_cover+"</option>";
+            });
 			
 			$("#cmb-workcover").empty().append(str);
 			
@@ -561,19 +562,22 @@ $(document).ready(function(){
 	});
 	
 	$("#cmb-super").change(function(){
-		$.post(base_url+"sales_transaction/get_effective_date", {super_no:$(this).val()}, function(data){
-			var json_data = $.parseJSON(data);
-			$("#effective_date").val(json_data.effective_date);
-		});
-	});
+        $.post(base_url+"sales_transaction/get_effective_date", {super_no:$(this).find('option:selected').attr('super-no')}, function(data){
+            var json_data = $.parseJSON(data);
+            $("#effective_date").val(json_data.effective_date);
+        });
+    });
 	
 	$("#cmb-workcover").change(function(){
-		$.post(base_url+"sales_transaction/get_workcover_info", {work_cover_no:$(this).val()}, function(data){
-			var json_data = $.parseJSON(data);
-			$("#B_17").val(json_data.work_cover_code);
-		});
-	});
+        $.post(base_url+"sales_transaction/get_workcover_info", {work_cover_no:$('option:selected', this).attr('work-cover-no')}, function(data){
+            var json_data = $.parseJSON(data);
+            $("#B_17").val(json_data.work_cover_code);
+        });
+    });
+    
 	$("#add-new-modern").click(function(){
+	    $("#frm").attr("action", base_url+"client_agreement/save");
+	    $(this).val("SAVE");
         $("#show-tab-1").parent().addClass("active");
         $("#show-tab-2, #show-tab-3, #show-tab-4, #show-tab-5").parent().removeClass("active");
         $("#nav-tabs").show("fast");
@@ -730,18 +734,34 @@ $(document).ready(function(){
     	}	
     }
     
-    $("#B_51, #allowance_rate2").change(function(){
-    	compute_allow();
+    $("#B_51, #allowance_rate1").change(function(){
+    	compute_allow("#allowance_rate1", "#B_52");
     });
     
-    function compute_allow(){
+    $("#B_51, #allowance_rate2").change(function(){
+        compute_allow("#allowance_rate2", "#B_53");
+    });
+    
+    $("#B_51, #allowance_rate3").change(function(){
+        compute_allow("#allowance_rate3", "#B_54");
+    });
+    
+    $("#B_51, #allowance_rate4").change(function(){
+        compute_allow("#allowance_rate4", "#B_55");
+    });
+    
+    $("#B_51, #allowance_rate5").change(function(){
+        compute_allow("#allowance_rate5", "#B_56");
+    });
+    
+    function compute_allow(allow_rate, b){
     	
     	var rate = parseFloat($("#B_51").val()).toFixed(2);
-    	var first_aid = parseFloat($("#allowance_rate2").val()).toFixed(2);
+    	var first_aid = parseFloat($(allow_rate).val()).toFixed(2);
     	
     	var allow = (first_aid / 100) * rate;
-    	if($("#B_51").val() != "" && $("#allowance_rate2").val() != ""){
-    		$("#B_53").val(allow.toFixed(2));
+    	if($("#B_51").val() != "" && $(allow_rate).val() != ""){
+    		$(b).val(allow.toFixed(2));
     	}
     }
     

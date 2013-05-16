@@ -90,6 +90,7 @@ $(document).ready(function(){
         $("input:text").val("");
         $("#m_allow_text").val("MARGIN FOR M ALLOWANCE");
         $("#allowance_txt").val("STANDARD RATE FOR CALS :");
+        $("#allowcap").val("%");
         $.post(base_url+"transactions/ajaxGetNextAwardNo", {}, function(data){
             res = $.parseJSON(data);
             $("#modern_award_no").val(res.next_id);
@@ -289,6 +290,41 @@ $(document).ready(function(){
         });
     });
     // end delete modern award
+    
+    // allowance computation
+    
+    $("#B_51, #allowance_rate1").change(function(){
+        compute_allow("#allowance_rate1", "#B_52");
+    });
+    
+    $("#B_51, #allowance_rate2").change(function(){
+        compute_allow("#allowance_rate2", "#B_53");
+    });
+    
+    $("#B_51, #allowance_rate3").change(function(){
+        compute_allow("#allowance_rate3", "#B_54");
+    });
+    
+    $("#B_51, #allowance_rate4").change(function(){
+        compute_allow("#allowance_rate4", "#B_55");
+    });
+    
+    $("#B_51, #allowance_rate5").change(function(){
+        compute_allow("#allowance_rate5", "#B_56");
+    });
+    
+    function compute_allow(allow_rate, b){
+        
+        var rate = parseFloat($("#B_51").val()).toFixed(2);
+        var first_aid = parseFloat($(allow_rate).val()).toFixed(2);
+        
+        var allow = (first_aid / 100) * rate;
+        if($("#B_51").val() != "" && $(allow_rate).val() != ""){
+            $(b).val(allow.toFixed(2));
+        }
+    }
+    
+    // end allowance
     
     // table sorter
     $("#award-table").tablesorter();

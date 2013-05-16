@@ -55,7 +55,7 @@
     				  <div class="control-group">
     				    <label class="control-label" for="modern_award_no">Transaction No.</label>
     				    <div class="controls controls-row">
-    				      <input type="text" id="trans_no" name="trans_no">
+    				      <input type="text" id="trans_no" readonly="true" name="trans_no">
     				      <input type="button" id="btn_gen" class="btn btn-inverse btn-medium" value="Generate No"/>
     				    </div>
     				  </div>
@@ -134,8 +134,8 @@
     				      <select class="" id="cmb-super" name="B_14">
     				      	<option></option>
     				      	<?php foreach ($super as $value) : ?>
-    							<option value="<?php echo $value["super_no"]?>"><?php echo $value["super"]?></option>
-    						<?php endforeach;?>
+                                <option super-no="<?php echo $value["super_no"] ?>" value="<?php echo $value["super"]?>"><?php echo $value["super"]?></option>
+                            <?php endforeach;?>
     				      </select>
     				      <input type="text" id="effective_date" />
     				    </div>
@@ -146,8 +146,8 @@
     				      <select id="cmb-workcover" name="B_15">
     				      	<option></option>
     				      	<?php foreach ($workcover as $value) : ?>
-    							<option value="<?php echo $value["work_cover_no"]?>"><?php echo $value["work_cover"]?></option>
-    						<?php endforeach;?>
+                                <option work-cover-no="<?php echo $value["work_cover_no"] ?>" value="<?php echo $value["work_cover"]?>"><?php echo $value["work_cover"]?></option>
+                            <?php endforeach;?>
     				      </select>
     				    </div>
     				  </div>
@@ -184,7 +184,7 @@
     				      <select name="B_20" id="B_20">
     				      	<option></option>
     				      	<?php foreach ($public_liability as $value) : ?>
-    							<option value="<?php echo $value["public_no"]?>"><?php echo $value["public_value"]?></option>
+    							<option value="<?php echo $value["public_value"]?>"><?php echo $value["public_value"]?></option>
     						<?php endforeach;?>
     				      </select>
     				    </div>
@@ -195,7 +195,7 @@
     				      <select name="B_21" id="B_21">
     				      	<option></option>
     				      	<?php foreach ($insurance as $value) : ?>
-    							<option value="<?php echo $value["insurance_no"]?>"><?php echo $value["insurance"]?></option>
+    							<option value="<?php echo $value["insurance"]?>"><?php echo $value["insurance"]?></option>
     						<?php endforeach;?>
     				      </select>
     				    </div>
@@ -206,7 +206,7 @@
     				      <select name="long_service" id="long_service">
     				      	<option></option>
     				      	<?php foreach ($long_service as $value) : ?>
-    							<option value="<?php echo $value["long_services_no"]?>"><?php echo $value["long_services"]?></option>
+    							<option value="<?php echo $value["long_services"]?>"><?php echo $value["long_services"]?></option>
     						<?php endforeach;?>
     				      </select>
     				    </div>
@@ -217,7 +217,7 @@
     				      <select name="B_22" id="B_22">
     				      	<option></option>
     				      	<?php foreach ($admin as $value) : ?>
-    							<option value="<?php echo $value["admin_no"]?>"><?php echo $value["admin"]?></option>
+    							<option value="<?php echo $value["admin"]?>"><?php echo $value["admin"]?></option>
     						<?php endforeach;?>
     				      </select>
     				    </div>
@@ -418,7 +418,7 @@
 						</label>
 						<label class="radio">
 							$
-							<input type="radio" name="swi_peror_cur" id="_dollar" value="0"/>
+							<input type="radio" checked="true" name="swi_peror_cur" id="_dollar" value="0"/>
 						</label><input type="text" class="txt" name="B_24" id="B_24"/>
 					</div>
 				</div>
@@ -834,42 +834,49 @@
 					<hr>
 					<div class="control-group">
 				      <input type="text" class="input-medium disabled" style="font-size: 10px;" disabled="true" value="STANDARD RATE FOR CALS :">
+					  <input type="text" class="input-mini" disabled="true" value="%">
 					  <div class="input-prepend">
                             <span class="add-on">$</span>
-					        <input type="text" class=" txt"  id="B_51"  name="B_51" placeholder="0.00">
+					        <input type="text" class="input-small txt"  id="B_51"  name="B_51" placeholder="0.00">
 					  </div>
 					  <div style="height: 5px;"></div>
 					  <input type="text" class="input-medium disabled" id="allowance_caption1"  name="allowance_caption1" style="font-size: 10px;" readonly="true" value="Meal">
+				      <input type="text" class="input-mini" id="allowance_rate1"  name="allowance_rate1">
 				      <div class="input-prepend">
                             <span class="add-on">$</span>
-					        <input type="text" class=" txt"  id="B_52"  name="B_52" placeholder="0.00">
+					        <input type="text" class="input-small txt"  id="B_52"  name="B_52" placeholder="0.00">
 					  </div>
 					  <div style="height: 5px;"></div>
 					  <input type="text" class="input-medium disabled" id="allowance_caption2"  name="allowance_caption2" style="font-size: 10px;" readonly="true" value="First-aid">
 					  <input type="text" class="input-mini" id="allowance_rate2"  name="allowance_rate2">
 					  <div class="input-prepend">
                             <span class="add-on">$</span>
-					        <input type="text" class="input-small txt" readonly="true" id="B_53"  name="B_53" placeholder="0.00">
+					        <input type="text" class="input-small txt" id="B_53"  name="B_53" placeholder="0.00">
 					  </div>
 					  <div style="height: 5px;"></div>
 					  <input type="text" class="input-medium disabled" id="allowance_caption3"  name="allowance_caption3" style="font-size: 10px;" readonly="true" value="L/Hand 3-10 Emps">
+					  <input type="text" class="input-mini" id="allowance_rate3"  name="allowance_rate3">
 					  <div class="input-prepend">
                             <span class="add-on">$</span>
-					        <input type="text" class=" txt"  id="B_54"  name="B_54" placeholder="0.00">
+					        <input type="text" class="input-small txt"  id="B_54"  name="B_54" placeholder="0.00">
 					  </div>
 					  <div style="height: 5px;"></div>
 					  <input type="text" class="input-medium disabled" id="allowance_caption4"  name="allowance_caption4" style="font-size: 10px;" readonly="true" value="L/Hand 10-20 Emps">
-					  
+					  <input type="text" class="input-mini" id="allowance_rate4"  name="allowance_rate4">
 					  <div class="input-prepend">
                             <span class="add-on">$</span>
-					        <input type="text" class=" txt"  id="B_55"  name="B_55" placeholder="0.00">
+					        <input type="text" class="input-small txt"  id="B_55"  name="B_55" placeholder="0.00">
 					  </div>
 					  <div style="height: 5px;"></div>
 					  <input type="text" class="input-medium disabled" id="allowance_caption5"  name="allowance_caption5" style="font-size: 10px;" readonly="true" value="L/Hand 20+ Emps">
+					  <input type="text" class="input-mini" id="allowance_rate5"  name="allowance_rate5">
 					  <div class="input-prepend">
                             <span class="add-on">$</span>
-					        <input type="text" class=" txt"  id="B_56"  name="B_56" placeholder="0.00">
+					        <input type="text" class="input-small txt"  id="B_56"  name="B_56" placeholder="0.00">
 					  </div>
+					  <div style="height: 5px;"></div>
+					  <input type="text" class="input-medium" id="m_allow_text" disabled="true" style="font-size: 10px;" value="MARGIN FOR M ALLOWANCE">
+					  <input type="text" class="input-mini" id="m_allow_margin" name="m_allow_margin">
 					  
 				    </div>
 				</div>
@@ -1325,8 +1332,8 @@
 				<td><?php echo $modern_award["date_of_quotation"] ?></td>
 				<td><?php echo $modern_award["company_name"] ?></td>
 				<td>
-					<a target="_blank" href="<?php echo base_url("transactions/upcoming_rate_increase/".$modern_award["modern_award_no"]) ?>" class="btn">Upcoming Rate Increase</a>
-				    <a target="_blank" href="<?php echo base_url("transactions/rate_increase_history/".$modern_award["modern_award_no"]) ?>" class="btn">Rate Increase History</a>
+					<a target="_blank" href="<?php echo base_url("client_agreement/upcoming_rate_increase/".$modern_award["trans_no"]) ?>" class="btn">Upcoming Rate Increase</a>
+				    <a target="_blank" href="<?php echo base_url("client_agreement/rate_increase_history/".$modern_award["trans_no"]) ?>" class="btn">Rate Increase History</a>
 				    <button type="button" class="btn edit-award-btn" edit-id="<?php echo $modern_award["trans_no"] ?>"><i class="icon-edit"></i></button>
 				    <button type="button" class="btn btn-danger delete-award-btn" del-id="<?php echo $modern_award["trans_no"] ?>"><i class="icon-trash icon-white"></i></button>
 				</td>

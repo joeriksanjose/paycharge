@@ -1,5 +1,5 @@
 <?php echo $header ?>
-<script type="text/javascript" src="<?php echo base_url("public/js/transaction/upcoming_rate.js") ?>"></script>
+<script type="text/javascript" src="<?php echo base_url("public/js/transaction/upcoming_rate_client.js") ?>"></script>
 
 <!-- DELETE MODAL -->
 <div id="deleteModal" class="modal hide fade" tabindex="-1" role="dialog">
@@ -209,10 +209,10 @@
             </thead>
             <tbody>
                 <?php 
-                if (count($upcoming_rate_increase)>0) : ?>
+                if (count($upcoming_rate_increase)) : ?>
                     <?php foreach($upcoming_rate_increase as $increase) : ?>
                     <tr>
-                        <td><?php echo $increase["created_at"] ?></td>
+                        <td><?php echo date("d/m/Y", strtotime($increase["created_at"])) ?></td>
                         <td><?php echo $increase["rate_1"] ?></td>
                         <td><?php echo $increase["rate_2"] ?></td>
                         <td><?php echo $increase["rate_3"] ?></td>

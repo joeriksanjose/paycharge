@@ -25,6 +25,7 @@ class Sales_transaction extends CI_Controller
 		parent::__construct();
 		$this->load->model("tbl_sales_modern_award", "smd");
         $this->load->model("tbl_print_defaults", "pd");
+        $this->load->model("tbl_m_allow", "ma");
 		$this->load->library("user_session");
 		$this->user_session = $this->user_session->checkUserSession();
 		$this->data["title"] = "System - Transactions";
@@ -147,6 +148,9 @@ class Sales_transaction extends CI_Controller
         $post = $this->input->post(null, true);
         
         $this->db->trans_begin();
+        if (!isset($post["swi_peror_cur"])) {
+            $post["swi_peror_cur"] = 0;
+        }
         
         for ($i = 1; $i <= 10; $i++) {
         	$trans_no = $post["trans_no"];
@@ -185,6 +189,11 @@ class Sales_transaction extends CI_Controller
 			unset($post["casual_rate".$i]);
         }
         
+        //save m_allow
+        $m_allow = $this->computeMAllow($post);
+        foreach ($m_allow as $val) {
+            $this->ma->saveMAllow($val);
+        }      
 		
         unset($post["allowance_caption12"]);
         $post["trans_type"] = 1;
@@ -205,6 +214,83 @@ class Sales_transaction extends CI_Controller
             $this->session->set_userdata("status", 1);
             $this->session->set_userdata("status_msg", "<b>Done!</b> Modern Award successfully saved");
 		}
+        
+        redirect(base_url("sales_transaction"));
+    }
+
+    public function update()
+    {
+        $post = $this->input->post(null, true);
+        $this->db->trans_begin();
+        $this->smd->deleteSalesModernAward2($post["trans_no"]);
+        
+        if (!isset($post["swi_peror_cur"])) {
+            $post["swi_peror_cur"] = 0;
+        }
+        
+        for ($i = 1; $i <= 10; $i++) {
+            $trans_no = $post["trans_no"];
+            $grade = "Grade ".$i;
+            $position_name = $this->smd->getPositionNameById($post["position_no".$i]);
+            $grade_and_pos = "Grade ".$i." - ".$position_name;
+            $position_no = $post["position_no".$i];
+            $payrate = $post["payrate_".$i];
+            $base_rate = $post["base_rate".$i];
+            $casual_rate = $post["casual_rate".$i];
+            
+            $data = array(
+                "trans_no"           => $trans_no,
+                "grade"              => $grade,
+                "grade_and_position" => $grade_and_pos,
+                "position_no"        => $position_no,
+                "payrate"            => $payrate,
+                "base_rate"          => $base_rate,
+                "casual_rate"        => $casual_rate
+            );
+            
+            $ml_cacl_1 = $this->computeML($post, $i, 1);
+            $ml_cacl_2 = $this->computeML($post, $i, 2);
+            $ml_cacl_3 = $this->computeML($post, $i, 3);
+            
+            foreach ($ml_cacl_1 as $key => $row) {
+                $this->smd->saveTblMl($i, $row);
+                $this->smd->saveTblMl($i, $ml_cacl_2[$key]);
+                $this->smd->saveTblMl($i, $ml_cacl_3[$key]);
+            } 
+
+            $this->smd->savePayRate($data);
+            unset($post["position_no".$i]);
+            unset($post["payrate_".$i]);
+            unset($post["base_rate".$i]);
+            unset($post["casual_rate".$i]);
+        }
+        
+        //update m_allow
+        $this->ma->deleteMAllowByTransNo($trans_no);
+        $m_allow = $this->computeMAllow($post);
+        foreach ($m_allow as $val) {
+            $this->ma->saveMAllow($val);
+        }
+        
+        unset($post["allowance_caption12"]);
+        $post["trans_type"] = 1;
+        $award_info = $this->smd->get_modern_info(array("modern_award_no" => $post["modern_award_no"]));
+        $post["transaction_name"] = $award_info["modern_award_name"];
+        $date = DateTime::createFromFormat('d/m/Y', $post["date_of_quotation"]);
+        $post["date_of_quotation"] = $date->format("Y-m-d");
+        
+        $this->smd->update($post["trans_no"], $post);
+        
+        if ($this->db->trans_status() === false) {
+            log_message("Transaction failed (tbl_charge_rate, tpsbl_payrate)");
+            $this->db->trans_rollback();
+            $this->session->set_userdata("status", 0);
+            $this->session->set_userdata("status_msg", "<b>Error!</b> Cannot create new modern award");
+        } else {
+            $this->db->trans_commit();
+            $this->session->set_userdata("status", 1);
+            $this->session->set_userdata("status_msg", "<b>Done!</b> Modern Award successfully saved");
+        }
         
         redirect(base_url("sales_transaction"));
     }
@@ -277,7 +363,8 @@ class Sales_transaction extends CI_Controller
             "double"      => $double,
             "DT1/2"       => $dt_12,
             "triple"      => $triple,
-            "calc_no"     => $calc
+            "calc_no"     => $calc,
+            "cell_no"     => 0
         );
     }
 
@@ -325,6 +412,7 @@ class Sales_transaction extends CI_Controller
             "double"      => $double,
             "DT1/2"       => $dt_12,
             "triple"      => $triple,
+            "cell_no"     => 1,
             "calc_no"     => $calc
         );
     }
@@ -373,7 +461,8 @@ class Sales_transaction extends CI_Controller
             "double"      => $double,
             "DT1/2"       => $dt_12,
             "triple"      => $triple,
-            "calc_no"     => $calc
+            "calc_no"     => $calc,
+            "cell_no"     => 2
         );
     }
     
@@ -434,7 +523,8 @@ class Sales_transaction extends CI_Controller
             "double"        => $double,
             "DT1/2"         => $dt_12,
             "triple"        => $triple,
-            "calc_no"       => $calc
+            "calc_no"       => $calc,
+            "cell_no"       => 3
         );
     }
 
@@ -471,7 +561,8 @@ class Sales_transaction extends CI_Controller
             "double"        => $double,
             "DT1/2"         => $dt_12,
             "triple"        => $triple,
-            "calc_no"       => $calc
+            "calc_no"       => $calc,
+            "cell_no"       => 4
         );
     }
 
@@ -508,7 +599,8 @@ class Sales_transaction extends CI_Controller
             "double"        => $double,
             "DT1/2"         => $dt_12,
             "triple"        => $triple,
-            "calc_no"       => $calc
+            "calc_no"       => $calc,
+            "cell_no"       => 5
         );
     }
 
@@ -545,7 +637,8 @@ class Sales_transaction extends CI_Controller
             "double"        => $double,
             "DT1/2"         => $dt_12,
             "triple"        => $triple,
-            "calc_no"       => $calc
+            "calc_no"       => $calc,
+            "cell_no"       => 6
         );
     }
 
@@ -582,7 +675,8 @@ class Sales_transaction extends CI_Controller
             "double"        => $double,
             "DT1/2"         => $dt_12,
             "triple"        => $triple,
-            "calc_no"       => $calc
+            "calc_no"       => $calc,
+            "cell_no"       => 7
         );
     }
 
@@ -601,7 +695,8 @@ class Sales_transaction extends CI_Controller
             "double"        => $post["B_21"],
             "DT1/2"         => $post["B_21"],
             "triple"        => $post["B_21"],
-            "calc_no"       => $calc
+            "calc_no"       => $calc,
+            "cell_no"       => 8
         );
     }
     
@@ -638,7 +733,8 @@ class Sales_transaction extends CI_Controller
             "double"        => $double,
             "DT1/2"         => $dt_12,
             "triple"        => $triple,
-            "calc_no"       => $calc
+            "calc_no"       => $calc,
+            "cell_no"       => 9
         );
     }
 
@@ -685,14 +781,15 @@ class Sales_transaction extends CI_Controller
             "double"        => $double,
             "DT1/2"         => $dt_12,
             "triple"        => $triple,
-            "calc_no"       => $calc
+            "calc_no"       => $calc,
+            "cell_no"       => 10
         );
     }
 
     private function computeHourlyChargeRates($total_with_pay, $post, $index, $calc)
     {
         $description = $this->ml_description[13];
-        if ($post["swi_peror_cur"] == "2") {
+        if ($post["swi_peror_cur"] == "0") {
             $normal = $total_with_pay["normal"] + $post["B_24"];
             $early = $total_with_pay["early"] + $post["B_24"];
             $afternoon = $total_with_pay["afternoon"] + $post["B_24"];
@@ -729,14 +826,15 @@ class Sales_transaction extends CI_Controller
             "double"        => $double,
             "DT1/2"         => $dt_12,
             "triple"        => $triple,
-            "calc_no"       => $calc
+            "calc_no"       => $calc,
+            "cell_no"       => 13
         );
     }
 
     private function computeDollarMargin($hourly_charge_rate, $total_with_pay, $post, $index, $calc)
     {
         $description = $this->ml_description[11];
-        if ($post["swi_peror_cur"] == "2") {
+        if ($post["swi_peror_cur"] == "0") {
             $normal = $post["B_24"];
             $early = $post["B_24"];
             $afternoon = $post["B_24"];
@@ -773,14 +871,15 @@ class Sales_transaction extends CI_Controller
             "double"        => $double,
             "DT1/2"         => $dt_12,
             "triple"        => $triple,
-            "calc_no"       => $calc
+            "calc_no"       => $calc,
+            "cell_no"       => 11
         );
     }
 
     private function computePercentMargin($hourly_charge_rate, $post, $index, $calc)
     {
         $description = $this->ml_description[12];
-        if ($post["swi_peror_cur"] == "2") {
+        if ($post["swi_peror_cur"] == "0") {
             $normal = ($post["B_24"]/$hourly_charge_rate["normal"])/100;
             $early = ($post["B_24"]/$hourly_charge_rate["early"])/100;
             $afternoon = ($post["B_24"]/$hourly_charge_rate["afternoon"])/100;
@@ -817,7 +916,131 @@ class Sales_transaction extends CI_Controller
             "double"        => $double,
             "DT1/2"         => $dt_12,
             "triple"        => $triple,
-            "calc_no"       => $calc
+            "calc_no"       => $calc,
+            "cell_no"       => 12
         );
+    }
+
+    private function computeMAllow($post)
+    {
+        $trans_no = $post["trans_no"];
+        
+        $allowance_pay = array(
+            "trans_no"    => $trans_no,
+            "description" => "Allowance Pay",
+            "cell_no"     => 0,
+            "meal"        => $post["B_52"],
+            "first_aid"   => $post["B_53"],
+            "L_hand_3"    => $post["B_54"],
+            "L_hand_10"   => $post["B_55"],
+            "L_hand_20"   => $post["B_56"]
+        );
+        
+        $super_percent = $post["B_14"]/100;
+        $super = array(
+            "trans_no"    => $trans_no,
+            "description" => "Superannuation",
+            "cell_no"     => 1,
+            "meal"        => $post["B_52"] * ($super_percent),
+            "first_aid"   => $post["B_53"] * ($super_percent),
+            "L_hand_3"    => $post["B_54"] * ($super_percent),
+            "L_hand_10"   => $post["B_55"] * ($super_percent),
+            "L_hand_20"   => $post["B_56"] * ($super_percent)
+        );
+        
+        $work_percent = $post["B_15"]/100;
+        $work_cover = array(
+            "trans_no"    => $trans_no,
+            "description" => "Work Cover (% on super total)",
+            "cell_no"     => 2,
+            "meal"        => ($allowance_pay["meal"] + $super["meal"]) * $work_percent,
+            "first_aid"   => ($allowance_pay["first_aid"] + $super["first_aid"]) * $work_percent,
+            "L_hand_3"    => ($allowance_pay["L_hand_3"] + $super["L_hand_3"]) * $work_percent,
+            "L_hand_10"   => ($allowance_pay["L_hand_10"] + $super["L_hand_10"]) * $work_percent,
+            "L_hand_20"   => ($allowance_pay["L_hand_20"] + $super["L_hand_20"]) * $work_percent,
+        );
+        
+        $public_percent = $post["B_20"]/100;
+        $public = array(
+            "trans_no"    => $trans_no,
+            "description" => "Public Liability (% on pay rate)",
+            "cell_no"     => 3,
+            "meal"        => $post["B_52"] * ($public_percent),
+            "first_aid"   => $post["B_53"] * ($public_percent),
+            "L_hand_3"    => $post["B_54"] * ($public_percent),
+            "L_hand_10"   => $post["B_55"] * ($public_percent),
+            "L_hand_20"   => $post["B_56"] * ($public_percent)
+        );
+        
+        $payroll_percent = $post["B_19"]/100;
+        $payroll = array(
+            "trans_no"    => $trans_no,
+            "description" => "Payroll Tax (% on super total)",
+            "cell_no"     => 4,
+            "meal"        => ($allowance_pay["meal"] + $super["meal"]) * $payroll_percent,
+            "first_aid"   => ($allowance_pay["first_aid"] + $super["first_aid"]) * $payroll_percent,
+            "L_hand_3"    => ($allowance_pay["L_hand_3"] + $super["L_hand_3"]) * $payroll_percent,
+            "L_hand_10"   => ($allowance_pay["L_hand_10"] + $super["L_hand_10"]) * $payroll_percent,
+            "L_hand_20"   => ($allowance_pay["L_hand_20"] + $super["L_hand_20"]) * $payroll_percent,
+        );
+        
+        $admin_percent = $post["B_22"]/100;
+        $admin = array(
+            "trans_no"    => $trans_no,
+            "description" => "Administration (% on super total)",
+            "cell_no"     => 5,
+            "meal"        => ($allowance_pay["meal"] + $super["meal"]) * $admin_percent,
+            "first_aid"   => ($allowance_pay["first_aid"] + $super["first_aid"]) * $admin_percent,
+            "L_hand_3"    => ($allowance_pay["L_hand_3"] + $super["L_hand_3"]) * $admin_percent,
+            "L_hand_10"   => ($allowance_pay["L_hand_10"] + $super["L_hand_10"]) * $admin_percent,
+            "L_hand_20"   => ($allowance_pay["L_hand_20"] + $super["L_hand_20"]) * $admin_percent,
+        );
+        
+        $total_with_pay = array(
+            "trans_no"    => $trans_no,
+            "description" => "TOTAL WITH PAY + ONCOSTS:",
+            "cell_no"     => 6,
+            "meal"        => $allowance_pay["meal"] + $super["meal"] + $work_cover["meal"] + $public["meal"] + $payroll["meal"] + $admin["meal"],
+            "first_aid"   => $allowance_pay["first_aid"] + $super["first_aid"] + $work_cover["first_aid"] + $public["first_aid"] + $payroll["first_aid"] + $admin["first_aid"],
+            "L_hand_3"    => $allowance_pay["L_hand_3"] + $super["L_hand_3"] + $work_cover["L_hand_3"] + $public["L_hand_3"] + $payroll["L_hand_3"] + $admin["L_hand_3"],
+            "L_hand_10"   => $allowance_pay["L_hand_10"] + $super["L_hand_10"] + $work_cover["L_hand_10"] + $public["L_hand_10"] + $payroll["L_hand_10"] + $admin["L_hand_10"],
+            "L_hand_20"   => $allowance_pay["L_hand_20"] + $super["L_hand_20"] + $work_cover["L_hand_20"] + $public["L_hand_20"] + $payroll["L_hand_20"] + $admin["L_hand_20"]
+        );
+        
+        $margin = $post["m_allow_margin"]/100;
+        $percent_margin = array(
+            "trans_no"    => $trans_no,
+            "description" => "% Margin",
+            "cell_no"     => 7,
+            "meal"        => $margin,
+            "first_aid"   => $margin,
+            "L_hand_3"    => $margin,
+            "L_hand_10"   => $margin,
+            "L_hand_20"   => $margin
+        );
+        
+        $dollar_margin = array(
+            "trans_no"    => $trans_no,
+            "description" => "$ Margin",
+            "cell_no"     => 8,
+            "meal"        => $total_with_pay["meal"] * $margin,
+            "first_aid"   => $total_with_pay["first_aid"] * $margin,
+            "L_hand_3"    => $total_with_pay["L_hand_3"] * $margin,
+            "L_hand_10"   => $total_with_pay["L_hand_10"] * $margin,
+            "L_hand_20"   => $total_with_pay["L_hand_20"] * $margin
+        );
+        
+        $labour_allow_charge_rate = array (
+            "trans_no"    => $trans_no,
+            "description" => "Labourpower Allowance Charge Rates",
+            "cell_no"     => 9,
+            "meal"        => $total_with_pay["meal"] + $dollar_margin["meal"],
+            "first_aid"   => $total_with_pay["first_aid"] + $dollar_margin["first_aid"],
+            "L_hand_3"    => $total_with_pay["L_hand_3"] + $dollar_margin["L_hand_3"],
+            "L_hand_10"   => $total_with_pay["L_hand_10"] + $dollar_margin["L_hand_10"],
+            "L_hand_20"   => $total_with_pay["L_hand_20"] + $dollar_margin["L_hand_20"]      
+        );
+        
+        return array($allowance_pay, $super, $work_cover, $public, $payroll, $admin, $total_with_pay, $percent_margin, $dollar_margin, $labour_allow_charge_rate);
     }
 }

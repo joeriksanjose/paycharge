@@ -121,6 +121,12 @@ class Tbl_sales_modern_award extends CI_Model
         return 1;
     }
     
+    public function update($trans_no, $data)
+    {
+        $this->db->where(array("trans_no" => $trans_no));
+        return $this->db->update("tbl_charge_rate", $data);
+    }
+    
     public function save($data)
     {
         return $this->db->insert("tbl_charge_rate", $data);
@@ -154,6 +160,28 @@ class Tbl_sales_modern_award extends CI_Model
     {
         $this->db->where(array("trans_no" => $trans_no));
         if (!$this->db->delete("tbl_charge_rate")) {
+            return false;
+        }
+        
+        $this->db->where(array("trans_no" => $trans_no));
+        if (!$this->db->delete("tbl_payrate")) {
+            return false;
+        }
+        
+        for ($i = 1; $i <= 10; $i++) {
+            $this->db->where(array("trans_no" => $trans_no));
+            if (!$this->db->delete("tbl_ml".$i)) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    public function deleteSalesModernAward2($trans_no)
+    {
+        $this->db->where(array("trans_no" => $trans_no));
+        if (!$this->db->delete("tbl_payrate")) {
             return false;
         }
         

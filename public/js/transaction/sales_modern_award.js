@@ -238,6 +238,8 @@ $(document).ready(function(){
     });
 	
 	$("#add-new-modern").click(function(){
+	    $("#frm").attr("action", base_url+"sales_transaction/save");
+	    $(this).val("SAVE");
 	    $(document).scrollTop(0);
 	    $("#modern_form").show("fast");
         $("#show-tab-1").parent().addClass("active");
@@ -385,7 +387,7 @@ $(document).ready(function(){
         $("#tab1").show("fast");
         $(".div-award").hide("fast");
         $("#tab2, #tab3, #tab4, #tab5").hide("fast");
-        $("#frm-modern").attr("action", base_url+"sales_transiaction/update");
+        $("#frm").attr("action", base_url+"sales_transaction/update");
         $("#trans_no").val(edit_id);
         $("#btn-save-update").attr("value", "UPDATE");
         

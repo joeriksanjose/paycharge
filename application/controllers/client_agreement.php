@@ -24,6 +24,8 @@ class Client_agreement extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model("tbl_client_agreement", "ca");
+        $this->load->model("tbl_modern_award", "md");
+        $this->load->model("tbl_m_allow", "ma");
         $this->load->library("user_session");
 		$this->user_session = $this->user_session->checkUserSession();
 		$this->data["title"] = "System - Transactions";
@@ -32,10 +34,24 @@ class Client_agreement extends CI_Controller
 		$this->data["date_slash"] = mdate("%d/%m/%Y");
 	}
 	
-	public function upcoming_rate_increase($modern_award_no){
-		$award_info = $this->ca->getAwardByAwardNo($modern_award_no);
+	/* RATE INCREASE */
+    
+    public function rate_increase_history($modern_award_no)
+    {
+        $award_info = $this->ca->get_charge_rate_info(array("trans_no" => $modern_award_no));$this->md->getAwardByAwardNo($modern_award_no);
         $this->data["award_info"] = $award_info;
-        $this->data["upcoming_rate_increase"] = $this->ca->getUpcomingRateIncrease($award_info["transaction_name"]);
+        $this->data["rate_increase_history"] = $this->md->getRateIncreaseHistory($award_info["transaction_name"]);
+        $this->data["header"] = $this->load->view("header", $this->data, true);
+        $this->data["footer"] = $this->load->view("footer", $this->data, true);
+        
+        $this->load->view("sales/rate_increase_client_history_view", $this->data);
+    }
+    
+    public function upcoming_rate_increase($modern_award_no)
+    {
+        $award_info = $this->ca->get_charge_rate_info(array("trans_no" => $modern_award_no));
+        $this->data["award_info"] = $award_info;
+        $this->data["upcoming_rate_increase"] = $this->md->getUpcomingRateIncrease($award_info["transaction_name"]);
         $this->data["header"] = $this->load->view("header", $this->data, true);
         $this->data["footer"] = $this->load->view("footer", $this->data, true);
         $this->data["status"] = $this->session->userdata("status");
@@ -44,16 +60,18 @@ class Client_agreement extends CI_Controller
         $this->session->unset_userdata("status_msg");
         
         $this->load->view("sales/upcoming_increase_client", $this->data);
-	}
-	
-	public function saveRate()
+    }
+    
+    public function saveRate()
     {
         $post = $this->input->post(null, true);
         $award_no = $post["award_no"];
+        $date = DateTime::createFromFormat('d/m/Y', $post["created_at"]);
+        $post["created_at"] = $date->format("Y-m-d");
         
         unset($post["award_no"]);
         unset($post["hid-edit-id"]);
-        if (!$this->ca->saveRate($post)) {
+        if (!$this->md->saveRate($post)) {
             $this->session->set_userdata("status", 0);
             $this->session->set_userdata("status_msg", "<b>Error! </b> Cannot save new rate.");
         } else {
@@ -61,8 +79,68 @@ class Client_agreement extends CI_Controller
             $this->session->set_userdata("status_msg", "<b>Done! </b> New rate was successfully saved.");
         }
         
-        // redirect(base_url("client_agreement/upcoming_rate_increase/".$award_no));
+        redirect(base_url("client_agreement/upcoming_rate_increase/".$award_no));
     }
+    
+    public function updateRate()
+    {
+        $post = $this->input->post(null, true);
+        $award_no = $post["award_no"];
+        $id = $post["hid-edit-id"];
+        $date = DateTime::createFromFormat('d/m/Y', $post["created_at"]);
+        $post["created_at"] = $date->format("Y-m-d");
+        
+        unset($post["award_no"]);
+        unset($post["hid-edit-id"]);
+        if (!$this->md->updateRate($id, $post)) {
+            $this->session->set_userdata("status", 0);
+            $this->session->set_userdata("status_msg", "<b>Error! </b> Cannot update new rate.");
+        } else {
+            $this->session->set_userdata("status", 1);
+            $this->session->set_userdata("status_msg", "<b>Done! </b> New rate was successfully updated.");
+        }
+        
+        redirect(base_url("client_agreement/upcoming_rate_increase/".$award_no));
+    }
+    
+    public function ajaxDeleteRate()
+    {
+        $params = array();
+        $params["status"] = true;
+        $id = $this->input->post("del_id", true);
+        
+        if (!$this->md->deleteRate($id)) {
+            $params["status"] = false;
+            echo json_encode($params);
+            return;
+        }
+        
+        echo json_encode($params);
+        return;
+    }
+    
+    public function ajaxGetRateInfo()
+    {
+        $params = array();
+        $params["status"] = true;
+        $id = $this->input->post("edit_id");
+        
+        $res = $this->md->getRateById($id);
+        if (!$res) {
+            $params["status"] = false;
+            echo json_encode($params);
+            return;
+        }
+        
+        $res["created_at"] = date("d/m/Y", strtotime($res["created_at"]));
+        
+        $params["rate_info"] = $res;
+        
+        echo json_encode($params);
+        return;
+    }
+    
+    /* END RATE INCREASE */
 	
 	public function delete(){
 			
@@ -143,7 +221,7 @@ class Client_agreement extends CI_Controller
         }
         if($this->session->userdata("ok")){
             $this->data["ok"] = true;
-			$this->data["success_msg"] = "Saved successfully.";
+			$this->data["success_msg"] = "<b>Done</b>! Saved successfully.";
         }
         $this->session->unset_userdata("error");
         $this->session->unset_userdata("ok");
@@ -164,7 +242,7 @@ class Client_agreement extends CI_Controller
 		$print_defaults_data = array();
 		$ctr = 1;
 		foreach ($post as $key => $v) {
-			if ($ctr > 133) {
+			if ($ctr > 138) {
 				$print_defaults_data[$key] = $v;
 			} else {
 				$charge_rate_data[$key] = $v;
@@ -211,6 +289,11 @@ class Client_agreement extends CI_Controller
 			unset($charge_rate_data["casual_rate".$i]);
         }
         
+        //save m_allow
+        $m_allow = $this->computeMAllow($post);
+        foreach ($m_allow as $val) {
+            $this->ma->saveMAllow($val);
+        }
 		
         unset($post["allowance_caption12"]);
         $charge_rate_data["trans_type"] = '2';
@@ -237,12 +320,12 @@ class Client_agreement extends CI_Controller
 	public function update()
     {
         $post = $this->input->post(null, true);
-		
+
 		$charge_rate_data = array();
 		$print_defaults_data = array();
 		$ctr = 1;
 		foreach ($post as $key => $v) {
-			if ($ctr > 133) {
+			if ($ctr > 138) {
 				$print_defaults_data[$key] = $v;
 			} else {
 				$charge_rate_data[$key] = $v;
@@ -290,6 +373,12 @@ class Client_agreement extends CI_Controller
 			unset($charge_rate_data["casual_rate".$i]);
         }
         
+        //update m_allow
+        $this->ma->deleteMAllowByTransNo($post["trans_no"]);
+        $m_allow = $this->computeMAllow($post);
+        foreach ($m_allow as $val) {
+            $this->ma->saveMAllow($val);
+        }
 		
         unset($post["allowance_caption12"]);
         $charge_rate_data["trans_type"] = '2';
@@ -314,7 +403,7 @@ class Client_agreement extends CI_Controller
 		redirect("client_agreement");
     }
 
-private function computeML($post, $index, $calc) 
+    private function computeML($post, $index, $calc) 
     {
         $full_time = $this->computeFullHourlyPayRate($post, $index, $calc);
         $casual = $this->computeCasualLoading($post, $index, $calc);
@@ -382,7 +471,8 @@ private function computeML($post, $index, $calc)
             "double"      => $double,
             "DT1/2"       => $dt_12,
             "triple"      => $triple,
-            "calc_no"     => $calc
+            "calc_no"     => $calc,
+            "cell_no"     => 0
         );
     }
 
@@ -430,6 +520,7 @@ private function computeML($post, $index, $calc)
             "double"      => $double,
             "DT1/2"       => $dt_12,
             "triple"      => $triple,
+            "cell_no"     => 1,
             "calc_no"     => $calc
         );
     }
@@ -478,7 +569,8 @@ private function computeML($post, $index, $calc)
             "double"      => $double,
             "DT1/2"       => $dt_12,
             "triple"      => $triple,
-            "calc_no"     => $calc
+            "calc_no"     => $calc,
+            "cell_no"     => 2
         );
     }
     
@@ -539,7 +631,8 @@ private function computeML($post, $index, $calc)
             "double"        => $double,
             "DT1/2"         => $dt_12,
             "triple"        => $triple,
-            "calc_no"       => $calc
+            "calc_no"       => $calc,
+            "cell_no"       => 3
         );
     }
 
@@ -576,7 +669,8 @@ private function computeML($post, $index, $calc)
             "double"        => $double,
             "DT1/2"         => $dt_12,
             "triple"        => $triple,
-            "calc_no"       => $calc
+            "calc_no"       => $calc,
+            "cell_no"       => 4
         );
     }
 
@@ -613,7 +707,8 @@ private function computeML($post, $index, $calc)
             "double"        => $double,
             "DT1/2"         => $dt_12,
             "triple"        => $triple,
-            "calc_no"       => $calc
+            "calc_no"       => $calc,
+            "cell_no"       => 5
         );
     }
 
@@ -650,7 +745,8 @@ private function computeML($post, $index, $calc)
             "double"        => $double,
             "DT1/2"         => $dt_12,
             "triple"        => $triple,
-            "calc_no"       => $calc
+            "calc_no"       => $calc,
+            "cell_no"       => 6
         );
     }
 
@@ -687,7 +783,8 @@ private function computeML($post, $index, $calc)
             "double"        => $double,
             "DT1/2"         => $dt_12,
             "triple"        => $triple,
-            "calc_no"       => $calc
+            "calc_no"       => $calc,
+            "cell_no"       => 7
         );
     }
 
@@ -706,7 +803,8 @@ private function computeML($post, $index, $calc)
             "double"        => $post["B_21"],
             "DT1/2"         => $post["B_21"],
             "triple"        => $post["B_21"],
-            "calc_no"       => $calc
+            "calc_no"       => $calc,
+            "cell_no"       => 8
         );
     }
     
@@ -743,7 +841,8 @@ private function computeML($post, $index, $calc)
             "double"        => $double,
             "DT1/2"         => $dt_12,
             "triple"        => $triple,
-            "calc_no"       => $calc
+            "calc_no"       => $calc,
+            "cell_no"       => 9
         );
     }
 
@@ -790,14 +889,15 @@ private function computeML($post, $index, $calc)
             "double"        => $double,
             "DT1/2"         => $dt_12,
             "triple"        => $triple,
-            "calc_no"       => $calc
+            "calc_no"       => $calc,
+            "cell_no"       => 10
         );
     }
 
     private function computeHourlyChargeRates($total_with_pay, $post, $index, $calc)
     {
         $description = $this->ml_description[13];
-        if ($post["swi_peror_cur"] == "2") {
+        if ($post["swi_peror_cur"] == "0") {
             $normal = $total_with_pay["normal"] + $post["B_24"];
             $early = $total_with_pay["early"] + $post["B_24"];
             $afternoon = $total_with_pay["afternoon"] + $post["B_24"];
@@ -834,14 +934,15 @@ private function computeML($post, $index, $calc)
             "double"        => $double,
             "DT1/2"         => $dt_12,
             "triple"        => $triple,
-            "calc_no"       => $calc
+            "calc_no"       => $calc,
+            "cell_no"       => 13
         );
     }
 
     private function computeDollarMargin($hourly_charge_rate, $total_with_pay, $post, $index, $calc)
     {
         $description = $this->ml_description[11];
-        if ($post["swi_peror_cur"] == "2") {
+        if ($post["swi_peror_cur"] == "0") {
             $normal = $post["B_24"];
             $early = $post["B_24"];
             $afternoon = $post["B_24"];
@@ -878,14 +979,15 @@ private function computeML($post, $index, $calc)
             "double"        => $double,
             "DT1/2"         => $dt_12,
             "triple"        => $triple,
-            "calc_no"       => $calc
+            "calc_no"       => $calc,
+            "cell_no"       => 11
         );
     }
 
     private function computePercentMargin($hourly_charge_rate, $post, $index, $calc)
     {
         $description = $this->ml_description[12];
-        if ($post["swi_peror_cur"] == "2") {
+        if ($post["swi_peror_cur"] == "0") {
             $normal = ($post["B_24"]/$hourly_charge_rate["normal"])/100;
             $early = ($post["B_24"]/$hourly_charge_rate["early"])/100;
             $afternoon = ($post["B_24"]/$hourly_charge_rate["afternoon"])/100;
@@ -922,7 +1024,131 @@ private function computeML($post, $index, $calc)
             "double"        => $double,
             "DT1/2"         => $dt_12,
             "triple"        => $triple,
-            "calc_no"       => $calc
+            "calc_no"       => $calc,
+            "cell_no"       => 12
         );
+    }
+
+    private function computeMAllow($post)
+    {
+        $trans_no = $post["trans_no"];
+        
+        $allowance_pay = array(
+            "trans_no"    => $trans_no,
+            "description" => "Allowance Pay",
+            "cell_no"     => 0,
+            "meal"        => $post["B_52"],
+            "first_aid"   => $post["B_53"],
+            "L_hand_3"    => $post["B_54"],
+            "L_hand_10"   => $post["B_55"],
+            "L_hand_20"   => $post["B_56"]
+        );
+        
+        $super_percent = $post["B_14"]/100;
+        $super = array(
+            "trans_no"    => $trans_no,
+            "description" => "Superannuation",
+            "cell_no"     => 1,
+            "meal"        => $post["B_52"] * ($super_percent),
+            "first_aid"   => $post["B_53"] * ($super_percent),
+            "L_hand_3"    => $post["B_54"] * ($super_percent),
+            "L_hand_10"   => $post["B_55"] * ($super_percent),
+            "L_hand_20"   => $post["B_56"] * ($super_percent)
+        );
+        
+        $work_percent = $post["B_15"]/100;
+        $work_cover = array(
+            "trans_no"    => $trans_no,
+            "description" => "Work Cover (% on super total)",
+            "cell_no"     => 2,
+            "meal"        => ($allowance_pay["meal"] + $super["meal"]) * $work_percent,
+            "first_aid"   => ($allowance_pay["first_aid"] + $super["first_aid"]) * $work_percent,
+            "L_hand_3"    => ($allowance_pay["L_hand_3"] + $super["L_hand_3"]) * $work_percent,
+            "L_hand_10"   => ($allowance_pay["L_hand_10"] + $super["L_hand_10"]) * $work_percent,
+            "L_hand_20"   => ($allowance_pay["L_hand_20"] + $super["L_hand_20"]) * $work_percent,
+        );
+        
+        $public_percent = $post["B_20"]/100;
+        $public = array(
+            "trans_no"    => $trans_no,
+            "description" => "Public Liability (% on pay rate)",
+            "cell_no"     => 3,
+            "meal"        => $post["B_52"] * ($public_percent),
+            "first_aid"   => $post["B_53"] * ($public_percent),
+            "L_hand_3"    => $post["B_54"] * ($public_percent),
+            "L_hand_10"   => $post["B_55"] * ($public_percent),
+            "L_hand_20"   => $post["B_56"] * ($public_percent)
+        );
+        
+        $payroll_percent = $post["B_19"]/100;
+        $payroll = array(
+            "trans_no"    => $trans_no,
+            "description" => "Payroll Tax (% on super total)",
+            "cell_no"     => 4,
+            "meal"        => ($allowance_pay["meal"] + $super["meal"]) * $payroll_percent,
+            "first_aid"   => ($allowance_pay["first_aid"] + $super["first_aid"]) * $payroll_percent,
+            "L_hand_3"    => ($allowance_pay["L_hand_3"] + $super["L_hand_3"]) * $payroll_percent,
+            "L_hand_10"   => ($allowance_pay["L_hand_10"] + $super["L_hand_10"]) * $payroll_percent,
+            "L_hand_20"   => ($allowance_pay["L_hand_20"] + $super["L_hand_20"]) * $payroll_percent,
+        );
+        
+        $admin_percent = $post["B_22"]/100;
+        $admin = array(
+            "trans_no"    => $trans_no,
+            "description" => "Administration (% on super total)",
+            "cell_no"     => 5,
+            "meal"        => ($allowance_pay["meal"] + $super["meal"]) * $admin_percent,
+            "first_aid"   => ($allowance_pay["first_aid"] + $super["first_aid"]) * $admin_percent,
+            "L_hand_3"    => ($allowance_pay["L_hand_3"] + $super["L_hand_3"]) * $admin_percent,
+            "L_hand_10"   => ($allowance_pay["L_hand_10"] + $super["L_hand_10"]) * $admin_percent,
+            "L_hand_20"   => ($allowance_pay["L_hand_20"] + $super["L_hand_20"]) * $admin_percent,
+        );
+        
+        $total_with_pay = array(
+            "trans_no"    => $trans_no,
+            "description" => "TOTAL WITH PAY + ONCOSTS:",
+            "cell_no"     => 6,
+            "meal"        => $allowance_pay["meal"] + $super["meal"] + $work_cover["meal"] + $public["meal"] + $payroll["meal"] + $admin["meal"],
+            "first_aid"   => $allowance_pay["first_aid"] + $super["first_aid"] + $work_cover["first_aid"] + $public["first_aid"] + $payroll["first_aid"] + $admin["first_aid"],
+            "L_hand_3"    => $allowance_pay["L_hand_3"] + $super["L_hand_3"] + $work_cover["L_hand_3"] + $public["L_hand_3"] + $payroll["L_hand_3"] + $admin["L_hand_3"],
+            "L_hand_10"   => $allowance_pay["L_hand_10"] + $super["L_hand_10"] + $work_cover["L_hand_10"] + $public["L_hand_10"] + $payroll["L_hand_10"] + $admin["L_hand_10"],
+            "L_hand_20"   => $allowance_pay["L_hand_20"] + $super["L_hand_20"] + $work_cover["L_hand_20"] + $public["L_hand_20"] + $payroll["L_hand_20"] + $admin["L_hand_20"]
+        );
+        
+        $margin = $post["m_allow_margin"]/100;
+        $percent_margin = array(
+            "trans_no"    => $trans_no,
+            "description" => "% Margin",
+            "cell_no"     => 7,
+            "meal"        => $margin,
+            "first_aid"   => $margin,
+            "L_hand_3"    => $margin,
+            "L_hand_10"   => $margin,
+            "L_hand_20"   => $margin
+        );
+        
+        $dollar_margin = array(
+            "trans_no"    => $trans_no,
+            "description" => "$ Margin",
+            "cell_no"     => 8,
+            "meal"        => $total_with_pay["meal"] * $margin,
+            "first_aid"   => $total_with_pay["first_aid"] * $margin,
+            "L_hand_3"    => $total_with_pay["L_hand_3"] * $margin,
+            "L_hand_10"   => $total_with_pay["L_hand_10"] * $margin,
+            "L_hand_20"   => $total_with_pay["L_hand_20"] * $margin
+        );
+        
+        $labour_allow_charge_rate = array (
+            "trans_no"    => $trans_no,
+            "description" => "Labourpower Allowance Charge Rates",
+            "cell_no"     => 9,
+            "meal"        => $total_with_pay["meal"] + $dollar_margin["meal"],
+            "first_aid"   => $total_with_pay["first_aid"] + $dollar_margin["first_aid"],
+            "L_hand_3"    => $total_with_pay["L_hand_3"] + $dollar_margin["L_hand_3"],
+            "L_hand_10"   => $total_with_pay["L_hand_10"] + $dollar_margin["L_hand_10"],
+            "L_hand_20"   => $total_with_pay["L_hand_20"] + $dollar_margin["L_hand_20"]      
+        );
+        
+        return array($allowance_pay, $super, $work_cover, $public, $payroll, $admin, $total_with_pay, $percent_margin, $dollar_margin, $labour_allow_charge_rate);
     }
 }

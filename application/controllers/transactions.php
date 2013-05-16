@@ -35,12 +35,13 @@ class Transactions extends CI_Controller
     public function save()
     {
         $post = $this->input->post(null, true);
-        
+        // echo "<pre>";
+        // var_dump($post);die();
         $modern_award_data = array();
         $print_defaults_data = array();
         $ctr = 0;
         foreach ($post as $key => $val) {
-            if ($ctr >= 60) {
+            if ($ctr >= 59) {
                 $print_defaults_data[$key] = $val;
             } else {
                 $modern_award_data[$key] = $val;

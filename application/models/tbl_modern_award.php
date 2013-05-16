@@ -68,7 +68,7 @@ class Tbl_modern_award extends CI_Model
         $rates = $this->db->get($this->table_rate_increase)->result_array();
         
         if (!$rates) {
-            return false;
+            return array();
         }
         
         $upcoming_rate_increase = array();

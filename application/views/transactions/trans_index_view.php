@@ -30,7 +30,7 @@
 		    <div class="navbar navbar-fixed-bottom" id="nav-tabs" style="display: none;">
             <div class="navbar-inner">
                 <div class="container">
-                <ul class="nav">
+                <ul class="nav pull-right">
                     <li class="active"><a href="#" id="show-tab-1">TAB 1</a></li>
                     <li><a href="#" id="show-tab-2">TAB 2</a></li>
                     <li><a href="#" id="show-tab-3">TAB 3</a></li>
@@ -362,7 +362,7 @@
 					<hr>
 					<div class="control-group">
 				      <input type="text" class="input-medium disabled" id="allowance_txt" style="font-size: 10px;" disabled="true" value="STANDARD RATE FOR CALS :">
-					  <input type="text" class="input-mini" id="allowance_caption12" name="allowance_caption12">
+					  <input type="text" class="input-mini" id="allowcap" disabled="true" value="%">
 					  <div class="input-prepend">
                             <span class="add-on">$</span>
 					        <input type="text" class="input-medium txt"  id="B_51" name="B_51" placeholder="0.00">

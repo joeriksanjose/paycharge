@@ -8,7 +8,7 @@ $(document).ready(function(){
    
    // adding
    $("#add-new-rate").click(function(){
-       $("#frm-new-rate").attr("action", base_url+"transactions/saveRate");
+       $("#frm-new-rate").attr("action", base_url+"client_agreement/saveRate");
        $(this).hide("fast");
        $("#new-rate").show("fast");
        $("input:text").val("");
@@ -39,7 +39,7 @@ $(document).ready(function(){
    });
    
    $("#delete-btn-modal").click(function(){
-      $.post(base_url+"transactions/ajaxDeleteRate", {del_id:del_id}, function(data){
+      $.post(base_url+"client_agreement/ajaxDeleteRate", {del_id:del_id}, function(data){
         res = $.parseJSON(data);
         if (res.status) {
             remove_row.fadeOut("slow", function(){
@@ -61,10 +61,10 @@ $(document).ready(function(){
        $(document).scrollTop(0);
        $("#new-rate").show("fast");
        $("#add-new-rate").hide("fast");
-       $.post(base_url+"transactions/ajaxGetRateInfo", {edit_id:edit_id}, function(data){
+       $.post(base_url+"client_agreement/ajaxGetRateInfo", {edit_id:edit_id}, function(data){
           res = $.parseJSON(data);
           if (res.status) {
-              $("#frm-new-rate").attr("action", base_url+"transactions/updateRate");
+              $("#frm-new-rate").attr("action", base_url+"client_agreement/updateRate");
               $("#btn-add").html("Update rate");
               $("#created_at").val(res.rate_info.created_at);
               $("#trans_no").val(res.rate_info.trans_no);
