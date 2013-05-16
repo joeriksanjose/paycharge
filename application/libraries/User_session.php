@@ -2,7 +2,7 @@
 
 class User_session extends CI_Controller
 {
-    public function checkUserSession()
+    public function checkUserSession()
     {
         $user_session = $this->session->all_userdata();
         
@@ -12,5 +12,17 @@ class User_session extends CI_Controller
         }
         
         return $user_session;
+    }
+    
+    public function checkClientSession()
+    {
+        $client_session = $this->session->all_userdata();
+        
+        if (!array_key_exists("client_no", $client_session)) {
+            $this->session->set_userdata("login_error", "Error: Must login to continue.");
+            redirect(base_url("client"));
+        }
+        
+        return $client_session;
     }
 }

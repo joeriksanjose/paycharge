@@ -1,0 +1,66 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+class Home extends CI_Controller {
+
+    function __construct()
+    {
+        parent::__construct();
+        $this->load->model("libraries/tbl_contacts", "cont");
+    }
+
+    public function index()
+    {
+        if ($this->session->userdata("user_id") != "") {
+            redirect(base_url("transactions"));
+        }
+        
+        $data["login_error"] = false;
+        $data["title"] = "System Login";
+        
+        if ($err_msg = $this->session->userdata("login_error")) {
+            $data["login_error"] = true;
+            $data["error_message"] = $err_msg;
+        }
+        
+        $this->session->unset_userdata("login_error");
+        
+        $this->load->view("client/login_view", $data);
+    }
+    
+    public function login()
+    { 
+        $post = $this->input->post(null, true);
+        $client = $this->cont->checkClientLogin($post);
+               
+        if (!$client) {
+            $this->session->set_userdata("login_error", "Error: Invalid username/password");
+            redirect(base_url("client"));
+        } else {
+            $client_session = array(
+                "client_name"       => $post["name"],
+                "client_no"    => $client["contact_no"],
+                "username"     => $client["username"],
+                "access_level" => $client["access_level"]
+            );
+                
+            $this->session->set_userdata($client_session);
+            redirect("client/pcs");
+        }
+    }
+    
+    public function logout()
+    {
+        $client_session = array(
+            "client"       => $post["name"],
+            "client_no"    => $client["contact_no"],
+            "username"     => $client["username"],
+            "access_level" => $client["access_level"]
+        );
+                
+        $this->session->unset_userdata($client_session);
+        redirect(base_url("client"));
+    }
+}
+
+/* End of file home.php */
+/* Location: ./application/controllers/home.php */

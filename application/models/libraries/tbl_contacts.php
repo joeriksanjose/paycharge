@@ -110,5 +110,19 @@ class Tbl_contacts extends CI_model{
         
         return $sql;
     }
+    
+    /* log in clients */
+    public function checkClientLogin($post)
+    {
+        $where = array(
+            "username" => $post["username"],
+            "password" => $post["password"]
+        );
+        
+        $this->db->where($where);
+        
+        return $this->db->get($this->table_name)->row_array();
+    }
+    /* end log in clients */
 }
 

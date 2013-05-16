@@ -204,6 +204,17 @@
                 </div>
               </div>
               <div class="control-group">
+                <label class="control-label">Access Levels</label>
+                <div class="controls">
+                  <label class="radio">
+                    <input type="radio" id="access_level" name="access_level" checked="true" class="input-medium" value="0"> Can View
+                  </label>
+                  <label class="radio">
+                    <input type="radio" id="access_level" name="access_level" class="input-medium" value="1"> Can View and Approve
+                  </label>
+                </div>
+              </div>
+              <div class="control-group">
                 <div class="controls">
                   <button type="submit" class="btn">Add contact</button>
                   <button type="button" class="btn" id="close-add-form">Cancel</button>
@@ -227,9 +238,12 @@
             <?php echo $success_msg ?>
         </div>
         <?php endif;?>
-        <div class="alert alert-success" style="display:none; margin-top: 10px" id="div-success">
+         <?php if ($error): ?>
+       <div class="alert alert-error" id="div-error" style="margin-top: 10px">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
-        </div>
+            <?php echo $error_msg ?>
+       </div>
+       <?php endif ; ?>
     </div>
     <div class="span12" style="400px;overflow-y: auto;margin-top: 10px;" id="tbl">
         <table class="table table-striped table-bordered" id="admin-table" style="font-size: 12px;">

@@ -188,8 +188,8 @@ class Contacts extends CI_Controller
     
     public function saveClientInfo()
     {
-        $post = $this->input->post(null, true);
-        try {
+        $post = $this->input->post(null, true);        
+         try {
             if (!$this->cc->save($post)) {
                 $this->session->set_userdata("status", "alert-error");
                 $this->session->set_userdata("status_msg", "<b>Error!</b> Database Error.");
