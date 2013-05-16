@@ -49,10 +49,10 @@
                                 <a href="">Mondern Award</a>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a href="">Rate Confirmation</a>
+                                        <a href="<?php echo base_url("reports/rate_confirmation/modern_award") ?>">Rate Confirmation</a>
                                     </li>
                                     <li>
-                                        <a href="">Allowance</a>
+                                        <a href="<?php echo base_url("reports/allowance/modern_award") ?>">Allowance</a>
                                     </li>
                                     <li>
                                         <a href="">Pay and Charge Rate Schedule</a>
@@ -66,10 +66,10 @@
                                 <a href="">Client Agreement</a>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a href="">Rate Confirmation</a>
+                                        <a href="<?php echo base_url("reports/rate_confirmation/client") ?>">Rate Confirmation</a>
                                     </li>
                                     <li>
-                                        <a href="">Allowance</a>
+                                        <a href="<?php echo base_url("reports/allowance/client") ?>">Allowance</a>
                                     </li>
                                     <li>
                                         <a href="">Pay and Charge Rate Schedule</a>
