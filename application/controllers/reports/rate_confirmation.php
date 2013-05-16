@@ -47,7 +47,7 @@ class Rate_confirmation extends CI_Controller
 		$this->data["header"] = $this->load->view("header", $this->data, true);
 		$this->data["footer"] = $this->load->view("footer", $this->data, true);
         
-        $this->data["print"] = $this->rc->getPrint($trans_no);
+        $this->data["print"] = $this->rc->getPrint($moder_no);
 		$this->data["charge_rate"] = $this->rc->getChargeRate($trans_no);
 		$this->data["modern"] = $this->rc->getModern($moder_no);
 		
@@ -247,7 +247,6 @@ class Rate_confirmation extends CI_Controller
 		if( $this->data["print"]["grade1"] ){
 			$this->data["ml1"] = $this->rc->getML1($trans_no, substr($this->data["print"]["calculator"], -1, 1));
 			$this->data["payrate_1"] = $this->rc->getPayrate($trans_no, "Grade 1");
-			var_dump($this->data["payrate_1"]);
 		} 
 		
 		if( $this->data["print"]["grade2"] ){
