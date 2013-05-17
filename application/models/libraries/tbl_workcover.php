@@ -17,10 +17,6 @@ class Tbl_workcover extends CI_model{
         
         $sql = $this->db->get("tbl_state")->result_array();
         
-        if (!$sql) {
-            throw new Exception("Error : Cannot retrieve data.");
-        }
-        
         return $sql;
     }
     

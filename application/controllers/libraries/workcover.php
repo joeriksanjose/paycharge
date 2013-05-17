@@ -24,6 +24,8 @@ class Workcover extends CI_Controller
         $this->data["footer"] = $this->load->view("footer", $this->data, true);
         $this->data["ok"] = false;
         $this->data["error"] = false;
+        $this->data["import_status"] = $this->session->userdata("import_status");
+        $this->data["stat_msg"] = $this->session->userdata("stat_msg");
         
         try {
             if ($this->data["success_msg"] = $this->session->userdata("ok")) {
@@ -34,6 +36,8 @@ class Workcover extends CI_Controller
             }
             $this->session->unset_userdata("error");
             $this->session->unset_userdata("ok");
+            $this->session->unset_userdata("import_status");
+            $this->session->unset_userdata("stat_msg");
             $this->data["data"] = $this->tbl->select_all();
             $this->data["count"] = count($this->data["data"]);
         } catch (Exception $ex) {
