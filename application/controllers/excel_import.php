@@ -20,20 +20,29 @@ class Excel_import extends CI_Controller {
      */
     public function importCsv()
     {
-        
         $key = $this->input->post("key", true);
         $table_name = $this->getTableName($key);
         
+        // no file chosen
+        if ($_FILES["csv_file"]["name"] == "") {
+            $this->session->set_userdata("import_status", 0);
+            $this->session->set_userdata("stat_msg", "<b>Error!</b> Please choose your CSV file.");
+            redirect($_SERVER["HTTP_REFERER"]);
+            return;
+        }
+        
+        // wrong key
         if (!$table_name) {
-            $this->session->set_userdata("status", 0);
+            $this->session->set_userdata("import_status", 0);
             $this->session->set_userdata("stat_msg", "<b>Error!</b> Something went wrong.");
             redirect($_SERVER["HTTP_REFERER"]);
             return;
         }
         
+        // check upload
         $is_uploaded = $this->upload->do_upload("csv_file");
         if (!$is_uploaded) {
-            $this->session->set_userdata("status", 0);
+            $this->session->set_userdata("import_status", 0);
             $this->session->set_userdata("stat_msg", "<b>Error!</b> ".$this->upload->display_errors());
             redirect($_SERVER["HTTP_REFERER"]);
             return;
@@ -43,10 +52,12 @@ class Excel_import extends CI_Controller {
         $csv_file = $file_info["full_path"];
         $handle = fopen($csv_file, "r");
         
+        // if file cannot be open
         if (!$handle) {
             $this->session->set_userdata("import_status", 0);
             $this->session->set_userdata("stat_msg", "<b>Error!</b> Error opening CSV file.");
             redirect($_SERVER["HTTP_REFERER"]);
+            return;
         }
         
         $ctr = 0;

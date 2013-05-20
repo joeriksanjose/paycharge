@@ -123,8 +123,8 @@
     </div>
 </div>
     <div class="span12">
-        <button type="button" id="add-new" class="btn"><i class="icon-plus"></i> Add new super</button>
-        <button class="btn" type="button" id="trig-file-browser">Import fromx CSV file</button>
+        <button type="button" id="add-new" class="btn"><i class="icon-plus"></i> Add new work cover</button>
+        <button class="btn" type="button" id="trig-file-browser">Import from CSV file</button>
         <input style="margin-bottom: 0px;" id="file-name" type="text" readonly="true" class="input-medium">
         <button type="button" id="upload" class="btn"><i class="icon-circle-arrow-up"></i></button>
         <form id="frm-importer" style="display: none;" enctype="multipart/form-data" method="post" action="<?php echo base_url("excel_import/importCsv") ?>">

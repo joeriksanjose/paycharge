@@ -70,9 +70,7 @@ $(document).ready(function(){
                  str = str + "<thead>"
                  str = str + "<tr>";
                  str = str + "<th>Contact No.</th>";
-                 str = str + "<th>Last Name</th>";
-                 str = str + "<th>First Name</th>";
-                 str = str + "<th>Middle Name</th>";
+                 str = str + "<th>Name</th>";
                  str = str + "<th>Mobile No.</th>";
                  str = str + "<th>Action</th>";
                  str = str + "</tr>";
@@ -81,11 +79,10 @@ $(document).ready(function(){
                  $.each(result, function(i, item){
                      str = str + "<tr>";
                      str = str + "<td>"+item.contact_no+"</td>";
-                     str = str + "<td>"+item.last_name+"</td>";
-                     str = str + "<td>"+item.first_name+"</td>";
-                     str = str + "<td>"+item.middle_name+"</td>";
+                     str = str + "<td>"+item.last_name+", "+item.first_name+" "+item.middle_name+"</td>";
                      str = str + "<td>"+item.contact_phone_no+"</td>";
-                     str = str + "<td><button type='button' class='btn btn-mini edit-state-btn' show-id='"+item.id+"'>";
+                     str = str + "<td><a target='_blank' href='"+base_url+"libraries/contacts/client_info/"+item.contact_no+"' class='btn btn-mini'>CLIENT</a>";
+                     str = str + " <button type='button' class='btn btn-mini edit-state-btn' show-id='"+item.id+"'>";
                      str = str + "<i class='icon-edit'></i></button> ";
                      str = str + "<button type='button' class='btn btn-mini btn-danger delete-state-btn' del-id='"+item.id+"'>";
                      str = str + "<i class='icon-trash icon-white'></i>";
@@ -175,6 +172,12 @@ $(document).ready(function(){
             $("#e_position").val(json_data.position);
             $("#e_contact_phone_no").val(json_data.contact_phone_no);
             $("#e_email").val(json_data.email);
+            $.each(json_data.client_nos_exploded, function(i, item) {
+               $("#e_client_nos option[value='"+item+"']").attr("selected", "selected"); 
+            });
+            $("#e_can_view").prop("checked", parseInt(json_data.can_view));
+            $("#e_can_approve").prop("checked", parseInt(json_data.can_approve));
+            $("#e_can_forecast").prop("checked", parseInt(json_data.can_forecast));
         });
         
         $("#showModal").modal("show");
@@ -205,7 +208,11 @@ $(document).ready(function(){
                     date_of_birth:$("#e_date_of_birth").val(),
                     position:$("#e_position").val(),
                     contact_phone_no:$("#e_contact_phone_no").val(),
-                    email:$("#e_email").val()
+                    email:$("#e_email").val(),
+                    client_nos:$("#e_client_nos").val(),
+                    can_view:$("#e_can_view").is(":checked") ? 1 : 0,
+                    can_approve:$("#e_can_approve").is(":checked") ? 1 : 0,
+                    can_forecast:$("#e_can_forecast").is(":checked") ? 1 : 0
                 },
                 function(data) {
                 var result = $.parseJSON(data);
@@ -220,9 +227,7 @@ $(document).ready(function(){
                      str = str + "<thead>"
                      str = str + "<tr>";
                      str = str + "<th>Contact No.</th>";
-                     str = str + "<th>Last Name</th>";
-                     str = str + "<th>First Name</th>";
-                     str = str + "<th>Middle Name</th>";
+                     str = str + "<th>Name</th>";
                      str = str + "<th>Mobile No.</th>";
                      str = str + "<th>Action</th>";
                      str = str + "</tr>";
@@ -231,11 +236,10 @@ $(document).ready(function(){
                      $.each(result.data, function(i, item){
                          str = str + "<tr>";
                          str = str + "<td>"+item.contact_no+"</td>";
-                         str = str + "<td>"+item.last_name+"</td>";
-                         str = str + "<td>"+item.first_name+"</td>";
-                         str = str + "<td>"+item.middle_name+"</td>";
+                         str = str + "<td>"+item.last_name+", "+item.first_name+" "+item.middle_name+"</td>";
                          str = str + "<td>"+item.contact_phone_no+"</td>";
-                         str = str + "<td><button type='button' class='btn btn-mini edit-state-btn' show-id='"+item.id+"'>";
+                         str = str + "<td><a target='_blank' href='"+base_url+"libraries/contacts/client_info/"+item.contact_no+"' class='btn btn-mini'>CLIENT</a>";
+                         str = str + " <button type='button' class='btn btn-mini edit-state-btn' show-id='"+item.id+"'>";
                          str = str + "<i class='icon-edit'></i></button> ";
                          str = str + "<button type='button' class='btn btn-mini btn-danger delete-state-btn' del-id='"+item.id+"'>";
                          str = str + "<i class='icon-trash icon-white'></i>";
@@ -271,6 +275,20 @@ $(document).ready(function(){
             event.preventDefault(); 
         }
     }
+    
+    // CSV import
+    $("#trig-file-browser").click(function(){
+        $("#csv_file").click();
+    });
+    
+    $("#csv_file").change(function(){
+       $("#file-name").val($(this).val().replace("C:\\fakepath\\", "")); 
+    });
+    
+    $("#upload").click(function(){
+        $("#frm-importer").submit();
+    });
+    // end CSV import
 });
 
 

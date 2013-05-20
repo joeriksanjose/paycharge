@@ -12,12 +12,7 @@ class Tbl_state extends CI_model{
     public function select_all_state()
     {
         $this->db->select("id, state_no, state_name, swi_active, tax");
-        
         $sql = $this->db->get($this->table_name)->result_array();
-        
-        if (!$sql) {
-            throw new Exception("Error : Cannot retrieve data.");
-        }
         
         return $sql;
     }
@@ -78,12 +73,7 @@ class Tbl_state extends CI_model{
     public function select_all_state_4_clients()
     {
         $this->db->select("id, state_no, state_name, swi_active, tax");
-        
         $sql = $this->db->get($this->table_name)->result_array();
-        
-        if (!$sql) {
-            throw new Exception("Error : Cannot retrieve data.");
-        }
         
         return $sql;
     }

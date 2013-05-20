@@ -92,6 +92,28 @@
               <input type="text" id="e_email" name="e_email" class="input-medium">
             </div>
           </div>
+          <div class="control-group">
+            <label class="control-label" for="e_client_nos"><span style="float:right; margin-left: 100px;">Clients</span></label>
+            <select multiple="multiple" id="e_client_nos" name="client_nos[]">
+                <?php foreach ($clients as $client) : ?>
+                    <option value="<?php echo $client["client_no"] ?>"><?php echo $client["company_name"] ?></option>
+                <?php endforeach ; ?>
+            </select>
+          </div>
+          <div class="control-group">
+            <label class="control-label">Access Levels</label>
+            <div class="controls">
+              <label class="checkbox">
+                <input type="checkbox" id="e_can_view" name="e_can_view" checked="true" class="input-medium" value="1"> Can View
+              </label>
+              <label class="checkbox">
+                <input type="checkbox" id="e_can_approve" name="e_can_approve" class="input-medium" value="1"> Can Approve
+              </label>
+              <label class="checkbox">
+                <input type="checkbox" id="e_can_forecast" name="e_can_forecast" class="input-medium" value="1"> Can Forecast
+              </label>
+            </div>
+          </div>
          </form>
     </div>
     <div class="modal-footer">
@@ -164,9 +186,6 @@
                   </div>
                 </div>
               </div>
-          </div>
-          <div class="span5">
-              
               <div class="control-group">
                 <label class="control-label" for="position">Position</label>
                 <div class="controls">
@@ -179,7 +198,9 @@
                   <input type="text" id="contact_phone_no" name="contact_phone_no" class="input-medium">
                 </div>
               </div>
-              <div class="control-group">
+          </div>
+          <div class="span5">
+               <div class="control-group">
                 <label class="control-label" for="email">Email</label>
                 <div class="controls">
                   <input type="text" id="email" name="email" class="input-medium">
@@ -204,13 +225,24 @@
                 </div>
               </div>
               <div class="control-group">
+                <label class="control-label" for="re_password"><span style="float:right; margin-left: 100px;">Clients</span></label>
+                <select multiple="multiple" id="client_nos" name="client_nos[]">
+                    <?php foreach ($clients as $client) : ?>
+                        <option value="<?php echo $client["client_no"] ?>"><?php echo $client["company_name"] ?></option>
+                    <?php endforeach ; ?>
+                </select>
+              </div>
+              <div class="control-group">
                 <label class="control-label">Access Levels</label>
                 <div class="controls">
-                  <label class="radio">
-                    <input type="radio" id="access_level" name="access_level" checked="true" class="input-medium" value="0"> Can View
+                  <label class="checkbox">
+                    <input type="checkbox" id="can_view" name="can_view" checked="true" class="input-medium" value="1"> Can View
                   </label>
-                  <label class="radio">
-                    <input type="radio" id="access_level" name="access_level" class="input-medium" value="1"> Can View and Approve
+                  <label class="checkbox">
+                    <input type="checkbox" id="can_approve" name="can_approve" class="input-medium" value="1"> Can Approve
+                  </label>
+                  <label class="checkbox">
+                    <input type="checkbox" id="can_forecast" name="can_forecast" class="input-medium" value="1"> Can Forecast
                   </label>
                 </div>
               </div>
@@ -227,6 +259,13 @@
    <hr>
     <div class="span12">
         <button type="button" id="add-new-state" class="btn"><i class="icon-plus"></i> Add new contact</button>
+        <button class="btn" type="button" id="trig-file-browser">Import from CSV file</button>
+        <input style="margin-bottom: 0px;" id="file-name" type="text" readonly="true" class="input-medium">
+        <button type="button" id="upload" class="btn"><i class="icon-circle-arrow-up"></i></button>
+        <form id="frm-importer" style="display: none;" enctype="multipart/form-data" method="post" action="<?php echo base_url("excel_import/importCsv") ?>">
+            <input type="file" id="csv_file" name="csv_file">
+            <input type="hidden" name="key" value="co">
+        </form>
         <div class="form-search pull-right">
             <input type="text" class="input-xlarge search-query" placeholder="Search" id="search">
             <button type="button" class="btn" id="btn-search"><i class="icon-search"></i></button>
@@ -244,15 +283,26 @@
             <?php echo $error_msg ?>
        </div>
        <?php endif ; ?>
+       
+       <!-- for importing from CSV -->
+        <?php if ($import_status === 0) : ?>
+        <div class="alert alert-error" style="margin-top: 10px">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <?php echo $stat_msg ?>
+        </div>
+        <?php elseif ($import_status === 1) : ?>
+        <div class="alert alert-success" style="margin-top: 10px">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <?php echo $stat_msg ?>
+        </div>
+        <?php endif ; ?>
     </div>
     <div class="span12" style="400px;overflow-y: auto;margin-top: 10px;" id="tbl">
         <table class="table table-striped table-bordered" id="admin-table" style="font-size: 12px;">
             <thead>
             <tr>
                 <th>Contact No</th>
-                <th>Last Name</th>
-                <th>First Name</th>
-                <th>Middle Name</th>
+                <th>Name</th>
                 <th>Mobile No</th>
                 <th>Action</th>
             </tr>
@@ -262,9 +312,7 @@
                 <?php foreach ($data as $value) : ?>
                     <tr>
                         <td><?php echo $value["contact_no"] ?></td>
-                        <td><?php echo $value["last_name"] ?></td>
-                        <td><?php echo $value["first_name"] ?></td>
-                        <td><?php echo $value["middle_name"] ?></td>
+                        <td><?php echo $value["last_name"].", ".$value["first_name"]." ".$value["middle_name"] ?></td>
                         <td><?php echo $value["contact_phone_no"] ?></td>
                         <td>
                             <a target="_blank" href="<?php echo base_url("libraries/contacts/client_info/".$value["contact_no"]) ?>" class="btn btn-mini">CLIENT</a>

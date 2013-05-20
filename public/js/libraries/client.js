@@ -263,6 +263,20 @@ $(document).ready(function(){
             event.preventDefault(); 
         }
     }
+    
+    // CSV import
+    $("#trig-file-browser").click(function(){
+        $("#csv_file").click();
+    });
+    
+    $("#csv_file").change(function(){
+       $("#file-name").val($(this).val().replace("C:\\fakepath\\", "")); 
+    });
+    
+    $("#upload").click(function(){
+        $("#frm-importer").submit();
+    });
+    // end CSV import
 });
 
 

@@ -191,6 +191,13 @@
        </div>
     <div class="span12">
         <button type="button" id="add-new-state" class="btn"><i class="icon-plus"></i> Add new client</button>
+        <button class="btn" type="button" id="trig-file-browser">Import from CSV file</button>
+        <input style="margin-bottom: 0px;" id="file-name" type="text" readonly="true" class="input-medium">
+        <button type="button" id="upload" class="btn"><i class="icon-circle-arrow-up"></i></button>
+        <form id="frm-importer" style="display: none;" enctype="multipart/form-data" method="post" action="<?php echo base_url("excel_import/importCsv") ?>">
+            <input type="file" id="csv_file" name="csv_file">
+            <input type="hidden" name="key" value="cl">
+        </form>
         <div class="form-search pull-right">
             <input type="text" class="input-xlarge search-query" placeholder="Search" id="search">
             <button type="button" class="btn" id="btn-search"><i class="icon-search"></i></button>
@@ -205,6 +212,19 @@
         <div class="alert alert-success" style="display:none; margin-top: 10px" id="div-success">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
         </div>
+        
+        <!-- for importing from CSV -->
+        <?php if ($import_status === 0) : ?>
+        <div class="alert alert-error" style="margin-top: 10px">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <?php echo $stat_msg ?>
+        </div>
+        <?php elseif ($import_status === 1) : ?>
+        <div class="alert alert-success" style="margin-top: 10px">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <?php echo $stat_msg ?>
+        </div>
+        <?php endif ; ?>
     </div>
     <div class="span12" style="max-height: 400px; overflow: auto; margin-top: 10px;" id="tbl">
         <table class="table table-striped table-bordered" id="admin-table" style="font-size: 12px;">

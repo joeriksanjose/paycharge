@@ -90,6 +90,10 @@ class Clients extends CI_Controller
         $this->data["ok"] = false;
         $this->data["error"] = false;
         $this->data["states"] = $this->state->select_all_state_4_clients();
+        $this->data["import_status"] = $this->session->userdata("import_status");
+        $this->data["stat_msg"] = $this->session->userdata("stat_msg");
+        $this->session->unset_userdata("import_status");
+        $this->session->unset_userdata("stat_msg");
         
         try {
             if ($this->data["success_msg"] = $this->session->userdata("ok")) {

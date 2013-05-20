@@ -24,6 +24,14 @@ class Contacts extends CI_Controller
         $this->data["footer"] = $this->load->view("footer", $this->data, true);
         $this->data["ok"] = false;
         $this->data["error"] = false;
+        $this->data["import_status"] = $this->session->userdata("import_status");
+        $this->data["stat_msg"] = $this->session->userdata("stat_msg");
+        
+        try {
+            $this->data["clients"] = $this->clients->select_all_clients();
+        } catch (Exception $e) {
+            $this->data["clients"] = array();
+        }
         
         try {
             if ($this->data["success_msg"] = $this->session->userdata("ok")) {
@@ -34,6 +42,8 @@ class Contacts extends CI_Controller
             }
             $this->session->unset_userdata("error");
             $this->session->unset_userdata("ok");
+            $this->session->unset_userdata("import_status");
+            $this->session->unset_userdata("stat_msg");
             $this->data["data"] = $this->contacts->select_all_contacts();
             $this->data["count"] = count($this->data["data"]);
         } catch(Exception $ex) {
@@ -49,6 +59,7 @@ class Contacts extends CI_Controller
         
         $this->data["data"] = $this->contacts->get_contacts($id);
         $this->data["data"]["date_of_birth"] = date("d/m/Y", strtotime($this->data["data"]["date_of_birth"]));
+        $this->data["data"]["client_nos_exploded"] = explode(",", $this->data["data"]["client_nos"]);
         
         echo json_encode($this->data["data"]);
     }
@@ -115,23 +126,39 @@ class Contacts extends CI_Controller
     public function save_contacts()
     {
         $data = $this->input->post(null, true);
-        $data["date_of_birth"] = date("Y-m-d", strtotime($data["date_of_birth"]));
+        $data["date_of_birth"] = $this->convertToYMD($data["date_of_birth"]);
         
+        if (!$data["client_nos"]) {
+            $this->session->set_userdata("error", "<b>Error!</b> Please select at least one client.");
+            redirect("libraries/contacts/");
+            return;
+        }
+        
+        $data["client_nos"] = implode(",", $data["client_nos"]);
+        
+        if (!isset($data["can_view"]) && !isset($data["can_approve"]) && !isset($data["can_forecast"])) {
+            $this->session->set_userdata("error", "<b>Error!</b> Please choose at least one access level.");
+            redirect("libraries/contacts/");
+            return;
+        }
+           
         $sql = $this->contacts->save_contacts($data);
         
         if ($sql) {
             $this->session->set_userdata("ok", "<b>Done!</b> Contact successfully added.");
             redirect("libraries/contacts/");
-        } else {
-            $this->session->set_userdata("error", "<b>Error!</b> Database error.");
-            redirect("libraries/contacts/");
+            return;
         }
+            
+        $this->session->set_userdata("error", "<b>Error!</b> Database error.");
+        redirect("libraries/contacts/");
     }
     
     public function update_contacts()
     {
         $data = $this->input->post(null, true);
-        $data["date_of_birth"] = date("Y-m-d", strtotime($data["date_of_birth"]));
+        $data["date_of_birth"] = $this->convertToYMD($data["date_of_birth"]);
+        $data["client_nos"] = implode(",", $data["client_nos"]);
         $sql = $this->contacts->update_contacts($data);
         
         if ($sql) {
@@ -233,6 +260,17 @@ class Contacts extends CI_Controller
         
         echo json_encode($client_info);
         return;
+    }
+    
+    private function convertToYMD($date)
+    {
+        $tmp = explode("/", $date);
+        
+        $d = $tmp[0];
+        $m = $tmp[1];
+        $y = $tmp[2];
+        
+        return $y."-".$m."-".$d;
     }
 }
 
