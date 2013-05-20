@@ -90,6 +90,18 @@ $(document).ready(function(){
         }
     });
     
+    
+    $("#admin").change(function(){
+       if ($(this).val() == 0) {
+           $("#state_assign").show("fast");
+           $("#state_no").removeAttr("disabled");
+           return;
+       }
+       
+       $("#state_assign").hide("fast");
+       $("#state_no").attr("disabled", "disabled");
+    });
+    
     // deleting user
     var del_id = 0;
     $('.delete-btn').click(function(){
@@ -127,6 +139,13 @@ $(document).ready(function(){
               return;
           }
           
+          // show state assignment
+          if (result.user.admin == 0) {
+              $("#e_state_assign").show("fast");
+              $("#e_state_no").removeAttr("disabled");
+              $("#e_state_no").val(result.user.state_no).attr("selected", "selected");
+          }
+          
           $("#e_admin").val(result.user.admin).attr("selected", "selected");
           $("#e_full_name").val(result.user.full_name);
           $("#e_username").val(result.user.username);
@@ -149,9 +168,7 @@ $(document).ready(function(){
         } else{
             $.post(base_url+"home/ajaxUpdateUser", {
                 user_id:user_id,
-                e_username:$("#e_username").val(),
-                e_full_name:$("#e_full_name").val(),
-                e_admin:$("#e_admin").val(),
+                e_state_no:$("#e_state_no").val(),
                 e_password:$("#e_password").val(),
                 e_c_password:$("#e_c_password").val()
             }, function(data){

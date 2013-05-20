@@ -201,14 +201,6 @@ class Home extends CI_Controller {
                 throw new Exception("<b>Error:</b> Do not leave blank fields");
             }
             
-            // if ($post["e_password"] != $post["e_c_password"]) {
-                // throw new Exception("Error: Password did not match.");
-            // }
-            
-            // if ($this->users->isUsernameExistForEdit($post["e_username"])) {
-                // throw new Exception("Error: User ID already exists");
-            // }
-            
             if (!$this->users->isPasswordCorrect($post["user_id"], $post["e_password"])) {
                 throw new Exception("<b>Error:</b> Incorrect password.");
             }
@@ -220,7 +212,6 @@ class Home extends CI_Controller {
         } catch (Exception $e) {
             $params["is_error"] = true;
             $params["error_msg"] = $e->getMessage();
-            // $params["error_msg"] = $this->users->isUsernameExistForEdit($post["e_username"]);
             echo json_encode($params);
             return;
         }

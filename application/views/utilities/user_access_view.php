@@ -33,7 +33,16 @@
               <select id="e_admin" name="e_admin" disabled>
                   <option value="1">Administrator</option>
                   <option value="0">Sales</option>
-                  <option value="2">Client</option>
+              </select>
+            </div>
+          </div>
+          <div class="control-group" id="e_state_assign" style="display: none;">
+            <label class="control-label" for="e_state_no">State Assignment</label>
+            <div class="controls">
+              <select disabled="disabled" id="e_state_no" name="e_state_no">
+                  <?php foreach ($states as $state) : ?>
+                      <option value="<?php echo $state["state_no"] ?>"><?php echo $state["state_name"] ?></option>
+                  <?php endforeach ; ?>
               </select>
             </div>
           </div>
@@ -106,8 +115,17 @@
                   <?php else : ?>
                   <option value="1">Administrator</option>
                   <option value="0" selected="selected">Sales</option>
-                  <option value="2">Client</option>
                   <?php endif ; ?>
+              </select>
+            </div>
+          </div>
+          <div class="control-group" id="state_assign" style="display: none;">
+            <label class="control-label" for="state_no">State Assignment</label>
+            <div class="controls">
+              <select disabled="disabled" id="state_no" name="state_no">
+                  <?php foreach ($states as $state) : ?>
+                      <option value="<?php echo $state["state_no"] ?>"><?php echo $state["state_name"] ?></option>
+                  <?php endforeach ; ?>
               </select>
             </div>
           </div>

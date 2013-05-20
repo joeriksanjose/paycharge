@@ -7,6 +7,7 @@ class Utilities extends CI_Controller
         parent::__construct();
         $this->load->model("tbl_user_model", "users");
         $this->load->model("tbl_system_setup", "setup");
+        $this->load->model("libraries/tbl_state", "state");
         $this->load->library("user_session");
         
         $this->user_session = $this->user_session->checkUserSession();
@@ -23,6 +24,9 @@ class Utilities extends CI_Controller
         
         $data["header"] = $this->load->view("header", $data, true);
         $data["footer"] = $this->load->view("footer", $data, true);
+        
+        // load states
+        $data["states"] = $this->state->select_all_state();
         
         $data["display_form"] = "none";
         $data["add_error"] = false;

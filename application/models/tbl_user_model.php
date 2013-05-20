@@ -73,9 +73,7 @@ class Tbl_user_model extends CI_Model
     {
         $where = array("id" => $user_id);
         $new_data = array(
-            "admin" => $data["e_admin"],
-            "full_name" => $data["e_full_name"],
-            "username" => $data["e_username"],
+            "state_no" => $data["e_state_no"],
             "password" => $data["e_c_password"]
         );
         
