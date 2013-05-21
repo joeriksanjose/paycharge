@@ -39,7 +39,7 @@
           <div class="control-group" id="e_state_assign" style="display: none;">
             <label class="control-label" for="e_state_no">State Assignment</label>
             <div class="controls">
-              <select disabled="disabled" id="e_state_no" name="e_state_no">
+              <select multiple="multiple" disabled="disabled" id="e_state_no" name="e_state_no[]" style="height: 100px; max-height: 100px;">
                   <?php foreach ($states as $state) : ?>
                       <option value="<?php echo $state["state_no"] ?>"><?php echo $state["state_name"] ?></option>
                   <?php endforeach ; ?>
@@ -122,7 +122,7 @@
           <div class="control-group" id="state_assign" style="display: none;">
             <label class="control-label" for="state_no">State Assignment</label>
             <div class="controls">
-              <select disabled="disabled" id="state_no" name="state_no">
+              <select multiple="multiple" disabled="disabled" id="state_no" name="state_no[]" style="height: 100px; max-height: 100px;">
                   <?php foreach ($states as $state) : ?>
                       <option value="<?php echo $state["state_no"] ?>"><?php echo $state["state_name"] ?></option>
                   <?php endforeach ; ?>

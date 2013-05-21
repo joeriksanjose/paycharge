@@ -46,7 +46,7 @@ class Home extends CI_Controller {
             if ($user_session["is_admin"]) {
                 redirect(base_url("transactions"));
             } else {
-                redirect(base_url("sales_transaction"));
+                redirect(base_url("sales"));
             }
         }
     }
@@ -68,8 +68,12 @@ class Home extends CI_Controller {
         $post = $this->input->post(null, true);
         
         foreach ($post as $k => $v) {
-            $post[$k] = trim($v);
+            if ($k != "state_no")
+                $post[$k] = trim($v);
         }
+        
+        $state_nos = implode(",", $post["state_no"]);
+        unset($post["state_no"]);
         
         if (in_array("", $post)) {
             $add_session_error = array(
@@ -103,6 +107,8 @@ class Home extends CI_Controller {
             $this->session->set_userdata($add_session_error);
             redirect(base_url("utilities/user_access"));
         }
+        
+        $post["state_no"] = $state_nos;
         
         $is_added = $this->users->addUser($post);
         if ($is_added) {
@@ -172,6 +178,7 @@ class Home extends CI_Controller {
         try {
             $user = $this->users->getUserById($user_id);
             $params["user"] = $user;
+            $params["user"]["state_no_exploded"] = explode(",", $params["user"]["state_no"]);
             echo json_encode($params);
             return;
         } catch (Exception $e) {
@@ -187,6 +194,8 @@ class Home extends CI_Controller {
         $params = array();
         $params["is_error"] = false;
         $post = $this->input->post(null, true);
+        $state_nos = implode(",", $post["e_state_no"]);
+        unset($post["e_state_no"]);
         
         foreach ($post as $k => $v) {
             $post[$k] = trim($v);
@@ -205,6 +214,7 @@ class Home extends CI_Controller {
                 throw new Exception("<b>Error:</b> Incorrect password.");
             }
             
+            $post["e_state_no"] = $state_nos;
             $is_updated = $this->users->updateById($post["user_id"], $post);
             if (!$is_updated) {
                 throw new Exception("<b>Error:</b> Database Error");

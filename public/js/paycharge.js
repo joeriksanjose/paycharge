@@ -130,7 +130,8 @@ $(document).ready(function(){
     var user_id = 0;
     $('.edit-btn').click(function(){
        user_id = $(this).attr('show-id');
-       $("#edit-form").hide("fast");
+       $("#e_state_no option:selected").removeAttr("selected");
+       $("#e_state_assign").hide("fast");
        $.post(base_url+"home/ajaxShowUserInfo", {user_id:user_id}, function(data){
           var result = $.parseJSON(data);
           if (result.is_error) {
@@ -143,7 +144,9 @@ $(document).ready(function(){
           if (result.user.admin == 0) {
               $("#e_state_assign").show("fast");
               $("#e_state_no").removeAttr("disabled");
-              $("#e_state_no").val(result.user.state_no).attr("selected", "selected");
+              $.each(result.user.state_no_exploded, function(i, item) {
+                  $("#e_state_no option[value='"+item+"']").attr("selected", "selected"); 
+              });
           }
           
           $("#e_admin").val(result.user.admin).attr("selected", "selected");
@@ -154,9 +157,9 @@ $(document).ready(function(){
           $("#n_password").val("");
           $("#edit-success-box").css("display", "none");
           $("#edit-error-box").css("display", "none");
+       }).done(function(){
+          $("#showModal").modal("show");
        });
-       $("#showModal").modal("show");
-       $("#edit-form").show("fast");
        return false;
     });
     
@@ -183,9 +186,13 @@ $(document).ready(function(){
                    $("#edit-success-box").css("display", "");
                    
                    $("#e_password").val("");
-                  $("#e_c_password").val("");
-                  $("#n_password").val("");
+                   $("#e_c_password").val("");
+                   $("#n_password").val("");
                }
+            }).done(function(){
+                setTimeout(function(){
+                    $("#showModal").modal("hide");
+                }, 1500);
             });
         }
     });
