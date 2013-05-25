@@ -197,14 +197,14 @@ $(document).ready(function(){
             event.keyCode == 9 || 
             event.keyCode == 27 || 
             event.keyCode == 13 || 
-            (event.keyCode >=48 && event.keyCode <= 57)
-        ) {
+            (event.keyCode >= 48 && event.keyCode <= 57) ||
+            (event.keyCode >= 96  && event.keyCode <= 105)
+           ) {
             return;
         } else {
             event.preventDefault(); 
         }
     }
-    
      // CSV import
     $("#trig-file-browser").click(function(){
         $("#csv_file").click();

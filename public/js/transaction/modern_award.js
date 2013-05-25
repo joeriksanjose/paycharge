@@ -9,8 +9,9 @@ $(document).ready(function(){
             event.keyCode == 9 || 
             event.keyCode == 27 || 
             event.keyCode == 13 || 
-            (event.keyCode >=48 && event.keyCode <= 57)
-            ) {
+            (event.keyCode >= 48 && event.keyCode <= 57) ||
+            (event.keyCode >= 96  && event.keyCode <= 105)
+           ) {
             return;
         } else {
             event.preventDefault(); 
@@ -328,5 +329,108 @@ $(document).ready(function(){
     
     // table sorter
     $("#award-table").tablesorter();
+    
+    // base rate computation
+    $("#B_26, #payrate_1, #payrate_2, #payrate_3, #payrate_4, #payrate_5, #payrate_6, #payrate_7, #payrate_8, #payrate_9, #payrate_10").change(function(){
+        compute_baserate();
+    });
+    
+    function compute_baserate()
+    {
+        var weekly = parseFloat($("#B_26").val()).toFixed(2);
+        
+        var grade1 = parseFloat($("#payrate_1").val()).toFixed(2);
+        var grade2 = parseFloat($("#payrate_2").val()).toFixed(2);
+        var grade3 = parseFloat($("#payrate_3").val()).toFixed(2);
+        var grade4 = parseFloat($("#payrate_4").val()).toFixed(2);
+        var grade5 = parseFloat($("#payrate_5").val()).toFixed(2);
+        var grade6 = parseFloat($("#payrate_6").val()).toFixed(2);
+        var grade7 = parseFloat($("#payrate_7").val()).toFixed(2);
+        var grade8 = parseFloat($("#payrate_8").val()).toFixed(2);
+        var grade9 = parseFloat($("#payrate_9").val()).toFixed(2);
+        var grade10 = parseFloat($("#payrate_10").val()).toFixed(2);
+        
+        var normal = parseFloat($("#B_27").val()).toFixed(2);
+        
+        if($("#payrate_1").val() != ""){
+            var base_rate_1 = grade1 / weekly;
+            $("#txt-base-rate-1").val(base_rate_1.toFixed(2));
+            
+            var casual_rate = (((normal / 100) * parseFloat(base_rate_1)) + parseFloat(base_rate_1)).toFixed(2);
+            $("#txt-casual-rate-1").val(casual_rate);
+        }
+        
+        if($("#payrate_2").val() != ""){
+            var base_rate_2 = grade2 / weekly;
+            $("#txt-base-rate-2").val(base_rate_2.toFixed(2));
+            
+            var casual_rate = (((normal / 100) * parseFloat(base_rate_2)) + parseFloat(base_rate_2)).toFixed(2);
+            $("#txt-casual-rate-2").val(casual_rate);
+        }
+        
+        if($("#payrate_3").val() != ""){
+            var base_rate_3 = grade3 / weekly;
+            $("#txt-base-rate-3").val(base_rate_3.toFixed(2));
+            
+            var casual_rate = (((normal / 100) * parseFloat(base_rate_3)) + parseFloat(base_rate_3)).toFixed(2);
+            $("#txt-casual-rate-3").val(casual_rate);
+        }
+        
+        if($("#payrate_4").val() != ""){
+            var base_rate_4 = grade4 / weekly;
+            $("#txt-base-rate-4").val(base_rate_4.toFixed(2));
+            
+            var casual_rate = (((normal / 100) * parseFloat(base_rate_4)) + parseFloat(base_rate_4)).toFixed(2);
+            $("#txt-casual-rate-4").val(casual_rate);
+        }
+        
+        if($("#payrate_5").val() != ""){
+            var base_rate_5 = grade5 / weekly;
+            $("#txt-base-rate-5").val(base_rate_5.toFixed(2));
+            
+            var casual_rate = (((normal / 100) * parseFloat(base_rate_5)) + parseFloat(base_rate_5)).toFixed(2);
+            $("#txt-casual-rate-5").val(casual_rate);
+        }
+        
+        if($("#payrate_6").val() != ""){
+            var base_rate_6 = grade6 / weekly;
+            $("#txt-base-rate-6").val(base_rate_6.toFixed(2));
+            
+            var casual_rate = (((normal / 100) * parseFloat(base_rate_6)) + parseFloat(base_rate_6)).toFixed(2);
+            $("#txt-casual-rate-6").val(casual_rate);
+        }
+        
+        if($("#payrate_7").val() != ""){
+            var base_rate_7 = grade7 / weekly;
+            $("#txt-base-rate-7").val(base_rate_7.toFixed(2));
+            
+            var casual_rate = (((normal / 100) * parseFloat(base_rate_7)) + parseFloat(base_rate_7)).toFixed(2);
+            $("#txt-casual-rate-7").val(casual_rate);
+        }
+        
+        if($("#payrate_8").val() != ""){
+            var base_rate_8 = grade8 / weekly;
+            $("#txt-base-rate-8").val(base_rate_8.toFixed(2));
+            
+            var casual_rate = (((normal / 100) * parseFloat(base_rate_8)) + parseFloat(base_rate_8)).toFixed(2);
+            $("#txt-casual-rate-8").val(casual_rate);
+        }
+        
+        if($("#payrate_9").val() != ""){
+            var base_rate_9 = grade9 / weekly;
+            $("#txt-base-rate-9").val(base_rate_9.toFixed(2));
+            
+            var casual_rate = (((normal / 100) * parseFloat(base_rate_9)) + parseFloat(base_rate_9)).toFixed(2);
+            $("#txt-casual-rate-9").val(casual_rate);
+        }
+        
+        if($("#payrate_10").val() != ""){
+            var base_rate_10 = grade10 / weekly;
+            $("#txt-base-rate-10").val(base_rate_10.toFixed(2));
+            
+            var casual_rate = (((normal / 100) * parseFloat(base_rate_10)) + parseFloat(base_rate_10)).toFixed(2);
+            $("#txt-casual-rate-10").val(casual_rate);
+        }   
+    }
     
 });

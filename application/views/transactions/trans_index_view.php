@@ -253,52 +253,52 @@
 			  	<div class="control-group">
 				      <div class="input-prepend">
                             <span class="add-on">$</span>
-                            <input type="text" class="input-medium txt" placeholder="0.00">
+                            <input type="text" class="input-medium txt" id="txt-base-rate-1" placeholder="0.00">
                       </div>
                       <div style="height: 3px;"></div>
                       <div class="input-prepend">
                             <span class="add-on">$</span>
-                            <input type="text" class="input-medium txt" placeholder="0.00">
+                            <input type="text" class="input-medium txt" id="txt-base-rate-2" placeholder="0.00">
                       </div>
                       <div style="height: 3px;"></div>
                       <div class="input-prepend">
                             <span class="add-on">$</span>
-                            <input type="text" class="input-medium txt" placeholder="0.00">
+                            <input type="text" class="input-medium txt" id="txt-base-rate-3" placeholder="0.00">
                       </div>
                       <div style="height: 3px;"></div>
                       <div class="input-prepend">
                             <span class="add-on">$</span>
-                            <input type="text" class="input-medium txt" placeholder="0.00">
+                            <input type="text" class="input-medium txt" id="txt-base-rate-4" placeholder="0.00">
                       </div>
                       <div style="height: 3px;"></div>
                       <div class="input-prepend">
                             <span class="add-on">$</span>
-                            <input type="text" class="input-medium txt" placeholder="0.00">
+                            <input type="text" class="input-medium txt" id="txt-base-rate-5" placeholder="0.00">
                       </div>
                       <div style="height: 3px;"></div>
                       <div class="input-prepend">
                             <span class="add-on">$</span>
-                            <input type="text" class="input-medium txt" placeholder="0.00">
+                            <input type="text" class="input-medium txt" id="txt-base-rate-6" placeholder="0.00">
                       </div>
                       <div style="height: 3px;"></div>
                       <div class="input-prepend">
                             <span class="add-on">$</span>
-                            <input type="text" class="input-medium txt" placeholder="0.00">
+                            <input type="text" class="input-medium txt" id="txt-base-rate-7" placeholder="0.00">
                       </div>
                       <div style="height: 3px;"></div>
                       <div class="input-prepend">
                             <span class="add-on">$</span>
-                            <input type="text" class="input-medium txt" placeholder="0.00">
+                            <input type="text" class="input-medium txt" id="txt-base-rate-8" placeholder="0.00">
                       </div>
                       <div style="height: 3px;"></div>
                       <div class="input-prepend">
                             <span class="add-on">$</span>
-                            <input type="text" class="input-medium txt" placeholder="0.00">
+                            <input type="text" class="input-medium txt" id="txt-base-rate-9" placeholder="0.00">
                       </div>
                       <div style="height: 3px;"></div>
                       <div class="input-prepend">
                             <span class="add-on">$</span>
-                            <input type="text" class="input-medium txt" placeholder="0.00">
+                            <input type="text" class="input-medium txt" id="txt-base-rate-10" placeholder="0.00">
                       </div>
 				  </div>
 			  </div>
@@ -307,52 +307,52 @@
 			  	<div class="control-group">
 			  	      <div class="input-prepend">
                             <span class="add-on">$</span>
-				            <input type="text" class="input-medium txt" placeholder="0.00">
+				            <input type="text" class="input-medium txt" id="txt-casual-rate-1" placeholder="0.00">
 				      </div>
 				      <div style="height: 3px;"></div>
 				      <div class="input-prepend">
                             <span class="add-on">$</span>
-				            <input type="text" class="input-medium txt" placeholder="0.00">
+				            <input type="text" class="input-medium txt" id="txt-casual-rate-2" placeholder="0.00">
 				      </div>
 				      <div style="height: 3px;"></div>
 				      <div class="input-prepend">
                             <span class="add-on">$</span>
-				            <input type="text" class="input-medium txt" placeholder="0.00">
+				            <input type="text" class="input-medium txt" id="txt-casual-rate-3" placeholder="0.00">
 				      </div>
 				      <div style="height: 3px;"></div>
 				      <div class="input-prepend">
                             <span class="add-on">$</span>
-				            <input type="text" class="input-medium txt" placeholder="0.00">
+				            <input type="text" class="input-medium txt" id="txt-casual-rate-4" placeholder="0.00">
 				      </div>
 				      <div style="height: 3px;"></div>
 				      <div class="input-prepend">
                             <span class="add-on">$</span>
-				            <input type="text" class="input-medium txt" placeholder="0.00">
+				            <input type="text" class="input-medium txt" id="txt-casual-rate-5" placeholder="0.00">
 				      </div>
 				      <div style="height: 3px;"></div>
 				      <div class="input-prepend">
                             <span class="add-on">$</span>
-				            <input type="text" class="input-medium txt" placeholder="0.00">
+				            <input type="text" class="input-medium txt" id="txt-casual-rate-6" placeholder="0.00">
 				      </div>
 				      <div style="height: 3px;"></div>
 				      <div class="input-prepend">
                             <span class="add-on">$</span>
-				            <input type="text" class="input-medium txt" placeholder="0.00">
+				            <input type="text" class="input-medium txt" id="txt-casual-rate-7" placeholder="0.00">
 				      </div>
 				      <div style="height: 3px;"></div>
 				      <div class="input-prepend">
                             <span class="add-on">$</span>
-				            <input type="text" class="input-medium txt" placeholder="0.00">
+				            <input type="text" class="input-medium txt" id="txt-casual-rate-8" placeholder="0.00">
 				      </div>
 				      <div style="height: 3px;"></div>
 				      <div class="input-prepend">
                             <span class="add-on">$</span>
-				            <input type="text" class="input-medium txt" placeholder="0.00">
+				            <input type="text" class="input-medium txt" id="txt-casual-rate-9" placeholder="0.00">
 				      </div>
 				      <div style="height: 3px;"></div>
 				      <div class="input-prepend">
                             <span class="add-on">$</span>
-				            <input type="text" class="input-medium txt" placeholder="0.00">
+				            <input type="text" class="input-medium txt" id="txt-casual-rate-10" placeholder="0.00">
 				      </div>
 				  </div>
 			  </div>

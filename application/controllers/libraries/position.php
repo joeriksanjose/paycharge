@@ -18,6 +18,9 @@ class Position extends CI_Controller
     public function index()
     {
         $this->data["header"] = $this->load->view("header", $this->data, true);
+        if (!$this->data["is_admin"]) {
+            $this->data["header"] = $this->load->view("sales/sales_header", $this->data, true);
+        }
         $this->data["footer"] = $this->load->view("footer", $this->data, true);
         $this->data["ok"] = false;
         $this->data["error"] = false;
