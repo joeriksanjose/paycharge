@@ -6,12 +6,14 @@ class Allowance extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model("reports/tbl_allowance", "al");
+        $this->load->model("tbl_user_model", "user");
         $this->load->library("user_session");
 		$this->user_session = $this->user_session->checkUserSession();
 		$this->data["title"] = "System - Reports";
 		$this->data["username"] = $this->session->userdata("username");
 		$this->data["is_admin"] = $this->user_session["is_admin"];
 		$this->data["date_slash"] = mdate("%d/%m/%Y");
+        $this->user_data = $this->user->getUserById($this->user_session["user_id"]);
 	}
 	
 	
@@ -27,7 +29,7 @@ class Allowance extends CI_Controller
         $this->data["status_msg"] = $this->session->userdata("status_message");
         $this->data["type"] = "Modern Award";
 		
-        $this->data["modern_awards"] = $this->al->getModernAwards();
+        $this->data["modern_awards"] = $this->al->getModernAwards($this->user_data["state_no"]);
         
         $this->session->unset_userdata("status");
 		
@@ -46,7 +48,7 @@ class Allowance extends CI_Controller
         $this->data["status_msg"] = $this->session->userdata("status_message");
         $this->data["type"] = "Client Agreement";
 		
-        $this->data["modern_awards"] = $this->al->getClient();
+        $this->data["modern_awards"] = $this->al->getClient($this->user_data["state_no"]);
         
         $this->session->unset_userdata("status");
 		

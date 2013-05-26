@@ -56,6 +56,22 @@ class Tbl_client_agreement extends CI_Model
 		return $this->db->get("tbl_super")->row_array();
 	}
 	
+    public function getSalesModernAwards($state_no)
+    {
+        $sql = 'SELECT ch.*, co.company_name '
+              .'FROM tbl_charge_rate as ch '
+              .'INNER JOIN tbl_company as co '
+              .'ON ch.company_no = co.client_no '
+              .'INNER JOIN tbl_state as s '
+              .'ON co.state_no = s.state_no '
+              .'WHERE ch.trans_type = 1 AND co.state_no IN ('.$state_no.')';
+              
+        $result = $this->db->query($sql)->result_array();
+        
+               
+        return $result;
+    }
+    
 	public function getModernAwards()
 	{
 		$sql = 'SELECT ch.*, co.company_name '
@@ -126,10 +142,14 @@ class Tbl_client_agreement extends CI_Model
 		return $this->db->get("tbl_position")->result_array();
 	}
 	
-	public function getCompany()
-	{
-		return $this->db->get("tbl_company")->result_array();
-	}
+	public function getCompany($state_no)
+    {
+        $sql = "SELECT comp.*, s.state_name FROM tbl_company as comp"
+              ." INNER JOIN tbl_state as s ON comp.state_no = s.state_no"
+              ." WHERE comp.state_no in ($state_no)";
+        
+        return $this->db->query($sql)->result_array();
+    }
 	
 	public function getAdmin()
 	{

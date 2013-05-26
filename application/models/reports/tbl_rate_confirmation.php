@@ -10,36 +10,36 @@ class Tbl_rate_confirmation extends CI_Model
         parent::__construct();
     }
 	
-	public function getModernAwards()
-	{
-		$sql = 'SELECT ch.*, co.company_name '
+	public function getModernAwards($state_no)
+    {
+         $sql = 'SELECT ch.*, co.company_name '
               .'FROM tbl_charge_rate as ch '
               .'INNER JOIN tbl_company as co '
-              .'ON ch.company_no = co.client_no where ch.trans_type <> 2';
+              .'ON ch.company_no = co.client_no '
+              .'INNER JOIN tbl_state as s '
+              .'ON co.state_no = s.state_no '
+              .'WHERE ch.trans_type <> 2 AND co.state_no IN ('.$state_no.')';
               
-		// if($sql){
-			$result = $this->db->query($sql)->result_array();	
-		// } else {
-			// $result = 0;
-		// }
-        
-        
+        $result = $this->db->query($sql)->result_array();   
                
         return $result;
-	}
+    }
 	
-	public function getClient()
-	{
-		$sql = 'SELECT ch.*, co.company_name '
+	public function getClient($state_no)
+    {
+        $sql = 'SELECT ch.*, co.company_name '
               .'FROM tbl_charge_rate as ch '
               .'INNER JOIN tbl_company as co '
-              .'ON ch.company_no = co.client_no where ch.trans_type = 2';
+              .'ON ch.company_no = co.client_no '
+              .'INNER JOIN tbl_state as s '
+              .'ON co.state_no = s.state_no '
+              .'WHERE ch.trans_type = 2 AND co.state_no IN ('.$state_no.')';
               
         $result = $this->db->query($sql)->result_array();
         
                
         return $result;
-	}
+    }
 	
 	public function getModern($trans_no)
 	{

@@ -6,12 +6,14 @@ class Paycharge_rate extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model("reports/tbl_paycharge_rate", "pr");
+        $this->load->model("tbl_user_model", "user");
         $this->load->library("user_session");
 		$this->user_session = $this->user_session->checkUserSession();
 		$this->data["title"] = "System - Reports";
 		$this->data["username"] = $this->session->userdata("username");
 		$this->data["is_admin"] = $this->user_session["is_admin"];
 		$this->data["date_slash"] = mdate("%d/%m/%Y");
+        $this->user_data = $this->user->getUserById($this->user_session["user_id"]);
 	}
 	
 	
@@ -25,7 +27,7 @@ class Paycharge_rate extends CI_Controller
         }
         $this->data["type"] = "Modern Award";
 		
-        $this->data["modern_awards"] = $this->pr->getModernAwards();
+        $this->data["modern_awards"] = $this->pr->getModernAwards($this->user_data["state_no"]);
         
         $this->load->view("reports/paycharge_rate_view", $this->data);
 	}
@@ -40,7 +42,7 @@ class Paycharge_rate extends CI_Controller
         }
         $this->data["type"] = "Client Agreement";
         
-        $this->data["charge_rate"] = $this->pr->getChargeRate();
+        $this->data["charge_rate"] = $this->pr->getChargeRate($this->user_data["state_no"]);
         
         $this->load->view("reports/paycharge_rate_client_view", $this->data);
 	}

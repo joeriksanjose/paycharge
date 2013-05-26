@@ -25,6 +25,7 @@ class Client_agreement extends CI_Controller
 		parent::__construct();
 		$this->load->model("tbl_client_agreement", "ca");
         $this->load->model("tbl_modern_award", "md");
+        $this->load->model("tbl_user_model", "user");
         $this->load->model("tbl_m_allow", "ma");
         $this->load->library("user_session");
 		$this->user_session = $this->user_session->checkUserSession();
@@ -32,6 +33,7 @@ class Client_agreement extends CI_Controller
 		$this->data["username"] = $this->session->userdata("username");
 		$this->data["is_admin"] = $this->user_session["is_admin"];
 		$this->data["date_slash"] = mdate("%d/%m/%Y");
+		$this->user_data = $this->user->getUserById($this->user_session["user_id"]);
 	}
 	
 	/* RATE INCREASE */
@@ -52,8 +54,13 @@ class Client_agreement extends CI_Controller
         $award_info = $this->ca->get_charge_rate_info(array("trans_no" => $modern_award_no));
         $this->data["award_info"] = $award_info;
         $this->data["upcoming_rate_increase"] = $this->md->getUpcomingRateIncrease($award_info["transaction_name"]);
-        $this->data["header"] = $this->load->view("header", $this->data, true);
-        $this->data["footer"] = $this->load->view("footer", $this->data, true);
+        if ($this->user_session["is_admin"]) {
+            $this->data["header"] = $this->load->view("header", $this->data, true);
+            $this->data["footer"] = $this->load->view("footer", $this->data, true);
+        } else {
+            $this->data["header"] = $this->load->view("sales/sales_header", $this->data, true);
+            $this->data["footer"] = $this->load->view("sales/sales_footer", $this->data, true);
+        }
         $this->data["status"] = $this->session->userdata("status");
         $this->data["status_msg"] = $this->session->userdata("status_msg");
         $this->session->unset_userdata("status");
@@ -200,11 +207,16 @@ class Client_agreement extends CI_Controller
 	
 	public function index()
 	{	
-		$this->data["header"] = $this->load->view("sales/sales_header", $this->data, true);
-		$this->data["footer"] = $this->load->view("sales/sales_footer", $this->data, true);
+		if ($this->user_session["is_admin"]) {
+            $this->data["header"] = $this->load->view("header", $this->data, true);
+            $this->data["footer"] = $this->load->view("footer", $this->data, true);
+        } else {
+            $this->data["header"] = $this->load->view("sales/sales_header", $this->data, true);
+            $this->data["footer"] = $this->load->view("sales/sales_footer", $this->data, true);
+        }
         
-		$this->data["modern_awards"] = $this->ca->getModernAwards();
-		$this->data["company"] = $this->ca->getCompany();
+		$this->data["modern_awards"] = $this->ca->getSalesModernAwards($this->user_data["state_no"]);
+		$this->data["company"] = $this->ca->getCompany($this->user_data["state_no"]);
 		$this->data["super"] = $this->ca->getSuper();
 		$this->data["public_liability"] = $this->ca->getPublicLiability();
 		$this->data["insurance"] = $this->ca->getInsurance();
