@@ -12,17 +12,28 @@ class Tbl_clients extends CI_model{
     public function getAssignedClientsByStateNos($state_nos)
     {
         $sql = "SELECT comp.*, s.state_name FROM tbl_company as comp"
-              ." INNER JOIN tbl_state as s ON comp.state_no = s.state_no WHERE comp.state_no in ($state_nos)";
+              ." INNER JOIN tbl_state as s ON comp.state_no = s.state_no"
+              ." WHERE comp.state_no in ($state_nos)";
         return $this->db->query($sql)->result_array();
     }
     
     public function searchClientByClientNo($key, $state_nos)
     {
         $sql = "SELECT comp.*, s.state_name FROM tbl_company as comp"
-              ." INNER JOIN tbl_state as s ON comp.state_no = s.state_no WHERE comp.state_no in ($state_nos)"
-              ." AND (comp.company_name LIKE ? OR comp.client_no LIKE ? OR comp.contact_first_name LIKE ?)";
+              ." INNER JOIN tbl_state as s ON comp.state_no = s.state_no" 
+              ." WHERE comp.state_no in ($state_nos)"
+              ." AND (comp.company_name LIKE ? OR comp.contact_first_name LIKE ?)";
         
-        return $this->db->query($sql, array('%'.$key.'%', '%'.$key.'%', '%'.$key.'%'))->result_array();
+        return $this->db->query($sql, array($key.'%', $key.'%'))->result_array();
+    }
+
+    public function getClientInformation($client_no, $state_nos)
+    {
+        $sql = "SELECT comp.*, s.state_name FROM tbl_company as comp"
+              ." INNER JOIN tbl_state as s ON comp.state_no = s.state_no"
+              ." WHERE comp.state_no in ($state_nos) AND comp.client_no = ?";
+        
+        return $this->db->query($sql, array($client_no))->row_array();
     }
     
     public function getClientByClientNo($id)

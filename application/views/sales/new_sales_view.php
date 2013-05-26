@@ -1,42 +1,85 @@
 <?php echo $header ?>
 <script type="text/javascript" src="<?php echo base_url("public/js/sales/sales_home.js") ?>"></script>
 <div class="topmargin"></div>
+
+<!-- INFO MODAL -->
+<div id="showClientModal" class="modal hide fade" tabindex="-1" role="dialog">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Client Information</h3>
+    </div>
+    <div class="modal-body">
+        <table class="table table-bordered">
+            <tr>
+                <th>Company No</th><td id="s_company_no"></td>
+            </tr>
+            <tr>
+                <th>Company Name</th><td id="s_company_name"></td>
+            </tr>
+            <tr>
+                <th>Address Line 1</th><td id="s_add1"></td>
+            </tr>
+            <tr>
+                <th>Address Line 2</th><td id="s_add2"></td>
+            </tr>
+            <tr>
+                <th>Contact First Name</th><td id="s_c_firstname"></td>
+            </tr>
+            <tr>
+                <th>Contact Full Name</th><td id="s_c_fullname"></td>
+            </tr>
+            <tr>
+                <th>Contact Title</th><td id="s_c_title"></td>
+            </tr>
+            <tr>
+                <th>State Name</th><td id="s_state_name"></td>
+            </tr>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    </div>
+</div>
+<!-- END INFO MODAL -->
+
 <input type="hidden" value="<?php echo base_url() ?>" id="base_url">
 <div class="row">
     <div class="span12">
         <ul id="myTab" class="nav nav-tabs">
-          <li class="active"><a href="#home" data-toggle="tab">Clients</a></li>
-          <li class=""><a href="#profile" data-toggle="tab">Transactions</a></li>
+          <li class="active"><a href="#clients" data-toggle="tab">Clients</a></li>
+          <li class=""><a href="#modern-trans" data-toggle="tab">Modern Award</a></li>
+          <li class=""><a href="#client-trans" data-toggle="tab">Client Agreement</a></li>
         </ul>
     </div>
     <div id="myTabContent" class="tab-content span12">
-        <div class="tab-pane fade active in" id="home">
-            <form class="form-inline">
+        <div class="tab-pane fade active in" id="clients">
+            <div class="form-inline" style="margin-bottom: 20px;">
                 <div class="input-append">
                     <input type="text" class="span4" id="search-input" placeholder="Search by company name, contact first name.">
                     <button type="button" class="btn" id="search-btn">Search</button>
                 </div>
-            </form>
-            <div  style="max-height: 494px; overflow: auto;">
+            </div>
+            <div  style="max-height: 494px; overflow: auto;" id="client-scroll">
                 <table class="table table-bordered table-condensed table-striped" style="font-size: 12px;" id="clients-table">
                     <thead>
                         <tr>
                             <th>Company Name</th>
                             <th>Department</th>
-                            <th>C. First Name</th>
-                            <th>C. Title</th>
-                            <th>State</th>    
+                            <th>State</th>
+                            <th>Action</th>    
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="clients-tbody">
                         <?php if (count($clients_assigned)) : ?>
                             <?php foreach ($clients_assigned as $clients) : ?>
                                 <tr>
                                     <td><?php echo $clients["company_name"] ?></td>
                                     <td><?php echo $clients["department"] ?></td>
-                                    <td><?php echo $clients["contact_first_name"] ?></td>
-                                    <td><?php echo $clients["contact_title"] ?></td>
                                     <td><?php echo $clients["state_name"] ?></td>
+                                    <td>
+                                        <button type="button" class="btn btn-mini show-info" show-id="<?php echo $clients["client_no"] ?>">Info</button>
+                                        <button type="button" class="btn btn-mini">Contacts</button>
+                                    </td>
                                 </tr>
                             <?php endforeach ; ?>
                         <?php else : ?>
@@ -48,7 +91,10 @@
                 </table>
             </div>
         </div>
-        <div class="tab-pane fade" id="profile">
+        <div class="tab-pane fade" id="modern-trans">
+    
+        </div>
+        <div class="tab-pane fade" id="client-trans">
     
         </div>
     </div>

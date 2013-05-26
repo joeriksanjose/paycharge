@@ -49,6 +49,24 @@ class Home extends CI_Controller {
         echo json_encode($params);
         return;
     }
+    
+    public function ajaxShowClientInformation()
+    {
+        $params = array();
+        $params["is_found"] = true;
+        $client_no = $this->input->post("client_no", true);
+        
+        $result = $this->clients->getClientInformation($client_no, $this->user_data["state_no"]);
+        if (!$result) {
+            $params["is_found"] = false;
+            echo json_encode($params);
+            return;
+        }
+        
+        $params["result"] = $result;
+        echo json_encode($params);
+        return;
+    }
 }
 
 /* End of file home.php */
