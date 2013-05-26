@@ -6,6 +6,7 @@ class Home extends CI_Controller {
     {
         parent::__construct();
         $this->load->model("tbl_user_model", "user");
+        $this->load->model("tbl_sales_modern_award", "smd");
         $this->load->model("libraries/tbl_clients", "clients");
         $this->load->library("user_session");
         $this->user_session = $this->user_session->checkUserSession();
@@ -22,12 +23,13 @@ class Home extends CI_Controller {
     
     public function index()
     {
+        $this->data["title"] = "Sales - Clients Assigned";
         $state_nos = $this->user_data["state_no"];
         
         $this->data["clients_assigned"] = $this->clients->getAssignedClientsByStateNos($state_nos);
         $this->data["header"] = $this->load->view("sales/sales_header", $this->data, true);
         $this->data["footer"] = $this->load->view("sales/sales_footer", $this->data, true);
-        
+
         $this->load->view("sales/new_sales_view", $this->data);
     }
     

@@ -16,8 +16,13 @@ class Rate_confirmation extends CI_Controller
 	
 	
 	public function modern_award(){
-		$this->data["header"] = $this->load->view("header", $this->data, true);
-		$this->data["footer"] = $this->load->view("footer", $this->data, true);
+		if ($this->user_session["is_admin"]) {
+            $this->data["header"] = $this->load->view("header", $this->data, true);
+            $this->data["footer"] = $this->load->view("footer", $this->data, true);
+        } else {
+            $this->data["header"] = $this->load->view("sales/sales_header", $this->data, true);
+            $this->data["footer"] = $this->load->view("sales/sales_footer", $this->data, true);
+        }
         $this->data["status"] = $this->session->userdata("status");
         $this->data["status_msg"] = $this->session->userdata("status_message");
         $this->data["type"] = "Modern Award";
@@ -30,8 +35,13 @@ class Rate_confirmation extends CI_Controller
 	}
 	
 	public function client(){
-		$this->data["header"] = $this->load->view("header", $this->data, true);
-		$this->data["footer"] = $this->load->view("footer", $this->data, true);
+	    if ($this->user_session["is_admin"]) {
+		    $this->data["header"] = $this->load->view("header", $this->data, true);
+		    $this->data["footer"] = $this->load->view("footer", $this->data, true);
+        } else {
+            $this->data["header"] = $this->load->view("sales/sales_header", $this->data, true);
+            $this->data["footer"] = $this->load->view("sales/sales_footer", $this->data, true);
+        }
         $this->data["status"] = $this->session->userdata("status");
         $this->data["status_msg"] = $this->session->userdata("status_message");
         $this->data["type"] = "Client Agreement";
@@ -44,8 +54,13 @@ class Rate_confirmation extends CI_Controller
 	}
 	
 	public function print_modern($trans_no, $moder_no){
-		$this->data["header"] = $this->load->view("header", $this->data, true);
-		$this->data["footer"] = $this->load->view("footer", $this->data, true);
+		if ($this->user_session["is_admin"]) {
+            $this->data["header"] = $this->load->view("header", $this->data, true);
+            $this->data["footer"] = $this->load->view("footer", $this->data, true);
+        } else {
+            $this->data["header"] = $this->load->view("sales/sales_header", $this->data, true);
+            $this->data["footer"] = $this->load->view("sales/sales_footer", $this->data, true);
+        }
         
         $this->data["print"] = $this->rc->getPrint($moder_no);
 		$this->data["charge_rate"] = $this->rc->getChargeRate($trans_no);
@@ -237,8 +252,13 @@ class Rate_confirmation extends CI_Controller
 	}
 	
 	public function print_client($trans_no){
-		$this->data["header"] = $this->load->view("header", $this->data, true);
-		$this->data["footer"] = $this->load->view("footer", $this->data, true);
+		if ($this->user_session["is_admin"]) {
+            $this->data["header"] = $this->load->view("header", $this->data, true);
+            $this->data["footer"] = $this->load->view("footer", $this->data, true);
+        } else {
+            $this->data["header"] = $this->load->view("sales/sales_header", $this->data, true);
+            $this->data["footer"] = $this->load->view("sales/sales_footer", $this->data, true);
+        }
         
         $this->data["print"] = $this->rc->getPrint($trans_no);
 		$this->data["charge_rate"] = $this->rc->getChargeRate($trans_no);
@@ -423,6 +443,7 @@ class Rate_confirmation extends CI_Controller
 			$this->data["grade9_active"] = "";
 			$this->data["grade10_active"] = "active";	
 		}
+        
 		$this->load->view("reports/print_rate_confirmation_client", $this->data);
 	}
 }

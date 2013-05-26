@@ -24,13 +24,15 @@ class Sales_transaction extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model("tbl_sales_modern_award", "smd");
+        $this->load->model("tbl_user_model", "user");
         $this->load->model("tbl_print_defaults", "pd");
         $this->load->model("tbl_m_allow", "ma");
 		$this->load->library("user_session");
 		$this->user_session = $this->user_session->checkUserSession();
-		$this->data["title"] = "System - Transactions";
+		$this->data["title"] = "Sales - Modern Award";
 		$this->data["username"] = $this->session->userdata("username");
         $this->data["is_admin"] = $this->user_session["is_admin"];
+        $this->user_data = $this->user->getUserById($this->user_session["user_id"]);
 	}
     
     public function getAwardInfo(){
@@ -81,15 +83,16 @@ class Sales_transaction extends CI_Controller
 	
 	public function index()
 	{	
-		$this->data["header"] = $this->load->view("header", $this->data, true);
-		$this->data["footer"] = $this->load->view("footer", $this->data, true);
+		$this->data["header"] = $this->load->view("sales/sales_header", $this->data, true);
+		$this->data["footer"] = $this->load->view("sales/sales_footer", $this->data, true);
+		$state_no = $this->user_data["state_no"];
         
         $this->data["status"] = $this->session->userdata("status");
         $this->data["status_msg"] = $this->session->userdata("status_msg");
         
-		$this->data["modern_awards_sales"] = $this->smd->getSalesModernAwards();
+		$this->data["modern_awards_sales"] = $this->smd->getSalesModernAwards($state_no);
         $this->data["modern_awards"] = $this->smd->getModernAwards();
-		$this->data["company"] = $this->smd->getCompany();
+		$this->data["company"] = $this->smd->getCompany($state_no);
 		$this->data["super"] = $this->smd->getSuper();
 		$this->data["public_liability"] = $this->smd->getPublicLiability();
 		$this->data["insurance"] = $this->smd->getInsurance();

@@ -28,7 +28,7 @@ class Client_agreement extends CI_Controller
         $this->load->model("tbl_m_allow", "ma");
         $this->load->library("user_session");
 		$this->user_session = $this->user_session->checkUserSession();
-		$this->data["title"] = "System - Transactions";
+		$this->data["title"] = "Sales - Client Agreement";
 		$this->data["username"] = $this->session->userdata("username");
 		$this->data["is_admin"] = $this->user_session["is_admin"];
 		$this->data["date_slash"] = mdate("%d/%m/%Y");
@@ -200,8 +200,8 @@ class Client_agreement extends CI_Controller
 	
 	public function index()
 	{	
-		$this->data["header"] = $this->load->view("header", $this->data, true);
-		$this->data["footer"] = $this->load->view("footer", $this->data, true);
+		$this->data["header"] = $this->load->view("sales/sales_header", $this->data, true);
+		$this->data["footer"] = $this->load->view("sales/sales_footer", $this->data, true);
         
 		$this->data["modern_awards"] = $this->ca->getModernAwards();
 		$this->data["company"] = $this->ca->getCompany();

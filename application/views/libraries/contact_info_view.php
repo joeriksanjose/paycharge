@@ -65,7 +65,7 @@
 
 <div class="row">
     <div class="span12">
-        <h2 class="titles">Contacts Information
+        <h2 class="titles">Contacts List
         	<small> 
         		(<?php echo $company["client_no"]?>)
                 <?php echo $company["company_name"]?>
@@ -97,9 +97,8 @@
             <thead>
             <tr>
                 <th>Contact No</th>
-                <th>Last Name</th>
-                <th>First Name</th>
-                <th>Middle Name</th>
+                <th>Name</th>
+                <th>Email</th>
                 <th>Mobile No</th>
                 <th>Action</th>
             </tr>
@@ -109,9 +108,8 @@
                 <?php foreach ($data as $value) : ?>
                     <tr>
                         <td><?php echo $value["contact_no"] ?></td>
-                        <td><?php echo $value["last_name"] ?></td>
-                        <td><?php echo $value["first_name"] ?></td>
-                        <td><?php echo $value["middle_name"] ?></td>
+                        <td><?php echo $value["last_name"].", ".$value["first_name"]." ".$value["middle_name"] ?></td>
+                        <td><?php echo $value["email"] ?></td>
                         <td><?php echo $value["contact_phone_no"] ?></td>
                         <td>
                             <a href="#" show-id="<?php echo $value["id"] ?>" id="view-info" class="btn btn-mini">VIEW</a>

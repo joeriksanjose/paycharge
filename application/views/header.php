@@ -55,10 +55,10 @@
                                         <a href="<?php echo base_url("reports/allowance/modern_award") ?>">Allowance</a>
                                     </li>
                                     <li>
-                                        <a href="">Pay and Charge Rate Schedule</a>
+                                        <a href="<?php echo base_url("reports/paycharge_rate/modern_award") ?>">Pay and Charge Rate Schedule</a>
                                     </li>
                                     <li>
-                                        <a href="">Upcoming Rate Increase</a>
+                                        <a href="<?php echo base_url("reports/upcoming_rate_increase/modern_award") ?>">Upcoming Rate Increase</a>
                                     </li>
                                 </ul>
                             </li>
@@ -72,10 +72,10 @@
                                         <a href="<?php echo base_url("reports/allowance/client") ?>">Allowance</a>
                                     </li>
                                     <li>
-                                        <a href="">Pay and Charge Rate Schedule</a>
+                                        <a href="<?php echo base_url("reports/paycharge_rate/client") ?>">Pay and Charge Rate Schedule</a>
                                     </li>
                                     <li>
-                                        <a href="">Upcoming Rate Increase</a>
+                                        <a href="<?php echo base_url("reports/upcoming_rate_increase/client") ?>">Upcoming Rate Increase</a>
                                     </li>
                                 </ul>
                             </li>

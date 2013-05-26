@@ -16,8 +16,13 @@ class Paycharge_rate extends CI_Controller
 	
 	
 	public function modern_award(){
-		$this->data["header"] = $this->load->view("header", $this->data, true);
-		$this->data["footer"] = $this->load->view("footer", $this->data, true);
+		if ($this->user_session["is_admin"]) {
+            $this->data["header"] = $this->load->view("header", $this->data, true);
+            $this->data["footer"] = $this->load->view("footer", $this->data, true);
+        } else {
+            $this->data["header"] = $this->load->view("sales/sales_header", $this->data, true);
+            $this->data["footer"] = $this->load->view("sales/sales_footer", $this->data, true);
+        }
         $this->data["type"] = "Modern Award";
 		
         $this->data["modern_awards"] = $this->pr->getModernAwards();
@@ -26,8 +31,13 @@ class Paycharge_rate extends CI_Controller
 	}
 	
 	public function client(){
-		$this->data["header"] = $this->load->view("header", $this->data, true);
-        $this->data["footer"] = $this->load->view("footer", $this->data, true);
+		if ($this->user_session["is_admin"]) {
+            $this->data["header"] = $this->load->view("header", $this->data, true);
+            $this->data["footer"] = $this->load->view("footer", $this->data, true);
+        } else {
+            $this->data["header"] = $this->load->view("sales/sales_header", $this->data, true);
+            $this->data["footer"] = $this->load->view("sales/sales_footer", $this->data, true);
+        }
         $this->data["type"] = "Client Agreement";
         
         $this->data["charge_rate"] = $this->pr->getChargeRate();
@@ -36,11 +46,16 @@ class Paycharge_rate extends CI_Controller
 	}
 	
 	public function print_modern($trans_no, $modern_no){
-		$this->data["header"] = $this->load->view("header", $this->data, true);
-		$this->data["footer"] = $this->load->view("footer", $this->data, true);
+		if ($this->user_session["is_admin"]) {
+            $this->data["header"] = $this->load->view("header", $this->data, true);
+            $this->data["footer"] = $this->load->view("footer", $this->data, true);
+        } else {
+            $this->data["header"] = $this->load->view("sales/sales_header", $this->data, true);
+            $this->data["footer"] = $this->load->view("sales/sales_footer", $this->data, true);
+        }
         
         
-        $this->data["calcu"] = $this->pr->getCalc($trans_no);
+        $this->data["calcu"] = $this->pr->getCalc($modern_no);
         $this->data["modern"] = $this->pr->getModern($modern_no);
         $this->data["mallow"] = $this->pr->getMAllow($trans_no);
         $this->data["charge"] = $this->pr->getCharge($trans_no);
@@ -428,8 +443,13 @@ class Paycharge_rate extends CI_Controller
 	}
 	
     public function print_client($trans_no){
-        $this->data["header"] = $this->load->view("header", $this->data, true);
-        $this->data["footer"] = $this->load->view("footer", $this->data, true);
+        if ($this->user_session["is_admin"]) {
+            $this->data["header"] = $this->load->view("header", $this->data, true);
+            $this->data["footer"] = $this->load->view("footer", $this->data, true);
+        } else {
+            $this->data["header"] = $this->load->view("sales/sales_header", $this->data, true);
+            $this->data["footer"] = $this->load->view("sales/sales_footer", $this->data, true);
+        }
         
         
         $this->data["calcu"] = $this->pr->getCalc($trans_no);

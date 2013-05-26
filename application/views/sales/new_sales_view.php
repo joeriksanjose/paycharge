@@ -45,57 +45,47 @@
 <input type="hidden" value="<?php echo base_url() ?>" id="base_url">
 <div class="row">
     <div class="span12">
-        <ul id="myTab" class="nav nav-tabs">
-          <li class="active"><a href="#clients" data-toggle="tab">Clients</a></li>
-          <li class=""><a href="#modern-trans" data-toggle="tab">Modern Award</a></li>
-          <li class=""><a href="#client-trans" data-toggle="tab">Client Agreement</a></li>
-        </ul>
+        <h2>Assigned Clients</h2>
+        <hr>
+        <div class="form-inline pull-right" style="margin-bottom: 20px;">
+            <div class="input-append">
+                <input type="text" class="span4" id="search-input" placeholder="Search by company name, contact first name.">
+                <button type="button" class="btn" id="search-btn"><i class="icon-search"></i></button>
+            </div>
+        </div>
     </div>
-    <div id="myTabContent" class="tab-content span12">
-        <div class="tab-pane fade active in" id="clients">
-            <div class="form-inline" style="margin-bottom: 20px;">
-                <div class="input-append">
-                    <input type="text" class="span4" id="search-input" placeholder="Search by company name, contact first name.">
-                    <button type="button" class="btn" id="search-btn">Search</button>
-                </div>
-            </div>
-            <div  style="max-height: 494px; overflow: auto;" id="client-scroll">
-                <table class="table table-bordered table-condensed table-striped" style="font-size: 12px;" id="clients-table">
-                    <thead>
-                        <tr>
-                            <th>Company Name</th>
-                            <th>Department</th>
-                            <th>State</th>
-                            <th>Action</th>    
-                        </tr>
-                    </thead>
-                    <tbody id="clients-tbody">
-                        <?php if (count($clients_assigned)) : ?>
-                            <?php foreach ($clients_assigned as $clients) : ?>
-                                <tr>
-                                    <td><?php echo $clients["company_name"] ?></td>
-                                    <td><?php echo $clients["department"] ?></td>
-                                    <td><?php echo $clients["state_name"] ?></td>
-                                    <td>
-                                        <button type="button" class="btn btn-mini show-info" show-id="<?php echo $clients["client_no"] ?>">Info</button>
-                                        <button type="button" class="btn btn-mini">Contacts</button>
-                                    </td>
-                                </tr>
-                            <?php endforeach ; ?>
-                        <?php else : ?>
+    <div class="span12">
+        <div  style="max-height: 494px; overflow: auto;" id="client-scroll">
+            <table class="table table-bordered table-condensed table-striped" style="font-size: 13px;" id="clients-table">
+                <thead>
+                    <tr>
+                        <th>Company Name</th>
+                        <th>Department</th>
+                        <th>State</th>
+                        <th>Action</th>    
+                    </tr>
+                </thead>
+                <tbody id="clients-tbody">
+                    <?php if (count($clients_assigned)) : ?>
+                        <?php foreach ($clients_assigned as $clients) : ?>
                             <tr>
-                                <td colspan="5">Empty Record.</td>
+                                <td><?php echo $clients["company_name"] ?></td>
+                                <td><?php echo $clients["department"] ?></td>
+                                <td><?php echo $clients["state_name"] ?></td>
+                                <td>
+                                    <button type="button" class="btn btn-mini show-info" show-id="<?php echo $clients["client_no"] ?>">Info</button>
+                                    <a target="_blank" href="<?php echo base_url("libraries/clients/contact_info/".$clients["client_no"]) ?>" type="button" class="btn btn-mini">Contacts </a>
+                                    <a href="" class="btn btn-mini">Trans</a>
+                                </td>
                             </tr>
-                        <?php endif ; ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="tab-pane fade" id="modern-trans">
-    
-        </div>
-        <div class="tab-pane fade" id="client-trans">
-    
+                        <?php endforeach ; ?>
+                    <?php else : ?>
+                        <tr>
+                            <td colspan="5">Empty Record.</td>
+                        </tr>
+                    <?php endif ; ?>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

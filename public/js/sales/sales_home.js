@@ -13,7 +13,7 @@ $(document).ready(function(){
    $("#search-btn").live("click", function(){
        var key = $("#search-input").val();
        loading = "<tr><td colspan='5'>";
-       loading = loading + "<div style='height: 10px' class='progress progress-success progress-striped active'>";
+       loading = loading + "<div style='height: 10px' class='progress progress-info progress-striped active'>";
        loading = loading + "<div class='bar' style='width: 100%'></div>";
        loading = loading + "</div>";
        loading = loading + "</td></tr>";
@@ -29,7 +29,7 @@ $(document).ready(function(){
                    result = result + "<td>" + item.state_name + "</td>";
                    result = result + "<td>";
                    result = result + "<button type='button' class='btn btn-mini show-info' show-id='"+ item.client_no +"'>Info</button>";
-                   result = result + "<button type='button' class='btn btn-mini'>Contacts</button>";
+                   result = result + " <a href='"+base_url+"libraries/clients/contact_info/"+item.client_no+"' class='btn btn-mini'>Contacts</button>";
                    result = result + "</td>";
                    result = result + "</tr>"; 
                });
