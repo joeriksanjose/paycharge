@@ -75,7 +75,6 @@
                                 <td>
                                     <button type="button" class="btn btn-mini show-info" show-id="<?php echo $clients["client_no"] ?>">Info</button>
                                     <a target="_blank" href="<?php echo base_url("libraries/clients/contact_info/".$clients["client_no"]) ?>" type="button" class="btn btn-mini">Contacts </a>
-                                    <a href="" class="btn btn-mini">Trans</a>
                                 </td>
                             </tr>
                         <?php endforeach ; ?>
