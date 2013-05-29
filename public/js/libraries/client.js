@@ -51,7 +51,7 @@ $(document).ready(function(){
              var str = "";
              
              if (!result.is_error) {
-                 str = str + "<table class='table table-striped table-bordered' id='contacts-table' style='font-size: 12px;'>";
+                 str = str + "<table class='table table-striped table-bordered table-condensed' id='contacts-table' style='font-size: 12px;'>";
                  str = str + "<thead>"
                  str = str + "<tr>";
                  str = str + "<th>Company Name</th>";
@@ -72,7 +72,7 @@ $(document).ready(function(){
                      str = str + "<td>"+item.contact_full_name+"</td>";
                      str = str + "<td>"+item.contact_title+"</td>";
                      str = str + "<td>"+item.state_name+"</td>";
-                     str = str + "<td><a href='' class='btn btn-mini'>Trans</a><a href='' class='btn btn-mini'>Contact</a><button type='button' class='btn btn-mini edit-state-btn' show-id='"+item.id+"'>";
+                     str = str + "<td><button type='button' class='btn btn-mini edit-state-btn' show-id='"+item.id+"'>";
                      str = str + "<i class='icon-edit'></i></button> ";
                      str = str + "<button type='button' class='btn btn-mini btn-danger delete-state-btn' del-id='"+item.id+"'>";
                      str = str + "<i class='icon-trash icon-white'></i>";
@@ -206,7 +206,7 @@ $(document).ready(function(){
                          "<b>Done!</b> Client was successfully updated." + "<button type='button' class='close' data-dismiss='alert'>&times;</button>"
                      );
                      var str = "";
-                     str = str + "<table class='table table-striped table-bordered' id='contacts-table' style='font-size: 12px;'>";
+                     str = str + "<table class='table table-striped table-bordered table-condensed' id='contacts-table' style='font-size: 12px;'>";
                      str = str + "<thead>"
                      str = str + "<tr>";
                      str = str + "<th>Company Name</th>";
@@ -227,7 +227,7 @@ $(document).ready(function(){
                          str = str + "<td>"+item.contact_full_name+"</td>";
                          str = str + "<td>"+item.contact_title+"</td>";
                          str = str + "<td>"+item.state_name+"</td>";
-                         str = str + "<td><a href='' class='btn btn-mini'>Trans</a><a href='' class='btn btn-mini'>Contact</a><button type='button' class='btn btn-mini edit-state-btn' show-id='"+item.id+"'>";
+                         str = str + "<td><button type='button' class='btn btn-mini edit-state-btn' show-id='"+item.id+"'>";
                          str = str + "<i class='icon-edit'></i></button> ";
                          str = str + "<button type='button' class='btn btn-mini btn-danger delete-state-btn' del-id='"+item.id+"'>";
                          str = str + "<i class='icon-trash icon-white'></i>";
@@ -250,12 +250,14 @@ $(document).ready(function(){
     
     function inputNumbers(event)
     {
+        console.log(event.keyCode);
         if (
             event.keyCode == 190 || 
             event.keyCode == 8 || 
             event.keyCode == 9 || 
             event.keyCode == 27 || 
-            event.keyCode == 13 || 
+            event.keyCode == 13 ||
+            event.keyCode == 110 || 
             (event.keyCode >= 48 && event.keyCode <= 57) ||
             (event.keyCode >= 96  && event.keyCode <= 105)
            ) {

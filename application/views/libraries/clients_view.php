@@ -44,9 +44,9 @@
             </div>
           </div>
           <div class="control-group">
-            <label class="control-label" for="e_department">State</label>
+            <label class="control-label" for="e_state">State</label>
             <div class="controls">
-                <select name="state_no">
+                <select name="e_state" id="e_state">
                     <?php foreach ($states as $state) : ?>
                         <option value="<?php echo $state["state_no"] ?>"><?php echo $state["state_name"] ?></option>
                     <?php endforeach ; ?>
@@ -227,7 +227,7 @@
         <?php endif ; ?>
     </div>
     <div class="span12" style="max-height: 400px; overflow: auto; margin-top: 10px;" id="tbl">
-        <table class="table table-striped table-bordered" id="admin-table" style="font-size: 12px;">
+        <table class="table table-striped table-bordered table-condensed" id="admin-table" style="font-size: 12px;">
             <thead>
             <tr>
                 <th>Company Name</th>
@@ -250,8 +250,6 @@
                         <td><?php echo $value["contact_title"] ?></td>
                         <td><?php echo $value["state_name"] ?></td>
                         <td>
-                            <a href="" class="btn btn-mini">Trans</a>
-                            <a target="_blank" href="<?php echo base_url("libraries/clients/contact_info/".$value["client_no"])?>" class="btn btn-mini">Contact</a>
                             <button type="button" class="btn btn-mini edit-state-btn" show-id="<?php echo $value["id"] ?>"><i class="icon-edit"></i></button>
                             <button type="button" class="btn btn-mini btn-danger delete-state-btn" del-id="<?php echo $value["id"] ?>">
                                 <i class="icon-trash icon-white"></i>

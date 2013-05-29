@@ -50,7 +50,7 @@
 			  <div class="control-group">
 			    <label class="control-label" for="modern_award_no">Modern Award No.</label>
 			    <div class="controls controls-row">
-			      <input type="text" class="input-medium disabled" readonly="true" id="modern_award_no" name="modern_award_no" value="<?php echo $next_award_no ?>">
+			      <input type="text" class="input-medium" id="modern_award_no" name="modern_award_no" value="<?php echo $next_award_no ?>">
 			    </div>
 			  </div>
 			  <div class="control-group">

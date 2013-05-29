@@ -22,9 +22,9 @@ class Tbl_clients extends CI_model{
         $sql = "SELECT comp.*, s.state_name FROM tbl_company as comp"
               ." INNER JOIN tbl_state as s ON comp.state_no = s.state_no" 
               ." WHERE comp.state_no in ($state_nos)"
-              ." AND (comp.company_name LIKE ? OR comp.contact_first_name LIKE ?)";
+              ." AND (comp.company_name LIKE ? OR comp.contact_first_name LIKE ? OR s.state_name LIKE ?)";
         
-        return $this->db->query($sql, array($key.'%', $key.'%'))->result_array();
+        return $this->db->query($sql, array($key.'%', $key.'%', $key.'%'))->result_array();
     }
 
     public function getClientInformation($client_no, $state_nos)

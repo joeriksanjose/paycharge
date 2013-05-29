@@ -17,6 +17,13 @@ class Tbl_state extends CI_model{
         return $sql;
     }
     
+    public function getStateByStateNos($state_nos)
+    {
+        $state_nos = explode(",", $state_nos);
+        $this->db->where_in("state_no", $state_nos);
+        return $this->db->get($this->table_name)->result_array();
+    }
+    
     public function search_state($key)
     {
         $this->db->like("id", $key, "after");

@@ -72,7 +72,12 @@ class Home extends CI_Controller {
                 $post[$k] = trim($v);
         }
         
-        $state_nos = implode(",", $post["state_no"]);
+        if ($post["admin"]) {
+            $state_nos = 0;
+        } else {
+            $state_nos = implode(",", $post["state_no"]);            
+        }
+        
         unset($post["state_no"]);
         
         if (in_array("", $post)) {

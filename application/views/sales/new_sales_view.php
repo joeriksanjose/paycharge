@@ -49,12 +49,27 @@
         <hr>
         <div class="form-inline pull-right" style="margin-bottom: 20px;">
             <div class="input-append">
-                <input type="text" class="span4" id="search-input" placeholder="Search by company name, contact first name.">
+                <input type="text" class="span5" id="search-input" placeholder="Search by state name, company name, contact first name.">
                 <button type="button" class="btn" id="search-btn"><i class="icon-search"></i></button>
             </div>
         </div>
     </div>
-    <div class="span12">
+    <div class="span2">
+        <form action="<?php echo base_url("sales") ?>" method="post">
+            <fieldset>
+                <legend>States</legend>
+                <button type="submit" class="btn btn-block btn-mini" style="margin-bottom: 10px;">Filter</button>
+                <?php foreach ($states_assigned as $state) : ?>
+                    <label class="checkbox" style="margin-left: 20px;">
+                        <input type="checkbox" name="state_nos[]" value="<?php echo $state["state_no"] ?>"> <?php echo $state["state_name"] ?>
+                    </label>
+                <?php endforeach ?>
+                
+            </fieldset>
+            <button type="submit" class="btn btn-block btn-mini" style="margin-bottom: 10px;">Filter</button>
+        </form>
+    </div>
+    <div class="span10">
         <div  style="max-height: 494px; overflow: auto;" id="client-scroll">
             <table class="table table-bordered table-condensed table-striped" style="font-size: 13px;" id="clients-table">
                 <thead>
@@ -74,7 +89,8 @@
                                 <td><?php echo $clients["state_name"] ?></td>
                                 <td>
                                     <button type="button" class="btn btn-mini show-info" show-id="<?php echo $clients["client_no"] ?>">Info</button>
-                                    <a target="_blank" href="<?php echo base_url("libraries/clients/contact_info/".$clients["client_no"]) ?>" type="button" class="btn btn-mini">Contacts </a>
+                                    <a target="_blank" href="<?php echo base_url("sales/home/contacts/".$clients["client_no"]) ?>" type="button" class="btn btn-mini">Contacts </a>
+                                    <a target="_blank" href="" type="button" class="btn btn-mini">Transactions </a>
                                 </td>
                             </tr>
                         <?php endforeach ; ?>

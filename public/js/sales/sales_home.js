@@ -29,7 +29,8 @@ $(document).ready(function(){
                    result = result + "<td>" + item.state_name + "</td>";
                    result = result + "<td>";
                    result = result + "<button type='button' class='btn btn-mini show-info' show-id='"+ item.client_no +"'>Info</button>";
-                   result = result + " <a href='"+base_url+"libraries/clients/contact_info/"+item.client_no+"' class='btn btn-mini'>Contacts</button>";
+                   result = result + " <a href='"+base_url+"libraries/clients/contact_info/"+item.client_no+"' class='btn btn-mini'>Contacts</a>";
+                   result = result + " <a target='_blank' href='' type='button' class='btn btn-mini'>Transactions </a>";
                    result = result + "</td>";
                    result = result + "</tr>"; 
                });
@@ -45,7 +46,7 @@ $(document).ready(function(){
    // end search client
    
    // show client info
-   $(".show-info").click(function(){
+   $(".show-info").live("click", function(){
        var show_id = $(this).attr("show-id");
        $.post(base_url+"sales/home/ajaxShowClientInformation", {client_no:show_id}, function(data){
            json = $.parseJSON(data);
