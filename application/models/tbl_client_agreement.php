@@ -64,7 +64,7 @@ class Tbl_client_agreement extends CI_Model
               .'ON ch.company_no = co.client_no '
               .'INNER JOIN tbl_state as s '
               .'ON co.state_no = s.state_no '
-              .'WHERE ch.trans_type = 1 AND co.state_no IN ('.$state_no.')';
+              .'WHERE ch.trans_type = 2 AND co.state_no IN ('.$state_no.')';
               
         $result = $this->db->query($sql)->result_array();
         

@@ -21,15 +21,17 @@ class Allowance extends CI_Controller
 		if ($this->user_session["is_admin"]) {
             $this->data["header"] = $this->load->view("header", $this->data, true);
             $this->data["footer"] = $this->load->view("footer", $this->data, true);
+            $this->data["modern_awards"] = $this->al->getModernAwards();
         } else {
             $this->data["header"] = $this->load->view("sales/sales_header", $this->data, true);
             $this->data["footer"] = $this->load->view("sales/sales_footer", $this->data, true);
+            $this->data["modern_awards"] = $this->al->getModernAwards($this->user_data["state_no"]);
         }
         $this->data["status"] = $this->session->userdata("status");
         $this->data["status_msg"] = $this->session->userdata("status_message");
         $this->data["type"] = "Modern Award";
 		
-        $this->data["modern_awards"] = $this->al->getModernAwards($this->user_data["state_no"]);
+        
         
         $this->session->unset_userdata("status");
 		
@@ -40,15 +42,16 @@ class Allowance extends CI_Controller
 		if ($this->user_session["is_admin"]) {
             $this->data["header"] = $this->load->view("header", $this->data, true);
             $this->data["footer"] = $this->load->view("footer", $this->data, true);
+            $this->data["modern_awards"] = $this->al->getClient();
         } else {
             $this->data["header"] = $this->load->view("sales/sales_header", $this->data, true);
             $this->data["footer"] = $this->load->view("sales/sales_footer", $this->data, true);
+            $this->data["modern_awards"] = $this->al->getClient($this->user_data["state_no"]);
         }
         $this->data["status"] = $this->session->userdata("status");
         $this->data["status_msg"] = $this->session->userdata("status_message");
         $this->data["type"] = "Client Agreement";
-		
-        $this->data["modern_awards"] = $this->al->getClient($this->user_data["state_no"]);
+	
         
         $this->session->unset_userdata("status");
 		

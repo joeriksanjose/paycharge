@@ -21,14 +21,14 @@ class Paycharge_rate extends CI_Controller
 		if ($this->user_session["is_admin"]) {
             $this->data["header"] = $this->load->view("header", $this->data, true);
             $this->data["footer"] = $this->load->view("footer", $this->data, true);
+            $this->data["modern_awards"] = $this->pr->getModernAwards();
         } else {
             $this->data["header"] = $this->load->view("sales/sales_header", $this->data, true);
             $this->data["footer"] = $this->load->view("sales/sales_footer", $this->data, true);
+            $this->data["modern_awards"] = $this->pr->getModernAwards($this->user_data["state_no"]);
         }
-        $this->data["type"] = "Modern Award";
-		
-        $this->data["modern_awards"] = $this->pr->getModernAwards($this->user_data["state_no"]);
         
+        $this->data["type"] = "Modern Award";
         $this->load->view("reports/paycharge_rate_view", $this->data);
 	}
 	
@@ -36,14 +36,14 @@ class Paycharge_rate extends CI_Controller
 		if ($this->user_session["is_admin"]) {
             $this->data["header"] = $this->load->view("header", $this->data, true);
             $this->data["footer"] = $this->load->view("footer", $this->data, true);
+            $this->data["charge_rate"] = $this->pr->getChargeRate();
         } else {
             $this->data["header"] = $this->load->view("sales/sales_header", $this->data, true);
             $this->data["footer"] = $this->load->view("sales/sales_footer", $this->data, true);
+            $this->data["charge_rate"] = $this->pr->getChargeRate($this->user_data["state_no"]);
         }
+        
         $this->data["type"] = "Client Agreement";
-        
-        $this->data["charge_rate"] = $this->pr->getChargeRate($this->user_data["state_no"]);
-        
         $this->load->view("reports/paycharge_rate_client_view", $this->data);
 	}
 	
