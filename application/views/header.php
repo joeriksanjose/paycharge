@@ -120,6 +120,9 @@
                                 <a href="<?php echo base_url("libraries/long_services") ?>">Long Service</a>
                             </li>
                             <li>
+                                <a href="<?php echo base_url("libraries/position") ?>">Position</a>
+                            </li>
+                            <li>
                                 <a href="<?php echo base_url("libraries/contacts") ?>">Contacts</a>
                             </li>
                             <li>

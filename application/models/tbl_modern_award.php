@@ -12,6 +12,7 @@ class Tbl_modern_award extends CI_Model
 	
 	public function getModernAwards()
 	{
+	    $this->db->order_by("modern_award_name");
 		return $this->db->get($this->table_name)->result_array();
 	}
     
@@ -54,6 +55,7 @@ class Tbl_modern_award extends CI_Model
     {
         $this->db->like("modern_award_no", $key, "after");
         $this->db->or_like("modern_award_name", $key, "after");
+        $this->db->order_by("modern_award_name");
         $this->db->select("*");
         
         return $this->db->get($this->table_name)->result_array();

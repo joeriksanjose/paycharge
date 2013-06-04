@@ -39,7 +39,7 @@ $(document).ready(function(){
              var str = "";
              
              if (!result.is_error) {
-                 str = str + "<table class='table table-striped table-bordered' id='award-table' style='margin-top: 15px;'>";
+                 str = str + "<table class='table table-striped table-bordered table-condensed' id='award-table' style='font-size: 12px;'>";
                  str = str + "<thead>"
                  str = str + "<tr>";
                  str = str + "<th>Modern Award No</th>";
@@ -54,9 +54,12 @@ $(document).ready(function(){
                      str = str + "<td>"+item.modern_award_no+"</td>";
                      str = str + "<td>"+item.modern_award_name+"</td>";
                      str = str + "<td>"+item.created_at+"</td>";
-                     str = str + "<td><button type='button' class='btn edit-award-btn' edit-id='"+item.modern_award_no+"'>";
+                     str = str + "<td>";
+                     str = str + '<a target="_blank" href="'+base_url+'transactions/upcoming_rate_increase/'+item.modern_award_no+'" class="btn btn-mini">Upcoming Rate Increase</a>';
+                     str = str + ' <a target="_blank" href="'+base_url+'transactions/rate_increase_history/'+item.modern_award_no+'" class="btn btn-mini">Rate Increase History</a>';
+                     str = str + " <button type='button' class='btn edit-award-btn btn-mini' edit-id='"+item.modern_award_no+"'>";
                      str = str + "<i class='icon-edit'></i></button> ";
-                     str = str + "<button type='button' class='btn btn-danger delete-award-btn' del-id='"+item.modern_award_no+"'>";
+                     str = str + "<button type='button' class='btn btn-danger delete-award-btn btn-mini' del-id='"+item.modern_award_no+"'>";
                      str = str + "<i class='icon-trash icon-white'></i>";
                      str = str + "</button></td>";
                      str = str + "</tr>";
@@ -151,7 +154,7 @@ $(document).ready(function(){
     // end show add modern award form, tabs
     
     // edit
-    $(".edit-award-btn").click(function(){
+    $(".edit-award-btn").live("click", function(){
         $(document).scrollTop(0);
         var edit_id = $(this).attr("edit-id");
         $("#modern-body").hide("fast");

@@ -24,22 +24,6 @@ class Home extends CI_Controller {
         $this->user_data = $this->user->getUserById($this->user_session["user_id"]);
     }
     
-    // public function index()
-    // {
-        // $this->data["title"] = "Sales - Clients Assigned";
-        // $state_nos = $this->user_data["state_no"];
-        // if (isset($_POST["state_nos"])) {
-            // $state_nos = implode(",", $this->input->post("state_nos", true));
-        // }
-// 
-        // $this->data["states_assigned"] = $this->state->getStateByStateNos($this->user_data["state_no"]);
-        // $this->data["clients_assigned"] = $this->clients->getAssignedClientsByStateNos($state_nos);
-        // $this->data["header"] = $this->load->view("sales/sales_header", $this->data, true);
-        // $this->data["footer"] = $this->load->view("sales/sales_footer", $this->data, true);
-// 
-        // $this->load->view("sales/new_sales_view2", $this->data);
-    // }
-    
     public function index()
     {
         $this->data["title"] = "Sales - Clients Assigned";
@@ -52,6 +36,7 @@ class Home extends CI_Controller {
         $this->data["clients_assigned"] = $this->clients->getAssignedClientsByStateNos($state_nos);
         $this->data["header"] = $this->load->view("sales/sales_header", $this->data, true);
         $this->data["footer"] = $this->load->view("sales/sales_footer", $this->data, true);
+        $this->data["side_nav"] = $this->load->view("sales/sales_side_nav", $this->data, true);
 
         $this->load->view("sales/new_sales_view2", $this->data);
     }
@@ -93,16 +78,24 @@ class Home extends CI_Controller {
         return;
     }
     
-    public function contacts($client_no)
+    public function view($client_no)
     {
+        $state_nos = $this->user_data["state_no"];
+        if (isset($_POST["state_nos"])) {
+            $state_nos = implode(",", $this->input->post("state_nos", true));
+        }
+
+        $this->data["states_assigned"] = $this->state->getStateByStateNos($this->user_data["state_no"]);
+        $this->data["clients_assigned"] = $this->clients->getAssignedClientsByStateNos($state_nos);
         $this->data["client_info"] = $this->clients->getClientInformation($client_no, $this->user_data["state_no"]);
-        $this->data["title"] = $this->data["client_info"]["company_name"]." Contacts List";
+        $this->data["title"] = $this->data["client_info"]["company_name"];
         $this->data["contacts"] = $this->cc->getAllContactInfo($client_no);
         
         $this->data["header"] = $this->load->view("sales/sales_header", $this->data, true);
         $this->data["footer"] = $this->load->view("sales/sales_footer", $this->data, true);
+        $this->data["side_nav"] = $this->load->view("sales/sales_side_nav", $this->data, true);
         
-        $this->load->view("sales/contacts_list_view", $this->data);
+        $this->load->view("sales/view_client", $this->data);
     }
     
     public function addNewContact()

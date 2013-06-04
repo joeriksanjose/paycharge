@@ -822,7 +822,7 @@
 	        <button type="button" class="btn" id="btn-search-award"><i class="icon-search"></i></button>
 	    </div>
 	</div>
-	<div class="span12" id="modern-body" style="max-height: 400px; overflow: auto;">
+	<div class="span12" id="modern-body" style="max-height: 400px; margin-top: 15px; overflow: auto;">
 	    <?php if ($status === 1) : ?>
 	        <div class="alert alert-success">
 	            <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -834,7 +834,7 @@
                <b>Error!</b> <?php echo $status_msg ?>
            </div>
 	    <?php endif ; ?>
-		<table class="table table-bordered table-striped" id="award-table" style="margin-top: 15px;">
+		<table class="table table-bordered table-striped table-condensed" id="award-table" style="font-size: 12px;">
 		    <thead>
 			<tr>
 				<th>Modern Award No</th>
@@ -851,10 +851,10 @@
 				<td><?php echo $modern_award["modern_award_name"] ?></td>
 				<td><?php echo date("d/m/Y", strtotime($modern_award["created_at"])) ?></td>
 				<td>
-				    <a target="_blank" href="<?php echo base_url("transactions/upcoming_rate_increase/".$modern_award["modern_award_no"]) ?>" class="btn">Upcoming Rate Increase</a>
-				    <a target="_blank" href="<?php echo base_url("transactions/rate_increase_history/".$modern_award["modern_award_no"]) ?>" class="btn">Rate Increase History</a>
-				    <button type="button" class="btn edit-award-btn" edit-id="<?php echo $modern_award["modern_award_no"] ?>"><i class="icon-edit"></i></button>
-				    <button type="button" class="btn btn-danger delete-award-btn" del-id="<?php echo $modern_award["modern_award_no"] ?>"><i class="icon-trash icon-white"></i></button>
+				    <a target="_blank" href="<?php echo base_url("transactions/upcoming_rate_increase/".$modern_award["modern_award_no"]) ?>" class="btn btn-mini">Upcoming Rate Increase</a>
+				    <a target="_blank" href="<?php echo base_url("transactions/rate_increase_history/".$modern_award["modern_award_no"]) ?>" class="btn btn-mini">Rate Increase History</a>
+				    <button type="button" class="btn edit-award-btn btn-mini" edit-id="<?php echo $modern_award["modern_award_no"] ?>"><i class="icon-edit"></i></button>
+				    <button type="button" class="btn btn-danger delete-award-btn btn-mini" del-id="<?php echo $modern_award["modern_award_no"] ?>"><i class="icon-trash icon-white"></i></button>
 				</td>
 			</tr>
 			<?php endforeach ; ?>

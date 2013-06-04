@@ -318,6 +318,10 @@ class Transactions extends CI_Controller
             return;
         }
         
+        foreach ($result as $key => $award) {
+            $result[$key]["created_at"] = date("d/m/Y", strtotime($award["created_at"]));
+        }
+        
         echo json_encode($result);
         return;
     }
