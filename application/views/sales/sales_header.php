@@ -18,11 +18,11 @@
     <div class="navbar navbar-fixed-top">
         <div class="navbar-inner">
             <div class="container">
-                <a href="<?php echo base_url("sales") ?>" class="brand pull-right">PCS</a>
-                <ul class="nav">
+                <a href="<?php echo base_url("sales") ?>" class="brand pull-right">Sales</a>
+                <!-- <ul class="nav">
                     <li class="divider-vertical"></li>
                     <li><a href="<?php echo base_url("sales") ?>"><i class="icon-th-list"></i> Clients</a></li>
-                </ul>
+                </ul> -->
                 <div class="pull-right" style="margin-top: 10px; margin-left: 5px;">
                     <a href="<?php echo base_url("logout") ?>">Logout</a>
                 </div>

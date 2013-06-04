@@ -164,7 +164,7 @@ $(document).ready(function(){
     });
     
     $("#edit-btn-modal").click(function(){
-        if($("#n_password").val()!=$("#e_c_password").val()){
+        if($("#n_password").val()!= $("#e_c_password").val()){
             $("#edit-error-box").css("display", "");
             $("#edit-error-box").html("<b>Error:</b> Password did not match.");
             $("#edit-success-box").css("display", "none");
@@ -188,12 +188,11 @@ $(document).ready(function(){
                    $("#e_password").val("");
                    $("#e_c_password").val("");
                    $("#n_password").val("");
+                   setTimeout(function(){
+                       $("#showModal").modal("hide");
+                   }, 1500);
                }
-            }).done(function(){
-                setTimeout(function(){
-                    $("#showModal").modal("hide");
-                }, 1500);
-            });
+            })
         }
     });
     // end show and updating user

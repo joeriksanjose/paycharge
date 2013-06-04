@@ -10,7 +10,6 @@ $(document).ready(function(){
     $("#frm-new-state").submit(function(){
         if (
                 $("#company_name").val() == "" || 
-                $("#department").val() == "" ||
                 $("#address_line1").val() == "" ||
                 $("#middle_name").val() == "" ||
                 $("#contact_first_name").val() == "" ||
@@ -171,7 +170,6 @@ $(document).ready(function(){
     $("#edit-btn-modal").live("click", function(){
         if(
             $("#e_company_name").val() == "" || 
-            $("#e_department").val() == "" ||
             $("#e_address_line1").val() == "" ||
             $("#e_middle_name").val() == "" ||
             $("#e_contact_first_name").val() == "" ||

@@ -8,6 +8,7 @@ class Home extends CI_Controller {
         $this->load->model("tbl_user_model", "user");
         $this->load->model("tbl_sales_modern_award", "smd");
         $this->load->model("libraries/tbl_clients", "clients");
+        $this->load->model("libraries/tbl_contacts", "contacts");
         $this->load->model("libraries/tbl_client_contacts", "cc");
         $this->load->model("libraries/tbl_state", "state");
         $this->load->library("user_session");
@@ -23,6 +24,22 @@ class Home extends CI_Controller {
         $this->user_data = $this->user->getUserById($this->user_session["user_id"]);
     }
     
+    // public function index()
+    // {
+        // $this->data["title"] = "Sales - Clients Assigned";
+        // $state_nos = $this->user_data["state_no"];
+        // if (isset($_POST["state_nos"])) {
+            // $state_nos = implode(",", $this->input->post("state_nos", true));
+        // }
+// 
+        // $this->data["states_assigned"] = $this->state->getStateByStateNos($this->user_data["state_no"]);
+        // $this->data["clients_assigned"] = $this->clients->getAssignedClientsByStateNos($state_nos);
+        // $this->data["header"] = $this->load->view("sales/sales_header", $this->data, true);
+        // $this->data["footer"] = $this->load->view("sales/sales_footer", $this->data, true);
+// 
+        // $this->load->view("sales/new_sales_view2", $this->data);
+    // }
+    
     public function index()
     {
         $this->data["title"] = "Sales - Clients Assigned";
@@ -36,7 +53,7 @@ class Home extends CI_Controller {
         $this->data["header"] = $this->load->view("sales/sales_header", $this->data, true);
         $this->data["footer"] = $this->load->view("sales/sales_footer", $this->data, true);
 
-        $this->load->view("sales/new_sales_view", $this->data);
+        $this->load->view("sales/new_sales_view2", $this->data);
     }
     
     public function ajaxSearchClient()
@@ -86,6 +103,15 @@ class Home extends CI_Controller {
         $this->data["footer"] = $this->load->view("sales/sales_footer", $this->data, true);
         
         $this->load->view("sales/contacts_list_view", $this->data);
+    }
+    
+    public function addNewContact()
+    {
+        if ($_SERVER['REQUEST_METHOD'] != "POST") {
+            redirect("sales");
+        }
+        
+        $post = $this->input->post(null, true);
     }
 }
 

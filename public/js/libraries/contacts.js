@@ -20,7 +20,6 @@ $(document).ready(function(){
                 $("#first_name").val() == "" ||
                 $("#pref_first_name").val() == "" ||
                 $("#last_name").val() == "" ||
-                $("#middle_name").val() == "" ||
                 $("#email").val() == "" ||
                 $("#username").val() == "" ||
                 $("#password").val() == "" ||
@@ -160,6 +159,7 @@ $(document).ready(function(){
     $(".edit-state-btn").live("click", function(){
         var id = $(this).attr("show-id");
         $("#div-edit-error").css("display", "none");
+        $("#e_client_nos option:selected").removeAttr("selected");
         $.post(base_url+"libraries/contacts/edit_contacts", {id:id}, function(data){
             var json_data = $.parseJSON(data);
             $("#id").val(json_data.id);
@@ -189,7 +189,6 @@ $(document).ready(function(){
             $("#e_first_name").val() == "" ||
             $("#e_pref_first_name").val() == "" ||
             $("#e_last_name").val() == "" ||
-            $("#e_middle_name").val() == "" ||
             $("#e_email").val() == ""
         ) {
             $("#div-success").css("display", "none");
