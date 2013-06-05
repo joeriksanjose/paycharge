@@ -159,21 +159,44 @@ $(document).ready(function(){
           $("#edit-error-box").css("display", "none");
        }).done(function(){
           $("#showModal").modal("show");
+          $("#div-pw").css("display", "none");
        });
        return false;
     });
     
+    $("#btn-change-pw").click(function(){
+    	if($(this).html() == "Close"){
+    		$(this).html("Change Password");
+    		$("#div-pw").hide("fast");
+    	} else {
+    		$(this).html("Close");
+    		$("#div-pw").show("fast");	
+    	}
+    	
+    });
+    
+    
     $("#edit-btn-modal").click(function(){
-        if($("#n_password").val()!= $("#e_c_password").val()){
-            $("#edit-error-box").css("display", "");
-            $("#edit-error-box").html("<b>Error:</b> Password did not match.");
-            $("#edit-success-box").css("display", "none");
-        } else{
-            $.post(base_url+"home/ajaxUpdateUser", {
-                user_id:user_id,
-                e_state_no:$("#e_state_no").val(),
-                e_password:$("#e_password").val(),
-                e_c_password:$("#e_c_password").val()
+    	
+    	if($("#btn-change-pw").html()=="Close"){
+    		
+    		if($("#n_password").val()!= $("#e_c_password").val()){
+	            $("#edit-error-box").css("display", "");
+	            $("#edit-error-box").html("<b>Error:</b> Password did not match.");
+	            $("#edit-success-box").css("display", "none");
+	            
+	            return false;
+	        } 
+    		
+    		$.post(base_url+"home/ajaxUpdateUser", {
+                id:user_id,
+                admin:$("#e_admin").val(),
+                state_no:$("#e_state_no").val(),
+                password:$("#e_password").val(),
+                new_password:$("#n_password").val(),
+                full_name:$("#e_full_name").val(),
+                username:$("#e_username").val(),
+                change:1
             }, function(data){
                var res = $.parseJSON(data);
                if (res.is_error) {
@@ -192,8 +215,38 @@ $(document).ready(function(){
                        $("#showModal").modal("hide");
                    }, 1500);
                }
-            })
-        }
+            });
+    		
+    	} else {
+    		
+    		$.post(base_url+"home/ajaxUpdateUser", {
+                id:user_id,
+                admin:$("#e_admin").val(),
+                state_no:$("#e_state_no").val(),
+                full_name:$("#e_full_name").val(),
+                username:$("#e_username").val(),
+                change:0
+            }, function(data){
+               var res = $.parseJSON(data);
+               if (res.is_error) {
+                   $("#edit-error-box").css("display", "");
+                   $("#edit-error-box").html(res.error_msg);
+                   $("#edit-success-box").css("display", "none");
+               } else {
+                   $("#edit-error-box").css("display", "none");
+                   $("#edit-success-box").html("<b>Done!</b> User successfully updated.");
+                   $("#edit-success-box").css("display", "");
+                   
+                   $("#e_password").val("");
+                   $("#e_c_password").val("");
+                   $("#n_password").val("");
+                   setTimeout(function(){
+                       $("#showModal").modal("hide");
+                   }, 1500);
+               }
+            });
+    		
+    	}
     });
     // end show and updating user
 });

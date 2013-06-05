@@ -72,13 +72,15 @@ class Tbl_user_model extends CI_Model
     public function updateById($user_id, $data)
     {
         $where = array("id" => $user_id);
-        $new_data = array(
-            "state_no" => $data["e_state_no"],
-            "password" => $data["e_c_password"]
-        );
+        // $new_data = array(
+            // "state_no" => $data["e_state_no"],
+            // "password" => $data["e_c_password"],
+            // "full_name" => $data["full_name"],
+            // "username" => $data["username"]
+        // );
         
         $this->db->where($where);
-        return $this->db->update($this->table_name, $new_data);
+        return $this->db->update($this->table_name, $data);
     }
     
     public function isPasswordCorrect($user_id, $password)

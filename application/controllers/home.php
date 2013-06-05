@@ -199,37 +199,54 @@ class Home extends CI_Controller {
         $params = array();
         $params["is_error"] = false;
         $post = $this->input->post(null, true);
-        $state_nos = implode(",", $post["e_state_no"]);
-        unset($post["e_state_no"]);
-        
-        foreach ($post as $k => $v) {
-            $post[$k] = trim($v);
+        if ($post["admin"]) {
+            $state_nos = 0;
+        } else {
+            $state_nos = implode(",", $post["state_no"]);            
         }
         
-        try {
-            if (!$post) {
-                throw new Exception("<b>Error:</b> Cannot update user");
-            }
-            
-            if (in_array("", $post)) {
-                throw new Exception("<b>Error:</b> Do not leave blank fields");
-            }
-            
-            if (!$this->users->isPasswordCorrect($post["user_id"], $post["e_password"])) {
-                throw new Exception("<b>Error:</b> Incorrect password.");
-            }
-            
-            $post["e_state_no"] = $state_nos;
-            $is_updated = $this->users->updateById($post["user_id"], $post);
+        foreach ($post as $k => $v) {
+            if ($k != "state_no")
+                $post[$k] = trim($v);
+        }
+        
+        unset($post["state_no"]);
+        
+		if($post["change"] == 1){
+			try {
+	            if (!$post) {
+	                throw new Exception("<b>Error:</b> Cannot update user");
+	            }
+	            
+	            if (in_array("", $post)) {
+	                throw new Exception("<b>Error:</b> Do not leave blank fields");
+	            }
+	            
+	            if (!$this->users->isPasswordCorrect($post["id"], $post["password"])) {
+	                throw new Exception("<b>Error:</b> Incorrect password.");
+	            }
+	            unset($post["change"]);
+	            $post["state_no"] = $state_nos;
+	            $post["password"] = $post["new_password"];
+				unset($post["new_password"]);
+	            $is_updated = $this->users->updateById($post["id"], $post);
+	            if (!$is_updated) {
+	                throw new Exception("<b>Error:</b> Database Error");
+	            }
+	        } catch (Exception $e) {
+	            $params["is_error"] = true;
+	            $params["error_msg"] = $e->getMessage();
+	            echo json_encode($params);
+	            return;
+	        }
+		} else {
+			unset($post["change"]);
+			$post["state_no"] = $state_nos;
+            $is_updated = $this->users->updateById($post["id"], $post);
             if (!$is_updated) {
                 throw new Exception("<b>Error:</b> Database Error");
             }
-        } catch (Exception $e) {
-            $params["is_error"] = true;
-            $params["error_msg"] = $e->getMessage();
-            echo json_encode($params);
-            return;
-        }
+		}
         
         echo json_encode($params);
         return;

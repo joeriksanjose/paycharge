@@ -30,7 +30,7 @@
           <div class="control-group">
             <label class="control-label" for="e_admin">User Type</label>
             <div class="controls">
-              <select id="e_admin" name="e_admin" disabled>
+              <select id="e_admin" name="e_admin" readonly="true">
                   <option value="1">Administrator</option>
                   <option value="0">Sales</option>
               </select>
@@ -49,32 +49,42 @@
           <div class="control-group">
             <label class="control-label" for="e_full_name">Full Name</label>
             <div class="controls">
-              <input type="text" disabled="" id="e_full_name" name="e_full_name" value="<?php echo $post_values["full_name"] ?>">
+              <input type="text"  id="e_full_name" name="e_full_name" value="<?php echo $post_values["full_name"] ?>">
             </div>
           </div>
           <div class="control-group">
             <label class="control-label" for="e_username">User ID</label>
             <div class="controls">
-              <input type="text" disabled id="e_username" name="e_username" value="<?php echo $post_values["username"] ?>">
+              <input type="text" id="e_username" name="e_username" value="<?php echo $post_values["username"] ?>">
             </div>
           </div>
           <div class="control-group">
-            <label class="control-label" for="e_password">Current Password</label>
             <div class="controls">
-              <input type="password" id="e_password" name="e_password">
+              <a id="btn-change-pw" class="btn btn-primary">
+	          		Change Password
+	          </a>
             </div>
           </div>
-          <div class="control-group">
-            <label class="control-label" for="n_password">New Password</label>
-            <div class="controls">
-              <input type="password" id="n_password" name="n_password">
-            </div>
-          </div>
-          <div class="control-group">
-            <label class="control-label" for="e_c_password">Confirm Password</label>
-            <div class="controls">
-              <input type="password" id="e_c_password" name="e_c_password">
-            </div>
+          
+          <div id="div-pw" style="display:none;margin-top:10px">
+	          <div class="control-group">
+	            <label class="control-label" for="e_password">Current Password</label>
+	            <div class="controls">
+	              <input type="password" id="e_password" name="e_password">
+	            </div>
+	          </div>
+	          <div class="control-group">
+	            <label class="control-label" for="n_password">New Password</label>
+	            <div class="controls">
+	              <input type="password" id="n_password" name="n_password">
+	            </div>
+	          </div>
+	          <div class="control-group">
+	            <label class="control-label" for="e_c_password">Confirm Password</label>
+	            <div class="controls">
+	              <input type="password" id="e_c_password" name="e_c_password">
+	            </div>
+	          </div>
           </div>
         </form>
     </div>
