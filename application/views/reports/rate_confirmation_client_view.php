@@ -1,4 +1,6 @@
 <?php echo $header;?>
+<script src="<?php echo base_url("public/js/reports/rate_confirmation.js")?>"></script>
+<input type="hidden" id="hid-base-url" value="<?php echo base_url()?>"/>
 
 <div class="topmargin"></div>
 <div class="row">
@@ -9,8 +11,8 @@
 	
 <div class="span12" id="search-modern">
 		<div class="form-search pull-right">
-	        <input type="text" class="input-xlarge search-query" id="search-award">
-	        <button type="button" class="btn" id="btn-search-award"><i class="icon-search"></i></button>
+	        <input type="text" class="input-xlarge search-query" id="search">
+	        <button type="button" class="btn" id="btn-search-client"><i class="icon-search"></i></button>
 	    </div>
 	</div>
 	<div class="span12" id="modern-body" style="max-height: 400px; overflow: auto;">
@@ -25,6 +27,7 @@
                <b>Error!</b> <?php echo $status_msg ?>
            </div>
 	    <?php endif ; ?>
+	    <div id="div">
 		<table class="table table-bordered table-striped" id="award-table" style="margin-top: 15px;">
 		    <thead>
 			<tr>
@@ -53,6 +56,7 @@
 			<?php endif ; ?>
 			</tbody>
 		</table>
+		</div>
 	</div>
 </div>	
 <?php echo $footer;?>

@@ -61,7 +61,7 @@ class Tbl_contacts extends CI_model{
     public function get_contacts($where)
     {
         $this->db->select("*");
-        $this->db->where(array("id" => $where));
+        $this->db->where(array("contact_no" => $where));
         $sql = $this->db->get($this->table_name)->row_array();
         
         if (!$sql) {

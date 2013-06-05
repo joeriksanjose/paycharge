@@ -32,6 +32,18 @@ class Paycharge_rate extends CI_Controller
         $this->load->view("reports/paycharge_rate_view", $this->data);
 	}
 	
+	public function search_award(){
+		$search = $_POST["search"]; 
+		
+		if ($this->user_session["is_admin"]) {
+            $params = $this->pr->searchModernAwards($search);
+        } else {
+            $params = $this->pr->searchModernAwards($search, $this->user_data["state_no"]);
+        }
+        
+        echo json_encode($params);
+	}
+	
 	public function client(){
 		if ($this->user_session["is_admin"]) {
             $this->data["header"] = $this->load->view("header", $this->data, true);
@@ -45,6 +57,17 @@ class Paycharge_rate extends CI_Controller
         
         $this->data["type"] = "Client Agreement";
         $this->load->view("reports/paycharge_rate_client_view", $this->data);
+	}
+	
+	public function search_client(){
+		$search = $_POST["search"];
+		if ($this->user_session["is_admin"]) {
+            $params = $this->pr->searchChargeRate($search);
+        } else {
+            $params = $this->pr->searchChargeRate($search, $this->user_data["state_no"]);
+        }
+        
+        echo json_encode($params);
 	}
 	
 	public function print_modern($trans_no, $modern_no){

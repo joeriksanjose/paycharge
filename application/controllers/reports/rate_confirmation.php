@@ -36,6 +36,17 @@ class Rate_confirmation extends CI_Controller
 		$this->load->view("reports/rate_confirmation_view", $this->data);
 	}
 	
+	public function search_award(){
+		$search = $_POST["search"];
+		if ($this->user_session["is_admin"]) {
+            $params = $this->rc->searchModernAwards($search);
+        } else {
+            $params = $this->rc->searchModernAwards($search, $this->user_data["state_no"]);
+        }
+        
+		echo json_encode($params);
+	}
+	
 	public function client(){
 	    if ($this->user_session["is_admin"]) {
 		    $this->data["header"] = $this->load->view("header", $this->data, true);
@@ -53,6 +64,16 @@ class Rate_confirmation extends CI_Controller
         $this->session->unset_userdata("status");
 		
 		$this->load->view("reports/rate_confirmation_client_view", $this->data);
+	}
+	
+	public function search_client(){
+		$search = $_POST["search"];
+	    if ($this->user_session["is_admin"]) {
+		    $params = $this->rc->searchClient($search);
+        } else {
+            $params = $this->rc->searchClient($search, $this->user_data["state_no"]);
+        }
+        echo json_encode($params);
 	}
 	
 	public function print_modern($trans_no, $moder_no){

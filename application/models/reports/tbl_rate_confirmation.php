@@ -29,6 +29,26 @@ class Tbl_rate_confirmation extends CI_Model
         return $result;
     }
 	
+	public function searchModernAwards($search, $state_no = null)
+    {
+         $sql = "SELECT ch.*, co.company_name "
+              ."FROM tbl_charge_rate as ch "
+              ."INNER JOIN tbl_company as co "
+              ."ON ch.company_no = co.client_no "
+              ."INNER JOIN tbl_state as s "
+              ."ON co.state_no = s.state_no "
+              ."WHERE ch.trans_type <> 2 and (ch.modern_award_no like '$search%'  "
+			  ." or ch.transaction_name like '$search%' or ch.created_at like '$search%') ";
+        
+        if ($state_no !== null) {
+            $sql .= " AND co.state_no IN ('.$state_no.')";
+        }
+              
+        $result = $this->db->query($sql)->result_array();   
+               
+        return $result;
+    }
+	
 	public function getClient($state_no = null)
     {
         $sql = 'SELECT ch.*, co.company_name '
@@ -49,6 +69,26 @@ class Tbl_rate_confirmation extends CI_Model
         return $result;
     }
 	
+	public function searchClient($search, $state_no = null)
+    {
+        $sql = "SELECT ch.*, co.company_name "
+              ."FROM tbl_charge_rate as ch "
+              ."INNER JOIN tbl_company as co "
+              ."ON ch.company_no = co.client_no "
+              ."INNER JOIN tbl_state as s "
+              ."ON co.state_no = s.state_no "
+              ."WHERE ch.trans_type = 2 and (ch.modern_award_no like '$search%'  "
+			  ."or ch.transaction_name like '$search%' or ch.created_at like '$search%') ";
+              
+        if ($state_no !== null) {
+            $sql .= ' AND co.state_no IN ('.$state_no.')';
+        }
+              
+        $result = $this->db->query($sql)->result_array();
+        
+               
+        return $result;
+    }
 	public function getModern($trans_no)
 	{
 		$this->db->where(array("modern_award_no" => $trans_no));

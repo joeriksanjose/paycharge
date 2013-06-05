@@ -62,7 +62,14 @@ class Contacts extends CI_Controller
         
         $this->data["data"] = $this->contacts->get_contacts($id);
         $this->data["data"]["date_of_birth"] = date("d/m/Y", strtotime($this->data["data"]["date_of_birth"]));
-        $this->data["data"]["client_nos_exploded"] = explode(",", $this->data["data"]["client_nos"]);
+        
+        $clients = $this->cc->getAllClientInfo($id);
+        $tmp_clients = array();
+        foreach ($clients as $client) {
+            $tmp_clients[] = $client["client_no"];
+        }
+        
+        $this->data["data"]["client_nos_exploded"] = $tmp_clients;
         
         echo json_encode($this->data["data"]);
     }
@@ -137,7 +144,12 @@ class Contacts extends CI_Controller
             return;
         }
         
-        $data["client_nos"] = implode(",", $data["client_nos"]);
+        foreach ($data["client_nos"] as $client) {
+            $cc_data = array("company_no" => $client, "contact_no" => $data["contact_no"]);
+            $this->cc->save($cc_data);
+        }
+        
+        unset($data["client_nos"]);
         
         if (!isset($data["can_view"]) && !isset($data["can_approve"]) && !isset($data["can_forecast"])) {
             $this->session->set_userdata("error", "<b>Error!</b> Please choose at least one access level.");
@@ -161,7 +173,16 @@ class Contacts extends CI_Controller
     {
         $data = $this->input->post(null, true);
         $data["date_of_birth"] = $this->convertToYMD($data["date_of_birth"]);
-        $data["client_nos"] = implode(",", $data["client_nos"]);
+        
+        $this->cc->delete(array("contact_no" => $data["contact_no"]));
+        
+        foreach ($data["client_nos"] as $client) {
+            $cc_data = array("company_no" => $client, "contact_no" => $data["contact_no"]);
+            $this->cc->save($cc_data);
+        }
+        
+        unset($data["client_nos"]);
+        
         $sql = $this->contacts->update_contacts($data);
         
         if ($sql) {

@@ -20,7 +20,9 @@
         </ul>
         <div id="myTabContent" class="tab-content">
           <div class="tab-pane fade active in" id="con">
-            <form class="form-horizontal" id="frmNewContact" method="post" style="display: none;">
+            <form class="form-horizontal" id="frmNewContact" method="post" style="display: none;"
+            action="<?php echo base_url("sales/home/addNewContact") ?>">
+                <div id="divError" style="display: none;"></div>
                 <table class="table">
                     <tr>
                         <td>Contact No.</td>
@@ -66,19 +68,19 @@
                     </tr>
                     <tr>
                         <td>Email</td>
-                        <td><input type="text" tabindex="9" name="contact_phone_no" id="contact_phone_no"></td>
+                        <td><input type="text" tabindex="9" name="email" id="email"></td>
                     </tr>
                     <tr>
                         <td>Username</td>
-                        <td><input type="text" tabindex="10" name="contact_phone_no" id="contact_phone_no"></td>
+                        <td><input type="text" tabindex="10" name="username" id="username"></td>
                     </tr>
                     <tr>
                         <td>Password</td>
-                        <td><input type="password" tabindex="11" name="contact_phone_no" id="contact_phone_no"></td>
+                        <td><input type="password" tabindex="11" name="password" id="password"></td>
                     </tr>
                     <tr>
                         <td>Retype Password</td>
-                        <td><input type="password" tabindex="12" name="contact_phone_no" id="contact_phone_no"></td>
+                        <td><input type="password" tabindex="12" id="re_password"></td>
                     </tr>
                     <tr>
                         <td>Access Levels</td>
@@ -97,7 +99,7 @@
                     <tr>
                         <td></td>
                         <td>
-                            <input type="hidden" name="client_nos" value="<?php echo $client_info["client_no"] ?>">
+                            <input type="hidden" name="client_nos[]" value="<?php echo $client_info["client_no"] ?>">
                             <button type="button" tabindex="17" class="btn pull-right" id="hideContactForm" style="margin-left: 5px;">Cancel</button>
                             <button type="submit" tabindex="16" class="btn pull-right">Save Contact</button>
                         </td>
@@ -109,6 +111,18 @@
                 <input id="search-contact-input" type="text" style="width: 320px;" placeholder="Search by name (Surname, Firstname or Lastname)">
                 <button class="btn" id="search-contact-btn" type="button"><i class="icon-search"></i></button>
             </div>
+            <?php if($ok):?>
+            <div class="alert alert-success" style="margin-top: 10px">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <?php echo $success_msg ?>
+            </div>
+            <?php endif;?>
+            <?php if ($error): ?>
+            <div class="alert alert-error" id="div-error" style="margin-top: 10px">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <?php echo $error_msg ?>
+            </div>
+            <?php endif ; ?>
             <table class="table table-bordered table-condensed table-hover" style="font-size: 12px;">
                 <thead>
                     <th>#</th>
@@ -121,10 +135,10 @@
                     <?php if (count($contacts)) : ?>
                         <?php foreach ($contacts as $contact) : ?>
                             <tr>
-                                <td><?php $contact["client_no"] ?></td>
-                                <td><?php $contact["last_name"].", ".$contact["first_name"]." ".$contact["middle_name"] ?></td>
-                                <td><?php $contact["contact_phone_no"] ?></td>
-                                <td><?php $contact["email"] ?></td>
+                                <td><?php echo $contact["contact_no"] ?></td>
+                                <td><?php echo $contact["last_name"].", ".$contact["first_name"]." ".$contact["middle_name"] ?></td>
+                                <td><?php echo $contact["contact_phone_no"] ?></td>
+                                <td><?php echo $contact["email"] ?></td>
                                 <td></td>
                             </tr>
                         <?php endforeach ?>

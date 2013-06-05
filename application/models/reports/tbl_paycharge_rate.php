@@ -29,8 +29,30 @@ class Tbl_paycharge_rate extends CI_Model
                
         return $result;
     }
+	
+	public function searchModernAwards($search, $state_no = null)
+    {    
+         $sql = "SELECT ch.*, co.company_name "
+              ."FROM tbl_charge_rate as ch "
+              ."INNER JOIN tbl_company as co "
+              ."ON ch.company_no = co.client_no "
+              ."INNER JOIN tbl_state as s "
+              ."ON co.state_no = s.state_no "
+              ."WHERE ch.trans_type <> 2 and (ch.trans_no like '$search%' or ch.transaction_name like '$search%' 
+              	or ch.date_of_quotation like '$search%' or co.company_name like '$search%')";
+              
+        if ($state_no === null) {
+            $result = $this->db->query($sql)->result_array();
+        } else {
+            $sql .= ' AND co.state_no IN ('.$state_no.')';
+            $result = $this->db->query($sql)->result_array();
+        }
+               
+        return $result;
+    }
     
-    public function getChargeRate($state_no = null)
+    
+	public function getChargeRate($state_no = null)
     {
         $sql = 'SELECT ch.*, co.company_name '
               .'FROM tbl_charge_rate as ch '
@@ -39,6 +61,26 @@ class Tbl_paycharge_rate extends CI_Model
               .'INNER JOIN tbl_state as s '
               .'ON co.state_no = s.state_no '
               .'where ch.trans_type = 2';
+        
+        if ($state_no !== null) {
+            $sql .= ' AND co.state_no IN ('.$state_no.')';
+        }
+              
+        $result = $this->db->query($sql)->result_array();   
+               
+        return $result;
+    }
+
+	public function searchChargeRate($search, $state_no = null)
+    {
+        $sql = "SELECT ch.*, co.company_name "
+              ."FROM tbl_charge_rate as ch "
+              ."INNER JOIN tbl_company as co "
+              ."ON ch.company_no = co.client_no "
+              ."INNER JOIN tbl_state as s "
+              ."ON co.state_no = s.state_no "
+              ."where ch.trans_type = 2 and (ch.trans_no like '$search%' or ch.transaction_name like '$search%' 
+              	or ch.date_of_quotation like '$search%' or co.company_name like '$search%')";
         
         if ($state_no !== null) {
             $sql .= ' AND co.state_no IN ('.$state_no.')';

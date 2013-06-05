@@ -38,6 +38,17 @@ class Allowance extends CI_Controller
 		$this->load->view("reports/allowance_view", $this->data);
 	}
 	
+	public function search_award(){
+		$search = $_POST["search"];
+		if ($this->user_session["is_admin"]) {
+            $params = $this->al->searchModernAwards($search);
+        } else {
+            $params = $this->al->searchModernAwards($search, $this->user_data["state_no"]);
+        }
+        
+		echo json_encode($params);
+	}
+	
 	public function client(){
 		if ($this->user_session["is_admin"]) {
             $this->data["header"] = $this->load->view("header", $this->data, true);
@@ -56,6 +67,16 @@ class Allowance extends CI_Controller
         $this->session->unset_userdata("status");
 		
 		$this->load->view("reports/allowance_client_view", $this->data);
+	}
+	
+	public function search_client(){
+		$search = $_POST["search"];
+		if ($this->user_session["is_admin"]) {
+            $params = $this->al->searchClient($search);
+        } else {
+            $params = $this->al->searchClient($search, $this->user_data["state_no"]);
+        }
+        echo json_encode($params);
 	}
 	
 	public function print_modern($trans_no, $modern_no){

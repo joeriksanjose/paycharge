@@ -12,10 +12,16 @@ class Tbl_client_contacts extends CI_model{
     public function save($data)
     {
         if ($this->getClientInfo($data["company_no"], $data["contact_no"])) {
-            throw new Exception("Company already added.");   
+            throw new Exception("record already added.");   
         }
         
         return $this->db->insert($this->table_name, $data);
+    }
+    
+    public function delete($data)
+    {
+        $this->db->where($data);
+        return $this->db->delete($this->table_name);
     }
     
     public function getAllClientInfo($contact_id)
@@ -42,7 +48,6 @@ class Tbl_client_contacts extends CI_model{
               
         $result = $this->db->query($sql, array($id))->result_array();
         
-               
         return $result;
     }
     

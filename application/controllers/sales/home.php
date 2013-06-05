@@ -80,10 +80,23 @@ class Home extends CI_Controller {
     
     public function view($client_no)
     {
+        $this->data["ok"] = false;
+        $this->data["error"] = false;
+        
         $state_nos = $this->user_data["state_no"];
         if (isset($_POST["state_nos"])) {
             $state_nos = implode(",", $this->input->post("state_nos", true));
         }
+        
+        if ($this->data["success_msg"] = $this->session->userdata("ok")) {
+            $this->data["ok"] = true;
+        }
+        if ($this->data["error_msg"] = $this->session->userdata("error")) {
+            $this->data["error"] = true;
+        }
+        
+        $this->session->unset_userdata("error");
+        $this->session->unset_userdata("ok");
 
         $this->data["states_assigned"] = $this->state->getStateByStateNos($this->user_data["state_no"]);
         $this->data["clients_assigned"] = $this->clients->getAssignedClientsByStateNos($state_nos);
@@ -100,11 +113,54 @@ class Home extends CI_Controller {
     
     public function addNewContact()
     {
-        if ($_SERVER['REQUEST_METHOD'] != "POST") {
-            redirect("sales");
+        $data = $this->input->post(null, true);
+        $data["date_of_birth"] = $this->convertToYMD($data["date_of_birth"]);
+        
+        if (!$data["client_nos"]) {
+            $this->session->set_userdata("error", "<b>Error!</b> Please select at least one client.");
+            redirect($_SERVER["HTTP_REFERER"]);
+            return;
         }
         
-        $post = $this->input->post(null, true);
+        if (!isset($data["can_view"]) && !isset($data["can_approve"]) && !isset($data["can_forecast"])) {
+            $this->session->set_userdata("error", "<b>Error!</b> Please choose at least one access level.");
+            redirect($_SERVER["HTTP_REFERER"]);
+            return;
+        }
+        
+        try {
+            foreach ($data["client_nos"] as $client) {
+                $cc_data = array("company_no" => $client, "contact_no" => $data["contact_no"]);
+                $this->cc->save($cc_data);
+            }
+        } catch (Exception $e) {
+            $this->session->set_userdata("error", "<b>Error!</b> Database Error");
+            redirect($_SERVER["HTTP_REFERER"]);
+        }
+        
+        unset($data["client_nos"]);
+           
+        $sql = $this->contacts->save_contacts($data);
+        
+        if ($sql) {
+            $this->session->set_userdata("ok", "<b>Done!</b> Contact successfully added.");
+            redirect($_SERVER["HTTP_REFERER"]);
+            return;
+        }
+            
+        $this->session->set_userdata("error", "<b>Error!</b> Database error.");
+        redirect($_SERVER["HTTP_REFERER"]);
+    }
+
+    private function convertToYMD($date)
+    {
+        $tmp = explode("/", $date);
+        
+        $d = $tmp[0];
+        $m = $tmp[1];
+        $y = $tmp[2];
+        
+        return $y."-".$m."-".$d;
     }
 }
 
