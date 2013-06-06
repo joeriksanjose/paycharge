@@ -51,6 +51,20 @@ class Tbl_client_contacts extends CI_model{
         return $result;
     }
     
+    public function searchContactInfo($key, $company_no)
+    {
+        $sql = 'SELECT con.*, cc.company_no, cc.contact_no '
+              .'FROM tbl_client_contacts as cc '
+              .'INNER JOIN tbl_contacts as con '
+              .'ON cc.contact_no = con.contact_no '
+              .'WHERE cc.company_no = ? AND (last_name LIKE "'.$key.'%" '
+              .'OR first_name LIKE "'.$key.'%" OR middle_name LIKE "'.$key.'%")';
+              
+        $result = $this->db->query($sql, array($company_no))->result_array();
+        
+        return $result;
+    }
+    
     public function deleteClientInfo($company_no, $contact_no)
     {
         $where = array(

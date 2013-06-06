@@ -6,6 +6,11 @@ $(document).ready(function(){
         format: "dd/MM/yyyy"
     });
     
+    $('#e_datetimepicker').datetimepicker({
+        pickTime: false,
+        format: "dd/MM/yyyy"
+    });
+    
     // show clients list
     $(".state-link").click(function(){
         var state_name = $(this).attr("state-name");

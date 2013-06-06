@@ -89,6 +89,16 @@ class Tbl_contacts extends CI_model{
         return $sql;
     }
     
+    public function updateContactByContactNo($data)
+    {
+        $where = array("contact_no" => $data["contact_no"]);
+        $this->db->where($where);
+
+        $sql = $this->db->update($this->table_name, $data);
+        
+        return $sql;
+    }
+    
     public function delete_contacts($data)
     {
         $where = array("id" => $data);

@@ -41,43 +41,6 @@ class Home extends CI_Controller {
         $this->load->view("sales/new_sales_view2", $this->data);
     }
     
-    public function ajaxSearchClient()
-    {
-        $params = array();
-        $params["is_found"] = true;
-        $key = $this->input->post("key", true);
-        
-        $result = $this->clients->searchClientByClientNo($key, $this->user_data["state_no"]);
-        
-        if (!$result) {
-            $params["is_found"] = false;
-            echo json_encode($params);
-            return;
-        }
-        
-        $params["result"] = $result;
-        echo json_encode($params);
-        return;
-    }
-    
-    public function ajaxShowClientInformation()
-    {
-        $params = array();
-        $params["is_found"] = true;
-        $client_no = $this->input->post("client_no", true);
-        
-        $result = $this->clients->getClientInformation($client_no, $this->user_data["state_no"]);
-        if (!$result) {
-            $params["is_found"] = false;
-            echo json_encode($params);
-            return;
-        }
-        
-        $params["result"] = $result;
-        echo json_encode($params);
-        return;
-    }
-    
     public function view($client_no)
     {
         $this->data["ok"] = false;
@@ -101,6 +64,7 @@ class Home extends CI_Controller {
         $this->data["states_assigned"] = $this->state->getStateByStateNos($this->user_data["state_no"]);
         $this->data["clients_assigned"] = $this->clients->getAssignedClientsByStateNos($state_nos);
         $this->data["client_info"] = $this->clients->getClientInformation($client_no, $this->user_data["state_no"]);
+        $this->data["existing_contacts"] = $this->contacts->select_all_contacts();
         $this->data["title"] = $this->data["client_info"]["company_name"];
         $this->data["contacts"] = $this->cc->getAllContactInfo($client_no);
         
@@ -151,7 +115,163 @@ class Home extends CI_Controller {
         $this->session->set_userdata("error", "<b>Error!</b> Database error.");
         redirect($_SERVER["HTTP_REFERER"]);
     }
-
+    
+    public function updateContact()
+    {
+        $data = $this->input->post(null, true);
+        $data["e_date_of_birth"] = $this->convertToYMD($data["e_date_of_birth"]);
+        
+        if (!isset($data["e_can_view"]) && !isset($data["e_can_approve"]) && !isset($data["e_can_forecast"])) {
+            $this->session->set_userdata("error", "<b>Error!</b> Please choose at least one access level.");
+            redirect($_SERVER["HTTP_REFERER"]);
+            return;
+        }
+        
+        $update_data = array (
+            "contact_no"       => $data["e_contact_no"],
+            "first_name"       => $data["e_first_name"],
+            "pref_first_name"  => $data["e_pref_first_name"],
+            "pref_first_name"  => $data["e_pref_first_name"],
+            "last_name"        => $data["e_last_name"],
+            "middle_name"      => $data["e_middle_name"],
+            "date_of_birth"    => $data["e_date_of_birth"],
+            "position"         => $data["e_position"],
+            "contact_phone_no" => $data["e_contact_phone_no"],
+            "email"            => $data["e_email"],
+            "first_name"       => $data["e_first_name"],
+            "can_view"         => $data["e_can_view"],
+            "can_approve"      => $data["e_can_approve"],
+            "can_forecast"     => $data["e_can_forecast"]
+        );
+           
+        $sql = $this->contacts->updateContactByContactNo($update_data);
+        
+        if (!$sql) {
+            $this->session->set_userdata("error", "<b>Error!</b> Database error.");
+            redirect($_SERVER["HTTP_REFERER"]);
+            return;
+        }
+        
+        $this->session->set_userdata("ok", "<b>Done!</b> Contact successfully updated.");
+        redirect($_SERVER["HTTP_REFERER"]);
+    }
+    
+    public function addExistingContact()
+    {
+        $data = $this->input->post(null, true);
+        
+        if (!$data) {
+            redirect($_SERVER["HTTP_REFERER"]);
+        }
+        
+        try {
+            foreach ($data["contact_nos"] as $contact) {
+                $cc_data = array("contact_no" => $contact, "company_no" => $data["company_no"]);
+                $this->cc->save($cc_data);
+            }
+        } catch (Exception $e) {
+            $this->session->set_userdata("error", "<b>Error!</b> ".$e->getMessage());
+            redirect($_SERVER["HTTP_REFERER"]);
+        }
+        
+        redirect($_SERVER["HTTP_REFERER"]);
+    }
+    
+    // AJAX
+    
+    public function ajaxSearchClient()
+    {
+        $params = array();
+        $params["is_found"] = true;
+        $key = $this->input->post("key", true);
+        
+        $result = $this->clients->searchClientByClientNo($key, $this->user_data["state_no"]);
+        
+        if (!$result) {
+            $params["is_found"] = false;
+            echo json_encode($params);
+            return;
+        }
+        
+        $params["result"] = $result;
+        echo json_encode($params);
+        return;
+    }
+    
+    public function ajaxShowClientInformation()
+    {
+        $params = array();
+        $params["is_found"] = true;
+        $client_no = $this->input->post("client_no", true);
+        
+        $result = $this->clients->getClientInformation($client_no, $this->user_data["state_no"]);
+        if (!$result) {
+            $params["is_found"] = false;
+            echo json_encode($params);
+            return;
+        }
+        
+        $params["result"] = $result;
+        echo json_encode($params);
+        return;
+    }
+    
+    public function ajaxGetUserInfo()
+    {
+        $params = array();
+        $params["is_found"] = true;
+        $contact_no = $this->input->post("contact_no", true);
+        
+        $result = $this->contacts->getContactByContactNo($contact_no);
+        if (!$result) {
+            $params["is_found"] = false;
+            echo json_encode($params);
+            return;
+        }
+        
+        $result["date_of_birth"] = date("d/m/Y", strtotime($result["date_of_birth"]));
+        
+        $params["result"] = $result;
+        echo json_encode($params);
+        return;
+    }
+    
+    public function ajaxDeleteContact()
+    {
+        $params = array();
+        $params["is_deleted"] = true;
+        $del = $this->input->post(null, true);
+        if (!$this->cc->delete($del)) {
+            $params["is_deleted"] = false;
+            echo json_encode($params);
+            return;
+        }
+        
+        echo json_encode($params);
+        return;
+    }
+    
+    public function ajaxSearchContact()
+    {
+        $params = array();
+        $params["is_found"] = true;
+        $post = $this->input->post(null, true);
+        
+        $result = $this->cc->searchContactInfo($post["key"], $post["company_no"]);
+        
+        if (!$result) {
+            $params["is_found"] = false;
+            echo json_encode($params);
+            return;
+        }
+        
+        $params["result"] = $result;
+        echo json_encode($params);
+        return;
+    }
+    
+    // END AJAX
+    
     private function convertToYMD($date)
     {
         $tmp = explode("/", $date);
