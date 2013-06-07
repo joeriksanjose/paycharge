@@ -224,6 +224,10 @@ class Contacts extends CI_Controller
         $client_names = array();
         try {
             $clients = $this->clients->select_all_clients();
+            foreach($clients as $key => $client) {
+                $state = $this->state->get_state_4_clients($client["state_no"]);
+                $clients[$key]["state_name"] = $state["state_name"];
+            }
         } catch (Exception $e) {
             $clients = array();
         }
@@ -241,11 +245,14 @@ class Contacts extends CI_Controller
     {
         $post = $this->input->post(null, true);        
          try {
-            if (!$this->cc->save($post)) {
-                $this->session->set_userdata("status", "alert-error");
-                $this->session->set_userdata("status_msg", "<b>Error!</b> Database Error.");
-                redirect(base_url("libraries/contacts/client_info/".$post["contact_no"]));
-                return;
+            foreach ($post["company_no"] as $company_no) {
+                $data = array("company_no" => $company_no, "contact_no" => $post["contact_no"]);
+                if (!$this->cc->save($data)) {
+                    $this->session->set_userdata("status", "alert-error");
+                    $this->session->set_userdata("status_msg", "<b>Error!</b> Database Error.");
+                    redirect(base_url("libraries/contacts/client_info/".$post["contact_no"]));
+                    return;
+                }
             }
         } catch (Exception $e) {
             $this->session->set_userdata("status", "alert-error");

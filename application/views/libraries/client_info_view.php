@@ -76,12 +76,11 @@
     <div class="span12">
         <form class="form-inline" method="post" action="<?php echo base_url("libraries/contacts/saveClientInfo") ?>">
             <input type="hidden" id="contact_no" value="<?php echo $contact_no ?>" name="contact_no">
-            Client's Name
-            <select name="company_no">
+            <select multiple="true" name="company_no[]" style="min-height: 95px; width:370px;">
                 <?php foreach ($clients as $client) : ?>
                     <option value="<?php echo $client["client_no"] ?>">
-                        <?php echo $client["company_name"] ?>
-                    </option>
+                        <?php echo "(".$client["state_name"].") ".$client["client_no"]." - ".$client["company_name"] ?>
+                    </op[tion>
                 <?php endforeach ; ?>
             </select>
             <button type="submit" class="btn"><i class="icon-plus"></i></button>
