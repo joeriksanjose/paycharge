@@ -101,9 +101,8 @@ class Tbl_sales_modern_award extends CI_Model
 	
 	public function getCompany($state_no)
 	{
-		$sql = "SELECT comp.*, s.state_name FROM tbl_company as comp"
-              ." INNER JOIN tbl_state as s ON comp.state_no = s.state_no"
-              ." WHERE comp.state_no in ($state_no)";
+		$sql = "SELECT comp.*, s.state_name FROM tbl_company as comp "
+              ."INNER JOIN tbl_state as s ON comp.state_no = s.state_no";
         
         return $this->db->query($sql)->result_array();
 	}

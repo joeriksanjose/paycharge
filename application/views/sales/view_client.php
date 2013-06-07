@@ -64,9 +64,9 @@
     </div>
     <div class="span9">
         <ul id="myTab" class="nav nav-tabs">
-          <li class="active"><a href="#con" data-toggle="tab">Contacts</a></li>
-          <li><a href="#modern" data-toggle="tab">Modern Awards</a></li>
-          <li><a href="#client" data-toggle="tab">Client Agreements</a></li>
+          <li class="active"><a href="#con">Contacts</a></li>
+          <li><a href="<?php echo base_url("sales/home/awards/".$client_info["client_no"]) ?>">Modern Awards</a></li>
+          <li><a href="">Client Agreements</a></li>
         </ul>
         <div id="myTabContent" class="tab-content">
           <div class="tab-pane fade active in" id="con">
@@ -133,6 +133,18 @@
                             <label class="checkbox inline">
                                 <input type="checkbox" tabindex="15" name="e_can_forecast" id="e_can_forecast" value="1"> Can forecast
                             </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Clients</td>
+                        <td>
+                            <select multiple="true" name="e_client_nos[]" id="e_client_nos" style="width: 380px; height: 130px;">
+                                <?php foreach($clients_assigned as $client) : ?>
+                                    <option value="<?php echo $client["client_no"] ?>">
+                                        <?php echo "(".$client["state_name"].") ".$client["client_no"]." - ".$client["company_name"] ?>
+                                    </option>
+                                <?php endforeach ?>
+                            </select>
                         </td>
                     </tr>
                     <tr>
@@ -210,6 +222,18 @@
                         <td><input type="password" tabindex="12" id="re_password"></td>
                     </tr>
                     <tr>
+                        <td>Clients</td>
+                        <td>
+                            <select multiple="true" name="client_nos[]" id="client_nos" style="width: 380px; height: 130px;">
+                                <?php foreach($clients_assigned as $client) : ?>
+                                    <option value="<?php echo $client["client_no"] ?>">
+                                        <?php echo "(".$client["state_name"].") ".$client["client_no"]." - ".$client["company_name"] ?>
+                                    </option>
+                                <?php endforeach ?>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
                         <td>Access Levels</td>
                         <td>
                             <label class="checkbox inline">
@@ -226,7 +250,6 @@
                     <tr>
                         <td></td>
                         <td>
-                            <input type="hidden" name="client_nos[]" value="<?php echo $client_info["client_no"] ?>">
                             <button type="button" tabindex="17" class="btn pull-right" id="hideContactForm" style="margin-left: 5px;">Cancel</button>
                             <button type="submit" tabindex="16" class="btn pull-right">Save Contact</button>
                         </td>
@@ -236,7 +259,7 @@
             <button type="button" class="btn" id="showContactForm"><i class="icon-user"></i> Add new contact</button>
             <button type="button" class="btn" id="showExistingForm"><i class="icon-user"></i> Add existing contact</button>
             <div class="input-append pull-right">
-                <input id="searchContactInput" type="text" style="width: 320px;" placeholder="Search by name (Surname, Firstname or Lastname)">
+                <input id="searchContactInput" type="text" style="width: 250px;" placeholder="Search by Name">
                 <button class="btn" id="searchContactBtn" type="button"><i class="icon-search"></i></button>
                 <div class="loading"></div>
             </div>

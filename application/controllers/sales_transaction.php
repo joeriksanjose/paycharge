@@ -217,7 +217,7 @@ class Sales_transaction extends CI_Controller
             $this->session->set_userdata("status_msg", "<b>Done!</b> Modern Award successfully saved");
 		}
         
-        redirect(base_url("sales_transaction"));
+        redirect($_SERVER["HTTP_REFERER"]);
     }
 
     public function update()
@@ -293,7 +293,7 @@ class Sales_transaction extends CI_Controller
             $this->session->set_userdata("status_msg", "<b>Done!</b> Modern Award successfully saved");
         }
         
-        redirect(base_url("sales_transaction"));
+        redirect($_SERVER["HTTP_REFERER"]);
     }
     
     private function computeML($post, $index, $calc) 

@@ -78,6 +78,7 @@ $(document).ready(function(){
     
     // edit contact
     $(".btnEditContact").live("click", function(){
+        $("#e_client_nos option:selected").removeAttr("selected");
         $.post(base_url+"sales/home/ajaxGetUserInfo", {contact_no:$(this).attr("id")}, function(data){
             json = $.parseJSON(data);
             if (json.is_found) {
@@ -94,6 +95,9 @@ $(document).ready(function(){
                 $("#e_can_view").prop("checked", parseInt(json.result.can_view));
                 $("#e_can_approve").prop("checked", parseInt(json.result.can_approve));
                 $("#e_can_forecast").prop("checked", parseInt(json.result.can_forecast));
+                $.each(json.client_nos, function(i, item) {
+                    $("#e_client_nos option[value='"+item+"']").attr("selected", "selected"); 
+                });
                 $("#frmEditContact").show("fast");   
             } else {
                 alert("Something went wrong");
