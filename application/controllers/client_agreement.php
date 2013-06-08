@@ -324,7 +324,7 @@ class Client_agreement extends CI_Controller
             $this->session->set_userdata("error", "error");
         }
 		
-		redirect("client_agreement");
+		redirect($_SERVER["HTTP_REFERER"]);
     }
 
 	public function update()
@@ -410,7 +410,7 @@ class Client_agreement extends CI_Controller
             $this->session->set_userdata("error", "error");
         }
         
-		redirect("client_agreement");
+		redirect($_SERVER["HTTP_REFERER"]);
     }
 
     private function computeML($post, $index, $calc) 

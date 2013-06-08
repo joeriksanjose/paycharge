@@ -1,6 +1,7 @@
 $(document).ready(function(){
 	
 	var base_url = $("#base-url").val();
+	var client_no = $("#hid_client_no").val();
 	
 	$("#btn_gen").click(function(){
         $.post(base_url+"sales_transaction/getTransNo", function(data){
@@ -209,7 +210,7 @@ $(document).ready(function(){
 			var str = "";
 			str = str + "<option></option>";
 			$.each(json_data.work_cover, function(i, item){
-				str = str + "<option work-cover-no="+item.work_cover_no+" value="+item.work_cover+">"+item.work_cover+"</option>";
+				str = str + "<option work-cover-no="+item.work_cover_no+" value="+item.work_cover+">("+item.work_cover_code+") - "+item.work_cover+"</option>";
 			});
 			
 			$("#cmb-workcover").empty().append(str);
@@ -234,14 +235,34 @@ $(document).ready(function(){
 	
 	$("#close-modern-form").click(function(){
        $("#modern_form").hide("fast");
-       $(".div-award").show("fast"); 
+       $(".div-award").show("fast");
+       $("#awardRow").show("fast"); 
     });
 	
 	$("#add-new-modern").click(function(){
 	    $("#frm").attr("action", base_url+"sales_transaction/save");
 	    $(this).val("SAVE");
 	    $(document).scrollTop(0);
+	    var d = new Date();
+	    
+	    var month = d.getMonth();
+	    var day = d.getDate();
+	    var year = d.getFullYear();
+	    $("input").val("");
+	    $("select  ").val("");
+	    $("#txt-standard").val("STANDARD RATE FOR CALS :");
+	    $("#txt-margin").val("MARGIN FOR M ALLOWANCE");
+	    $("#txt-permanent").val("Permanent Guarantee Period in Days");
+	    $("#btn_gen").val("Generate No");
+	    $("#btn-save-update").val("Save");
+	    $("#date_of_quotation").val(("0"+day).slice(-2)+"/"+("0"+month).slice(-2)+"/"+year);
+	    $("#cmb-company").val(client_no).attr("selected", "selected");
+	    $("#cmb-company").change();
+	    $("#cmb-company").attr("readonly", "readonly");
+	    $("#trans_no").removeAttr("readonly");
+        $("#btn_gen").removeAttr("disabled");
 	    $("#modern_form").show("fast");
+	    $("#awardRow").hide("fast");
         $("#show-tab-1").parent().addClass("active");
         $("#show-tab-2, #show-tab-3, #show-tab-4").parent().removeClass("active");
         $("#nav-tabs").show("fast");
@@ -288,7 +309,7 @@ $(document).ready(function(){
     
     // delete modern award
     var award_no_del;
-    $(".delete-award-btn").click(function(){
+    $(".delete-award-btn").live("click", function(){
        award_no_del = $(this).attr("del-id");
        remove_row = $(this).parent().parent();
        $("#deleteModal").modal("show"); 
@@ -377,9 +398,12 @@ $(document).ready(function(){
     // end searh
     
     // edit
-    $(".edit-award-btn").click(function(){
+    $(".edit-award-btn").live("click", function(){
         $(document).scrollTop(0);
+        $("#awardRow").hide("fast"); 
         var edit_id = $(this).attr("edit-id");
+        $("#trans_no").attr("readonly", "true");
+        $("#btn_gen").attr("disabled", "true");
         $("#modern_form").show("fast");
         $("#show-tab-1").parent().addClass("active");
         $("#show-tab-2, #show-tab-3, #show-tab-4, #show-tab-5").parent().removeClass("active");
@@ -408,7 +432,7 @@ $(document).ready(function(){
                $("#cmb-workcover").attr("work-cover-no", work_cover).attr("selected", "selected");
                $("#cmb-company").val(company_no).attr("selected", "selected");
                $("#cmb-modern").val(res.charge_rate.modern_award_no).attr("selected", "selected");
-               
+               $("#date_of_quotation").val(res.charge_rate.date_of_quotation);
                $("#transaction_name").val(res.charge_rate.transaction_name);
                $("#industry_rate").val(res.charge_rate.B_16);
                $("#wic_code").val(res.charge_rate.B_17);

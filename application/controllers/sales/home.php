@@ -13,9 +13,10 @@ class Home extends CI_Controller {
         $this->load->model("libraries/tbl_state", "state");
         $this->load->model("tbl_sales_modern_award", "sma");
         $this->load->model("sales/tbl_sales_trans", "st");
+        $this->load->model("tbl_client_agreement", "ca");
         $this->load->library("user_session");
         $this->user_session = $this->user_session->checkUserSession();
-        
+        $this->data["date_slash"] = mdate("%d/%m/%Y");
         if ($this->user_session["is_admin"]) {
             redirect(base_url());
         }
@@ -232,6 +233,48 @@ class Home extends CI_Controller {
     }
     // END AWARDS
     
+    // CLIENT AGREEMENT
+    public function agreements($client_no)
+    {
+        $state_nos = $this->user_data["state_no"];
+        
+        // side navigation
+        $this->data["states_assigned"] = $this->state->getStateByStateNos($this->user_data["state_no"]);
+        $this->data["clients_assigned"] = $this->clients->getAssignedClientsByStateNos($state_nos);
+        
+        $this->data["client_info"] = $this->clients->getClientInformation($client_no, $this->user_data["state_no"]);
+        $this->data["agreements"] = $this->st->getTransaction($client_no, 2);
+        
+        $this->data["modern_awards"] = $this->ca->getSalesModernAwards($this->user_data["state_no"]);
+        $this->data["company"] = $this->ca->getCompany($this->user_data["state_no"]);
+        $this->data["super"] = $this->ca->getSuper();
+        $this->data["public_liability"] = $this->ca->getPublicLiability();
+        $this->data["insurance"] = $this->ca->getInsurance();
+        $this->data["long_service"] = $this->ca->getLongService();
+        $this->data["admin"] = $this->ca->getAdmin();
+        $this->data["position"] = $this->ca->getPosition();
+        
+        $this->data["error"] = false;
+        $this->data["ok"] = false;
+        
+        if($this->session->userdata("error")){
+            $this->data["error"] = true;
+        }
+        if($this->session->userdata("ok")){
+            $this->data["ok"] = true;
+            $this->data["success_msg"] = "<b>Done</b>! Saved successfully.";
+        }
+        $this->session->unset_userdata("error");
+        $this->session->unset_userdata("ok");
+        
+        $this->data["header"] = $this->load->view("sales/sales_header", $this->data, true);
+        $this->data["footer"] = $this->load->view("sales/sales_footer", $this->data, true);
+        $this->data["side_nav"] = $this->load->view("sales/sales_side_nav", $this->data, true);
+        
+        $this->load->view("sales/agreements_view", $this->data);
+    }
+    // END CLIENT AGREEMENT
+    
     // AJAX
     
     public function ajaxSearchClient()
@@ -339,6 +382,34 @@ class Home extends CI_Controller {
         
         try {
             $result = $this->st->searchTransaction($post["key"], $post["client_no"]);
+            if (!$result) {
+                $params["is_found"] = false;
+                echo json_encode($params);
+                return;
+            }
+        } catch (Exception $e) {
+            $params["is_found"] = false;
+            echo json_encode($params);
+            return;
+        }
+        
+        foreach ($result as $key => $res) {
+            $result[$key]["date_of_quotation"] = date("d/m/Y", strtotime($res["date_of_quotation"]));
+        }
+        
+        $params["result"] = $result;
+        echo json_encode($params);
+        return;
+    }
+    
+    public function ajaxSearchAgreement()
+    {
+        $params = array();
+        $params["is_found"] = true;
+        $post = $this->input->post(null, true);
+        
+        try {
+            $result = $this->st->searchTransaction($post["key"], $post["client_no"], 2);
             if (!$result) {
                 $params["is_found"] = false;
                 echo json_encode($params);

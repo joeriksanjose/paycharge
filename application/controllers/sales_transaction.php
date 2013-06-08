@@ -39,6 +39,7 @@ class Sales_transaction extends CI_Controller
         $post = $this->input->post(null, true);
         
         $params["charge_rate"] = $this->smd->get_charge_rate_info($post);
+        $params["charge_rate"]["date_of_quotation"] = date("d/m/Y", strtotime($params["charge_rate"]["date_of_quotation"]));
         $params["payrate"] = $this->smd->get_payrate_info($post);
         $params["status"] = true;
         

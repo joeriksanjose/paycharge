@@ -66,7 +66,7 @@
         <ul id="myTab" class="nav nav-tabs">
           <li class="active"><a href="#con">Contacts</a></li>
           <li><a href="<?php echo base_url("sales/home/awards/".$client_info["client_no"]) ?>">Modern Awards</a></li>
-          <li><a href="">Client Agreements</a></li>
+          <li><a href="<?php echo base_url("sales/home/agreements/".$client_info["client_no"]) ?>">Client Agreements</a></li>
         </ul>
         <div id="myTabContent" class="tab-content">
           <div class="tab-pane fade active in" id="con">
@@ -98,7 +98,7 @@
                         <td>Middle Name</td>
                         <td><input type="text" tabindex="5" name="e_middle_name" id="e_middle_name"></td>
                     </tr>
-                    <tr>
+                    <!-- <tr>
                         <td>Date of Birth</td>
                         <td>
                             <div id="e_datetimepicker" class="input-append">
@@ -108,7 +108,7 @@
                                 </span>
                             </div>
                         </td>
-                    </tr>
+                    </tr> -->
                     <tr>
                         <td>Position *</td>
                         <td><input type="text" tabindex="7" name="e_position" id="e_position"></td>
@@ -186,7 +186,7 @@
                         <td>Middle Name</td>
                         <td><input type="text" tabindex="5" name="middle_name" id="middle_name"></td>
                     </tr>
-                    <tr>
+                    <!-- <tr>
                         <td>Date of Birth</td>
                         <td>
                             <div id="datetimepicker" class="input-append">
@@ -196,7 +196,7 @@
                                 </span>
                             </div>
                         </td>
-                    </tr>
+                    </tr> -->
                     <tr>
                         <td>Position</td>
                         <td><input type="text" tabindex="7" name="position" id="position"></td>

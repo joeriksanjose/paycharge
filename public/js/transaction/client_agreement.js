@@ -4,7 +4,7 @@ $(document).ready(function(){
 	var delete_id;
 	var remove_row;
 	
-	$(".delete-award-btn").click(function(){
+	$(".delete-award-btn").live("click", function(){
 		delete_id = $(this).attr("del-id");
 		remove_row = $(this).parent().parent(); 
 
@@ -30,7 +30,7 @@ $(document).ready(function(){
 		});
 	});	
 	// edit
-    $(".edit-award-btn").click(function(){
+    $(".edit-award-btn").live("click", function(){
         $(document).scrollTop(0);
         var edit_id = $(this).attr("edit-id");
         $("#show-tab-1").parent().addClass("active");
@@ -580,6 +580,8 @@ $(document).ready(function(){
     
 	$("#add-new-modern").click(function(){
 	    $("#frm").attr("action", base_url+"client_agreement/save");
+	    $("#agreementRow").hide("fast");
+	    $(document).scrollTop(0);
 	    $(this).val("SAVE");
         $("#show-tab-1").parent().addClass("active");
         $("#show-tab-2, #show-tab-3, #show-tab-4, #show-tab-5").parent().removeClass("active");
@@ -593,10 +595,12 @@ $(document).ready(function(){
     $("#close-modern-form").click(function(){
        $("#frm").hide("fast");
        $(".div-award").show("fast");
+       $("#agreementRow").show("fast");
     });
     
     $("#show-tab-1").click(function(){
     	$(this).parent().addClass("active");
+    	$(document).scrollTop(0);
     	$("#show-tab-2, #show-tab-3, #show-tab-4, #show-tab-5").parent().removeClass("active");
         $("#tab1").show("fast");
         $("#tab2, #tab3, #tab4, #tab5").hide("fast");
@@ -605,6 +609,7 @@ $(document).ready(function(){
     
     $("#show-tab-2").click(function(){
     	$(this).parent().addClass("active");
+    	$(document).scrollTop(0);
     	$("#show-tab-1, #show-tab-3, #show-tab-4, #show-tab-5").parent().removeClass("active");
         $("#tab2").show("fast");
         $("#tab1, #tab3, #tab4, #tab5").hide("fast");
@@ -613,6 +618,7 @@ $(document).ready(function(){
     
     $("#show-tab-3").click(function(){
     	$(this).parent().addClass("active");
+    	$(document).scrollTop(0);
     	$("#show-tab-1, #show-tab-2, #show-tab-4, #show-tab-5").parent().removeClass("active");
         $("#tab3").show("fast");
         $("#tab1, #tab2, #tab4, #tab5").hide("fast");
@@ -621,6 +627,7 @@ $(document).ready(function(){
     
     $("#show-tab-4").click(function(){
     	$(this).parent().addClass("active");
+    	$(document).scrollTop(0);
     	$("#show-tab-1, #show-tab-3, #show-tab-2, #show-tab-5").parent().removeClass("active");
         $("#tab4").show("fast");
         $("#tab1, #tab3, #tab2, #tab5").hide("fast");
@@ -629,6 +636,7 @@ $(document).ready(function(){
     
     $("#show-tab-5").click(function(){
     	$(this).parent().addClass("active");
+    	$(document).scrollTop(0);
     	$("#show-tab-1, #show-tab-3, #show-tab-2, #show-tab-4").parent().removeClass("active");
         $("#tab5").show("fast");
         $("#tab1, #tab3, #tab2, #tab4").hide("fast");

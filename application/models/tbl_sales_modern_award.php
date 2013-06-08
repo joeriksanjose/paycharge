@@ -40,6 +40,7 @@ class Tbl_sales_modern_award extends CI_Model
 	
 	public function getModernAwards()
 	{
+	    $this->db->order_by("modern_award_name");
 		return $this->db->get($this->table_name)->result_array();
 	}
 	
