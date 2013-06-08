@@ -191,6 +191,19 @@ $(document).ready(function(){
             } else {
                 $("#B_56").removeAttr("disabled");
             }
+            
+            // AWARD INTERPRETATION
+            $("#B_59").val(json_data.B_59);
+            $("#B_60").val(json_data.B_60);
+            $("#B_61").val(json_data.B_61);
+            $("#B_62").val(json_data.B_62);
+            $("#B_63").val(json_data.B_63);
+            $("#B_64").val(json_data.B_64);
+            $("#B_65").val(json_data.B_65);
+            $("#B_66").val(json_data.B_66);
+            $("#B_67").val(json_data.B_67);
+            $("#B_68").val(json_data.B_68);
+            $("#B_69").val(json_data.B_69);
 		});
 	});
 	
@@ -601,6 +614,18 @@ $(document).ready(function(){
                     }
                });
                
+               // AWARD INTERPRETATION
+               $("#B_59").val(res.charge_rate.B_59);
+               $("#B_60").val(res.charge_rate.B_60);
+               $("#B_61").val(res.charge_rate.B_61);
+               $("#B_62").val(res.charge_rate.B_62);
+               $("#B_63").val(res.charge_rate.B_63);
+               $("#B_64").val(res.charge_rate.B_64);
+               $("#B_65").val(res.charge_rate.B_65);
+               $("#B_66").val(res.charge_rate.B_66);
+               $("#B_67").val(res.charge_rate.B_67);
+               $("#B_68").val(res.charge_rate.B_68);
+               $("#B_69").val(res.charge_rate.B_69);               
                
                $("#allowance_caption1").val(res.charge_rate.allowance_caption1);
                $("#allowance_caption2").val(res.charge_rate.allowance_caption2);

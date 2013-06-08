@@ -74,7 +74,6 @@
            <form class="form-horizontal" id="frmEditContact" method="post" style="display: none;"
             action="<?php echo base_url("sales/home/updateContact") ?>">
                 <div id="eDivError" style="display: none;"></div>
-                <div id="divError" style="display: none;"></div>
                 <table class="table">
                     <tr>
                         <td>Contact No.</td>
