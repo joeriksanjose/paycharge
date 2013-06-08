@@ -47,6 +47,7 @@
 		<!-- TAB 1 -->
 		<div class="span12" id="tab1" style="display:none;">
 			<div style="height: 20px;"></div>
+			<div class="alert alert-error" style="display: none" id="error_div"></div>
 			  <div class="control-group">
 			    <label class="control-label" for="modern_award_no">Modern Award No.</label>
 			    <div class="controls controls-row">

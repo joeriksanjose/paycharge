@@ -187,40 +187,57 @@ class Transactions extends CI_Controller
     public function saveRate()
     {
         $post = $this->input->post(null, true);
-        $award_no = $post["award_no"];
-        $post["created_at"] = $this->convertToYMD($post["created_at"]);
         
-        unset($post["award_no"]);
-        unset($post["hid-edit-id"]);
-        if (!$this->md->saveRate($post)) {
-            $this->session->set_userdata("status", 0);
-            $this->session->set_userdata("status_msg", "<b>Error! </b> Cannot save new rate.");
+        $where = array("trans_no" => $post["trans_no"]);
+        $check_transno = $this->md->checkTransno("trans_no", $where, "tbl_rate_increase");
+        $award_no = $post["award_no"];
+        
+        if($check_transno==0){
+            
+            $post["created_at"] = $this->convertToYMD($post["created_at"]);
+            
+            $company = $this->md->getCompany($post["award_no"]);
+            if($company["print_company_no"] == 1){
+                $post["company"] = "Labour Power";  
+            } else {
+                $post["company"] = "LP Consulting Services";
+            }
+            
+            unset($post["award_no"]);
+            unset($post["hid-edit-id"]);
+            
+            if (!$this->md->saveRate($post)) {
+                $this->data["status"] = 0;
+                $this->data["status_msg"] = "<b>Error! </b> Cannot save new rate.";
+            } else {
+                $this->data["status"] = 1;
+                $this->data["status_msg"] = "<b>Done! </b> New rate was successfully saved.";
+            }
+           
         } else {
-            $this->session->set_userdata("status", 1);
-            $this->session->set_userdata("status_msg", "<b>Done! </b> New rate was successfully saved.");
+            $this->data["status"] = 0;
+            $this->data["status_msg"] = "<b>Error! </b> Transaction number already exists.";
         }
         
-        redirect(base_url("transactions/upcoming_rate_increase/".$award_no));
+        echo json_encode($this->data);
     }
     
     public function updateRate()
     {
         $post = $this->input->post(null, true);
-        $award_no = $post["award_no"];
-        $id = $post["hid-edit-id"];
+        $id = $post["hid_edit_id"];
         $post["created_at"] = $this->convertToYMD($post["created_at"]);
         
-        unset($post["award_no"]);
-        unset($post["hid-edit-id"]);
+        unset($post["hid_edit_id"]);
         if (!$this->md->updateRate($id, $post)) {
-            $this->session->set_userdata("status", 0);
-            $this->session->set_userdata("status_msg", "<b>Error! </b> Cannot update new rate.");
+             $this->data["status"] = 0;
+                $this->data["status_msg"] = "<b>Error! </b> Cannot update rate.";
         } else {
-            $this->session->set_userdata("status", 1);
-            $this->session->set_userdata("status_msg", "<b>Done! </b> New rate was successfully updated.");
+            $this->data["status"] = 1;
+                $this->data["status_msg"] = "<b>Done! </b> Rate was successfully updated.";
         }
         
-        redirect(base_url("transactions/upcoming_rate_increase/".$award_no));
+        echo json_encode($this->data);
     }
     
     public function ajaxDeleteRate()
@@ -324,6 +341,19 @@ class Transactions extends CI_Controller
         
         echo json_encode($result);
         return;
+    }
+    
+    function checkTransNo(){
+        
+        $post = $this->input->post(null, true);
+        if($this->md->checkTransNo($post)){
+            $this->data["status"] = 0;
+            $this->data["status_msg"] = "<b>Error! </b> Modern Award number already exists.";
+        } else {
+            $this->data["status"] = 1;
+        }
+        
+        echo json_encode($this->data);  
     }
     
     private function convertToYMD($date)

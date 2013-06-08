@@ -2,10 +2,30 @@ $(document).ready(function(){
     
     var base_url = $("#base-url").val();
     
+    $("#btn-add").click(function(){
+        if($("#error_div").css("display") == "block"){
+            return false;
+        }   
+    });
+    
+    $("#state_no").keyup(function(){
+        $.post(base_url+"libraries/state/checkTransNo", {state_no:$(this).val()}, function(data){
+            var json_data = $.parseJSON(data);
+            
+            if(json_data.status == 0){
+                $("#error_div").css("display", "block");
+                $("#success_div").css("display", "none");
+                $("#error_div").html(json_data.status_msg);
+            } else {
+                $("#error_div").css("display", "none");
+            }
+        });
+    });
+    
     $("#tax").keydown(function(evt){
         inputNumbers(evt);
     });
-    $("#e_tax").keydown(function(evt){
+    $("#e_tax, #state_no").keydown(function(evt){
         inputNumbers(evt);
     });
     
@@ -41,6 +61,7 @@ $(document).ready(function(){
                 var result = $.parseJSON(data);
                 if (result.is_error == false && result.success_update == true) {
                      $("#div-error").css("display", "none");
+                     $("#div-ok").css("display", "none");
                      $("#div-success").css("display", "");
                      $("#div-success").html("<b>Done!</b> State was successfully updated.");
                      var str = "";
@@ -179,6 +200,7 @@ $(document).ready(function(){
                  remove_row.fadeOut('slow', function(){
                      $(this).remove();
                      $("#div-error").css("display", "none");
+                     $("#div-ok").css("display", "none");
                      $("#div-success").css("display", "");
                      $("#div-success").html("<b>Done!</b> State was successfully removed.");
                      
@@ -190,12 +212,12 @@ $(document).ready(function(){
          });
     }); 
     
-    $("#btn_e_gen, #btn_gen").click(function(){
+    $("#btn_gen").click(function(){
         $.post(base_url+"libraries/state/get_last_id", function(data){
             var json_data = $.parseJSON(data);
             
-            $("#e_state_no").val(json_data);
             $("#state_no").val(json_data);
+            $("#error_div").css("display", "none");
         });
     });
     

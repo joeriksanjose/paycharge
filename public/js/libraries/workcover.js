@@ -2,6 +2,26 @@ $(document).ready(function(){
     
     var base_url = $("#base-url").val();
     
+    $("#btn-add").click(function(){
+        if($("#error_div").css("display") == "block"){
+            return false;
+        }   
+    });
+    
+    $("#work_cover_no").keyup(function(){
+        $.post(base_url+"libraries/workcover/checkTransNo", {work_cover_no:$(this).val()}, function(data){
+            var json_data = $.parseJSON(data);
+            
+            if(json_data.status == 0){
+                $("#error_div").css("display", "block");
+                $("#success_div").css("display", "none");
+                $("#error_div").html(json_data.status_msg);
+            } else {
+                $("#error_div").css("display", "none");
+            }
+        });
+    });
+    
     $('#datetimepicker').datetimepicker({
       pickTime: false
     });
@@ -36,6 +56,7 @@ $(document).ready(function(){
                 var result = $.parseJSON(data);
                 if (result.is_error == false && result.success_update == true) {
                      $("#div-error").css("display", "none");
+                     $("#div-ok").css("display", "none");
                      $("#div-success").css("display", "");
                      $("#div-success").html("<b>Done!</b> Super was successfully updated.");
                      var str = "";
@@ -162,6 +183,7 @@ $(document).ready(function(){
                  remove_row.fadeOut('slow', function(){
                      $(this).remove();
                      $("#div-error").css("display", "none");
+                     $("#div-ok").css("display", "none");
                      $("#div-success").css("display", "");
                      $("#div-success").html("<b>Done!</b> Super was successfully removed.");
                      
@@ -178,6 +200,7 @@ $(document).ready(function(){
             var json_data = $.parseJSON(data);
             
             $("#work_cover_no").val(json_data);
+            $("#error_div").css("display", "none");
         });
     });
     
@@ -204,6 +227,10 @@ $(document).ready(function(){
         });
         
         $("#showModal").modal("show");
+    });
+    
+    $("#work_cover_no").keydown(function(evt){
+        inputNumbers(evt);
     });
     
     function inputNumbers(event)

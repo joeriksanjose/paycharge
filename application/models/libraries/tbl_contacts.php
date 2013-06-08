@@ -121,6 +121,14 @@ class Tbl_contacts extends CI_model{
         return $sql;
     }
     
+    public function checkTransno($post)
+    {
+        $this->db->select("contact_no");
+        $this->db->where($post);
+        
+        return $this->db->get($this->table_name)->num_rows();
+    }
+    
     /* log in clients */
     public function checkClientLogin($post)
     {
@@ -132,6 +140,48 @@ class Tbl_contacts extends CI_model{
         $this->db->where($where);
         
         return $this->db->get($this->table_name)->row_array();
+    }
+    
+    public function getCompany($contact_no){
+        
+        $query = "select c.* from tbl_company c inner join tbl_client_contacts cc "
+                ."on c.client_no = cc.company_no where cc.contact_no = '$contact_no'";
+                
+        return $this->db->query($query)->result_array();
+    }
+    
+    public function getAward($post){
+        
+        $this->db->where($post);
+        return $this->db->get("tbl_charge_rate")->result_array();
+    }
+    
+    public function getUpcomingRates($trans_no)
+    {
+        $date = date("Y-m-d");
+        $sql = "SELECT * "
+              ."FROM tbl_rate_increase r "
+              ."where created_at >= '$date' and "
+              ."trans_no = '$trans_no' "
+              ."order by created_at";
+              
+        $result = $this->db->query($sql)->result_array();   
+               
+        return $result;
+    }
+    
+    public function getRateHistory($trans_no)
+    {
+        $date = date("Y-m-d");
+        $sql = "SELECT * "
+              ."FROM tbl_rate_increase r "
+              ."where created_at <= '$date' and "
+              ."trans_no = '$trans_no' "
+              ."order by created_at";
+              
+        $result = $this->db->query($sql)->result_array();   
+               
+        return $result;
     }
     /* end log in clients */
 }

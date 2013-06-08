@@ -2,9 +2,27 @@ $(document).ready(function(){
     
     var base_url = $("#base-url").val();
     
+    $("#btn-add").click(function(){
+        if($("#error_div").css("display") == "block"){
+            return false;
+        }   
+    });
+    
+    $("#public_no").keyup(function(){
+        $.post(base_url+"libraries/public_liability/checkTransNo", {public_no:$(this).val()}, function(data){
+            var json_data = $.parseJSON(data);
+            
+            if(json_data.status == 0){
+                $("#error_div").css("display", "block");
+                $("#error_div").html(json_data.status_msg);
+            } else {
+                $("#error_div").css("display", "none");
+            }
+        });
+    });
     
     // adding
-    $("#public_value").keydown(function(evt){
+    $("#public_value, #public_no").keydown(function(evt){
         inputNumbers(evt);
     });
     
@@ -85,7 +103,8 @@ $(document).ready(function(){
              }
              
              $("#tbl").html(str);
-             $("#public-table").tablesorter();
+             $("#public-table").tablesorter();
+
         });
     });
     
@@ -107,8 +126,9 @@ $(document).ready(function(){
                  remove_row.fadeOut('slow', function(){
                      $(this).remove();
                      $("#div-error").css("display", "none");
+                     $("#div-ok").css("display", "none");
                      $("#div-success").css("display", "");
-                     $("#div-success").html("<b>Done!</b> State was successfully removed.");
+                     $("#div-success").html("<b>Done!</b> Public Liability was successfully removed.");
                      
                  });
                  $('#deleteModal').modal("hide");
@@ -120,12 +140,12 @@ $(document).ready(function(){
     // end delete
     
     // id generator
-    $("#btn_e_gen, #btn_gen").click(function(){
+    $("#btn_gen").click(function(){
         $.post(base_url+"libraries/public_liability/get_last_id", function(data){
             var json_data = $.parseJSON(data);
             
-            $("#e_public_no").val(json_data);
             $("#public_no").val(json_data);
+            $("#error_div").css("display", "none");
         });
     });
     // end id generator
@@ -161,8 +181,9 @@ $(document).ready(function(){
                 var result = $.parseJSON(data);
                 if (result.is_error == false && result.success_update == true) {
                      $("#div-error").css("display", "none");
+                     $("#div-ok").css("display", "none");
                      $("#div-success").css("display", "");
-                     $("#div-success").html("<b>Done!</b> Public was successfully updated.");
+                     $("#div-success").html("<b>Done!</b> Public Liability was successfully updated.");
                      var str = "";
                      str = str + "<table class='table table-striped table-bordered' id = 'public-table'>";
                      str = str + "<thead>"

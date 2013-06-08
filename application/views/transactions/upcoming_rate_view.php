@@ -31,14 +31,14 @@
     <div class="span12" id="new-rate" style="display: none;">
         <div class="alert alert-error" id="error_div" style="display: none;"></div>
         <form class="form-horizontal" id="frm-new-rate" action="<?php echo base_url("transactions/saveRate"); ?>" method="post">
-            <input type="hidden" name="award_no" value="<?php echo $award_info["modern_award_no"] ?>">
-            <input type="hidden" name="transaction_name" value="<?php echo $award_info["modern_award_name"] ?>">
+            <input type="hidden" id="award_no" value="<?php echo $award_info["modern_award_no"] ?>">
+            <input type="hidden" id="transaction_name" value="<?php echo $award_info["modern_award_name"] ?>">
             <input type="hidden" id="hid-edit-id" name="hid-edit-id">
             <div class="span5">
                 <div class="control-group">
                     <label class="control-label" for="trans_no">Transaction No.</label>
                     <div class="controls controls-row">
-                        <input type="text" id="trans_no" name="trans_no">
+                        <input type="text" id="trans_no" name="trans_no" >
                     </div>
                 </div>
                 <div class="control-group">
@@ -168,7 +168,7 @@
                 </div>
                 <div class="control-group">
                     <div class="controls">
-                        <button type="submit" class="btn" id="btn-add">Add rate</button>
+                        <button type="button" class="btn" id="btn-add">Add rate</button>
                         <button type="button" class="btn" id="close-add-form">Cancel</button>
                     </div>
                 </div>
@@ -179,17 +179,17 @@
         <button type="button" id="add-new-rate" class="btn"><i class="icon-plus"></i> Add new rate</button>
     </div>
     <div class="span12" style="max-height: 400px; overflow: auto;">
-        <?php if ($status === 1) : ?>
-            <div class="alert alert-success" style="margin-top: 10px;">
+        <?php //if ($status === 1) : ?>
+            <div class="alert alert-success" id="success_div" style="display:none; margin-top: 10px;">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <?php echo $status_msg ?>
+                <?php //echo $status_msg ?>
             </div>
-        <?php elseif ($status === 0) : ?>
-            <div class="alert alert-error" style="margin-top: 10px;">
+        <?php //elseif ($status === 0) : ?>
+            <div class="alert alert-error" style="display:none;margin-top: 10px;">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <?php echo $status_msg ?>
+                <?php //echo $status_msg ?>
             </div>
-        <?php endif ; ?>
+        <?php // endif ; ?>
         <table class="table table-bordered table-striped" id="rate-table" style="font-size: 11px; margin-top: 15px;">
             <thead>
                 <tr>

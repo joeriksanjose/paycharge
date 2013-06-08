@@ -39,6 +39,13 @@ class Tbl_long_services extends CI_model{
         return $sql;
     }
     
+    public function checkTransno($post)
+    {
+        $this->db->select("long_services_no");
+        $this->db->where($post);
+        
+        return $this->db->get($this->table_name)->num_rows();
+    }
     public function get_last_id()
     {
         $this->db->select("long_services_no");

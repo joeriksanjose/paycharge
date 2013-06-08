@@ -136,11 +136,12 @@ $(document).ready(function(){
     // end delete
     
     // id generator    
-    $("#btn_e_gen, #btn_gen").click(function(){
+    $("#btn_gen").click(function(){
         $.post(base_url+"libraries/clients/get_last_id", function(data){
             var json_data = $.parseJSON(data);
             
-            $("#e_contact_no").val(json_data);
+            
+            $("#error_div").css("display", "none");
             $("#contact_no").val(json_data);
         });
     });

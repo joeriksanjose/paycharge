@@ -43,6 +43,19 @@ class Public_liability extends CI_Controller
         $this->load->view("libraries/public_liability_view", $this->data);
     }
     
+    function checkTransNo(){
+        
+        $post = $this->input->post(null, true);
+        if($this->public->checkTransNo($post)){
+            $this->data["status"] = 0;
+            $this->data["status_msg"] = "<b>Error! </b> Public Liability number already exists.";
+        } else {
+            $this->data["status"] = 1;
+        }
+        
+        echo json_encode($this->data);  
+    }
+    
     public function edit_public()
     {
         $id = $_POST["id"];

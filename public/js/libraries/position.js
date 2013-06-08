@@ -2,6 +2,27 @@ $(document).ready(function(){
     
     var base_url = $("#base-url").val();
     
+    $("#btn-add").click(function(event){
+        var json;
+        $.post(base_url+"libraries/position/checkPosition", {position:$("#position").val()}, function(data){
+            var json_data = $.parseJSON(data);
+            json = json_data.status;
+            if(json == 0){
+                $("#error_div").css("display", "block");
+                $("#error_div").html(json_data.status_msg);
+                event.preventDefault();
+                return false;
+            }
+        });
+        
+        if($("#error_div").css("display") == "block"){
+            event.preventDefault();
+            return false;
+        }
+        
+    });
+    
+    
     $('#datetimepicker').datetimepicker({
       pickTime: false,
       format: "dd/MM/yyyy"
@@ -37,6 +58,7 @@ $(document).ready(function(){
                 var result = $.parseJSON(data);
                 if (result.is_error == false && result.success_update == true) {
                      $("#div-error").css("display", "none");
+                     $("#div-ok").css("display", "none");
                      $("#div-success").css("display", "");
                      $("#div-success").html("<b>Done!</b> Position was successfully updated.");
                      var str = "";
@@ -157,8 +179,9 @@ $(document).ready(function(){
                  remove_row.fadeOut('slow', function(){
                      $(this).remove();
                      $("#div-error").css("display", "none");
+                     $("#div-ok").css("display", "none");
                      $("#div-success").css("display", "");
-                     $("#div-success").html("<b>Done!</b> Super was successfully removed.");
+                     $("#div-success").html("<b>Done!</b> Position was successfully removed.");
                      
                  });
                  $('#deleteModal').modal("hide");

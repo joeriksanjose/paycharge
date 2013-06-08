@@ -1,6 +1,26 @@
 $(document).ready(function(){
     var base_url = $("#base_url").val();
     
+    $("#btn-save-update").click(function(){
+        if($("#error_div").css("display") == "block"){
+            return false;
+        }   
+    });
+    
+    $("#modern_award_no").keyup(function(){
+        $.post(base_url+"transactions/checkTransNo", {modern_award_no:$(this).val()}, function(data){
+            var json_data = $.parseJSON(data);
+            
+            if(json_data.status == 0){
+                $("#error_div").css("display", "block");
+                $("#success_div").css("display", "none");
+                $("#error_div").html(json_data.status_msg);
+            } else {
+                $("#error_div").css("display", "none");
+            }
+        });
+    });
+    
     function inputNumbers(event)
     {
         console.log(event.keyCode);
@@ -97,10 +117,10 @@ $(document).ready(function(){
         $("#m_allow_text").val("MARGIN FOR M ALLOWANCE");
         $("#allowance_txt").val("STANDARD RATE FOR CALS :");
         $("#allowcap").val("%");
-        $.post(base_url+"transactions/ajaxGetNextAwardNo", {}, function(data){
-            res = $.parseJSON(data);
-            $("#modern_award_no").val(res.next_id);
-        })
+        // $.post(base_url+"transactions/ajaxGetNextAwardNo", {}, function(data){
+            // res = $.parseJSON(data);
+            // $("#modern_award_no").val(res.next_id);
+        // })
         $("#modern-body").hide("fast");
         $("#search-modern").hide("fast");
         $("#show-tab-1").parent().addClass("active");

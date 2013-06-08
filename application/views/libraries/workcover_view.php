@@ -77,7 +77,7 @@
     </div>
     
     <div class="span12" id="new-form" style="display: none;">
-        <div class="alert alert-error" style="display: none" id="div-error"></div>
+        <div class="alert alert-error" style="display: none" id="error_div"></div>
         
         <form class="form-horizontal centerDiv" style="width: 500px;" id="frm-new"
         action="<?php echo base_url("libraries/workcover/save"); ?>" method="post">
@@ -114,7 +114,7 @@
           </div>
           <div class="control-group">
             <div class="controls">
-              <button type="submit" class="btn">Add</button>
+              <button type="submit" id="btn-add" class="btn">Add</button>
               <button type="button" class="btn" id="close-add-form">Cancel</button>
             </div>
           </div>
@@ -137,7 +137,7 @@
         </div>
         
         <?php if($ok):?>
-        <div class="alert alert-success" style="margin-top: 10px">
+        <div class="alert alert-success" id="div-ok" style="margin-top: 10px">
             <?php echo $success_msg ?>
         </div>
         <?php endif;?>

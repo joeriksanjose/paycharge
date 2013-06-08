@@ -9,12 +9,12 @@ class Tbl_modern_award extends CI_Model
     {
         parent::__construct();
     }
-	
-	public function getModernAwards()
-	{
-	    $this->db->order_by("modern_award_name");
-		return $this->db->get($this->table_name)->result_array();
-	}
+    
+    public function getModernAwards()
+    {
+        $this->db->order_by("modern_award_name");
+        return $this->db->get($this->table_name)->result_array();
+    }
     
     public function getNextAwardNo()
     {
@@ -61,6 +61,14 @@ class Tbl_modern_award extends CI_Model
         return $this->db->get($this->table_name)->result_array();
     }
     
+    public function checkTransno($post)
+    {
+        $this->db->select("modern_award_no");
+        $this->db->where($post);
+        
+        return $this->db->get($this->table_name)->num_rows();
+    }
+    
     /* RATE INCREASE */
     
     public function getUpcomingRateIncrease($modern_award_name)
@@ -81,6 +89,18 @@ class Tbl_modern_award extends CI_Model
         }
         
         return $upcoming_rate_increase;    
+    }
+    
+    public function getCompany($trans_no)
+    {
+        $this->db->where(array("trans_no" => $trans_no, "trans_type" => "Admin"));
+        $rates = $this->db->get("tbl_print_dialog_default_values")->row_array();
+        
+        if (!$rates) {
+            return array();
+        }
+        
+        return $rates;    
     }
     
     public function getRateIncreaseHistory($modern_award_name)

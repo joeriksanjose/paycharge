@@ -2,9 +2,27 @@ $(document).ready(function(){
     
     var base_url = $("#base-url").val();
     
+    $("#btn-add").click(function(){
+        if($("#error_div").css("display") == "block"){
+            return false;
+        }   
+    });
+    
+    $("#insurance_no").keyup(function(){
+        $.post(base_url+"libraries/insurance/checkTransNo", {insurance_no:$(this).val()}, function(data){
+            var json_data = $.parseJSON(data);
+            
+            if(json_data.status == 0){
+                $("#error_div").css("display", "block");
+                $("#error_div").html(json_data.status_msg);
+            } else {
+                $("#error_div").css("display", "none");
+            }
+        });
+    });
     
     // adding
-    $("#insurance").keydown(function(evt){
+    $("#insurance, #insurance_no").keydown(function(evt){
         inputNumbers(evt);
     });
     
@@ -108,6 +126,7 @@ $(document).ready(function(){
                  remove_row.fadeOut('slow', function(){
                      $(this).remove();
                      $("#div-error").css("display", "none");
+                     $("#div-ok").css("display", "none");
                      $("#div-success").css("display", "");
                      $("#div-success").html("<b>Done!</b> State was successfully removed.");
                      
@@ -121,12 +140,13 @@ $(document).ready(function(){
     // end delete
     
     // id generator
-    $("#btn_e_gen, #btn_gen").click(function(){
+    $("#btn_gen").click(function(){
         $.post(base_url+"libraries/insurance/get_last_id", function(data){
             var json_data = $.parseJSON(data);
             
-            $("#e_insurance_no").val(json_data);
             $("#insurance_no").val(json_data);
+            
+            $("#error_div").css("display", "none");
         });
     });
     // end id generator
@@ -162,6 +182,7 @@ $(document).ready(function(){
                 var result = $.parseJSON(data);
                 if (result.is_error == false && result.success_update == true) {
                      $("#div-error").css("display", "none");
+                     $("#div-ok").css("display", "none");
                      $("#div-success").css("display", "");
                      $("#div-success").html("<b>Done!</b> Insurance was successfully updated.");
                      var str = "";

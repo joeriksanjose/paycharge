@@ -55,6 +55,15 @@ class Tbl_workcover extends CI_model{
         
         return $sql;
     }
+    
+    public function checkTransno($post)
+    {
+        $this->db->select("work_cover_no");
+        $this->db->where($post);
+        
+        return $this->db->get($this->table_name)->num_rows();
+    }
+    
     public function get_last_id()
     {
         $this->db->select("work_cover_no");

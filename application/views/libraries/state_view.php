@@ -35,7 +35,6 @@
             <label class="control-label">State No.</label>
             <div class="controls controls-row">
               <input type="text" id="e_state_no" name="e_state_no" class="input-medium" disabled>
-              <input type="button" id="btn_e_gen" class="btn btn-inverse" value="Generate No"/>
             </div>
           </div>
           <div class="control-group">
@@ -78,9 +77,7 @@
     </div>
     
     <div class="span12" id="new-state-form" style="display: none;">
-        <?php //if ($add_error) : ?>
-        <div class="alert alert-error" style="display: none" id="div-error">
-            <?php //echo $error_msg ?>
+        <div class="alert alert-error" style="display: none" id="error_div">
         </div>
         
         <form class="form-horizontal centerDiv" style="width: 500px;" id="frm-new-state"
@@ -115,7 +112,7 @@
           </div>
           <div class="control-group">
             <div class="controls">
-              <button type="submit" class="btn">Add State</button>
+              <button type="submit" id="btn-add" class="btn">Add State</button>
               <button type="button" class="btn" id="close-add-form">Cancel</button>
             </div>
           </div>
@@ -131,7 +128,7 @@
         </div>
         
         <?php if($ok):?>
-        <div class="alert alert-success" style="margin-top: 10px">
+        <div class="alert alert-success" id="div-ok" style="margin-top: 10px">
             <?php echo $success_msg ?>
         </div>
         <?php endif;?>

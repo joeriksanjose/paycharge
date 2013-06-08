@@ -10,7 +10,7 @@
         <h3 id="myModalLabel">Delete Confirmation</h3>
     </div>
     <div class="modal-body">
-    	<input type="hidden" id="contact_no" name="contact_no"/>
+        <input type="hidden" id="contact_no" name="contact_no"/>
         <p>Are you sure you want to delete this contact?</p>
     </div>
     <div class="modal-footer">
@@ -66,11 +66,11 @@
 <div class="row">
     <div class="span12">
         <h2 class="titles">Contacts List
-        	<small> 
-        		(<?php echo $company["client_no"]?>)
+            <small> 
+                (<?php echo $company["client_no"]?>)
                 <?php echo $company["company_name"]?>
                 </small>
-        	</h2>
+            </h2>
         <hr>
     </div>
     
@@ -90,7 +90,7 @@
     </div>
     
     <div class="span12" style="400px;overflow-y: auto;margin-top: 10px;" id="tbl">
-    	<div class="alert <?php echo $status ?>" style="display: none;">
+        <div class="alert <?php echo $status ?>" style="display: none;">
             <?php echo $status_msg ?>
         </div>
         <table class="table table-striped table-bordered" id="admin-table" style="font-size: 12px;">

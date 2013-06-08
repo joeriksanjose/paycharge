@@ -37,6 +37,15 @@ class Tbl_position extends CI_model{
         
         return $sql;
     }
+    
+    public function checkPosition($post)
+    {
+        $this->db->select("position");
+        $this->db->where($post);
+        
+        return $this->db->get($this->table_name)->num_rows();
+    }
+    
     public function get_last_id()
     {
         $this->db->select("id");

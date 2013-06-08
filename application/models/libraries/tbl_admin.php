@@ -39,6 +39,14 @@ class Tbl_admin extends CI_model{
         return $sql;
     }
     
+    public function checkTransno($post)
+    {
+        $this->db->select("admin_no");
+        $this->db->where($post);
+        
+        return $this->db->get($this->table_name)->num_rows();
+    }
+    
     public function get_last_id()
     {
         $this->db->select("admin_no");

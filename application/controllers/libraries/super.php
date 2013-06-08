@@ -43,6 +43,19 @@ class Super extends CI_Controller
         $this->load->view("libraries/super_view", $this->data);
     }
     
+    function checkTransNo(){
+        
+        $post = $this->input->post(null, true);
+        if($this->tbl->checkTransNo($post)){
+            $this->data["status"] = 0;
+            $this->data["status_msg"] = "<b>Error! </b> Super number already exists.";
+        } else {
+            $this->data["status"] = 1;
+        }
+        
+        echo json_encode($this->data);  
+    }
+    
     public function edit()
     {
         $id = $_POST["id"];
@@ -113,7 +126,7 @@ class Super extends CI_Controller
         if (!$sql) {
             echo json_encode(0+1);    
         } else {
-            echo json_encode($sql["id"]+1);
+            echo json_encode($sql["super_no"]+1);
         }
         
     }

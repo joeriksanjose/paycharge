@@ -303,5 +303,18 @@ class Contacts extends CI_Controller
         
         return $y."-".$m."-".$d;
     }
+    
+    function checkTransNo(){
+        
+        $post = $this->input->post(null, true);
+        if($this->contacts->checkTransNo($post)){
+            $this->data["status"] = 0;
+            $this->data["status_msg"] = "<b>Error! </b> Contacts number already exists.";
+        } else {
+            $this->data["status"] = 1;
+        }
+        
+        echo json_encode($this->data);  
+    }
 }
 

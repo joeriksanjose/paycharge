@@ -41,10 +41,19 @@ class Tbl_state extends CI_model{
         
         return $sql;
     }
+    
+    public function checkTransno($post)
+    {
+        $this->db->select("state_no");
+        $this->db->where($post);
+        
+        return $this->db->get($this->table_name)->num_rows();
+    }
+    
     public function get_last_id()
     {
-        $this->db->select("id");
-        $this->db->order_by("id desc");
+        $this->db->select("state_no");
+        $this->db->order_by("state_no desc");
         
         $sql = $this->db->get($this->table_name)->row_array();
         

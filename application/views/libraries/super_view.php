@@ -34,7 +34,6 @@
             <label class="control-label">Super No.</label>
             <div class="controls controls-row">
               <input type="text" id="e_super_no" name="e_super_no" class="input-medium" disabled>
-              <input type="button" id="btn_e_gen" class="btn btn-inverse" value="Generate No"/>
             </div>
           </div>
           <div class="control-group">
@@ -47,7 +46,7 @@
             <label class="control-label">Effective Date</label>
             <div class="controls">
               <div id="e_datetimepicker" class="input-append">
-                <input type="text" id="e_effective_date" name="e_effective_date" class="input-medium">
+                <input type="text" id="e_effective_date" readonly="true" name="e_effective_date" class="input-medium">
                 <span class="add-on">
                   <i data-time-icon="icon-time" data-date-icon="icon-calendar">
                   </i>
@@ -74,7 +73,7 @@
     </div>
     
     <div class="span12" id="new-form" style="display: none;">
-        <div class="alert alert-error" style="display: none" id="div-error"></div>
+        <div class="alert alert-error" style="display: none" id="error_div"></div>
         
         <form class="form-horizontal centerDiv" style="width: 500px;" id="frm-new"
         action="<?php echo base_url("libraries/super/save"); ?>" method="post">
@@ -96,7 +95,7 @@
             <label class="control-label" for="password">Effective Date</label>
             <div class="controls">
               <div id="datetimepicker" class="input-append">
-                <input type="text" id="effective_date" name="effective_date" class="input-medium">
+                <input type="text" id="effective_date" readonly="true" name="effective_date" class="input-medium">
                 <span class="add-on">
                   <i data-time-icon="icon-time" data-date-icon="icon-calendar">
                   </i>
@@ -108,7 +107,7 @@
           
           <div class="control-group">
             <div class="controls">
-              <button type="submit" class="btn">Add</button>
+              <button type="submit" id="btn-add" class="btn">Add</button>
               <button type="button" class="btn" id="close-add-form">Cancel</button>
             </div>
           </div>
@@ -124,7 +123,7 @@
         </div>
         
         <?php if($ok):?>
-        <div class="alert alert-success" style="margin-top: 10px">
+        <div class="alert alert-success" id="div-ok" style="margin-top: 10px">
             <?php echo $success_msg ?>
         </div>
         <?php endif;?>

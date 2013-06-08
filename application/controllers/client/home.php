@@ -30,19 +30,21 @@ class Home extends CI_Controller {
     public function login()
     { 
         $post = $this->input->post(null, true);
-        $client = $this->cont->checkClientLogin($post);
-               
+		unset($post["name"]);
+		$client = $this->cont->checkClientLogin($post);
+        
         if (!$client) {
             $this->session->set_userdata("login_error", "Error: Invalid username/password");
             redirect(base_url("client"));
         } else {
             $client_session = array(
-                "client_name"       => $post["name"],
-                "client_no"    => $client["contact_no"],
+                "contact_name" => $client["last_name"].", ".$client["first_name"],
+                "contact_no"   => $client["contact_no"],
                 "username"     => $client["username"],
-                "access_level" => $client["access_level"]
+                "can_view"     => $client["can_view"],
+                "can_approve"  => $client["can_approve"],
+                "can_forecast" => $client["can_forecast"]
             );
-                
             $this->session->set_userdata($client_session);
             redirect("client/pcs");
         }

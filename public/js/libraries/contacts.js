@@ -2,7 +2,28 @@ $(document).ready(function(){
     
     var base_url = $("#base-url").val();
     
+    $("#btn-add").click(function(){
+        if($("#error_div").css("display") == "block"){
+            return false;
+        }   
+    });
     
+    $("#contact_no").keyup(function(){
+        $.post(base_url+"libraries/contacts/checkTransNo", {contact_no:$(this).val()}, function(data){
+            var json_data = $.parseJSON(data);
+            
+            if(json_data.status == 0){
+                $("#error_div").css("display", "block");
+                $("#error_div").html(json_data.status_msg);
+            } else {
+                $("#error_div").css("display", "none");
+            }
+        });
+    });
+    
+    $("#contact_no").keydown(function(evt){
+        inputNumbers(evt);
+    });
     // adding
     $('#datetimepicker').datetimepicker({
       pickTime: false,
@@ -132,6 +153,7 @@ $(document).ready(function(){
                  remove_row.fadeOut('slow', function(){
                      $(this).remove();
                      $("#div-error").css("display", "none");
+                     $("#div-ok").css("display", "none");
                      $("#div-success").css("display", "");
                      $("#div-success").html("<b>Done!</b> Contact was successfully removed.");
                      
@@ -145,11 +167,12 @@ $(document).ready(function(){
     // end delete
     
     // id generator    
-    $("#btn_e_gen, #btn_gen").click(function(){
+    $("#btn_gen").click(function(){
         $.post(base_url+"libraries/contacts/get_last_id", function(data){
             var json_data = $.parseJSON(data);
             
-            $("#e_contact_no").val(json_data);
+            
+            $("#error_div").css("display", "none");
             $("#contact_no").val(json_data);
         });
     });
@@ -217,6 +240,7 @@ $(document).ready(function(){
                 var result = $.parseJSON(data);
                 if (result.is_error == false && result.success_update == true) {
                      $("#div-error").css("display", "none");
+                     $("#div-ok").css("display", "");
                      $("#div-success").css("display", "");
                      $("#div-success").html(
                          "<b>Done!</b> contacts was successfully updated." + "<button type='button' class='close' data-dismiss='alert'>&times;</button>"

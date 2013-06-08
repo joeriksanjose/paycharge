@@ -47,6 +47,19 @@ class Position extends CI_Controller
         $this->load->view("libraries/position_view", $this->data);
     }
     
+    function checkPosition(){
+        
+        $post = $this->input->post(null, true);
+        if($this->tbl->checkPosition($post)){
+            $this->data["status"] = 0;
+            $this->data["status_msg"] = "<b>Error! </b> Position already exists.";
+        } else {
+            $this->data["status"] = 1;
+        }
+        
+        echo json_encode($this->data);  
+    }
+    
     public function edit()
     {
         $id = $_POST["id"];
@@ -122,7 +135,7 @@ class Position extends CI_Controller
         $sql = $this->tbl->save($data);
         
         if ($sql) {
-            $this->session->set_userdata("ok", "<b>Done!</b> Super successfully added.");
+            $this->session->set_userdata("ok", "<b>Done!</b> Position successfully added.");
             redirect("libraries/position/");
         } else {
             $this->session->set_userdata("errpositionor", "<b>Error!</b> Database error.");
@@ -133,7 +146,7 @@ class Position extends CI_Controller
     public function update()
     {
         $data = $this->input->post(null, true);
-		$sql = $this->tbl->update($data);
+        $sql = $this->tbl->update($data);
         
         if ($sql) {
             $params["is_error"] = false;

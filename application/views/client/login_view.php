@@ -28,15 +28,15 @@
                 </div>
                 <?php endif; ?>
                 <form class="form-horizontal" action="<?php echo base_url("client/home/login"); ?>" method="post">
-                  <h3 style="margin-left: 170px;">Client Login</h3>
+                  <h4 style="margin-left: 170px;"><i class="icon-lock"></i>  Client Login</h4>
                   <div class="control-group">
-                    <label class="control-label" for="username">Name</label>
+                    <label class="control-label" for="username">User ID</label>
                     <div class="controls">
                       <input type="text" id="name" name="name">
                     </div>
                   </div>
                   <div class="control-group">
-                    <label class="control-label" for="username">User ID</label>
+                    <label class="control-label" for="username">User Name</label>
                     <div class="controls">
                       <input type="text" id="username" name="username">
                     </div>

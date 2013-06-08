@@ -237,6 +237,7 @@
                                     <option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
                                 <?php endforeach;?>
                               </select>
+                              <button class="btn add_position"><i class="icon-plus"></i></button>
                             </div>
                           </div>
                           <div class="control-group">
@@ -248,6 +249,7 @@
                                     <option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
                                 <?php endforeach;?>
                               </select>
+                              <button class="btn add_position"><i class="icon-plus"></i></button>
                             </div>
                           </div>
                           <div class="control-group">
@@ -259,6 +261,7 @@
                                     <option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
                                 <?php endforeach;?>
                               </select>
+                              <button class="btn add_position"><i class="icon-plus"></i></button>
                             </div>
                           </div>
                           <div class="control-group">
@@ -270,6 +273,7 @@
                                     <option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
                                 <?php endforeach;?>
                               </select>
+                              <button class="btn add_position"><i class="icon-plus"></i></button>
                             </div>
                           </div>
                           <div class="control-group">
@@ -281,6 +285,7 @@
                                     <option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
                                 <?php endforeach;?>
                               </select>
+                              <button class="btn add_position"><i class="icon-plus"></i></button>
                             </div>
                           </div>
                           <div class="control-group">
@@ -292,6 +297,7 @@
                                     <option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
                                 <?php endforeach;?>
                               </select>
+                              <button class="btn add_position"><i class="icon-plus"></i></button>
                             </div>
                           </div>
                           <div class="control-group">
@@ -303,6 +309,7 @@
                                     <option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
                                 <?php endforeach;?>
                               </select>
+                              <button class="btn add_position"><i class="icon-plus"></i></button>
                             </div>
                           </div>
                           <div class="control-group">
@@ -314,6 +321,7 @@
                                     <option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
                                 <?php endforeach;?>
                               </select>
+                              <button class="btn add_position"><i class="icon-plus"></i></button>
                             </div>
                           </div>
                           <div class="control-group">
@@ -325,6 +333,7 @@
                                     <option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
                                 <?php endforeach;?>
                               </select>
+                              <button class="btn add_position"><i class="icon-plus"></i></button>
                             </div>
                           </div>
                           <div class="control-group">
@@ -336,6 +345,7 @@
                                     <option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
                                 <?php endforeach;?>
                               </select>
+                              <button class="btn add_position"><i class="icon-plus"></i></button>
                             </div>
                           </div>
                       </div>
@@ -1062,4 +1072,20 @@
     </div>
 </div>
 <!-- END DELETE MODAL -->
+
+<!-- POSITION MODAL -->
+<div id="positionModal" class="modal hide fade" tabindex="-1" role="dialog">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Add Position</h3>
+    </div>
+    <div class="modal-body">
+        <p>Are you sure you want to delete this modern award?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-danger" id="delete-award-btn-modal">Delete</button>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    </div>
+</div>
+<!-- END POSITION MODAL -->
 <?php echo $footer ?>

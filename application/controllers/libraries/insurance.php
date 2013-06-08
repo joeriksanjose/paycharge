@@ -43,6 +43,18 @@ class Insurance extends CI_Controller
         $this->load->view("libraries/insurance_view", $this->data);
     }
     
+    function checkTransNo(){
+        
+        $post = $this->input->post(null, true);
+        if($this->insurance->checkTransNo($post)){
+            $this->data["status"] = 0;
+            $this->data["status_msg"] = "<b>Error! </b> Insurance number already exists.";
+        } else {
+            $this->data["status"] = 1;
+        }
+        
+        echo json_encode($this->data);  
+    }
     public function edit_insurance()
     {
         $id = $_POST["id"];

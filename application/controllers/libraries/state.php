@@ -43,6 +43,19 @@ class State extends CI_Controller
         $this->load->view("libraries/state_view", $this->data);
     }
     
+    function checkTransNo(){
+        
+        $post = $this->input->post(null, true);
+        if($this->state->checkTransNo($post)){
+            $this->data["status"] = 0;
+            $this->data["status_msg"] = "<b>Error! </b> State number already exists.";
+        } else {
+            $this->data["status"] = 1;
+        }
+        
+        echo json_encode($this->data);  
+    }
+    
     function edit_state()
     {
         $id = $_POST["id"];
@@ -108,7 +121,7 @@ class State extends CI_Controller
         if (!$sql) {
             echo json_encode(0+1);    
         } else {
-            echo json_encode($sql["id"]+1);
+            echo json_encode($sql["state_no"]+1);
         }
     }
     

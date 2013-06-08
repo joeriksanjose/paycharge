@@ -43,6 +43,19 @@ class Long_services extends CI_Controller
         $this->load->view("libraries/long_services_view", $this->data);
     }
     
+    function checkTransNo(){
+        
+        $post = $this->input->post(null, true);
+        if($this->long_services->checkTransNo($post)){
+            $this->data["status"] = 0;
+            $this->data["status_msg"] = "<b>Error! </b> Long Service number already exists.";
+        } else {
+            $this->data["status"] = 1;
+        }
+        
+        echo json_encode($this->data);  
+    }
+    
     public function edit_long_services()
     {
         $id = $_POST["id"];

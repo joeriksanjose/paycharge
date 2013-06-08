@@ -35,7 +35,7 @@
             <label class="control-label">Long Service No.</label>
             <div class="controls controls-row">
               <input type="text" id="e_long_services_no" name="e_public_no" class="input-medium" disabled>
-              <input type="button" id="btn_e_gen" class="btn btn-inverse disabled" disabled="true" value="Generate No"/>
+              
             </div>
           </div>
           <div class="control-group">
@@ -65,7 +65,7 @@
     
     <div class="span12" id="new-state-form" style="display: none;">
         <?php //if ($add_error) : ?>
-        <div class="alert alert-error" style="display: none" id="div-error">
+        <div class="alert alert-error" style="display: none" id="error_div">
             <?php //echo $error_msg ?>
         </div>
         
@@ -87,7 +87,7 @@
           </div>
           <div class="control-group">
             <div class="controls">
-              <button type="submit" class="btn">Add long service</button>
+              <button type="submit" id="btn-add" class="btn">Add long service</button>
               <button type="button" class="btn" id="close-add-form">Cancel</button>
             </div>
           </div>
@@ -103,7 +103,7 @@
         </div>
         
         <?php if($ok):?>
-        <div class="alert alert-success" style="margin-top: 10px">
+        <div class="alert alert-success"id="div-ok" style="margin-top: 10px">
             <?php echo $success_msg ?>
         </div>
         <?php endif;?>
