@@ -3,7 +3,7 @@
 <div class="topmargin" style="margin-top: 50px;"></div>
 <div class="row">
     
-    <p>Thank you for giving LP Consulting Services the opportunity to provide you with this quotation for the supply of Labour Hire and Recruitment Services.</p>
+    <p>Thank you for giving <?php echo $company?> the opportunity to provide you with this quotation for the supply of Labour Hire and Recruitment Services.</p>
     <p>Labour Hire Services</p>
     <p>LP Consulting Services’s Casual Staff are remunerated according to an appropriate industrial instrument. The following pay and charge rate schedules have been created using the:</p>
     
@@ -119,28 +119,28 @@
                 <tr>
                     <td>Day Shift</td>
                     <?php if($calcu["p_normal_time"]):?>
-                    <td><?php echo $normal_total_ml2?></td>
-                    <td><?php echo $normal_labour_ml2?></td>
+                    <td><?php echo $normal_total_ml1?></td>
+                    <td><?php echo $normal_labour_ml1?></td>
                     <?php endif;?>
                     <?php if($calcu["p_t_14"]):?>
-                    <td><?php echo $t14_total_ml2?></td>
-                    <td><?php echo $t14_labour_ml2?></td>
+                    <td><?php echo $t14_total_ml1?></td>
+                    <td><?php echo $t14_labour_ml1?></td>
                     <?php endif;?>
                     <?php if($calcu["p_time_and_half"]):?>
-                    <td><?php echo $t12_total_ml2?></td>
-                    <td><?php echo $t12_labour_ml2?></td>
+                    <td><?php echo $t12_total_ml1?></td>
+                    <td><?php echo $t12_labour_ml1?></td>
                     <?php endif;?>
                     <?php if($calcu["p_double_time"]):?>
-                    <td><?php echo $double_total_ml2?></td>
-                    <td><?php echo $double_labour_ml2?></td>
+                    <td><?php echo $double_total_ml1?></td>
+                    <td><?php echo $double_labour_ml1?></td>
                     <?php endif;?>
                     <?php if($calcu["p_double_and_half"]):?>
-                    <td><?php echo $double_t12_total_ml2?></td>
-                    <td><?php echo $double_t12_labour_ml2?></td>
+                    <td><?php echo $double_t12_total_ml1?></td>
+                    <td><?php echo $double_t12_labour_ml1?></td>
                     <?php endif;?>
                     <?php if($calcu["p_triple"]):?>
-                    <td><?php echo $triple_total_ml2?></td>
-                    <td><?php echo $triple_labour_ml2?></td>
+                    <td><?php echo $triple_total_ml1?></td>
+                    <td><?php echo $triple_labour_ml1?></td>
                     <?php endif;?>
                 </tr>
                 <?php endif;?>
@@ -148,28 +148,28 @@
                 <tr>
                     <td>Early Shift</td>
                     <?php if($calcu["p_normal_time"]):?>
-                    <td><?php echo $early_total_ml2?></td>
-                    <td><?php echo $early_labour_ml2?></td>
+                    <td><?php echo $early_total_ml1?></td>
+                    <td><?php echo $early_labour_ml1?></td>
                     <?php endif;?>
                     <?php if($calcu["p_t_14"]):?>
-                    <td><?php echo $t14_total_ml2?></td>
-                    <td><?php echo $t14_labour_ml2?></td>
+                    <td><?php echo $t14_total_ml1?></td>
+                    <td><?php echo $t14_labour_ml1?></td>
                     <?php endif;?>
                     <?php if($calcu["p_time_and_half"]):?>
-                    <td><?php echo $t12_total_ml2?></td>
-                    <td><?php echo $t12_labour_ml2?></td>
+                    <td><?php echo $t12_total_ml1?></td>
+                    <td><?php echo $t12_labour_ml1?></td>
                     <?php endif;?>
                     <?php if($calcu["p_double_time"]):?>
-                    <td><?php echo $double_total_ml2?></td>
-                    <td><?php echo $double_labour_ml2?></td>
+                    <td><?php echo $double_total_ml1?></td>
+                    <td><?php echo $double_labour_ml1?></td>
                     <?php endif;?>
                     <?php if($calcu["p_double_and_half"]):?>
-                    <td><?php echo $double_t12_total_ml2?></td>
-                    <td><?php echo $double_t12_labour_ml2?></td>
+                    <td><?php echo $double_t12_total_ml1?></td>
+                    <td><?php echo $double_t12_labour_ml1?></td>
                     <?php endif;?>
                     <?php if($calcu["p_triple"]):?>
-                    <td><?php echo $triple_total_ml2?></td>
-                    <td><?php echo $triple_labour_ml2?></td>
+                    <td><?php echo $triple_total_ml1?></td>
+                    <td><?php echo $triple_labour_ml1?></td>
                     <?php endif;?>
                 </tr>
                 <?php endif;?>
@@ -177,28 +177,28 @@
                 <tr>
                     <td>Afternoon Shift</td>
                     <?php if($calcu["p_normal_time"]):?>
-                    <td><?php echo $aft_total_ml2?></td>
-                    <td><?php echo $aft_labour_ml2?></td>
+                    <td><?php echo $aft_total_ml1?></td>
+                    <td><?php echo $aft_labour_ml1?></td>
                     <?php endif;?>
                     <?php if($calcu["p_t_14"]):?>
-                    <td><?php echo $t14_total_ml2?></td>
-                    <td><?php echo $t14_labour_ml2?></td>
+                    <td><?php echo $t14_total_ml1?></td>
+                    <td><?php echo $t14_labour_ml1?></td>
                     <?php endif;?>
                     <?php if($calcu["p_time_and_half"]):?>
-                    <td><?php echo $t12_total_ml2?></td>
-                    <td><?php echo $t12_labour_ml2?></td>
+                    <td><?php echo $t12_total_ml1?></td>
+                    <td><?php echo $t12_labour_ml1?></td>
                     <?php endif;?>
                     <?php if($calcu["p_double_time"]):?>
-                    <td><?php echo $double_total_ml2?></td>
-                    <td><?php echo $double_labour_ml2?></td>
+                    <td><?php echo $double_total_ml1?></td>
+                    <td><?php echo $double_labour_ml1?></td>
                     <?php endif;?>
                     <?php if($calcu["p_double_and_half"]):?>
-                    <td><?php echo $double_t12_total_ml2?></td>
-                    <td><?php echo $double_t12_labour_ml2?></td>
+                    <td><?php echo $double_t12_total_ml1?></td>
+                    <td><?php echo $double_t12_labour_ml1?></td>
                     <?php endif;?>
                     <?php if($calcu["p_triple"]):?>
-                    <td><?php echo $triple_total_ml2?></td>
-                    <td><?php echo $triple_labour_ml2?></td>
+                    <td><?php echo $triple_total_ml1?></td>
+                    <td><?php echo $triple_labour_ml1?></td>
                     <?php endif;?>
                 </tr>
                 
@@ -208,28 +208,28 @@
                 <tr>
                     <td>Night Shift</td>
                     <?php if($calcu["p_normal_time"]):?>
-                    <td><?php echo $night_total_ml2?></td>
-                    <td><?php echo $night_labour_ml2?></td>
+                    <td><?php echo $night_total_ml1?></td>
+                    <td><?php echo $night_labour_ml1?></td>
                     <?php endif;?>
                     <?php if($calcu["p_t_14"]):?>
-                    <td><?php echo $t14_total_ml2?></td>
-                    <td><?php echo $t14_labour_ml2?></td>
+                    <td><?php echo $t14_total_ml1?></td>
+                    <td><?php echo $t14_labour_ml1?></td>
                     <?php endif;?>
                     <?php if($calcu["p_time_and_half"]):?>
-                    <td><?php echo $t12_total_ml2?></td>
-                    <td><?php echo $t12_labour_ml2?></td>
+                    <td><?php echo $t12_total_ml1?></td>
+                    <td><?php echo $t12_labour_ml1?></td>
                     <?php endif;?>
                     <?php if($calcu["p_double_time"]):?>
-                    <td><?php echo $double_total_ml2?></td>
-                    <td><?php echo $double_labour_ml2?></td>
+                    <td><?php echo $double_total_ml1?></td>
+                    <td><?php echo $double_labour_ml1?></td>
                     <?php endif;?>
                     <?php if($calcu["p_double_and_half"]):?>
-                    <td><?php echo $double_t12_total_ml2?></td>
-                    <td><?php echo $double_t12_labour_ml2?></td>
+                    <td><?php echo $double_t12_total_ml1?></td>
+                    <td><?php echo $double_t12_labour_ml1?></td>
                     <?php endif;?>
                     <?php if($calcu["p_triple"]):?>
-                    <td><?php echo $triple_total_ml2?></td>
-                    <td><?php echo $triple_labour_ml2?></td>
+                    <td><?php echo $triple_total_ml1?></td>
+                    <td><?php echo $triple_labour_ml1?></td>
                     <?php endif;?>
                 </tr>
                 
@@ -239,28 +239,28 @@
                 <tr>
                     <td>50% Shift</td>
                     <?php if($calcu["p_normal_time"]):?>
-                    <td><?php echo $_50_total_ml2?></td>
-                    <td><?php echo $_50_labour_ml2?></td>
+                    <td><?php echo $_50_total_ml1?></td>
+                    <td><?php echo $_50_labour_ml1?></td>
                     <?php endif;?>
                     <?php if($calcu["p_t_14"]):?>
-                    <td><?php echo $t14_total_ml2?></td>
-                    <td><?php echo $t14_labour_ml2?></td>
+                    <td><?php echo $t14_total_ml1?></td>
+                    <td><?php echo $t14_labour_ml1?></td>
                     <?php endif;?>
                     <?php if($calcu["p_time_and_half"]):?>
-                    <td><?php echo $t12_total_ml2?></td>
-                    <td><?php echo $t12_labour_ml2?></td>
+                    <td><?php echo $t12_total_ml1?></td>
+                    <td><?php echo $t12_labour_ml1?></td>
                     <?php endif;?>
                     <?php if($calcu["p_double_time"]):?>
-                    <td><?php echo $double_total_ml2?></td>
-                    <td><?php echo $double_labour_ml2?></td>
+                    <td><?php echo $double_total_ml1?></td>
+                    <td><?php echo $double_labour_ml1?></td>
                     <?php endif;?>
                     <?php if($calcu["p_double_and_half"]):?>
-                    <td><?php echo $double_t12_total_ml2?></td>
-                    <td><?php echo $double_t12_labour_ml2?></td>
+                    <td><?php echo $double_t12_total_ml1?></td>
+                    <td><?php echo $double_t12_labour_ml1?></td>
                     <?php endif;?>
                     <?php if($calcu["p_triple"]):?>
-                    <td><?php echo $triple_total_ml2?></td>
-                    <td><?php echo $triple_labour_ml2?></td>
+                    <td><?php echo $triple_total_ml1?></td>
+                    <td><?php echo $triple_labour_ml1?></td>
                     <?php endif;?>
                 </tr>
                 <?php endif;?>
@@ -1942,26 +1942,31 @@
     
     <table class="table table-bordered table-condensed" style="margin-top: 20px;">
         <tr>
+            <td><?php echo $modern["allowance_caption1"]?></td>
             <td>$<?php echo $allow_meal?></td>
             <td>$<?php echo $labour_meal?></td>
             <td><?php echo $modern["C_52"]?></td>
         </tr>
         <tr>
+            <td><?php echo $modern["allowance_caption2"]?></td>
             <td>$<?php echo $allow_first_aid?></td>
             <td>$<?php echo $labour_first_aid?></td>
             <td><?php echo $modern["C_53"]?></td>
         </tr>
         <tr>
+            <td><?php echo $modern["allowance_caption3"]?></td>
             <td>$<?php echo $allow_l_hand_3?></td>
             <td>$<?php echo $labour_l_hand_3?></td>
             <td><?php echo $modern["C_54"]?></td>
         </tr>
         <tr>
+            <td><?php echo $modern["allowance_caption4"]?></td>
             <td>$<?php echo $allow_l_hand_10?></td>
             <td>$<?php echo $labour_l_hand_10?></td>
             <td><?php echo $modern["C_55"]?></td>
         </tr>
         <tr>
+            <td><?php echo $modern["allowance_caption5"]?></td>
             <td>$<?php echo $allow_l_hand_20?></td>
             <td>$<?php echo $labour_l_hand_20?></td>
             <td><?php echo $modern["C_56"]?></td>

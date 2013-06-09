@@ -29,6 +29,9 @@ $(document).ready(function(){
                     str = str + '<td>'+item.date_of_quotation+'</td>'
                     str = str + '<td>'
                     str = str + '<button type="button" class="btn btn-mini edit-award-btn" edit-id="'+item.trans_no+'"><i class="icon-edit"></i></button>'
+                    str = str + ' <a target="_blank" href="'+base_url+'reports/rate_confirmation/print_modern/'+item.trans_no+'/'+item.modern_award_no+'" class="btn btn-mini">'
+                    str = str + '<i class="icon-print"></i>'
+                    str = str + '</a>'
                     str = str + ' <button type="button" del-id="'+item.trans_no+'" class="btn btn-mini btn-danger delete-award-btn"><i class="icon-trash icon-white"></i></button>'
                     str = str + '</td>'
                     str = str + '</tr>';

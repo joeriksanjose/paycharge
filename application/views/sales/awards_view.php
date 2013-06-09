@@ -133,7 +133,7 @@
                           <select id="cmb-workcover" name="B_15">
                             <option></option>
                             <?php foreach ($workcover as $value) : ?>
-                                <option work-cover-no="<?php echo $value["work_cover_no"] ?>" value="<?php echo $value["work_cover"]?>"><?php echo $value["work_cover"]?></option>
+                                <option work-cover-no="<?php echo $value["work_cover_no"] ?>" value="<?php echo $value["work_cover"]?>"><?php echo "(".$value["work_cover_code"].") - ".$value["work_cover"]?></option>
                             <?php endforeach;?>
                           </select>
                         </div>
@@ -878,7 +878,7 @@
                       <div style="height: 5px;"></div>
                       <input type="text" class="input-medium" disabled="true" style="font-size: 10px;" 
                       id="txt-margin" value="MARGIN FOR M ALLOWANCE">
-                      <input type="text" class="input-mini" id="m_allow_margin">
+                      <input type="text" class="input-mini" name="m_allow_margin" id="m_allow_margin">
                     </div>
                 </div>
                 <div class="span4">
@@ -1009,12 +1009,10 @@
                 </div>
                 <?php if ($status === 0) : ?>
                 <div class="alert alert-error">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <?php echo $status_msg ?>
                 </div>
                 <?php elseif ($status === 1) : ?>
                 <div class="alert alert-success">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <?php echo $status_msg ?>
                 </div>
                 <?php endif ; ?>
@@ -1040,6 +1038,9 @@
                                     <button type="button" class="btn btn-mini edit-award-btn" edit-id="<?php echo $award["trans_no"] ?>">
                                         <i class="icon-edit"></i>
                                     </button>
+                                    <a target="_blank" href="<?php echo base_url("reports/rate_confirmation/print_modern/".$award["trans_no"]."/".$award["modern_award_no"]) ?>" class="btn btn-mini">
+                                        <i class="icon-print"></i>
+                                    </a>
                                     <button type="button" del-id="<?php echo $award["trans_no"] ?>" class="btn btn-mini btn-danger delete-award-btn">
                                         <i class="icon-trash icon-white"></i>
                                     </button>

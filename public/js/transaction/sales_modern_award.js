@@ -412,6 +412,7 @@ $(document).ready(function(){
     
     // edit
     $(".edit-award-btn").live("click", function(){
+        $("#loadingModal").modal("show");
         $(document).scrollTop(0);
         $("#awardRow").hide("fast"); 
         var edit_id = $(this).attr("edit-id");
@@ -431,6 +432,33 @@ $(document).ready(function(){
         var company_no;
         var work_cover;
         var super1;
+        
+        $.post(base_url+"client_agreement/get_company_info", {client_no:client_no}, function(data){
+            var json_data = $.parseJSON(data);
+            $("#department").val(json_data.company_info.department);
+            $("#add1").val(json_data.company_info.address_line1);
+            $("#add2").val(json_data.company_info.address_line2);
+            $("#c_first_name").val(json_data.company_info.contact_first_name);
+            $("#c_full_name").val(json_data.company_info.contact_full_name);
+            $("#c_title").val(json_data.company_info.contact_title);
+            $("#state_no").val(json_data.company_info.state_no);
+            
+            var str = "";
+            str = str + "<option></option>";
+            $.each(json_data.work_cover, function(i, item){
+                if(work_cover == item.work_cover) {
+                    str = str + "<option selected='selected' value="+item.work_cover_no+">("+item.work_cover_code+") - "+item.work_cover+"</option>";
+                } else {
+                    str = str + "<option value="+item.work_cover_no+">("+item.work_cover_code+") - "+item.work_cover+"</option>";    
+                }
+                
+            });
+            
+            $("#cmb-workcover").empty().append(str);
+            
+            $("#B_19").val(json_data.tax.tax);
+        });
+        
         $.post(base_url+"sales_transaction/getAwardInfo", {trans_no:edit_id}, function(data){
            res = $.parseJSON(data);
            if (res.status) {
@@ -442,7 +470,8 @@ $(document).ready(function(){
 
                $("#cmb-company").val(company_no).attr("selected", "selected");
                $("#cmb-super").val(super1).attr("selected", "selected");
-               $("#cmb-workcover").attr("work-cover-no", work_cover).attr("selected", "selected");
+               $("#cmb-super").change();
+               $("#cmb-workcover").val(work_cover).attr("selected", "selected");
                $("#cmb-company").val(company_no).attr("selected", "selected");
                $("#cmb-modern").val(res.charge_rate.modern_award_no).attr("selected", "selected");
                $("#date_of_quotation").val(res.charge_rate.date_of_quotation);
@@ -642,32 +671,6 @@ $(document).ready(function(){
            } else {
                alert("Database Error.")
            }
-           
-           $.post(base_url+"client_agreement/get_company_info", {client_no:company_no}, function(data){
-                var json_data = $.parseJSON(data);
-                $("#department").val(json_data.company_info.department);
-                $("#add1").val(json_data.company_info.address_line1);
-                $("#add2").val(json_data.company_info.address_line2);
-                $("#c_first_name").val(json_data.company_info.contact_first_name);
-                $("#c_full_name").val(json_data.company_info.contact_full_name);
-                $("#c_title").val(json_data.company_info.contact_title);
-                $("#state_no").val(json_data.company_info.state_no);
-                
-                var str = "";
-                str = str + "<option></option>";
-                $.each(json_data.work_cover, function(i, item){
-                    if(work_cover == item.work_cover) {
-                        str = str + "<option selected='selected' value="+item.work_cover_no+">"+item.work_cover+"</option>";
-                    } else {
-                        str = str + "<option value="+item.work_cover_no+">"+item.work_cover+"</option>";    
-                    }
-                    
-                });
-                
-                $("#cmb-workcover").empty().append(str);
-                
-                $("#B_19").val(json_data.tax.tax);
-            });
         
             $.post(base_url+"client_agreement/get_effective_date", {super_no:super1}, function(data){
                 var json_data = $.parseJSON(data);
@@ -678,6 +681,8 @@ $(document).ready(function(){
                 var json_data = $.parseJSON(data);
                 $("#B_17").val(json_data.work_cover_code);
             });
+            
+            $("#loadingModal").modal("hide");
         }); 
     });
     // end edit

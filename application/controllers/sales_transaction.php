@@ -291,7 +291,7 @@ class Sales_transaction extends CI_Controller
         } else {
             $this->db->trans_commit();
             $this->session->set_userdata("status", 1);
-            $this->session->set_userdata("status_msg", "<b>Done!</b> Modern Award successfully saved");
+            $this->session->set_userdata("status_msg", "<b>Done!</b> Modern Award successfully updated");
         }
         
         redirect($_SERVER["HTTP_REFERER"]);

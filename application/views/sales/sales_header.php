@@ -14,6 +14,18 @@
     <script type="text/javascript" src="<?php echo base_url("public/js/jquery.tablesorter.min.js") ?>"></script>
 </head>
 <body>
+<!-- LOADING MODAL -->
+<div id="loadingModal" class="modal hide fade" tabindex="-1" role="dialog">
+    <div class="modal-header">
+        <h3 id="myModalLabel">Loading</h3>
+    </div>
+    <div class="modal-body">
+        <div class="progress progress-striped active">
+            <div class="bar" style="width: 100%;"></div>
+        </div>
+    </div>
+</div>
+<!-- END LOADING MODAL -->
 <div class="container">
     <div class="navbar navbar-fixed-top">
         <div class="navbar-inner">

@@ -1942,26 +1942,31 @@
     
     <table class="table table-bordered table-condensed" style="margin-top: 20px;">
         <tr>
+            <td><?php echo $charge["allowance_caption1"]?></td>
             <td>$<?php echo $allow_meal?></td>
             <td>$<?php echo $labour_meal?></td>
             <td><?php echo $charge["C_52"]?></td>
         </tr>
         <tr>
+            <td><?php echo $charge["allowance_caption2"]?></td>
             <td>$<?php echo $allow_first_aid?></td>
             <td>$<?php echo $labour_first_aid?></td>
             <td><?php echo $charge["C_53"]?></td>
         </tr>
         <tr>
+            <td><?php echo $charge["allowance_caption3"]?></td>
             <td>$<?php echo $allow_l_hand_3?></td>
             <td>$<?php echo $labour_l_hand_3?></td>
             <td><?php echo $charge["C_54"]?></td>
         </tr>
         <tr>
+            <td><?php echo $charge["allowance_caption4"]?></td>
             <td>$<?php echo $allow_l_hand_10?></td>
             <td>$<?php echo $labour_l_hand_10?></td>
             <td><?php echo $charge["C_55"]?></td>
         </tr>
         <tr>
+            <td><?php echo $charge["allowance_caption5"]?></td>
             <td>$<?php echo $allow_l_hand_20?></td>
             <td>$<?php echo $labour_l_hand_20?></td>
             <td><?php echo $charge["C_56"]?></td>

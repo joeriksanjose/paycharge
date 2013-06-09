@@ -85,6 +85,12 @@ class Paycharge_rate extends CI_Controller
         $this->data["mallow"] = $this->pr->getMAllow($trans_no);
         $this->data["charge"] = $this->pr->getCharge($trans_no);
         
+        if($this->data["calcu"]["print_company_no"] == 1){
+            $this->data["company"] = "Labour Power";
+        } else if($this->data["calcu"]["print_company_no"] == 2){
+            $this->data["company"] = "LP Consulting Services";
+        }
+        
         foreach ($this->data["mallow"] as $key => $value) {
             if($value["description"]=="Allowance Pay"){
                 $this->data["allow_meal"] = $value["meal"];
