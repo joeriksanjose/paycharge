@@ -1,6 +1,29 @@
 $(document).ready(function(){
     base_url = $("#base_url").val();
     
+    
+    $("#btn-save-only").click(function(){
+        $("#frm").attr("action", base_url+"sales_transaction/save");
+        $("#frm").submit();
+    });
+    
+    $("#btn-save-process").click(function(){
+        if($(this).val() != "UPDATE"){
+            $("#frm").attr("action", base_url+"sales_transaction/saveAndProcess");
+            $("#frm").submit();
+        }
+    });
+    
+    $("#btn-save-update").click(function(){
+        $("#frm").attr("action", base_url+"sales_transaction/update");
+        $("#frm").submit();
+    });
+    
+    $("#btn-save-process-update").click(function(){
+        $("#frm").attr("action", base_url+"sales_transaction/updateAndProcess");
+        $("#frm").submit();
+    });
+    
     $(".add_position").click(function(){
         
         $("#positionModal").modal("show");

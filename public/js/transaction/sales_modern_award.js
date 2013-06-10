@@ -254,7 +254,6 @@ $(document).ready(function(){
 	
 	$("#add-new-modern").click(function(){
 	    $("#frm").attr("action", base_url+"sales_transaction/save");
-	    $(this).val("SAVE");
 	    $(document).scrollTop(0);
 	    var d = new Date();
 	    var month = d.getMonth();
@@ -266,7 +265,13 @@ $(document).ready(function(){
 	    $("#txt-margin").val("MARGIN FOR M ALLOWANCE");
 	    $("#txt-permanent").val("Permanent Guarantee Period in Days");
 	    $("#btn_gen").val("Generate No");
-	    $("#btn-save-update").val("Save");
+	    $("#btn-save-update").hide();
+	    $("#btn-save-process-update").hide();
+	    $("#btn-save-only").show();
+	    $("#btn-save-process").show();
+	    $("#btn-save-process").val("Save and Process");
+	    $("#btn-save-only").val("Save Only");
+        $("#btn-save-update").hide();
 	    $("#date_of_quotation").val(("0"+day).slice(-2)+"/"+("0"+month).slice(-2)+"/"+year);
 	    $("#cmb-company").val(client_no).attr("selected", "selected");
 	    $("#cmb-company").change();
@@ -426,8 +431,10 @@ $(document).ready(function(){
         $("#tab2, #tab3, #tab4, #tab5").hide("fast");
         $("#frm").attr("action", base_url+"sales_transaction/update");
         $("#trans_no").val(edit_id);
-        $("#btn-save-update").attr("value", "UPDATE");
-        
+        $("#btn-save-update").show();
+        $("#btn-save-update").val("Update Only");
+        $("#btn-save-only").hide();
+        $("#btn-save-process").hide();
         var company_no;
         var work_cover;
         var super1;
@@ -466,6 +473,11 @@ $(document).ready(function(){
                company_no = res.charge_rate.company_no;
                super1 = res.charge_rate.B_14;
                work_cover = res.charge_rate.B_15;
+               
+               if (res.charge_rate.swi_process != 1) {
+                   $("#btn-save-process-update").show();
+                   $("#btn-save-process-update").val("Update and Process");
+               }
 
                $("#cmb-company").val(company_no).attr("selected", "selected");
                $("#cmb-super").val(super1).attr("selected", "selected");

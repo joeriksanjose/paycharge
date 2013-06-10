@@ -10,7 +10,7 @@
 <div class="row">
     <!-- MODERN AWARD FORM -->
     <div class="span12" id="modern_form" style="display: none;">
-        <form class="form-horizontal" id="frm" action="<?php echo base_url("sales_transaction/save")?>" method="post">
+        <form class="form-horizontal" id="frm" method="post">
             <div class="navbar navbar-fixed-bottom" id="nav-tabs" style="display: none;">
                 <div class="navbar-inner">
                     <div class="container">
@@ -22,7 +22,10 @@
                         <li class="divider-vertical"></li>
                         <li class="pull-right">
                             <button type="button" class="btn pull-right" style="margin-left: 3px;" id="close-modern-form">Cancel</button>
-                            <input type="submit" class="btn btn-inverse pull-right" id="btn-save-update" value="SAVE">
+                            <input type="button" class="btn btn-inverse pull-right" style="margin-left: 3px; display: none;" id="btn-save-process-update" value="Update and Process"/>
+                            <input type="button" class="btn btn-inverse pull-right" style="margin-left: 3px; display: none;" id="btn-save-update" value="Update Only"/> 
+                            <input type="button" class="btn btn-inverse pull-right" style="margin-left: 3px;" id="btn-save-process" value="Save and Process"/>
+                            <input type="button" class="btn btn-inverse pull-right" id="btn-save-only" value="Save Only"/>
                         </li>
                     </ul>
                     </div>
@@ -1035,6 +1038,10 @@
                                 <td><?php echo $award["company_name"] ?></td>
                                 <td><?php echo date("d/m/Y", strtotime($award["date_of_quotation"])) ?></td>
                                 <td>
+                                    <!-- <button type="button" class="btn btn-mini ok-award-btn" edit-id="<?php echo $award["trans_no"] ?>">
+                                        <i class="icon-ok"></i>
+                                    </button> -->
+                                    
                                     <button type="button" class="btn btn-mini edit-award-btn" edit-id="<?php echo $award["trans_no"] ?>">
                                         <i class="icon-edit"></i>
                                     </button>
