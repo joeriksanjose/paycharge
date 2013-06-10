@@ -143,6 +143,22 @@ class Position extends CI_Controller
         }
     }
     
+    public function save_position(){ // for add position in sales award
+        $data = $this->input->post(null, true);
+        $sql = $this->tbl->save($data);
+        
+        if ($sql) {
+            $params["status"] = "ok";
+            $params["status_msg"] = "<b>Done!</b> Position successfully added.";
+        } else {
+            $params["status"] = "error";
+            $params["status_msg"] = "<b>Error!</b> Database error.";
+        }
+        $params["data"] = $this->tbl->select_all();
+        
+        echo json_encode($params);
+    }
+    
     public function update()
     {
         $data = $this->input->post(null, true);

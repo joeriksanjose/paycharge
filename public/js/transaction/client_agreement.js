@@ -1,4 +1,5 @@
 $(document).ready(function(){
+	var client_no = $("#hid_client_no").val();	
 	
 	//delete
 	var delete_id;
@@ -31,6 +32,7 @@ $(document).ready(function(){
 	});	
 	// edit
     $(".edit-award-btn").live("click", function(){
+        $("#agreementRow").hide("fast")
         $(document).scrollTop(0);
         var edit_id = $(this).attr("edit-id");
         $("#show-tab-1").parent().addClass("active");
@@ -47,6 +49,33 @@ $(document).ready(function(){
         var company_no;
         var work_cover;
         var super1;
+        
+        $.post(base_url+"client_agreement/get_company_info", {client_no:client_no}, function(data){
+            var json_data = $.parseJSON(data);
+            $("#department").val(json_data.company_info.department);
+            $("#add1").val(json_data.company_info.address_line1);
+            $("#add2").val(json_data.company_info.address_line2);
+            $("#c_first_name").val(json_data.company_info.contact_first_name);
+            $("#c_full_name").val(json_data.company_info.contact_full_name);
+            $("#c_title").val(json_data.company_info.contact_title);
+            $("#state_no").val(json_data.company_info.state_no);
+            
+            var str = "";
+            str = str + "<option></option>";
+            $.each(json_data.work_cover, function(i, item){
+                if(work_cover == item.work_cover_no){
+                    str = str + "<option selected='selected' value="+item.work_cover+">"+item.work_cover+"</option>";
+                } else {
+                    str = str + "<option value="+item.work_cover+">"+item.work_cover+"</option>";    
+                }
+                
+            });
+            
+            $("#cmb-workcover").empty().append(str);
+            
+            $("#B_19").val(json_data.tax.tax);
+        });
+        
         $.post(base_url+"client_agreement/getAwardInfo", {trans_no:edit_id}, function(data){
            res = $.parseJSON(data);
            if (res.status) {
@@ -58,10 +87,12 @@ $(document).ready(function(){
 
                $("#cmb-company").val(company_no).attr("selected", "selected");
                $("#cmb-super").val(super1).attr("selected", "selected");
+               $("#cmb-super").change();
                $("#cmb-workcover").val(work_cover).attr("selected", "selected");
                $("#cmb-company").val(company_no).attr("selected", "selected");
                               
                $("#transaction_name").val(res.charge_rate.transaction_name);
+               $("#B_16").val(res.charge_rate.B_15).attr("selected", "selected");
                $("#B_16").val(res.charge_rate.B_16);
                $("#B_18").val(res.charge_rate.B_18);
                $("#B_20").val(res.charge_rate.B_20).attr("selected", "selected");
@@ -286,32 +317,6 @@ $(document).ready(function(){
            } else {
                alert("Database Error.")
            }
-           
-           $.post(base_url+"client_agreement/get_company_info", {client_no:company_no}, function(data){
-				var json_data = $.parseJSON(data);
-				$("#department").val(json_data.company_info.department);
-				$("#add1").val(json_data.company_info.address_line1);
-				$("#add2").val(json_data.company_info.address_line2);
-				$("#c_first_name").val(json_data.company_info.contact_first_name);
-				$("#c_full_name").val(json_data.company_info.contact_full_name);
-				$("#c_title").val(json_data.company_info.contact_title);
-				$("#state_no").val(json_data.company_info.state_no);
-				
-				var str = "";
-				str = str + "<option></option>";
-				$.each(json_data.work_cover, function(i, item){
-					if(work_cover == item.work_cover_no){
-						str = str + "<option selected='selected' value="+item.work_cover_no+">"+item.work_cover+"</option>";
-					} else {
-						str = str + "<option value="+item.work_cover_no+">"+item.work_cover+"</option>";	
-					}
-					
-				});
-				
-				$("#cmb-workcover").empty().append(str);
-				
-				$("#B_19").val(json_data.tax.tax);
-			});
 		
 			$.post(base_url+"client_agreement/get_effective_date", {super_no:super1}, function(data){
 				var json_data = $.parseJSON(data);
@@ -583,6 +588,23 @@ $(document).ready(function(){
 	    $("#agreementRow").hide("fast");
 	    $(document).scrollTop(0);
 	    $(this).val("SAVE");
+	    var d = new Date();
+        var month = d.getMonth();
+        var day = d.getDate();
+        var year = d.getFullYear();
+        $("input").val("");
+        $("select  ").val("");
+        $("#txt-standard").val("STANDARD RATE FOR CALS :");
+        $("#m_allow_text").val("MARGIN FOR M ALLOWANCE");
+        $("#txt-permanent").val("Permanent Guarantee Period in Days");
+        $("#btn_gen").val("Generate No");
+        $("#btn-save").val("Save");
+        $("#date_of_quotation").val(("0"+day).slice(-2)+"/"+("0"+month).slice(-2)+"/"+year);
+        $("#cmb-company").val(client_no).attr("selected", "selected");
+        $("#cmb-company").change();
+        $("#cmb-company").attr("readonly", "readonly");
+        $("#trans_no").removeAttr("readonly");
+        $("#btn_gen").removeAttr("disabled");
         $("#show-tab-1").parent().addClass("active");
         $("#show-tab-2, #show-tab-3, #show-tab-4, #show-tab-5").parent().removeClass("active");
         $("#nav-tabs").show("fast");

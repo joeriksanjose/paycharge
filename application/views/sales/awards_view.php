@@ -231,7 +231,7 @@
                           <div class="control-group">
                             <label class="control-label" for="position_no1">Position titles Level 1</label>
                             <div class="controls">
-                              <select class="" id="position_no1" name="position_no1">
+                              <select class="position_no" id="position_no1" name="position_no1">
                                 <option></option>
                                 <?php foreach ($position as $value) : ?>
                                     <option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
@@ -243,7 +243,7 @@
                           <div class="control-group">
                             <label class="control-label" for="position_no2">Position titles Level 2</label>
                             <div class="controls">
-                              <select class="" id="position_no2" name="position_no2">
+                              <select class="position_no" id="position_no2" name="position_no2">
                                 <option></option>
                                 <?php foreach ($position as $value) : ?>
                                     <option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
@@ -255,7 +255,7 @@
                           <div class="control-group">
                             <label class="control-label" for="position_no3">Position titles Level 3</label>
                             <div class="controls">
-                              <select class="" id="position_no3" name="position_no3">
+                              <select class="position_no" id="position_no3" name="position_no3">
                                 <option></option>
                                 <?php foreach ($position as $value) : ?>
                                     <option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
@@ -267,7 +267,7 @@
                           <div class="control-group">
                             <label class="control-label" for="position_no4">Position titles Level 4</label>
                             <div class="controls">
-                              <select class="" id="position_no4" name="position_no4">
+                              <select class="position_no" id="position_no4" name="position_no4">
                                 <option></option>
                                 <?php foreach ($position as $value) : ?>
                                     <option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
@@ -279,7 +279,7 @@
                           <div class="control-group">
                             <label class="control-label" for="position_no5">Position titles Level 5</label>
                             <div class="controls">
-                              <select class="" id="position_no5" name="position_no5">
+                              <select class="position_no" id="position_no5" name="position_no5">
                                 <option></option>
                                 <?php foreach ($position as $value) : ?>
                                     <option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
@@ -291,7 +291,7 @@
                           <div class="control-group">
                             <label class="control-label" for="position_no6">Position titles Level 6</label>
                             <div class="controls">
-                              <select class="" id="position_no6" name="position_no6">
+                              <select class="position_no" id="position_no6" name="position_no6">
                                 <option></option>
                                 <?php foreach ($position as $value) : ?>
                                     <option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
@@ -303,7 +303,7 @@
                           <div class="control-group">
                             <label class="control-label" for="position_no7">Position titles Level 7</label>
                             <div class="controls">
-                              <select class="" id="position_no7" name="position_no7">
+                              <select class="position_no" id="position_no7" name="position_no7">
                                 <option></option>
                                 <?php foreach ($position as $value) : ?>
                                     <option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
@@ -315,7 +315,7 @@
                           <div class="control-group">
                             <label class="control-label" for="position_no8">Position titles Level 8</label>
                             <div class="controls">
-                              <select class="" id="position_no8" name="position_no8">
+                              <select class="position_no" id="position_no8" name="position_no8">
                                 <option></option>
                                 <?php foreach ($position as $value) : ?>
                                     <option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
@@ -327,7 +327,7 @@
                           <div class="control-group">
                             <label class="control-label" for="position_no9">Position titles Level 9</label>
                             <div class="controls">
-                              <select class="" id="position_no9" name="position_no9">
+                              <select class="position_no" id="position_no9" name="position_no9">
                                 <option></option>
                                 <?php foreach ($position as $value) : ?>
                                     <option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
@@ -339,7 +339,7 @@
                           <div class="control-group">
                             <label class="control-label" for="position_no10">Position titles Level 10</label>
                             <div class="controls">
-                              <select class="" id="position_no10" name="position_no10">
+                              <select class="position_no" id="position_no10" name="position_no10">
                                 <option></option>
                                 <?php foreach ($position as $value) : ?>
                                     <option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
@@ -1081,10 +1081,31 @@
         <h3 id="myModalLabel">Add Position</h3>
     </div>
     <div class="modal-body">
-        <p>Are you sure you want to delete this modern award?</p>
+       
+            <div class="alert alert-error" style="display: none" id="error_div"></div>
+            <div class="alert alert-success" style="display: none" id="success_div"></div>
+            
+            <div class="form-horizontal">
+              <div class="control-group">
+                <label class="control-label" for="username">Position</label>
+                <div class="controls">
+                  <input type="text" id="position" name="position" class="input-medium">
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="password">Description</label>
+                <div class="controls">
+                    <input type="text" id="description" name="description" class="input-medium">
+                </div>
+                  
+                </div>
+              
+            </div>
+            <hr>
+       
     </div>
     <div class="modal-footer">
-        <button class="btn btn-danger" id="delete-award-btn-modal">Delete</button>
+        <button class="btn btn-primary" id="btn-add-position">Add</button>
         <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
     </div>
 </div>

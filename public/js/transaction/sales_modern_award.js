@@ -257,12 +257,11 @@ $(document).ready(function(){
 	    $(this).val("SAVE");
 	    $(document).scrollTop(0);
 	    var d = new Date();
-	    
 	    var month = d.getMonth();
 	    var day = d.getDate();
 	    var year = d.getFullYear();
 	    $("input").val("");
-	    $("select  ").val("");
+	    $("select").val("");
 	    $("#txt-standard").val("STANDARD RATE FOR CALS :");
 	    $("#txt-margin").val("MARGIN FOR M ALLOWANCE");
 	    $("#txt-permanent").val("Permanent Guarantee Period in Days");
@@ -447,9 +446,9 @@ $(document).ready(function(){
             str = str + "<option></option>";
             $.each(json_data.work_cover, function(i, item){
                 if(work_cover == item.work_cover) {
-                    str = str + "<option selected='selected' value="+item.work_cover_no+">("+item.work_cover_code+") - "+item.work_cover+"</option>";
+                    str = str + "<option selected='selected' value="+item.work_cover+">("+item.work_cover_code+") - "+item.work_cover+"</option>";
                 } else {
-                    str = str + "<option value="+item.work_cover_no+">("+item.work_cover_code+") - "+item.work_cover+"</option>";    
+                    str = str + "<option value="+item.work_cover+">("+item.work_cover_code+") - "+item.work_cover+"</option>";    
                 }
                 
             });
@@ -474,6 +473,7 @@ $(document).ready(function(){
                $("#cmb-workcover").val(work_cover).attr("selected", "selected");
                $("#cmb-company").val(company_no).attr("selected", "selected");
                $("#cmb-modern").val(res.charge_rate.modern_award_no).attr("selected", "selected");
+               $("#cmb-modern").change();
                $("#date_of_quotation").val(res.charge_rate.date_of_quotation);
                $("#transaction_name").val(res.charge_rate.transaction_name);
                $("#industry_rate").val(res.charge_rate.B_16);
@@ -485,7 +485,11 @@ $(document).ready(function(){
                $("#admin_txt").val(res.charge_rate.B_22).attr("selected", "selected");
                $("#B_24").val(res.charge_rate.B_24);
                $("#long_service").val(res.charge_rate.long_service).attr("selected", "selected");
-               $("#swi_peror_cur").val(res.charge_rate.swi_peror_cur).attr("selected", "selected");
+               if(res.charge_rate.swi_peror_cur == "0"){
+                    $("#_dollar").prop("checked", true);    
+               } else {
+                    $("#_percent").prop("checked", true);   
+               }
                
                
                // VARIABLES

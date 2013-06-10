@@ -4,6 +4,7 @@
 <script type="text/javascript" src="<?php echo base_url("public/js/sales/sales_agreement.js") ?>"></script>
 <input type="hidden" id="base_url" value="<?php echo base_url() ?>">
 <input type="hidden" id="base-url" value="<?php echo base_url() ?>">
+<input type="hidden" id="hid_client_no" value="<?php echo $client_info["client_no"] ?>" />
 
 <!-- DELETE MODAL -->
 <div id="deleteModal" class="modal hide fade" tabindex="-1" role="dialog">
@@ -567,7 +568,7 @@
                           <div style="height: 3px;"></div>
                                 <input type="text" class="" name="C_37" id="C_37">
                           <div style="height: 3px;"></div>
-                                <input type="text" class=" disabled" style="font-size: 9px;" disabled="true"  value="Permanent Guarantee Period in Days">
+                                <input type="text" id="txt-permanent" class="disabled" style="font-size: 9px;" disabled="true"  value="Permanent Guarantee Period in Days">
                       </div>
                   </div>
                   <div class="span4">
@@ -833,42 +834,42 @@
                     <h3>Allowances</h3>
                     <hr>
                     <div class="control-group">
-                      <input type="text" class="input-medium disabled" style="font-size: 10px;" disabled="true" value="STANDARD RATE FOR CALS :">
+                      <input type="text" class="input-medium disabled" id="txt-standard" style="font-size: 10px;" disabled="true" value="STANDARD RATE FOR CALS :">
                       <input type="text" class="input-mini" disabled="true" value="%">
                       <div class="input-prepend">
                             <span class="add-on">$</span>
                             <input type="text" class="input-small txt"  id="B_51"  name="B_51" placeholder="0.00">
                       </div>
                       <div style="height: 5px;"></div>
-                      <input type="text" class="input-medium disabled" id="allowance_caption1"  name="allowance_caption1" style="font-size: 10px;" readonly="true" value="Meal">
+                      <input type="text" class="input-medium" id="allowance_caption1" name="allowance_caption1" style="font-size: 10px;" value="Meal">
                       <input type="text" class="input-mini" id="allowance_rate1"  name="allowance_rate1">
                       <div class="input-prepend">
                             <span class="add-on">$</span>
                             <input type="text" class="input-small txt"  id="B_52"  name="B_52" placeholder="0.00">
                       </div>
                       <div style="height: 5px;"></div>
-                      <input type="text" class="input-medium disabled" id="allowance_caption2"  name="allowance_caption2" style="font-size: 10px;" readonly="true" value="First-aid">
+                      <input type="text" class="input-medium disabled" id="allowance_caption2"  name="allowance_caption2" style="font-size: 10px;" value="First-aid">
                       <input type="text" class="input-mini" id="allowance_rate2"  name="allowance_rate2">
                       <div class="input-prepend">
                             <span class="add-on">$</span>
                             <input type="text" class="input-small txt" id="B_53"  name="B_53" placeholder="0.00">
                       </div>
                       <div style="height: 5px;"></div>
-                      <input type="text" class="input-medium disabled" id="allowance_caption3"  name="allowance_caption3" style="font-size: 10px;" readonly="true" value="L/Hand 3-10 Emps">
+                      <input type="text" class="input-medium disabled" id="allowance_caption3"  name="allowance_caption3" style="font-size: 10px;" value="L/Hand 3-10 Emps">
                       <input type="text" class="input-mini" id="allowance_rate3"  name="allowance_rate3">
                       <div class="input-prepend">
                             <span class="add-on">$</span>
                             <input type="text" class="input-small txt"  id="B_54"  name="B_54" placeholder="0.00">
                       </div>
                       <div style="height: 5px;"></div>
-                      <input type="text" class="input-medium disabled" id="allowance_caption4"  name="allowance_caption4" style="font-size: 10px;" readonly="true" value="L/Hand 10-20 Emps">
+                      <input type="text" class="input-medium disabled" id="allowance_caption4"  name="allowance_caption4" style="font-size: 10px;" value="L/Hand 10-20 Emps">
                       <input type="text" class="input-mini" id="allowance_rate4"  name="allowance_rate4">
                       <div class="input-prepend">
                             <span class="add-on">$</span>
                             <input type="text" class="input-small txt"  id="B_55"  name="B_55" placeholder="0.00">
                       </div>
                       <div style="height: 5px;"></div>
-                      <input type="text" class="input-medium disabled" id="allowance_caption5"  name="allowance_caption5" style="font-size: 10px;" readonly="true" value="L/Hand 20+ Emps">
+                      <input type="text" class="input-medium disabled" id="allowance_caption5"  name="allowance_caption5" style="font-size: 10px;" value="L/Hand 20+ Emps">
                       <input type="text" class="input-mini" id="allowance_rate5"  name="allowance_rate5">
                       <div class="input-prepend">
                             <span class="add-on">$</span>
@@ -910,15 +911,13 @@
                   <div class="control-group">
                     <label class="control-label" for="B_59">Daily Normal Hours</label>
                     <div class="controls controls-row">
-                      <input type="text" class="input-xxlarge" id="B_59" name="B_59" 
-                      value="Can work 88886 or 5x7.65 Mon-Fri between 530am and 630pm">
+                      <input type="text" class="input-xxlarge" id="B_59" name="B_59">
                     </div>
                   </div>
                   <div class="control-group">
                     <label class="control-label" for="B_60">Minimum Shift Engagement</label>
                     <div class="controls controls-row">
-                      <input type="text" class="input-xxlarge" id="B_60" name="B_60"
-                      value="4 Hours for casuals">
+                      <input type="text" class="input-xxlarge" id="B_60" name="B_60">
                     </div>
                   </div>
                   <div class="control-group">
@@ -942,43 +941,37 @@
                    <div class="control-group">
                     <label class="control-label" for="B_64">Overtime Rule</label>
                     <div class="controls controls-row">
-                      <input type="text" class="input-xxlarge" id="B_64" name="B_64"
-                      value="First 2 hours at Time1/2 then double">
+                      <input type="text" class="input-xxlarge" id="B_64" name="B_64">
                     </div>
                   </div>
                   <div class="control-group">
                     <label class="control-label" for="B_65">Saturday Rule</label>
                     <div class="controls controls-row">
-                      <input type="text" class="input-xxlarge" id="B_65" name="B_65"
-                      value="If ordinary Time1/2 all shift if OT first 2 at Time1/2 then double">
+                      <input type="text" class="input-xxlarge" id="B_65" name="B_65">
                     </div>
                   </div>
                   <div class="control-group">
                     <label class="control-label" for="B_66">Sunday Rule</label>
                     <div class="controls controls-row">
-                      <input type="text" class="input-xxlarge" id="B_66" name="B_66"
-                      value="All at Double Time">
+                      <input type="text" class="input-xxlarge" id="B_66" name="B_66">
                     </div>
                   </div>
                   <div class="control-group">
                     <label class="control-label" for="B_67">Public Holidays</label>
                     <div class="controls controls-row">
-                      <input type="text" class="input-xxlarge" id="B_67" name="B_67"
-                      value="Double Time and a Half, Triple time for Xmas and Good Friday">
+                      <input type="text" class="input-xxlarge" id="B_67" name="B_67">
                     </div>
                   </div>
                   <div class="control-group">
                     <label class="control-label" for="B_68">Casuals Must Transition to Perm</label>
                     <div class="controls controls-row">
-                      <input type="text" class="input-xxlarge" id="B_68" name="B_68"
-                      value="If continuous for 12 Months">
+                      <input type="text" class="input-xxlarge" id="B_68" name="B_68">
                     </div>
                   </div>
                   <div class="control-group">
                     <label class="control-label" for="B_69">If Higher Duties Performed</label>
                     <div class="controls controls-row">
-                      <input type="text" class="input-xxlarge" id="B_69" name="B_69"
-                      value="If works higher duty, pay whole shift at higher rate">
+                      <input type="text" class="input-xxlarge" id="B_69" name="B_69">
                     </div>
                   </div>
                 <div class="span11">
