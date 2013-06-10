@@ -64,7 +64,7 @@
 						
 						<td>Shift loadings (Early)</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_31"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_31"], 2, '.', '')?>%</b></td>
 					</tr>
 					<tr>
 						<td>Weekly Normal Time Hours</td>
@@ -73,7 +73,7 @@
 						
 						<td>Shift loadings (Afternoon)</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_33"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_33"], 2, '.', '')?>%</b></td>
 					</tr>
 					
 					<tr>
@@ -83,7 +83,7 @@
 						
 						<td>Shift loadings (Night)</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_35"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_35"], 2, '.', '')?>%</b></td>
 					</tr>
 					
 					<tr>
@@ -93,7 +93,7 @@
 						
 						<td>Shift loadings (50%)</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_37"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_37"], 2, '.', '')?>%</b></td>
 					</tr>
 					
 					<tr>
@@ -103,7 +103,7 @@
 						
 						<td>Casual Loading</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_27"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_27"], 2, '.', '')?>%</b></td>
 					</tr>
 					
 					<tr>
@@ -113,7 +113,7 @@
 						
 						<td>OT Casual Loading</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_28"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_28"], 2, '.', '')?>%</b></td>
 					</tr>
 				</table>
 				
@@ -181,7 +181,7 @@
 						
 						<td>Shift loadings (Early)</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_31"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_31"], 2, '.', '')?>%</b></td>
 					</tr>
 					<tr>
 						<td>Weekly Normal Time Hours</td>
@@ -190,7 +190,7 @@
 						
 						<td>Shift loadings (Afternoon)</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_33"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_33"], 2, '.', '')?>%</b></td>
 					</tr>
 					
 					<tr>
@@ -200,7 +200,7 @@
 						
 						<td>Shift loadings (Night)</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_35"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_35"], 2, '.', '')?>%</b></td>
 					</tr>
 					
 					<tr>
@@ -210,7 +210,7 @@
 						
 						<td>Shift loadings (50%)</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_37"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_37"], 2, '.', '')?>%</b></td>
 					</tr>
 					
 					<tr>
@@ -220,7 +220,7 @@
 						
 						<td>Casual Loading</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_27"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_27"], 2, '.', '')?>%</b></td>
 					</tr>
 					
 					<tr>
@@ -230,7 +230,7 @@
 						
 						<td>OT Casual Loading</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_28"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_28"], 2, '.', '')?>%</b></td>
 					</tr>
 				</table>
 				
@@ -298,7 +298,7 @@
 						
 						<td>Shift loadings (Early)</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_31"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_31"], 2, '.', '')?>%</b></td>
 					</tr>
 					<tr>
 						<td>Weekly Normal Time Hours</td>
@@ -307,7 +307,7 @@
 						
 						<td>Shift loadings (Afternoon)</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_33"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_33"], 2, '.', '')?>%</b></td>
 					</tr>
 					
 					<tr>
@@ -317,7 +317,7 @@
 						
 						<td>Shift loadings (Night)</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_35"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_35"], 2, '.', '')?>%</b></td>
 					</tr>
 					
 					<tr>
@@ -327,7 +327,7 @@
 						
 						<td>Shift loadings (50%)</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_37"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_37"], 2, '.', '')?>%</b></td>
 					</tr>
 					
 					<tr>
@@ -337,7 +337,7 @@
 						
 						<td>Casual Loading</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_27"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_27"], 2, '.', '')?>%</b></td>
 					</tr>
 					
 					<tr>
@@ -347,7 +347,7 @@
 						
 						<td>OT Casual Loading</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_28"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_28"], 2, '.', '')?>%</b></td>
 					</tr>
 				</table>
 				
@@ -416,7 +416,7 @@
 						
 						<td>Shift loadings (Early)</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_31"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_31"], 2, '.', '')?>%</b></td>
 					</tr>
 					<tr>
 						<td>Weekly Normal Time Hours</td>
@@ -425,7 +425,7 @@
 						
 						<td>Shift loadings (Afternoon)</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_33"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_33"], 2, '.', '')?>%</b></td>
 					</tr>
 					
 					<tr>
@@ -435,7 +435,7 @@
 						
 						<td>Shift loadings (Night)</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_35"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_35"], 2, '.', '')?>%</b></td>
 					</tr>
 					
 					<tr>
@@ -445,7 +445,7 @@
 						
 						<td>Shift loadings (50%)</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_37"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_37"], 2, '.', '')?>%</b></td>
 					</tr>
 					
 					<tr>
@@ -455,7 +455,7 @@
 						
 						<td>Casual Loading</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_27"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_27"], 2, '.', '')?>%</b></td>
 					</tr>
 					
 					<tr>
@@ -465,7 +465,7 @@
 						
 						<td>OT Casual Loading</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_28"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_28"], 2, '.', '')?>%</b></td>
 					</tr>
 				</table>
 				
@@ -534,7 +534,7 @@
 						
 						<td>Shift loadings (Early)</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_31"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_31"], 2, '.', '')?>%</b></td>
 					</tr>
 					<tr>
 						<td>Weekly Normal Time Hours</td>
@@ -543,7 +543,7 @@
 						
 						<td>Shift loadings (Afternoon)</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_33"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_33"], 2, '.', '')?>%</b></td>
 					</tr>
 					
 					<tr>
@@ -553,7 +553,7 @@
 						
 						<td>Shift loadings (Night)</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_35"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_35"], 2, '.', '')?>%</b></td>
 					</tr>
 					
 					<tr>
@@ -563,7 +563,7 @@
 						
 						<td>Shift loadings (50%)</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_37"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_37"], 2, '.', '')?>%</b></td>
 					</tr>
 					
 					<tr>
@@ -573,7 +573,7 @@
 						
 						<td>Casual Loading</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_27"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_27"], 2, '.', '')?>%</b></td>
 					</tr>
 					
 					<tr>
@@ -583,7 +583,7 @@
 						
 						<td>OT Casual Loading</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_28"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_28"], 2, '.', '')?>%</b></td>
 					</tr>
 				</table>
 				
@@ -651,7 +651,7 @@
 						
 						<td>Shift loadings (Early)</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_31"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_31"], 2, '.', '')?>%</b></td>
 					</tr>
 					<tr>
 						<td>Weekly Normal Time Hours</td>
@@ -660,7 +660,7 @@
 						
 						<td>Shift loadings (Afternoon)</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_33"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_33"], 2, '.', '')?>%</b></td>
 					</tr>
 					
 					<tr>
@@ -670,7 +670,7 @@
 						
 						<td>Shift loadings (Night)</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_35"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_35"], 2, '.', '')?>%</b></td>
 					</tr>
 					
 					<tr>
@@ -680,7 +680,7 @@
 						
 						<td>Shift loadings (50%)</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_37"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_37"], 2, '.', '')?>%</b></td>
 					</tr>
 					
 					<tr>
@@ -690,7 +690,7 @@
 						
 						<td>Casual Loading</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_27"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_27"], 2, '.', '')?>%</b></td>
 					</tr>
 					
 					<tr>
@@ -700,7 +700,7 @@
 						
 						<td>OT Casual Loading</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_28"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_28"], 2, '.', '')?>%</b></td>
 					</tr>
 				</table>
 				
@@ -768,7 +768,7 @@
 						
 						<td>Shift loadings (Early)</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_31"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_31"], 2, '.', '')?>%</b></td>
 					</tr>
 					<tr>
 						<td>Weekly Normal Time Hours</td>
@@ -777,7 +777,7 @@
 						
 						<td>Shift loadings (Afternoon)</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_33"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_33"], 2, '.', '')?>%</b></td>
 					</tr>
 					
 					<tr>
@@ -787,7 +787,7 @@
 						
 						<td>Shift loadings (Night)</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_35"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_35"], 2, '.', '')?>%</b></td>
 					</tr>
 					
 					<tr>
@@ -797,7 +797,7 @@
 						
 						<td>Shift loadings (50%)</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_37"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_37"], 2, '.', '')?>%</b></td>
 					</tr>
 					
 					<tr>
@@ -807,7 +807,7 @@
 						
 						<td>Casual Loading</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_27"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_27"], 2, '.', '')?>%</b></td>
 					</tr>
 					
 					<tr>
@@ -817,7 +817,7 @@
 						
 						<td>OT Casual Loading</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_28"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_28"], 2, '.', '')?>%</b></td>
 					</tr>
 				</table>
 				
@@ -884,7 +884,7 @@
 						
 						<td>Shift loadings (Early)</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_31"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_31"], 2, '.', '')?>%</b></td>
 					</tr>
 					<tr>
 						<td>Weekly Normal Time Hours</td>
@@ -893,7 +893,7 @@
 						
 						<td>Shift loadings (Afternoon)</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_33"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_33"], 2, '.', '')?>%</b></td>
 					</tr>
 					
 					<tr>
@@ -903,7 +903,7 @@
 						
 						<td>Shift loadings (Night)</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_35"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_35"], 2, '.', '')?>%</b></td>
 					</tr>
 					
 					<tr>
@@ -913,7 +913,7 @@
 						
 						<td>Shift loadings (50%)</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_37"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_37"], 2, '.', '')?>%</b></td>
 					</tr>
 					
 					<tr>
@@ -923,7 +923,7 @@
 						
 						<td>Casual Loading</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_27"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_27"], 2, '.', '')?>%</b></td>
 					</tr>
 					
 					<tr>
@@ -933,7 +933,7 @@
 						
 						<td>OT Casual Loading</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_28"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_28"], 2, '.', '')?>%</b></td>
 					</tr>
 				</table>
 				<table class="table table-bordered table-condensed table-striped" style="margin-top: 20px;">
@@ -1000,7 +1000,7 @@
 						
 						<td>Shift loadings (Early)</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_31"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_31"], 2, '.', '')?>%</b></td>
 					</tr>
 					<tr>
 						<td>Weekly Normal Time Hours</td>
@@ -1009,7 +1009,7 @@
 						
 						<td>Shift loadings (Afternoon)</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_33"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_33"], 2, '.', '')?>%</b></td>
 					</tr>
 					
 					<tr>
@@ -1019,7 +1019,7 @@
 						
 						<td>Shift loadings (Night)</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_35"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_35"], 2, '.', '')?>%</b></td>
 					</tr>
 					
 					<tr>
@@ -1029,7 +1029,7 @@
 						
 						<td>Shift loadings (50%)</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_37"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_37"], 2, '.', '')?>%</b></td>
 					</tr>
 					
 					<tr>
@@ -1039,7 +1039,7 @@
 						
 						<td>Casual Loading</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_27"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_27"], 2, '.', '')?>%</b></td>
 					</tr>
 					
 					<tr>
@@ -1049,7 +1049,7 @@
 						
 						<td>OT Casual Loading</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_28"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_28"], 2, '.', '')?>%</b></td>
 					</tr>
 				</table>
 				
@@ -1117,7 +1117,7 @@
 						
 						<td>Shift loadings (Early)</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_31"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_31"], 2, '.', '')?>%</b></td>
 					</tr>
 					<tr>
 						<td>Weekly Normal Time Hours</td>
@@ -1126,7 +1126,7 @@
 						
 						<td>Shift loadings (Afternoon)</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_33"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_33"], 2, '.', '')?>%</b></td>
 					</tr>
 					
 					<tr>
@@ -1136,7 +1136,7 @@
 						
 						<td>Shift loadings (Night)</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_35"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_35"], 2, '.', '')?>%</b></td>
 					</tr>
 					
 					<tr>
@@ -1146,7 +1146,7 @@
 						
 						<td>Shift loadings (50%)</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_37"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_37"], 2, '.', '')?>%</b></td>
 					</tr>
 					
 					<tr>
@@ -1156,7 +1156,7 @@
 						
 						<td>Casual Loading</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_27"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_27"], 2, '.', '')?>%</b></td>
 					</tr>
 					
 					<tr>
@@ -1166,7 +1166,7 @@
 						
 						<td>OT Casual Loading</td>
 						<td>:</td>
-						<td><b><?php echo number_format($charge_rate["B_28"], 2, '.', '')?>%</b></td>
+						<td><b><?php echo number_format((double)$charge_rate["B_28"], 2, '.', '')?>%</b></td>
 					</tr>
 				</table>
 				

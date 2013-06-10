@@ -410,10 +410,10 @@
                     <label class="control-label">Margin</label>
                     <div class="controls">
                         <label class="radio">
-                            %<input type="radio" id="swi_peror_cur" name="swi_peror_cur" value="1"/>
+                            %<input type="radio" id="_percent" name="swi_peror_cur" value="1"/>
                         </label>
                         <label class="radio">
-                            $<input type="radio" checked="true" id="swi_peror_cur" name="swi_peror_cur" value="0"/>
+                            $<input type="radio" checked="true" id="_dollar" name="swi_peror_cur" value="0"/>
                         </label>
                         <label class="radio">
                             <input type="text" id="B_24" name="B_24">

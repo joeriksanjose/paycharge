@@ -1343,6 +1343,9 @@
                                 <!-- <a target="_blank" href="<?php echo base_url("client_agreement/upcoming_rate_increase/".$agreement["trans_no"]) ?>" class="btn">Upcoming Rate Increase</a>
                                 <a target="_blank" href="<?php echo base_url("client_agreement/rate_increase_history/".$agreement["trans_no"]) ?>" class="btn">Rate Increase History</a> -->
                                 <button type="button" class="btn btn-mini edit-award-btn" edit-id="<?php echo $agreement["trans_no"] ?>"><i class="icon-edit"></i></button>
+                                <a target="_blank" href="<?php echo base_url("reports/rate_confirmation/print_client/".$agreement["trans_no"]) ?>" class="btn btn-mini">
+                                    <i class="icon-print"></i>
+                                </a>
                                 <button type="button" class="btn btn-mini btn-danger delete-award-btn" del-id="<?php echo $agreement["trans_no"] ?>"><i class="icon-trash icon-white"></i></button>
                             </td>
                         </tr>
