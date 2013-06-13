@@ -71,6 +71,14 @@ class Tbl_modern_award extends CI_Model
     
     /* RATE INCREASE */
     
+    public function checkRateTransno($post)
+    {
+        $this->db->select("trans_no");
+        $this->db->where($post);
+        
+        return $this->db->get($this->table_rate_increase)->num_rows();
+    }
+    
     public function getUpcomingRateIncrease($modern_award_name)
     {
         $now = time();

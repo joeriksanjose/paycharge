@@ -32,6 +32,8 @@ class Pcs extends CI_Controller {
         $this->data["footer"] = $this->load->view("client/footer", $this->data, true);
 		
 		$this->data["get_company"] = $this->cont->getCompany($this->client_session["contact_no"]);
+		
+        $post["swi_process"] = 1;
 		$this->data["get_award"] = $this->cont->getAward($post);
 		$this->data["ok"] = 1;
 		
@@ -46,6 +48,12 @@ class Pcs extends CI_Controller {
         $this->data["modern"] = $this->pr->getModern($modern_no);
         $this->data["mallow"] = $this->pr->getMAllow($trans_no);
         $this->data["charge"] = $this->pr->getCharge($trans_no);
+        
+        if($this->data["calcu"]["print_company_no"] == 1){
+            $this->data["company"] = "Labour Power";
+        } else if($this->data["calcu"]["print_company_no"] == 2){
+            $this->data["company"] = "LP Consulting Services";
+        }
         
         foreach ($this->data["mallow"] as $key => $value) {
             if($value["description"]=="Allowance Pay"){
@@ -831,7 +839,7 @@ class Pcs extends CI_Controller {
         
 		$this->data["rates"] = $this->cont->getUpcomingRates($trans_no);
 		
-		$this->load->view("reports/print_upcoming_rates", $this->data);
+		$this->load->view("reports/upcoming_rates", $this->data);
 	}
 	
 	public function getRateHistory($trans_no){

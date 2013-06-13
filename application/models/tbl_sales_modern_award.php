@@ -9,6 +9,13 @@ class Tbl_sales_modern_award extends CI_Model
         parent::__construct();
     }
     
+    public function processSalesModern($where){
+        
+        $this->db->where($where);
+        return $this->db->update("tbl_charge_rate", array("swi_process" => 1));
+        
+    }
+    
     public function get_charge_rate_info($where){
         $this->db->where($where);
         return $this->db->get("tbl_charge_rate")->row_array();

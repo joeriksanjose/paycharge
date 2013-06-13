@@ -1,6 +1,29 @@
 $(document).ready(function(){
    var base_url = $("#base_url").val();
    
+   $("#btn-add").click(function(){
+        if($("#error_div").css("display") == "block"){
+            return false;
+        }   
+    });
+    
+    $("#trans_no").keyup(function(){
+        $.post(base_url+"transactions/checkRateTransno", {trans_no:$(this).val()}, function(data){
+            var json_data = $.parseJSON(data);
+            
+            if(json_data.status == 0){
+                $("#error_div").css("display", "block");
+                $("#success_div").css("display", "none");
+                $("#error_div").html(json_data.status_msg);
+            } else {
+                $("#error_div").css("display", "none");
+            }
+        });
+    });
+   
+   
+   
+   
    $('#datetimepicker').datetimepicker({
       pickTime: false,
       format: "dd/MM/yyyy"

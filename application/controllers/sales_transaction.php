@@ -27,6 +27,7 @@ class Sales_transaction extends CI_Controller
         $this->load->model("tbl_user_model", "user");
         $this->load->model("tbl_print_defaults", "pd");
         $this->load->model("tbl_m_allow", "ma");
+        $this->load->model("sales/tbl_sales_trans", "st");
 		$this->load->library("user_session");
 		$this->user_session = $this->user_session->checkUserSession();
 		$this->data["title"] = "Sales - Modern Award";
@@ -136,6 +137,22 @@ class Sales_transaction extends CI_Controller
             echo json_encode($params);
             return;
         }
+        
+        echo json_encode($params);
+        return;
+    }
+    
+    public function processSalesModern()
+    {
+        $post = $this->input->post(null, true);
+        $params["status"] = true;
+        if (!$this->smd->processSalesModern($post)) {
+            $params["status"] = false;
+            echo json_encode($params);
+            return;
+        }
+        
+        $params["awards"] = $this->st->getTransaction($post["company_no"]);
         
         echo json_encode($params);
         return;

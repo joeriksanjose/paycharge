@@ -1002,7 +1002,7 @@
           <li class="active"><a href="">Modern Awards</a></li>
           <li><a href="<?php echo base_url("sales/home/agreements/".$client_info["client_no"]) ?>">Client Agreements</a></li>
         </ul>
-        <div id="myTabContent" class="tab-content">
+        <div id="myTabContent">
             <div class="tab-pane fade active in" id="con">
                 <button type="button" id="add-new-modern" class="btn"><i class="icon-plus"></i> Add new modern award</button>
                 <div class="input-append pull-right">
@@ -1019,6 +1019,11 @@
                     <?php echo $status_msg ?>
                 </div>
                 <?php endif ; ?>
+                
+                <div class="alert alert-success"id="div-process" style="display:none">
+                    Award has been processed.
+                </div>
+                
                 <table class="table table-condensed table-condensed table-hover table-bordered" style="font-size: 12px;" id="tblAwards">
                     <thead>
                         <tr>
@@ -1026,6 +1031,7 @@
                             <th>Award Name</th>
                             <th>Client</th>
                             <th>Date of Quotation</th>
+                            <th>Process Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -1037,20 +1043,40 @@
                                 <td><?php echo $award["transaction_name"] ?></td>
                                 <td><?php echo $award["company_name"] ?></td>
                                 <td><?php echo date("d/m/Y", strtotime($award["date_of_quotation"])) ?></td>
+                                <td><?php echo $award["swi_process"] ?></td>
                                 <td>
                                     <!-- <button type="button" class="btn btn-mini ok-award-btn" edit-id="<?php echo $award["trans_no"] ?>">
                                         <i class="icon-ok"></i>
                                     </button> -->
-                                    
-                                    <button type="button" class="btn btn-mini edit-award-btn" edit-id="<?php echo $award["trans_no"] ?>">
-                                        <i class="icon-edit"></i>
-                                    </button>
-                                    <a target="_blank" href="<?php echo base_url("reports/rate_confirmation/print_modern/".$award["trans_no"]."/".$award["modern_award_no"]) ?>" class="btn btn-mini">
-                                        <i class="icon-print"></i>
-                                    </a>
-                                    <button type="button" del-id="<?php echo $award["trans_no"] ?>" class="btn btn-mini btn-danger delete-award-btn">
-                                        <i class="icon-trash icon-white"></i>
-                                    </button>
+                                    <div class="btn-group">
+                                      <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">
+                                        Action <span class="caret"></span>
+                                      </a>
+                                      <ul class="dropdown-menu pull-right">
+                                          <?php if(!$award["swi_process"]):?>
+                                          <li>
+                                            <a href="#" class="process-award-btn" process-id="<?php echo $award["trans_no"] ?>">
+                                                <i class="icon-ok"></i> Process
+                                            </a>
+                                        </li>
+                                        <?php endif;?>
+                                        <li>
+                                            <a href="#" class="edit-award-btn" edit-id="<?php echo $award["trans_no"] ?>">
+                                                <i class="icon-edit"></i> Edit
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a target="_blank" href="<?php echo base_url("reports/rate_confirmation/print_modern/".$award["trans_no"]."/".$award["modern_award_no"]) ?>">
+                                                <i class="icon-print"></i> View
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" del-id="<?php echo $award["trans_no"] ?>" class="delete-award-btn">
+                                                <i class="icon-trash"></i> Delete   
+                                            </a>
+                                        </li>
+                                      </ul>
+                                    </div>
                                 </td>
                             </tr>
                         <?php endforeach ?>
@@ -1080,6 +1106,23 @@
     </div>
 </div>
 <!-- END DELETE MODAL -->
+
+<!-- PROCESS MODAL -->
+<div id="processModal" class="modal hide fade" tabindex="-1" role="dialog">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Process Confirmation</h3>
+    </div>
+    <div class="modal-body">
+        <p>Are you sure you want to process this modern award?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" id="process-award-btn-modal">Process</button>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    </div>
+</div>
+<!-- END DELETE MODAL -->
+
 
 <!-- POSITION MODAL -->
 <div id="positionModal" class="modal hide fade" tabindex="-1" role="dialog">

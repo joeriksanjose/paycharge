@@ -1,5 +1,75 @@
 $(document).ready(function(){
     base_url = $("#base_url").val();
+    var client_no = $("#hid_client_no").val();
+    
+    var process_id;
+    $(".process-award-btn").live("click", function(){
+        
+        process_id = $(this).attr("process-id");
+        
+        $("#processModal").modal("show");
+    });
+    
+    $("#process-award-btn-modal").click(function(){
+        
+        $.post(base_url+"sales_transaction/processSalesModern", {trans_no:process_id, company_no:client_no}, function(data){
+           res = $.parseJSON(data);
+           if (!res.status) {
+              alert("Database Error");
+           } else {
+               
+                str = '<thead>'
+                str = str + '<tr>'
+                str = str + '<th>Trans No.</th>'
+                str = str + '<th>Award Name</th>'
+                str = str + '<th>Client</th>'
+                str = str + '<th>Date of Quotation</th>'
+                str = str + '<th>Process Status</th>'
+                str = str + '<th>Action</th>'
+                str = str + '</tr>'
+                str = str + '</thead>'
+                if (res.awards.length > 0) {
+                    $.each(res.awards, function(i, item){
+                        str = str + '<tr>';
+                        str = str + '<td>'+item.trans_no+'</td>'
+                        str = str + '<td>'+item.transaction_name+'</td>'
+                        str = str + '<td>'+item.company_name+'</td>'
+                        str = str + '<td>'+item.date_of_quotation+'</td>'
+                        str = str + '<td>'+item.swi_process+'</td>'
+                        str = str + '<td>'
+                        str = str + '<div class="btn-group">'
+                        str = str + '<a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">'
+                        str = str + 'Action <span class="caret"></span></a>'
+                        str = str + '<ul class="dropdown-menu pull-right">'
+                        if(item.swi_process == 0){
+                            str = str + '<li><a href="#" class="process-award-btn" process-id="'+item.trans_no+'">'
+                            str = str + '<i class="icon-ok"></i> Process</a></li>'
+                        }
+                        str = str + '<li><a href="#" class="edit-award-btn" edit-id="'+item.trans_no+'">'
+                        str = str + '<i class="icon-edit"></i> Edit</a></li>'
+                        str = str + '<li><a target="_blank" href="'+base_url+'reports/rate_confirmation/print_modern/'+item.trans_no+'/'+item.modern_award_no+'">'
+                        str = str + '<i class="icon-print"></i> View</a></li>'
+                        str = str + '<li>'
+                        str = str + '<a href="#" del-id="'+item.trans_no+'" class="delete-award-btn">'
+                        str = str + '<i class="icon-trash"></i> Delete</a></li></ul></div>'   
+                        str = str + '</td>'
+                        str = str + '</tr>';
+                    })
+                } else {
+                    str = str + '<tr><td colspan="5">No results found.</td></tr>'
+                }
+                
+                $("#tblAwards").html(str);            
+
+           }
+           
+           $("#processModal").modal("hide");
+           $("#div-process").css("display", "");
+           $("#div-process").css("display", "");
+           
+           
+        });
+    });
     
     
     $("#btn-save-only").click(function(){
@@ -148,7 +218,7 @@ $(document).ready(function(){
         
     });
     
-    
+    // search
     $("#searchAwardtInput").keypress(function(event){
         if (event.keyCode == 13) {
             $("#searchAwardBtn").click();
@@ -165,6 +235,7 @@ $(document).ready(function(){
             str = str + '<th>Award Name</th>'
             str = str + '<th>Client</th>'
             str = str + '<th>Date of Quotation</th>'
+            str = str + '<th>Process Status</th>'
             str = str + '<th>Action</th>'
             str = str + '</tr>'
             str = str + '</thead>'
@@ -175,12 +246,23 @@ $(document).ready(function(){
                     str = str + '<td>'+item.transaction_name+'</td>'
                     str = str + '<td>'+item.company_name+'</td>'
                     str = str + '<td>'+item.date_of_quotation+'</td>'
+                    str = str + '<td>'+item.swi_process+'</td>'
                     str = str + '<td>'
-                    str = str + '<button type="button" class="btn btn-mini edit-award-btn" edit-id="'+item.trans_no+'"><i class="icon-edit"></i></button>'
-                    str = str + ' <a target="_blank" href="'+base_url+'reports/rate_confirmation/print_modern/'+item.trans_no+'/'+item.modern_award_no+'" class="btn btn-mini">'
-                    str = str + '<i class="icon-print"></i>'
-                    str = str + '</a>'
-                    str = str + ' <button type="button" del-id="'+item.trans_no+'" class="btn btn-mini btn-danger delete-award-btn"><i class="icon-trash icon-white"></i></button>'
+                    str = str + '<div class="btn-group">'
+                    str = str + '<a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">'
+                    str = str + 'Action <span class="caret"></span></a>'
+                    str = str + '<ul class="dropdown-menu pull-right">'
+                    if(item.swi_process == 0){
+                        str = str + '<li><a href="#" class="process-award-btn" process-id="'+item.trans_no+'">'
+                        str = str + '<i class="icon-ok"></i> Process</a></li>'
+                    }
+                    str = str + '<li><a href="#" class="edit-award-btn" edit-id="'+item.trans_no+'">'
+                    str = str + '<i class="icon-edit"></i> Edit</a></li>'
+                    str = str + '<li><a target="_blank" href="'+base_url+'reports/rate_confirmation/print_modern/'+item.trans_no+'/'+item.modern_award_no+'">'
+                    str = str + '<i class="icon-print"></i> View</a></li>'
+                    str = str + '<li>'
+                    str = str + '<a href="#" del-id="'+item.trans_no+'" class="delete-award-btn">'
+                    str = str + '<i class="icon-trash"></i> Delete</a></li></ul></div>'   
                     str = str + '</td>'
                     str = str + '</tr>';
                 })

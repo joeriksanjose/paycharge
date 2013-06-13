@@ -188,11 +188,11 @@ class Transactions extends CI_Controller
     {
         $post = $this->input->post(null, true);
         
-        $where = array("trans_no" => $post["trans_no"]);
-        $check_transno = $this->md->checkTransno("trans_no", $where, "tbl_rate_increase");
+        // $where = array("trans_no" => $post["trans_no"]);
+        // $check_transno = $this->md->checkRateTransno($where);
         $award_no = $post["award_no"];
         
-        if($check_transno==0){
+        // if($check_transno==0){
             
             $post["created_at"] = $this->convertToYMD($post["created_at"]);
             
@@ -207,19 +207,14 @@ class Transactions extends CI_Controller
             unset($post["hid-edit-id"]);
             
             if (!$this->md->saveRate($post)) {
-                $this->data["status"] = 0;
-                $this->data["status_msg"] = "<b>Error! </b> Cannot save new rate.";
+                $this->session->set_userdata("status", 0);
+                $this->session->set_userdata("status_msg", "<b>Error! </b> Cannot save new rate.");
             } else {
-                $this->data["status"] = 1;
-                $this->data["status_msg"] = "<b>Done! </b> New rate was successfully saved.";
+                $this->session->set_userdata("status", 0);
+                $this->session->set_userdata("status_msg", "<b>Done! </b> New rate was successfully saved.");
             }
            
-        } else {
-            $this->data["status"] = 0;
-            $this->data["status_msg"] = "<b>Error! </b> Transaction number already exists.";
-        }
-        
-        echo json_encode($this->data);
+        redirect($_SERVER["HTTP_REFERER"]);
     }
     
     public function updateRate()
@@ -349,6 +344,19 @@ class Transactions extends CI_Controller
         if($this->md->checkTransNo($post)){
             $this->data["status"] = 0;
             $this->data["status_msg"] = "<b>Error! </b> Modern Award number already exists.";
+        } else {
+            $this->data["status"] = 1;
+        }
+        
+        echo json_encode($this->data);  
+    }
+    
+    function checkRateTransNo(){
+        
+        $post = $this->input->post(null, true);
+        if($this->md->checkRateTransno($post)){
+            $this->data["status"] = 0;
+            $this->data["status_msg"] = "<b>Error! </b> Transaction number already exists.";
         } else {
             $this->data["status"] = 1;
         }
