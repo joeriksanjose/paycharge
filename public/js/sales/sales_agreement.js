@@ -28,11 +28,32 @@ $(document).ready(function(){
                     str = str + '<td>'+item.company_name+'</td>'
                     str = str + '<td>'+item.date_of_quotation+'</td>'
                     str = str + '<td>'
-                    str = str + '<button type="button" class="btn btn-mini edit-award-btn" edit-id="'+item.trans_no+'"><i class="icon-edit"></i></button>'
-                    str = str + ' <a target="_blank" href="'+base_url+'reports/rate_confirmation/print_client/'+item.trans_no+'" class="btn btn-mini">'
-                    str = str + '<i class="icon-print"></i>'
-                    str = str + '</a>'
-                    str = str + ' <button type="button" class="btn btn-mini btn-danger delete-award-btn" del-id="'+item.trans_no+'"><i class="icon-trash icon-white"></i></button>'
+                    str = str + '<div class="btn-group">'+
+                    '<a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">'+
+                    'Action <span class="caret"></span>'+
+                    '</a>'+
+                    '<ul class="dropdown-menu pull-right">'+
+                    '<li><a href="#" class="edit-award-btn" edit-id="'+item.trans_no+'"><i class="icon-edit"></i> Edit</a></li>'+
+                    '<li>'+
+                    '<a target="_blank" href="'+base_url+'reports/rate_confirmation/print_client/'+item.trans_no+'">'+
+                    '<i class="icon-print"></i> Rate Confirmation'+
+                    '</a>'+
+                    '</li>'+
+                    '<li>'+
+                    '<a target="_blank" href="'+base_url+'reports/allowance/print_client/'+item.trans_no+'">'+
+                    '<i class="icon-print"></i> Allowance'+
+                    '</a>'+
+                    '</li>'+
+                    '<li>'+
+                    '<a target="_blank" href="'+base_url+'reports/paycharge_rate/print_client/'+item.trans_no+'">'+
+                    '<i class="icon-print"></i> Pay and Charge Rate Schedule'+
+                    '</a>'+
+                    '</li>'+
+                    '<li>'+
+                    '<a href="#" class="delete-award-btn" del-id="'+item.trans_no+'"><i class="icon-trash"></i> Delete</a>'+
+                    '</li>'+
+                    '</ul>'+
+                    '</div>';
                     str = str + '</td>'
                     str = str + '</tr>';
                 })

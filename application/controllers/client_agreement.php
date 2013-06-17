@@ -625,7 +625,7 @@ class Client_agreement extends CI_Controller
                 $double = $full_time["double"] * 2.25;
                 $dt_12 = $full_time["DT1/2"] * 2.75;
                 $triple = $full_time["triple"] * 3.25;
-                break;                               
+                break;                                
         }
         
         return array(
@@ -919,16 +919,30 @@ class Client_agreement extends CI_Controller
             $dt_12 = $total_with_pay["DT1/2"] + $post["B_24"];
             $triple = $total_with_pay["triple"] + $post["B_24"];
         } else {
-            $normal = $total_with_pay["normal"] / (0.01 - ($post["B_24"]/100));
-            $early = $total_with_pay["early"] / (0.01 - ($post["B_24"]/100));
-            $afternoon = $total_with_pay["afternoon"] / (0.01 - ($post["B_24"]/100));
-            $night = $total_with_pay["night"] / (0.01 - ($post["B_24"]/100));
-            $fifty_shift = $total_with_pay["50%Shift"] / (0.01 - ($post["B_24"]/100));
-            $t_14 = $total_with_pay["T1/4"] / (0.01 - ($post["B_24"]/100));
-            $t_12 = $total_with_pay["T1/2"] / (0.01 - ($post["B_24"]/100));
-            $double = $total_with_pay["double"] / (0.01 - ($post["B_24"]/100));
-            $dt_12 = $total_with_pay["DT1/2"] / (0.01 - ($post["B_24"]/100));
-            $triple = $total_with_pay["triple"] / (0.01 - ($post["B_24"]/100));
+            if ($post["B_24"] == "") {
+                $normal = $total_with_pay["normal"];
+                $early = $total_with_pay["early"];
+                $afternoon = $total_with_pay["afternoon"];
+                $night = $total_with_pay["night"];
+                $fifty_shift = $total_with_pay["50%Shift"];
+                $t_14 = $total_with_pay["T1/4"];
+                $t_12 = $total_with_pay["T1/2"];
+                $double = $total_with_pay["double"];
+                $dt_12 = $total_with_pay["DT1/2"];
+                $triple = $total_with_pay["triple"];        
+            } else {
+                $percentage = 1 - ($post["B_24"]/100);
+                $normal = $total_with_pay["normal"] / $percentage;
+                $early = $total_with_pay["early"] / $percentage;
+                $afternoon = $total_with_pay["afternoon"] / $percentage;
+                $night = $total_with_pay["night"] / $percentage;
+                $fifty_shift = $total_with_pay["50%Shift"] / $percentage;
+                $t_14 = $total_with_pay["T1/4"] / $percentage;
+                $t_12 = $total_with_pay["T1/2"] / $percentage;
+                $double = $total_with_pay["double"] / $percentage;
+                $dt_12 = $total_with_pay["DT1/2"] / $percentage;
+                $triple = $total_with_pay["triple"] / $percentage;   
+            }
         }
         
         return array(

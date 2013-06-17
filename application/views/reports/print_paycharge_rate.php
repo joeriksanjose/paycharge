@@ -5,11 +5,11 @@
     
     <p>Thank you for giving <?php echo $company?> the opportunity to provide you with this quotation for the supply of Labour Hire and Recruitment Services.</p>
     <p>Labour Hire Services</p>
-    <p>LP Consulting Services’s Casual Staff are remunerated according to an appropriate industrial instrument. The following pay and charge rate schedules have been created using the:</p>
+    <p><?php echo $company?>’s Casual Staff are remunerated according to an appropriate industrial instrument. The following pay and charge rate schedules have been created using the:</p>
     
     
     <p><b><?php echo $modern["modern_award_name"]?></b></p>
-    <p>All terms and conditions that apply to this industrial instrument are required to be paid to LP Consulting Servicess Casual Staff, therefore any related entitlements or allowances are
+    <p>All terms and conditions that apply to this industrial instrument are required to be paid to <?php echo $company?> Casual Staff, therefore any related entitlements or allowances are
     to be charged to your organisation. The following conditions are applied to payments using the above mentioned instrument:</p>
     
     <table class="table table-bordered table-condensed">
@@ -1934,9 +1934,8 @@
     <?php endif;?>
 
     <p><i>* Please note that all hourly charge rates and entitlements are subject to 10% GST</i></p>
-    <p>The engagement of  LP Consulting Services Casual Staff are subject to the terms and conditions as outlined in the Terms and Conditions of Temporary</p>
-    <p>Placement version 2004 document which has been provided to you. By engaging  LP Consulting Services  Casual Staff you agree to the terms and conditions</p>
-    <p>set out.</p>
+    <p>The engagement of <?php echo $company?> Casual Staff are subject to the terms and conditions as outlined in the Terms and Conditions of Temporary</p>
+    <p>Placement version 2004 document which has been provided to you. By engaging  <?php echo $company?> Casual Staff you agree to the terms and conditions set out.</p>
     
     <p>The following are examples of potential allowances and charges as per the rules of the instrument:</p>
     
@@ -1974,7 +1973,7 @@
     </table>
     
     <p>Permanent Placement Fees</p>
-    <p>LP Consulting Services 's recruitment fees are for the engagement of  LP Consulting Services  to effectively source suitable applicants and conduct the recruitment process required for your
+    <p><?php echo $company?>'s recruitment fees are for the engagement of <?php echo $company?> to effectively source suitable applicants and conduct the recruitment process required for your
     organisation to appoint an appropriate employee as per the position requirements established during briefing.</p>
     
     <p>The recruitment fee is a percentage of the salary package. The salary package includes base salary, superannuation, commission, performance related bonuses,
@@ -2039,11 +2038,11 @@
     
     
     <p>Confidentiality and Onward Referral - All resumes and introductions are for the sole use of you and your company. You can not disclose any information regarding the
-        candidate to any other party without our consent. Placement of any candidate presented by LP Consulting Services either verbally or in writing or by resume within six (6) months
+        candidate to any other party without our consent. Placement of any candidate presented by <?php echo $company?> either verbally or in writing or by resume within six (6) months
         of the date of introduction with either your client or through referring the candidate details to a third party will result in the full recruitment fee being charged.</p>
         
-    <p>Recruitment Guarantee - LP Consulting Services guarantees the employment of the successful candidate for a period as noted below. This is provided in the event of an employee
-       resigning or being terminated for any reason (with the exception of redundancy, retrenchment and/or a change of position specification). Under guarantee, LP Consulting Services
+    <p>Recruitment Guarantee - <?php echo $company?> guarantees the employment of the successful candidate for a period as noted below. This is provided in the event of an employee
+       resigning or being terminated for any reason (with the exception of redundancy, retrenchment and/or a change of position specification). Under guarantee, <?php echo $company?>
        will recruit for the same position specification at no charge. Should no suitable replacement be identified within the period as stated below, a full credit will be
        applied to your account for use on a future placement (must be used within 6 months).</p>
     

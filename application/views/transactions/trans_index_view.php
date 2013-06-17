@@ -514,7 +514,7 @@
                     <label class="control-label" for="print_company_no">Company</label>
                     <div class="controls controls-row">
                       <select id="print_company_no" name="print_company_no">
-                          <option value="1">Labour Power</option>
+                          <option value="1">Labourpower Recruitment Services</option>
                           <option value="2">LP Consulting Services</option>
                       </select>
                     </div>
@@ -580,174 +580,6 @@
                           <th><input type="checkbox" class="tblCheckbox" checked="true" id="dt_12" name="dt_12" value="1"> DT1/2</th>
                           <th><input type="checkbox" class="tblCheckbox" checked="true" id="triple" name="triple" value="1"> Triple</th>
                       </tr>
-                      <tr class="warning">
-                          <td>$ 13.16</td>
-                          <td>$ 13.16</td>
-                          <td>$ 13.16</td>
-                          <td>$ 13.16</td>
-                          <td>$ 13.16</td>
-                          <td>$ 13.16</td>
-                          <td>$ 13.16</td>
-                          <td>$ 13.16</td>
-                          <td>$ 13.16</td>
-                          <td>$ 13.16</td>
-                      </tr>
-                      <tr class="warning">
-                          <td>$ 3.29</td>
-                          <td>$ 3.29</td>
-                          <td>$ 3.29</td>
-                          <td>$ 3.29</td>
-                          <td>$ 3.29</td>
-                          <td>$ 1.32</td>
-                          <td>$ 1.32</td>
-                          <td>$ 1.32</td>
-                          <td>$ 1.32</td>
-                          <td>$ 1.32</td>
-                      </tr>
-                      <tr class="warning">
-                          <td>$ 0.00</td>
-                          <td>$ 2.06</td>
-                          <td>$ 2.88</td>
-                          <td>$ 4.94</td>
-                          <td>$ 8.23</td>
-                          <td>$ 0.00</td>
-                          <td>$ 0.00</td>
-                          <td>$ 0.00</td>
-                          <td>$ 0.00</td>
-                          <td>$ 0.00</td>
-                      </tr>
-                      <tr class="warning">
-                          <td>$ 16.45</td>
-                          <td>$ 18.51</td>
-                          <td>$ 19.33</td>
-                          <td>$ 21.39</td>
-                          <td>$ 24.68</td>
-                          <td>$ 18.10</td>
-                          <td>$ 21.72</td>
-                          <td>$ 28.96</td>
-                          <td>$ 36.20</td>
-                          <td>$ 43.44</td>
-                      </tr>
-                      <tr>
-                          <td>$ 1.48</td>
-                          <td>$ 1.67</td>
-                          <td>$ 1.74</td>
-                          <td>$ 1.93</td>
-                          <td>$ 2.22</td>
-                          <td>$ 0.00</td>
-                          <td>$ 0.00</td>
-                          <td>$ 0.00</td>
-                          <td>$ 0.00</td>
-                          <td>$ 0.00</td>
-                      </tr>
-                      <tr>
-                          <td>$ 0.00</td>
-                          <td>$ 0.00</td>
-                          <td>$ 0.00</td>
-                          <td>$ 0.00</td>
-                          <td>$ 0.00</td>
-                          <td>$ 0.00</td>
-                          <td>$ 0.00</td>
-                          <td>$ 0.00</td>
-                          <td>$ 0.00</td>
-                          <td>$ 0.00</td>
-                      </tr>
-                      <tr>
-                          <td>$ 0.18</td>
-                          <td>$ 0.20</td>
-                          <td>$ 0.21</td>
-                          <td>$ 0.23</td>
-                          <td>$ 0.27</td>
-                          <td>$ 0.18</td>
-                          <td>$ 0.22</td>
-                          <td>$ 0.29</td>
-                          <td>$ 0.36</td>
-                          <td>$ 0.43</td>
-                      </tr>
-                      <tr>
-                          <td>$ 0.90</td>
-                          <td>$ 1.01</td>
-                          <td>$ 1.05</td>
-                          <td>$ 1.17</td>
-                          <td>$ 1.35</td>
-                          <td>$ 0.91</td>
-                          <td>$ 1.09</td>
-                          <td>$ 1.45</td>
-                          <td>$ 1.81</td>
-                          <td>$ 2.17</td>
-                      </tr>
-                      <tr>
-                          <td>$ 0.04</td>
-                          <td>$ 0.04</td>
-                          <td>$ 0.04</td>
-                          <td>$ 0.04</td>
-                          <td>$ 0.04</td>
-                          <td>$ 0.04</td>
-                          <td>$ 0.04</td>
-                          <td>$ 0.04</td>
-                          <td>$ 0.04</td>
-                          <td>$ 0.04</td>
-                      </tr>
-                      <tr>
-                          <td>$ 1.26</td>
-                          <td>$ 1.41</td>
-                          <td>$ 1.47</td>
-                          <td>$ 1.63</td>
-                          <td>$ 1.88</td>
-                          <td>$ 1.27</td>
-                          <td>$ 1.52</td>
-                          <td>$ 2.03</td>
-                          <td>$ 2.53</td>
-                          <td>$ 3.04</td>
-                      </tr>
-                      <tr>
-                          <td>$ 20.31</td>
-                          <td>$ 22.84</td>
-                          <td>$ 23.84</td>
-                          <td>$ 28.39</td>
-                          <td>$ 30.44</td>
-                          <td>$ 20.50</td>
-                          <td>$ 24.59</td>
-                          <td>$ 32.77</td>
-                          <td>$ 40.94</td>
-                          <td>$ 49.12</td>
-                      </tr>
-                      <tr>
-                          <td>$ 1.07</td>
-                          <td>$ 1.20</td>
-                          <td>$ 1.25</td>
-                          <td>$ 1.39</td>
-                          <td>$ 1.60</td>
-                          <td>$ 1.08</td>
-                          <td>$ 1.29</td>
-                          <td>$ 1.72</td>
-                          <td>$ 2.15</td>
-                          <td>$ 2.59</td>
-                      </tr>
-                      <tr>
-                          <td>5.00 %</td>
-                          <td>5.00 %</td>
-                          <td>5.00 %</td>
-                          <td>5.00 %</td>
-                          <td>5.00 %</td>
-                          <td>5.00 %</td>
-                          <td>5.00 %</td>
-                          <td>5.00 %</td>
-                          <td>5.00 %</td>
-                          <td>5.00 %</td>
-                      </tr>
-                      <tr class="error">
-                          <td>$ 3.29</td>
-                          <td>$ 3.29</td>
-                          <td>$ 3.29</td>
-                          <td>$ 3.29</td>
-                          <td>$ 3.29</td>
-                          <td>$ 1.32</td>
-                          <td>$ 1.32</td>
-                          <td>$ 1.32</td>
-                          <td>$ 1.32</td>
-                          <td>$ 1.32</td>
-                      </tr>
                   </table>
               </div>
               <div class="span11">
@@ -764,48 +596,48 @@
                       </tr>
                       <tr>
                           <td><input type="checkbox" class="tblCheckbox" checked="true" value="1" id="p_day" name="p_day"> Day Shift</td>
-                          <td>$ 0.04</td><td>$ 7.14</td>
-                          <td>$ 0.09</td><td>$ 7.19</td>
-                          <td>$ 0.12</td><td>$ 7.23</td>
-                          <td>$ 0.15</td><td>$ 7.26</td>
-                          <td>$ 0.18</td><td>$ 7.29</td>
-                          <td>$ 0.08</td><td>$ 7.18</td>
+                          <td colspan="2"></td>
+                          <td colspan="2"></td>
+                          <td colspan="2"></td>
+                          <td colspan="2"></td>
+                          <td colspan="2"></td>
+                          <td colspan="2"></td>
                       </tr>
                       <tr>
                           <td><input type="checkbox" class="tblCheckbox" checked="true" value="1" id="p_early" name="p_early"> Early Shift</td>
-                          <td>$ 0.05</td><td>$ 7.16</td>
-                          <td>$ 0.09</td><td>$ 7.19</td>
-                          <td>$ 0.12</td><td>$ 7.23</td>
-                          <td>$ 0.15</td><td>$ 7.26</td>
-                          <td>$ 0.18</td><td>$ 7.29</td>
-                          <td>$ 0.08</td><td>$ 7.18</td>
+                          <td colspan="2"></td>
+                          <td colspan="2"></td>
+                          <td colspan="2"></td>
+                          <td colspan="2"></td>
+                          <td colspan="2"></td>
+                          <td colspan="2"></td>
                       </tr>
                       <tr>
                           <td><input type="checkbox" class="tblCheckbox" checked="true" value="1" id="p_afternoon" name="p_afternoon"> Afternoon Shift</td>
-                          <td>$ 0.08</td><td>$ 7.19</td>
-                          <td>$ 0.09</td><td>$ 7.19</td>
-                          <td>$ 0.12</td><td>$ 7.23</td>
-                          <td>$ 0.15</td><td>$ 7.26</td>
-                          <td>$ 0.18</td><td>$ 7.29</td>
-                          <td>$ 0.08</td><td>$ 7.18</td>
+                          <td colspan="2"></td>
+                          <td colspan="2"></td>
+                          <td colspan="2"></td>
+                          <td colspan="2"></td>
+                          <td colspan="2"></td>
+                          <td colspan="2"></td>
                       </tr>
                       <tr>
                           <td><input type="checkbox" class="tblCheckbox" checked="true" value="1" id="p_night" name="p_night"> Night Shift</td>
-                          <td>$ 0.04</td><td>$ 7.14</td>
-                          <td>$ 0.09</td><td>$ 7.19</td>
-                          <td>$ 0.12</td><td>$ 7.23</td>
-                          <td>$ 0.15</td><td>$ 7.26</td>
-                          <td>$ 0.18</td><td>$ 7.29</td>
-                          <td>$ 0.08</td><td>$ 7.18</td>
+                          <td colspan="2"></td>
+                          <td colspan="2"></td>
+                          <td colspan="2"></td>
+                          <td colspan="2"></td>
+                          <td colspan="2"></td>
+                          <td colspan="2"></td>
                       </tr>
                       <tr>
                           <td><input type="checkbox" class="tblCheckbox" checked="true" value="1" id="p_half" name="p_half"> 50% Shift</td>
-                          <td>$ 0.04</td><td>$ 7.146</td>
-                          <td>$ 0.09</td><td>$ 7.19</td>
-                          <td>$ 0.12</td><td>$ 7.23</td>
-                          <td>$ 0.15</td><td>$ 7.26</td>
-                          <td>$ 0.18</td><td>$ 7.29</td>
-                          <td>$ 0.08</td><td>$ 7.18</td>
+                          <td colspan="2"></td>
+                          <td colspan="2"></td>
+                          <td colspan="2"></td>
+                          <td colspan="2"></td>
+                          <td colspan="2"></td>
+                          <td colspan="2"></td>
                       </tr>
                   </table>
               </div>

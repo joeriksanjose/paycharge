@@ -1067,7 +1067,17 @@
                                         </li>
                                         <li>
                                             <a target="_blank" href="<?php echo base_url("reports/rate_confirmation/print_modern/".$award["trans_no"]."/".$award["modern_award_no"]) ?>">
-                                                <i class="icon-print"></i> View
+                                                <i class="icon-print"></i> Rate Confirmation
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a target="_blank" href="<?php echo base_url("reports/allowance/print_modern/".$award["trans_no"]."/".$award["modern_award_no"]) ?>">
+                                                <i class="icon-print"></i> Allowance
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a target="_blank" href="<?php echo base_url("reports/paycharge_rate/print_modern/".$award["trans_no"]."/".$award["modern_award_no"]) ?>">
+                                                <i class="icon-print"></i> Pay Charge Rate Schedule
                                             </a>
                                         </li>
                                         <li>
