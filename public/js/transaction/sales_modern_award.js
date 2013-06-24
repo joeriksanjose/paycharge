@@ -473,7 +473,6 @@ $(document).ready(function(){
                company_no = res.charge_rate.company_no;
                super1 = res.charge_rate.B_14;
                work_cover = res.charge_rate.B_15;
-               
                if (res.charge_rate.swi_process != 1) {
                    $("#btn-save-process-update").show();
                    $("#btn-save-process-update").val("Update and Process");

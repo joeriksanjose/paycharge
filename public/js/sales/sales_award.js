@@ -11,7 +11,8 @@ $(document).ready(function(){
     });
     
     $("#process-award-btn-modal").click(function(){
-        
+        $("#processModal").modal("hide");
+        $("#loadingModal").modal("show");
         $.post(base_url+"sales_transaction/processSalesModern", {trans_no:process_id, company_no:client_no}, function(data){
            res = $.parseJSON(data);
            if (!res.status) {
@@ -69,7 +70,7 @@ $(document).ready(function(){
 
            }
            
-           $("#processModal").modal("hide");
+           $("#loadingModal").modal("hide");
            $("#div-process").css("display", "");
            $("#div-process").css("display", "");
            

@@ -7,11 +7,17 @@ class Home extends CI_Controller {
         parent::__construct();
         $this->load->model("libraries/tbl_contacts", "cont");
     }
+    
+    public function testEmail()
+    {
+        $this->load->library("user_session");
+        $this->user_session->notifEmail("test", "test");
+    }
 
     public function index()
     {
-        if ($this->session->userdata("user_id") != "") {
-            redirect(base_url("transactions"));
+        if ($this->session->userdata("contact_no") != "") {
+            redirect(base_url("client/pcs"));
         }
         
         $data["login_error"] = false;

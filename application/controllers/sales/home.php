@@ -15,16 +15,16 @@ class Home extends CI_Controller {
         $this->load->model("sales/tbl_sales_trans", "st");
         $this->load->model("tbl_client_agreement", "ca");
         $this->load->library("user_session");
-        $this->user_session = $this->user_session->checkUserSession();
+        $this->user_sess = $this->user_session->checkUserSession();
         $this->data["date_slash"] = mdate("%d/%m/%Y");
-        if ($this->user_session["is_admin"]) {
+        if ($this->user_sess["is_admin"]) {
             redirect(base_url());
         }
         
         $this->data["title"] = "System - Sales";
-        $this->data["username"] = $this->user_session["username"];
-        $this->data["is_admin"] = $this->user_session["is_admin"];
-        $this->user_data = $this->user->getUserById($this->user_session["user_id"]);
+        $this->data["username"] = $this->user_sess["username"];
+        $this->data["is_admin"] = $this->user_sess["is_admin"];
+        $this->user_data = $this->user->getUserById($this->user_sess["user_id"]);
     }
     
     public function index()

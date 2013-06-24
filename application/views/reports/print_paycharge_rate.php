@@ -4,7 +4,7 @@
 <div class="row">
     
     <p>Thank you for giving <?php echo $company?> the opportunity to provide you with this quotation for the supply of Labour Hire and Recruitment Services.</p>
-    <p>Labour Hire Services</p>
+    <p><b>Labour Hire Services</b></p>
     <p><?php echo $company?>’s Casual Staff are remunerated according to an appropriate industrial instrument. The following pay and charge rate schedules have been created using the:</p>
     
     
@@ -56,14 +56,10 @@
                 <td>Night Shift Allowance</td>
                 <td><?php echo $modern["B_36"]?></td>
             </tr>
-            <tr>
-                <td>50% Shift</td>
-                <td><?php echo $modern["B_38"]?></td>
-            </tr>
         </tbody>
     </table>
     
-    <p>The charge rates shown on the following pages are inclusive of all statutory requirements including:</p>
+    <p>The charge rates below are inclusive of all statutory requirements including:</p>
     
     <table cellpadding="5">
         <tr>
@@ -1934,8 +1930,8 @@
     <?php endif;?>
 
     <p><i>* Please note that all hourly charge rates and entitlements are subject to 10% GST</i></p>
-    <p>The engagement of <?php echo $company?> Casual Staff are subject to the terms and conditions as outlined in the Terms and Conditions of Temporary</p>
-    <p>Placement version 2004 document which has been provided to you. By engaging  <?php echo $company?> Casual Staff you agree to the terms and conditions set out.</p>
+    <p>The engagement of <?php echo $company?> Casual Staff are subject to the terms and conditions as outlined in the Terms and Conditions of Temporary 
+        Placement version 2004 document which has been provided to you. By engaging  <?php echo $company?> Casual Staff you agree to the terms and conditions set out.</p>
     
     <p>The following are examples of potential allowances and charges as per the rules of the instrument:</p>
     
@@ -1972,7 +1968,7 @@
         </tr>
     </table>
     
-    <p>Permanent Placement Fees</p>
+    <p><b>Permanent Placement Fees</b></p>
     <p><?php echo $company?>'s recruitment fees are for the engagement of <?php echo $company?> to effectively source suitable applicants and conduct the recruitment process required for your
     organisation to appoint an appropriate employee as per the position requirements established during briefing.</p>
     
@@ -2046,13 +2042,12 @@
        will recruit for the same position specification at no charge. Should no suitable replacement be identified within the period as stated below, a full credit will be
        applied to your account for use on a future placement (must be used within 6 months).</p>
     
-    <p>Guarantee</p>
-    <p>Days</p>
-    <p>Terms and Condition</p>
+    <p>Guarantee Period <?php echo $charge["D_38"] ?> Days</p>
+    <p>Terms and Conditions</p>
     <p>* All introductions are confidential and for the sole use of you and your company.</p>
-    <p>* Advertising will be lodged free of charge, however some print media may be charged to you upon agreement</p>
-    <p>* Invoices are payable 7 days from the date of invoice</p>
-    <p>* The guarantee is void if payment of the permanent placement fee is not received within 14 days of the invoice date</p>
+    <p>* Advertising will be lodged free of charge, however some print media may be charged to you upon agreement.</p>
+    <p>* Invoices are payable 7 days from the date of invoice.</p>
+    <p>* The guarantee is void if payment of the permanent placement fee is not received within 14 days of the invoice date.</p>
     
     <p>Please acknowledge your acceptance of the pay and charge rate schedule by signing and returning this document.</p>
     

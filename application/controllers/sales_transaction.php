@@ -26,14 +26,15 @@ class Sales_transaction extends CI_Controller
 		$this->load->model("tbl_sales_modern_award", "smd");
         $this->load->model("tbl_user_model", "user");
         $this->load->model("tbl_print_defaults", "pd");
+        $this->load->model("libraries/tbl_client_contacts", "cc");
         $this->load->model("tbl_m_allow", "ma");
         $this->load->model("sales/tbl_sales_trans", "st");
 		$this->load->library("user_session");
-		$this->user_session = $this->user_session->checkUserSession();
+		$this->user_sess = $this->user_session->checkUserSession();
 		$this->data["title"] = "Sales - Modern Award";
 		$this->data["username"] = $this->session->userdata("username");
-        $this->data["is_admin"] = $this->user_session["is_admin"];
-        $this->user_data = $this->user->getUserById($this->user_session["user_id"]);
+        $this->data["is_admin"] = $this->user_sess["is_admin"];
+        $this->user_data = $this->user->getUserById($this->user_sess["user_id"]);
 	}
     
     public function getAwardInfo(){
@@ -154,6 +155,30 @@ class Sales_transaction extends CI_Controller
         
         $params["awards"] = $this->st->getTransaction($post["company_no"]);
         
+        // email notification
+        $award = $this->smd->get_charge_rate_info(array("trans_no" => $post["trans_no"]));
+        $print_def = $this->pd->getPrintsByTransNo($award["modern_award_no"]);
+        if($print_def["print_company_no"] == 1){
+            $company = "Labourpower Recruitment Services";
+        } else if($print_def["print_company_no"] == 2){
+            $company = "LP Consulting Services";
+        }
+        $contacts = $this->cc->getAllContactInfo($post["company_no"]);
+        foreach ($contacts as $contact) {
+            $to = "jesanjose@gmail.com";
+            $subject = "Notice to client of rates being submitted for approval";
+            $message = "Dear ".$contact["first_name"]." ".$contact["last_name"]."\n\n";
+            $message .= "Thank you for giving ".$company." the opportunity to provide you with this quotation for the supply of Labour Hire & Recruitment Services.\n\n";
+            $message .= "Please go to http://ratescalc.labourpower.com/client and log in to approve the current rates. Your log in details are listed below:\n\n\n";
+            $message .= "Client No : ".$contact["contact_no"]."\n";
+            $message .= "Username : ".$contact["username"]."\n";
+            $message .= "Password : ".$contact["password"]."\n\n";
+            $message .= "If you have any queries please do not hesitate to contact your ".$company." representative.\n\n";
+            $message .= "Kind Regards\n\n";
+            $message .= $company;
+            $this->user_session->notifEmail($subject, $message, $to);   
+        }
+        
         echo json_encode($params);
         return;
     }
@@ -223,6 +248,30 @@ class Sales_transaction extends CI_Controller
         $post["date_of_quotation"] = $this->convertToYMD($post["date_of_quotation"]);
         
         $this->smd->save($post);
+        
+        if ($post["swi_process"] == 1) {
+            $print_def = $this->pd->getPrintsByTransNo($post["modern_award_no"]);
+            if($print_def["print_company_no"] == 1){
+                $company = "Labourpower Recruitment Services";
+            } else if($print_def["print_company_no"] == 2){
+                $company = "LP Consulting Services";
+            }
+            $contacts = $this->cc->getAllContactInfo($post["company_no"]);
+            foreach ($contacts as $contact) {
+                $to = "jesanjose@gmail.com";
+                $subject = "Notice to client of rates being submitted for approval";
+                $message = "Dear ".$contact["first_name"]." ".$contact["last_name"]."\n\n";
+                $message .= "Thank you for giving ".$company." the opportunity to provide you with this quotation for the supply of Labour Hire & Recruitment Services.\n\n";
+                $message .= "Please go to http://ratescalc.labourpower.com/client and log in to approve the current rates. Your log in details are listed below:\n\n\n";
+                $message .= "Client No : ".$contact["contact_no"]."\n";
+                $message .= "Username : ".$contact["username"]."\n";
+                $message .= "Password : ".$contact["password"]."\n\n";
+                $message .= "If you have any queries please do not hesitate to contact your ".$company." representative.\n\n";
+                $message .= "Kind Regards\n\n";
+                $message .= $company;
+                $this->user_session->notifEmail($subject, $message, $to);   
+            }
+        }
 		
 		if ($this->db->trans_status() === false) {
 			log_message("Transaction failed (tbl_charge_rate, tpsbl_payrate)");
@@ -305,6 +354,30 @@ class Sales_transaction extends CI_Controller
         $post["date_of_quotation"] = $this->convertToYMD($post["date_of_quotation"]);
         
         $this->smd->update($post["trans_no"], $post);
+        
+        if ($post["swi_process"] == 1) {
+            $print_def = $this->pd->getPrintsByTransNo($post["modern_award_no"]);
+            if($print_def["print_company_no"] == 1){
+                $company = "Labourpower Recruitment Services";
+            } else if($print_def["print_company_no"] == 2){
+                $company = "LP Consulting Services";
+            }
+            $contacts = $this->cc->getAllContactInfo($post["company_no"]);
+            foreach ($contacts as $contact) {
+                $to = "jesanjose@gmail.com";
+                $subject = "Notice to client of rates being submitted for approval";
+                $message = "Dear ".$contact["first_name"]." ".$contact["last_name"]."\n\n";
+                $message .= "Thank you for giving ".$company." the opportunity to provide you with this quotation for the supply of Labour Hire & Recruitment Services.\n\n";
+                $message .= "Please go to http://ratescalc.labourpower.com/client and log in to approve the current rates. Your log in details are listed below:\n\n\n";
+                $message .= "Client No : ".$contact["contact_no"]."\n";
+                $message .= "Username : ".$contact["username"]."\n";
+                $message .= "Password : ".$contact["password"]."\n\n";
+                $message .= "If you have any queries please do not hesitate to contact your ".$company." representative.\n\n";
+                $message .= "Kind Regards\n\n";
+                $message .= $company;
+                $this->user_session->notifEmail($subject, $message, $to);   
+            }
+        }
         
         if ($this->db->trans_status() === false) {
             log_message("Transaction failed (tbl_charge_rate, tpsbl_payrate)");

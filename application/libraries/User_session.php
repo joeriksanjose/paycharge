@@ -1,7 +1,30 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class User_session extends CI_Controller
-{
+{    
+    public function notifEmail($subject, $message, $to)
+    {
+        $config["protocol"] = "smtp";
+        $config["smtp_host"] = "server.datalinkpacific.com.au";
+        $config["smtp_user"] = "ratescal";
+        $config["smtp_pass"] = "Tgu48wuIa";
+        $config["smtp_port"] = 26;
+        $config["smtp_timeout"] = 10;
+        $config['mailtype'] = "html";
+        $config['charset'] = 'iso-8859-1';
+        $config['wordwrap'] = TRUE;
+        $config["mailtype"] = "html";
+        
+        $this->load->library('email', $config);
+        
+        $this->email->from('no-reply@labourpower.com', 'Labourpower');
+        $this->email->to($to);  
+        $this->email->subject($subject);
+        $this->email->message(nl2br($message));  
+        
+        $this->email->send();
+    }
+    
     public function checkUserSession()
     {
         $user_session = $this->session->all_userdata();
