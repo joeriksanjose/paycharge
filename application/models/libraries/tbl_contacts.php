@@ -151,8 +151,9 @@ class Tbl_contacts extends CI_model{
     }
     
     public function getAward($post){
-        
+        $where2 = array("swi_process" => 1);
         $this->db->where($post);
+        $this->db->where($where2);
         return $this->db->get("tbl_charge_rate")->result_array();
     }
     
@@ -161,11 +162,11 @@ class Tbl_contacts extends CI_model{
         $date = date("Y-m-d");
         $sql = "SELECT * "
               ."FROM tbl_rate_increase r "
-              ."where created_at >= '$date' and "
-              ."trans_no = '$trans_no' "
+              ."where created_at >= ? and "
+              ."trans_no = ? "
               ."order by created_at";
               
-        $result = $this->db->query($sql)->result_array();   
+        $result = $this->db->query($sql, array($date, $trans_no))->result_array();   
                
         return $result;
     }
@@ -175,13 +176,24 @@ class Tbl_contacts extends CI_model{
         $date = date("Y-m-d");
         $sql = "SELECT * "
               ."FROM tbl_rate_increase r "
-              ."where created_at <= '$date' and "
-              ."trans_no = '$trans_no' "
+              ."where created_at <= ? and "
+              ."trans_no = ? "
               ."order by created_at";
               
-        $result = $this->db->query($sql)->result_array();   
+        $result = $this->db->query($sql, array($date, $trans_no))->result_array();   
                
         return $result;
+    }
+    
+    public function approveRate($trans_no)
+    {
+        $sql = "UPDATE tbl_charge_rate set is_approved = 1 WHERE trans_no = ?";
+        if ($this->db->query($sql, array($trans_no))) {
+            $sql2 = "SELECT company_no FROM tbl_charge_rate WHERE trans_no = ?";
+            return $this->db->query($sql2, array($trans_no))->row_array();
+        }
+        
+        return false;
     }
     /* end log in clients */
 }

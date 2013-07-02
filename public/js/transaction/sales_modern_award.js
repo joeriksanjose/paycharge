@@ -476,6 +476,8 @@ $(document).ready(function(){
                if (res.charge_rate.swi_process != 1) {
                    $("#btn-save-process-update").show();
                    $("#btn-save-process-update").val("Update and Process");
+               } else {
+                   $("#btn-save-process-update").hide();
                }
 
                $("#cmb-company").val(company_no).attr("selected", "selected");

@@ -27,13 +27,16 @@ class Client_agreement extends CI_Controller
         $this->load->model("tbl_modern_award", "md");
         $this->load->model("tbl_user_model", "user");
         $this->load->model("tbl_m_allow", "ma");
+        $this->load->model("sales/tbl_sales_trans", "st");
+        $this->load->model("tbl_print_defaults", "pd");
+        $this->load->model("libraries/tbl_client_contacts", "cc");
         $this->load->library("user_session");
-		$this->user_session = $this->user_session->checkUserSession();
+		$this->user_sess = $this->user_session->checkUserSession();
 		$this->data["title"] = "Sales - Client Agreement";
 		$this->data["username"] = $this->session->userdata("username");
-		$this->data["is_admin"] = $this->user_session["is_admin"];
+		$this->data["is_admin"] = $this->user_sess["is_admin"];
 		$this->data["date_slash"] = mdate("%d/%m/%Y");
-		$this->user_data = $this->user->getUserById($this->user_session["user_id"]);
+		$this->user_data = $this->user->getUserById($this->user_sess["user_id"]);
 	}
 	
 	/* RATE INCREASE */
@@ -54,7 +57,7 @@ class Client_agreement extends CI_Controller
         $award_info = $this->ca->get_charge_rate_info(array("trans_no" => $modern_award_no));
         $this->data["award_info"] = $award_info;
         $this->data["upcoming_rate_increase"] = $this->md->getUpcomingRateIncrease($award_info["transaction_name"]);
-        if ($this->user_session["is_admin"]) {
+        if ($this->user_sess["is_admin"]) {
             $this->data["header"] = $this->load->view("header", $this->data, true);
             $this->data["footer"] = $this->load->view("footer", $this->data, true);
         } else {
@@ -207,7 +210,7 @@ class Client_agreement extends CI_Controller
 	
 	public function index()
 	{	
-		if ($this->user_session["is_admin"]) {
+		if ($this->user_sess["is_admin"]) {
             $this->data["header"] = $this->load->view("header", $this->data, true);
             $this->data["footer"] = $this->load->view("footer", $this->data, true);
         } else {
@@ -239,15 +242,63 @@ class Client_agreement extends CI_Controller
 		$this->load->view("sales/client_agreement_view", $this->data);
 	}
     
+    public function processSalesModern()
+    {
+        $post = $this->input->post(null, true);
+        $params["status"] = true;
+        if (!$this->ca->processSalesModern($post)) {
+            $params["status"] = false;
+            echo json_encode($params);
+            return;
+        }
+        
+        $params["awards"] = $this->st->getTransaction($post["company_no"], 2);
+        
+        // email notification
+        $award = $this->ca->get_charge_rate_info(array("trans_no" => $post["trans_no"]));
+        $print_def = $this->pd->getPrintsByTransNo($award["trans_no"]);
+        if($print_def["print_company_no"] == 1){
+            $company = "Labourpower Recruitment Services";
+        } else if($print_def["print_company_no"] == 2){
+            $company = "LP Consulting Services";
+        }
+        $contacts = $this->cc->getAllContactInfo($post["company_no"]);
+        foreach ($contacts as $contact) {
+            $to = "jesanjose@gmail.com";
+            $subject = "Notice to client of rates being submitted for approval";
+            $message = "Dear ".$contact["first_name"]." ".$contact["last_name"]."\n\n";
+            $message .= "Thank you for giving ".$company." the opportunity to provide you with this quotation for the supply of Labour Hire & Recruitment Services.\n\n";
+            $message .= "Please go to http://ratescalc.labourpower.com/client and log in to approve the current rates. Your log in details are listed below:\n\n\n";
+            $message .= "Client No : ".$contact["contact_no"]."\n";
+            $message .= "Username : ".$contact["username"]."\n";
+            $message .= "Password : ".$contact["password"]."\n\n";
+            $message .= "If you have any queries please do not hesitate to contact your ".$company." representative.\n\n";
+            $message .= "Kind Regards\n\n";
+            $message .= $company;
+            $this->user_session->notifEmail($subject, $message, $to);   
+        }
+        
+        echo json_encode($params);
+        return;
+    }
+
 	public function getTransNo(){
 		$sql=$this->ca->getTransNo();
 		
 		echo json_encode($sql);
 	}
+    
+    public function saveAndProcess(){
+        $_POST["swi_process"] = 1;
+        $this->save();
+    }
+    
     public function save()
     {
         $post = $this->input->post(null, true);
-		
+		$swi_process = isset($post["swi_process"]) ? $post["swi_process"] : 0;
+		unset($post["swi_process"]);
+        
 		$charge_rate_data = array();
 		$print_defaults_data = array();
 		$ctr = 1;
@@ -307,9 +358,13 @@ class Client_agreement extends CI_Controller
 		
         unset($post["allowance_caption12"]);
         $charge_rate_data["trans_type"] = '2';
+        $charge_rate_data["swi_process"] = $swi_process;
 		$print_defaults_data["trans_type"] = 'Client';
 		$print_defaults_data["trans_no"] = $charge_rate_data["trans_no"];
+        
+        
         $sql1 = $this->ca->save($charge_rate_data);
+		
 		$sql2 = $this->ca->savePrint($print_defaults_data);
 		if ($this->db->trans_status() === false) {
 			log_message("Transaction failed (tbl_charge_rate, tbl_payrate)");
@@ -327,11 +382,21 @@ class Client_agreement extends CI_Controller
 		redirect($_SERVER["HTTP_REFERER"]);
     }
 
+    public function updateAndProcess()
+    {
+        $_POST["swi_process"] = 1;
+        $this->update();
+    }
+    
 	public function update()
     {
         $post = $this->input->post(null, true);
-
-		$charge_rate_data = array();
+        if(isset($post["swi_process"])){
+            $swi_process = 1;
+            unset($post["swi_process"]);    
+        }
+         
+        $charge_rate_data = array();
 		$print_defaults_data = array();
 		$ctr = 1;
 		foreach ($post as $key => $v) {
@@ -395,7 +460,15 @@ class Client_agreement extends CI_Controller
 		$print_defaults_data["trans_type"] = 'Client';
 		$print_defaults_data["trans_no"] = $charge_rate_data["trans_no"];
         
-        $sql1 = $this->ca->update($charge_rate_data);
+        
+        if($swi_process == 0){
+            $sql1 = $this->ca->update($charge_rate_data);    
+        } else {
+            $charge_rate_data["swi_process"] = $swi_process;
+            // var_dump($charge_rate_data);
+            $sql1 = $this->ca->update($charge_rate_data);
+        }
+        
 		$sql2 = $this->ca->updatePrint($print_defaults_data);
 		if ($this->db->trans_status() === false) {
 			log_message("Transaction failed (tbl_charge_rate, tbl_payrate)");
@@ -1011,7 +1084,7 @@ class Client_agreement extends CI_Controller
     private function computePercentMargin($hourly_charge_rate, $post, $index, $calc)
     {
         $description = $this->ml_description[12];
-        if ($post["swi_peror_cur"] == "0") {
+        if ($post["swi_peror_cur"] == "0" && $post["B_24"] != "") {
             $normal = ($post["B_24"]/$hourly_charge_rate["normal"])/100;
             $early = ($post["B_24"]/$hourly_charge_rate["early"])/100;
             $afternoon = ($post["B_24"]/$hourly_charge_rate["afternoon"])/100;

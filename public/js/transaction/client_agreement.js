@@ -5,6 +5,83 @@ $(document).ready(function(){
 	var delete_id;
 	var remove_row;
 	
+	var process_id;
+    $(".process-award-btn").live("click", function(){
+        
+        process_id = $(this).attr("process-id");
+        
+        $("#processModal").modal("show");
+    });
+    
+    $("#process-award-btn-modal").click(function(){
+        $("#processModal").modal("hide");
+        $("#loadingModal").modal("show");
+        $.post(base_url+"client_agreement/processSalesModern", {trans_no:process_id, company_no:client_no}, function(data){
+           res = $.parseJSON(data);
+           if (!res.status) {
+              alert("Database Error");
+           } else {
+               
+                str = '<thead>'
+                str = str + '<tr>'
+                str = str + '<th>Trans No.</th>'
+                str = str + '<th>Agreement Name</th>'
+                str = str + '<th>Client</th>'
+                str = str + '<th>Date of Quotation</th>'
+                str = str + '<th>Process Status</th>'
+                str = str + '<th>Action</th>'
+                str = str + '</tr>'
+                str = str + '</thead>'
+                if (res.awards.length > 0) {
+                    $.each(res.awards, function(i, item){
+                        str = str + '<tr>';
+                        str = str + '<td>'+item.trans_no+'</td>'
+                        str = str + '<td>'+item.transaction_name+'</td>'
+                        str = str + '<td>'+item.company_name+'</td>'
+                        str = str + '<td>'+item.date_of_quotation+'</td>'
+                        str = str + '<td>'+item.swi_process+'</td>'
+                        str = str + '<td>'
+                        str = str + '<div class="btn-group">'
+                        str = str + '<a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">'
+                        str = str + 'Action <span class="caret"></span></a>'
+                        str = str + '<ul class="dropdown-menu pull-right">'
+                        if(item.swi_process == 0){
+                            str = str + '<li><a href="#" class="process-award-btn" process-id="'+item.trans_no+'">'
+                            str = str + '<i class="icon-ok"></i> Process</a></li>'
+                        }
+                        str = str + '<li><a href="#" class="edit-award-btn" edit-id="'+item.trans_no+'">'
+                        str = str + '<i class="icon-edit"></i> Edit</a></li>'
+                        str = str + '<li><a target="_blank" href="'+base_url+'reports/rate_confirmation/print_client/'+item.trans_no+'">'
+                        str = str + '<i class="icon-print"></i> Rate Confirmation</a></li>'
+                        str = str + '<li>'
+                        str = str + '<a target="_blank" href="'+base_url+'reports/allowance/print_client/'+item.trans_no+'">'
+                        str = str + '<i class="icon-print"></i> Allowance</a></li>'
+                        str = str + '<li>'
+                        str = str + '<a target="_blank" href="'+base_url+'reports/paycharge_rate/print_client/'+item.trans_no+'">'
+                        str = str + '<i class="icon-print"></i> Pay Charge Rate Schedule</a></li>'
+                        str = str + '<li>'
+                        str = str + '<a href="#" del-id="'+item.trans_no+'" class="delete-award-btn">'
+                        str = str + '<i class="icon-trash"></i> Delete</a></li></ul></div>'   
+                        str = str + '</td>'
+                        str = str + '</tr>';
+                    })
+                } else {
+                    str = str + '<tr><td colspan="5">No results found.</td></tr>'
+                }
+                
+                $("#tblAgreement").html(str);            
+
+           }
+           
+           $("#loadingModal").modal("hide");
+           $("#div-process").css("display", "");
+           $("#div-process").css("display", "");
+           
+           
+        });
+    });
+	
+	
 	$(".delete-award-btn").live("click", function(){
 		delete_id = $(this).attr("del-id");
 		remove_row = $(this).parent().parent(); 
@@ -31,6 +108,16 @@ $(document).ready(function(){
 		});
 	});	
 	// edit
+	$("#btn-save-update").click(function(){
+        $("#frm").attr("action", base_url+"client_agreement/update");
+        $("#frm").submit();
+    });
+    
+    $("#btn-save-process-update").click(function(){ 
+        $("#frm").attr("action", base_url+"client_agreement/updateAndProcess");
+        $("#frm").submit();
+    });
+    
     $(".edit-award-btn").live("click", function(){
         $("#loadingModal").modal("show");
         $("#agreementRow").hide("fast")
@@ -45,7 +132,10 @@ $(document).ready(function(){
         $("#tab2, #tab3, #tab4, #tab5").hide("fast");
         $("#frm").attr("action", base_url+"client_agreement/update");
         $("#trans_no").val(edit_id);
-        $("#btn-save").attr("value", "UPDATE");
+        $("#btn-save-update").show();
+        $("#btn-save-update").val("Update Only");
+        $("#btn-save-only").hide();
+        $("#btn-save-process").hide();
         
         var company_no;
         var work_cover;
@@ -85,7 +175,13 @@ $(document).ready(function(){
                company_no = res.charge_rate.company_no;
                super1 = res.charge_rate.B_14;
                work_cover = res.charge_rate.B_15;
-
+               if (res.charge_rate.swi_process != 1) {
+                   $("#btn-save-process-update").show();
+                   $("#btn-save-process-update").val("Update and Process");
+               } else {
+                   $("#btn-save-process-update").hide();
+               }
+               
                $("#cmb-company").val(company_no).attr("selected", "selected");
                $("#cmb-super").val(super1).attr("selected", "selected");
                $("#cmb-super").change();
@@ -584,7 +680,19 @@ $(document).ready(function(){
         });
     });
     
-	$("#add-new-modern").click(function(){
+    $("#btn-save-only").click(function(){
+        $("#frm").attr("action", base_url+"client_agreement/save");
+        $("#frm").submit();
+    });
+    
+    $("#btn-save-process").click(function(){
+        if($(this).val() != "UPDATE"){
+            $("#frm").attr("action", base_url+"client_agreement/saveAndProcess");
+            $("#frm").submit();
+        }
+    });
+    
+    $("#add-new-modern").click(function(){
 	    $("#frm").attr("action", base_url+"client_agreement/save");
 	    $("#agreementRow").hide("fast");
 	    $(document).scrollTop(0);
@@ -595,11 +703,14 @@ $(document).ready(function(){
         var year = d.getFullYear();
         $("input").val("");
         $("select  ").val("");
+        $("#btn-save-update").hide();
+        $("#btn-save-process-update").hide();
         $("#txt-standard").val("STANDARD RATE FOR CALS :");
         $("#m_allow_text").val("MARGIN FOR M ALLOWANCE");
         $("#txt-permanent").val("Permanent Guarantee Period in Days");
         $("#btn_gen").val("Generate No");
-        $("#btn-save").val("Save");
+        $("#btn-save-process").val("Save and Process");
+        $("#btn-save-only").val("Save Only");
         $("#date_of_quotation").val(("0"+day).slice(-2)+"/"+("0"+month).slice(-2)+"/"+year);
         $("#cmb-company").val(client_no).attr("selected", "selected");
         $("#cmb-company").change();

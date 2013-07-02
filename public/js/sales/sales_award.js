@@ -21,7 +21,7 @@ $(document).ready(function(){
                
                 str = '<thead>'
                 str = str + '<tr>'
-                str = str + '<th>Trans No.</th>'
+                str = str + '<th>Trans No.123</th>'
                 str = str + '<th>Award Name</th>'
                 str = str + '<th>Client</th>'
                 str = str + '<th>Date of Quotation</th>'

@@ -22,7 +22,7 @@
         <tbody>
             <tr>
                 <td>Normal / Ordinary Time Hours</td>
-                <td><?php echo number_format($charge["B_26"], 2, ".", "")?></td>
+                <td><?php echo number_format((double)$charge["B_26"], 2, ".", "")?></td>
             </tr>
             <tr>
                 <td>How We Will Calculate Normal Hours</td>

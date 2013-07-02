@@ -40,7 +40,10 @@
                         <li class="divider-vertical"></li>
                         <li class="pull-right">
                             <button type="button" class="btn pull-right" style="margin-left: 3px;" id="close-modern-form">Cancel</button>
-                            <input type="submit" class="btn btn-inverse pull-right" id="btn-save" value="SAVE">
+                            <input type="button" class="btn btn-inverse pull-right" style="margin-left: 3px; display: none;" id="btn-save-process-update" value="Update and Process"/>
+                            <input type="button" class="btn btn-inverse pull-right" style="margin-left: 3px; display: none;" id="btn-save-update" value="Update Only"/> 
+                            <input type="button" class="btn btn-inverse pull-right" style="margin-left: 3px;" id="btn-save-process" value="Save and Process"/>
+                            <input type="button" class="btn btn-inverse pull-right" id="btn-save-only" value="Save Only"/>
                         </li>
                     </ul>
                     </div>
@@ -1161,6 +1164,7 @@
                             <th>Agreement Name</th>
                             <th>Client</th>
                             <th>Date of Quotation</th>
+                            <th>Process Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -1172,12 +1176,20 @@
                             <td><?php echo $agreement["transaction_name"] ?></td>
                             <td><?php echo $agreement["company_name"] ?></td>
                             <td><?php echo $agreement["date_of_quotation"] ?></td>
+                            <td><?php echo $agreement["swi_process"] ?></td>
                             <td>
                                 <div class="btn-group">
                                     <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">
                                         Action <span class="caret"></span>
                                     </a>
                                     <ul class="dropdown-menu pull-right">
+                                        <?php if(!$agreement["swi_process"]):?>
+                                          <li>
+                                            <a href="#" class="process-award-btn" process-id="<?php echo $agreement["trans_no"] ?>">
+                                                <i class="icon-ok"></i> Process
+                                            </a>
+                                          </li>
+                                        <?php endif;?>
                                         <li><a href="#" class="edit-award-btn" edit-id="<?php echo $agreement["trans_no"] ?>"><i class="icon-edit"></i> Edit</a></li>
                                         <li>
                                             <a target="_blank" href="<?php echo base_url("reports/rate_confirmation/print_client/".$agreement["trans_no"]) ?>">
@@ -1214,5 +1226,22 @@
     </div>
     
 </div>
+
+
+<!-- PROCESS MODAL -->
+<div id="processModal" class="modal hide fade" tabindex="-1" role="dialog">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Process Confirmation</h3>
+    </div>
+    <div class="modal-body">
+        <p>Are you sure you want to process this modern award?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" id="process-award-btn-modal">Process</button>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    </div>
+</div>
+<!-- END DELETE MODAL -->
 
 <?php echo $footer ?>

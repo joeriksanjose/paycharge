@@ -25,7 +25,7 @@ class Pcs extends CI_Controller {
         $this->load->view("client/client_index_view", $this->data);
     }
 	
-	public function award($company)
+	public function rates($company)
     {
     	$post["company_no"] = $company;
         $this->data["header"] = $this->load->view("client/header", $this->data, true);
@@ -40,6 +40,20 @@ class Pcs extends CI_Controller {
         $this->load->view("client/client_index_view", $this->data);
     }
 	
+	public function termsAndCondition($trans_no, $modern_no){
+	    $this->data["header"] = $this->load->view("client/header", $this->data, true);
+        $this->data["footer"] = $this->load->view("client/footer", $this->data, true);
+        
+        $this->data["calcu"] = $this->pr->getCalc($modern_no);
+        if($this->data["calcu"]["print_company_no"] == 1){
+            $this->data["company"] = "Labourpower Recruitment Services";
+        } else if($this->data["calcu"]["print_company_no"] == 2){
+            $this->data["company"] = "LP Consulting Services";
+        }
+        
+        $this->load->view("client/terms_and_conditions_view", $this->data);
+	}
+    
 	public function getChargeRate($trans_no, $modern_no){
 		$this->data["header"] = $this->load->view("client/header", $this->data, true);
         $this->data["footer"] = $this->load->view("client/footer", $this->data, true);
@@ -50,7 +64,7 @@ class Pcs extends CI_Controller {
         $this->data["charge"] = $this->pr->getCharge($trans_no);
         
         if($this->data["calcu"]["print_company_no"] == 1){
-            $this->data["company"] = "Labour Power";
+            $this->data["company"] = "Labourpower Recruitment Services";
         } else if($this->data["calcu"]["print_company_no"] == 2){
             $this->data["company"] = "LP Consulting Services";
         }
@@ -438,16 +452,16 @@ class Pcs extends CI_Controller {
 	}
 	
     public function print_client($trans_no){
-        if ($this->user_session["is_admin"]) {
-            $this->data["header"] = $this->load->view("header", $this->data, true);
-            $this->data["footer"] = $this->load->view("footer", $this->data, true);
-        } else {
-            $this->data["header"] = $this->load->view("sales/sales_header", $this->data, true);
-            $this->data["footer"] = $this->load->view("sales/sales_footer", $this->data, true);
-        }
-        
+        $this->data["header"] = $this->load->view("client/header", $this->data, true);
+        $this->data["footer"] = $this->load->view("client/footer", $this->data, true);
         
         $this->data["calcu"] = $this->pr->getCalc($trans_no);
+        if($this->data["calcu"]["print_company_no"] == 1){
+            $this->data["company"] = "Labourpower Recruitment Services";
+        } else if($this->data["calcu"]["print_company_no"] == 2){
+            $this->data["company"] = "LP Consulting Services";
+        }
+        
         $this->data["mallow"] = $this->pr->getMAllow($trans_no);
         $this->data["charge"] = $this->pr->getCharge($trans_no);
         
@@ -833,7 +847,31 @@ class Pcs extends CI_Controller {
         $this->load->view("reports/print_paycharge_rate_client", $this->data);
 	}
 	
-	public function getUpcomingRates($trans_no){
+	public function approve_rate()
+    {
+        $trans_no = $this->input->post("approve_trans_no", true);
+        $rate_info = $this->cont->approveRate($trans_no);
+        
+        if ($rate_info) {
+            $sql = "SELECT company_name FROM tbl_company WHERE client_no = ?";
+            $company = $this->db->query($sql, array($rate_info["company_no"]))->row_array();
+            $to = "jesanjose@gmail.com";
+            $subject = "Notice to Payroll of rates being signed by a Client";
+   
+            $message = "The below client has approved their rates." 
+                      ."Please advise the Branch Immediately.<br><br>"
+                      ."Client Name : ".$company["company_name"]."<br>"
+                      ."Contact Name : ".$this->client_session["contact_name"]."<br>"
+                      ."Client No : ".$rate_info["company_no"]."<br>"; 
+            
+            $this->user_session->notifEmail($subject, $message, $to);
+        }
+        
+        redirect($_SERVER["HTTP_REFERER"]);
+    }
+	
+	public function getUpcomingRates($trans_no)
+	{
 		$this->data["header"] = $this->load->view("client/header", $this->data, true);
         $this->data["footer"] = $this->load->view("client/footer", $this->data, true);
         
@@ -842,7 +880,8 @@ class Pcs extends CI_Controller {
 		$this->load->view("reports/upcoming_rates", $this->data);
 	}
 	
-	public function getRateHistory($trans_no){
+	public function getRateHistory($trans_no)
+	{
 		$this->data["header"] = $this->load->view("client/header", $this->data, true);
         $this->data["footer"] = $this->load->view("client/footer", $this->data, true);
         

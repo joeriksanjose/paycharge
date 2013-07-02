@@ -9,6 +9,13 @@ class Tbl_client_agreement extends CI_Model
         parent::__construct();
     }
 	
+    public function processSalesModern($where){
+        
+        $this->db->where($where);
+        return $this->db->update("tbl_charge_rate", array("swi_process" => 1));
+        
+    }
+    
 	public function saveTblMl($index, $data)
     {
         return $this->db->insert("tbl_ml".$index, $data);
