@@ -161,8 +161,13 @@ class Transactions extends CI_Controller
     public function rate_increase_history($modern_award_no)
     {
         $award_info = $this->md->getAwardByAwardNo($modern_award_no);
+        
+        if (!$award_info) {
+            show_404();
+        }
+        
         $this->data["award_info"] = $award_info;
-        $this->data["rate_increase_history"] = $this->md->getRateIncreaseHistory($award_info["modern_award_name"]);
+        $this->data["rate_increase_history"] = $this->md->getRateIncreaseHistory($modern_award_no);
         $this->data["header"] = $this->load->view("header", $this->data, true);
         $this->data["footer"] = $this->load->view("footer", $this->data, true);
         
@@ -172,8 +177,13 @@ class Transactions extends CI_Controller
     public function upcoming_rate_increase($modern_award_no)
     {
         $award_info = $this->md->getAwardByAwardNo($modern_award_no);
+        
+        if (!$award_info) {
+            show_404();
+        }
+        
         $this->data["award_info"] = $award_info;
-        $this->data["upcoming_rate_increase"] = $this->md->getUpcomingRateIncrease($award_info["modern_award_name"]);
+        $this->data["upcoming_rate_increase"] = $this->md->getUpcomingRateIncrease($modern_award_no);
         $this->data["header"] = $this->load->view("header", $this->data, true);
         $this->data["footer"] = $this->load->view("footer", $this->data, true);
         $this->data["status"] = $this->session->userdata("status");
@@ -198,7 +208,7 @@ class Transactions extends CI_Controller
             
             $company = $this->md->getCompany($post["award_no"]);
             if($company["print_company_no"] == 1){
-                $post["company"] = "Labour Power";  
+                $post["company"] = "Labourpower Recruitment Services";  
             } else {
                 $post["company"] = "LP Consulting Services";
             }
@@ -220,10 +230,11 @@ class Transactions extends CI_Controller
     public function updateRate()
     {
         $post = $this->input->post(null, true);
-        $id = $post["hid_edit_id"];
+        $id = $post["hid-edit-id"];
         $post["created_at"] = $this->convertToYMD($post["created_at"]);
         
-        unset($post["hid_edit_id"]);
+        unset($post["award_no"]);
+        unset($post["hid-edit-id"]);
         if (!$this->md->updateRate($id, $post)) {
              $this->data["status"] = 0;
                 $this->data["status_msg"] = "<b>Error! </b> Cannot update rate.";
@@ -232,7 +243,7 @@ class Transactions extends CI_Controller
                 $this->data["status_msg"] = "<b>Done! </b> Rate was successfully updated.";
         }
         
-        echo json_encode($this->data);
+        redirect($_SERVER["HTTP_REFERER"]);
     }
     
     public function ajaxDeleteRate()

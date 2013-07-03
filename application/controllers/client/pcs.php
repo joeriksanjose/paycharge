@@ -5,6 +5,7 @@ class Pcs extends CI_Controller {
     function __construct()
     {
         parent::__construct();
+        $this->load->model("tbl_modern_award", "md");
         $this->load->model("libraries/tbl_contacts", "cont");
 		$this->load->model("reports/tbl_paycharge_rate", "pr");
         $this->load->library("user_session");

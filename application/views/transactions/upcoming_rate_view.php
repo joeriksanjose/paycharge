@@ -38,7 +38,7 @@
                 <div class="control-group">
                     <label class="control-label" for="trans_no">Transaction No.</label>
                     <div class="controls controls-row">
-                        <input type="text" id="trans_no" name="trans_no" >
+                        <input type="text" id="trans_no" name="trans_no" value="<?php echo $award_info["modern_award_no"] ?>" readonly="true">
                     </div>
                 </div>
                 <div class="control-group">

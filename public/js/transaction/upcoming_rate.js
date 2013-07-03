@@ -34,7 +34,9 @@ $(document).ready(function(){
        $("#frm-new-rate").attr("action", base_url+"transactions/saveRate");
        $(this).hide("fast");
        $("#new-rate").show("fast");
+       trans_no = $("#trans_no").val();
        $("input:text").val("");
+       $("#trans_no").val(trans_no);
    });
    
    $("#close-add-form").click(function(){

@@ -99,14 +99,10 @@
                                                     </a>
                                                 </li> 
             							 	    <?php endif ?>
-            							 		<!-- <li><a target="_blank" href="<?php echo base_url("client/pcs/getUpcomingRates/".$value["trans_no"])?>">
+            							 		<li><a target="_blank" href="<?php echo base_url("client/pcs/getUpcomingRates/".$value["trans_no"])?>">
             							 			<i class="icon-print"></i> Upcoming Rates</a></li>
             							 		<li><a target="_blank" href="<?php echo base_url("client/pcs/getRateHistory/".$value["trans_no"])?>">
-            							 			<i class="icon-print"></i> Rate History</a></li> -->
-            							 	    <li><a target="_blank" href="#">
-                                                    <i class="icon-print"></i> Upcoming Rates</a></li>
-                                                <li><a target="_blank" href="#">
-                                                    <i class="icon-print"></i> Rate History</a></li>
+            							 			<i class="icon-print"></i> Rate History</a></li>
             							 	    <?php if (!$value["is_approved"]) : ?>
                                                 <li>    
                                                     <a href="#" class="approve-rate" a-id="<?php echo $value["trans_no"] ?>">

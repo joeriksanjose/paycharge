@@ -7,12 +7,6 @@ class Home extends CI_Controller {
         parent::__construct();
         $this->load->model("libraries/tbl_contacts", "cont");
     }
-    
-    public function testEmail()
-    {
-        $this->load->library("user_session");
-        $this->user_session->notifEmail("test", "test");
-    }
 
     public function index()
     {
@@ -59,10 +53,12 @@ class Home extends CI_Controller {
     public function logout()
     {
         $client_session = array(
-            "client"       => $post["name"],
-            "client_no"    => $client["contact_no"],
-            "username"     => $client["username"],
-            "access_level" => $client["access_level"]
+            "contact_name" => "",
+            "contact_no"   => "",
+            "username"     => "",
+            "can_view"     => "",
+            "can_approve"  => "",
+            "can_forecast" => ""
         );
                 
         $this->session->unset_userdata($client_session);

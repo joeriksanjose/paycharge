@@ -16,8 +16,8 @@ class Tbl_upcoming_rates extends CI_Model
         $sql = 'SELECT * '
               .'FROM tbl_rate_increase r '
               .'where created_at > '.$date.' and '
-              .'exists (select modern_award_name from tbl_modern_award m ' 
-              .'where r.transaction_name = m.modern_award_name) '
+              .'exists (select modern_award_no from tbl_modern_award m ' 
+              .'where r.trans_no = m.modern_award_no) '
               .'order by created_at';
               
         $result = $this->db->query($sql)->result_array();   
@@ -32,7 +32,7 @@ class Tbl_upcoming_rates extends CI_Model
               .'FROM tbl_rate_increase r '
               .'where created_at > '.$date.' and '
               .'exists (select transaction_name from tbl_charge_rate m ' 
-              .'where r.transaction_name = m.transaction_name and m.trans_type = 2 )'
+              .'where r.trans_no = m.trans_no and m.trans_type = 2 )'
               .'order by created_at';
               
         $result = $this->db->query($sql)->result_array();   

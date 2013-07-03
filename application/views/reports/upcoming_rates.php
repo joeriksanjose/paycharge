@@ -89,6 +89,7 @@
 	                </tr>
 	                
 	            </table>
+	            <hr>
 	        <?php endforeach;?>
         <?php else:?>
         	Empty records.

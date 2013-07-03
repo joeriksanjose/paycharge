@@ -79,10 +79,10 @@ class Tbl_modern_award extends CI_Model
         return $this->db->get($this->table_rate_increase)->num_rows();
     }
     
-    public function getUpcomingRateIncrease($modern_award_name)
+    public function getUpcomingRateIncrease($modern_award_no)
     {
         $now = time();
-        $this->db->where(array("transaction_name" => $modern_award_name));
+        $this->db->where(array("trans_no" => $modern_award_no));
         $rates = $this->db->get($this->table_rate_increase)->result_array();
         
         if (!$rates) {
@@ -111,10 +111,10 @@ class Tbl_modern_award extends CI_Model
         return $rates;    
     }
     
-    public function getRateIncreaseHistory($modern_award_name)
+    public function getRateIncreaseHistory($modern_award_no)
     {
         $now = time();
-        $this->db->where(array("transaction_name" => $modern_award_name));
+        $this->db->where(array("trans_no" => $modern_award_no));
         $rates = $this->db->get($this->table_rate_increase)->result_array();
         
         if (!$rates) {
