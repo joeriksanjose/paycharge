@@ -83,25 +83,25 @@
                                                 Action <span class="caret"></span>
                                             </a>
         							 	    <ul class="dropdown-menu pull-right">
-        							 	        <li><a target="_blank" href="<?php echo base_url("client/pcs/termsAndCondition/".$value["trans_no"]."/".$value["modern_award_no"])?>">
+        							 	        <li><a target="_blank" href="<?php echo base_url("client/pcs/terms_conditions/".$value["trans_no"])?>">
                                                     <i class="icon-print"></i> Terms and Condition</a></li>
                                                 <li>
                                                 <?php if ($value["trans_type"] == "1") : ?>
             							 		<li>
-            							 		    <a target="_blank" href="<?php echo base_url("client/pcs/getChargeRate/".$value["trans_no"]."/".$value["modern_award_no"])?>">
+            							 		    <a target="_blank" href="<?php echo base_url("client/pcs/charge_rate/".$value["trans_no"]."/".$value["modern_award_no"])?>">
             							 			<i class="icon-print"></i> Pay and Charge Rate Schedule
             							 			</a>
             							 	    </li>
             							 	    <?php else : ?>
             							 	    <li>
-                                                    <a target="_blank" href="<?php echo base_url("client/pcs/print_client/".$value["trans_no"])?>">
+                                                    <a target="_blank" href="<?php echo base_url("client/pcs/charge_rate_client/".$value["trans_no"])?>">
                                                     <i class="icon-print"></i> Pay and Charge Rate Schedule
                                                     </a>
                                                 </li> 
             							 	    <?php endif ?>
-            							 		<li><a target="_blank" href="<?php echo base_url("client/pcs/getUpcomingRates/".$value["trans_no"])?>">
+            							 		<li><a target="_blank" href="<?php echo base_url("client/pcs/upcoming_rates/".$value["trans_no"])?>">
             							 			<i class="icon-print"></i> Upcoming Rates</a></li>
-            							 		<li><a target="_blank" href="<?php echo base_url("client/pcs/getRateHistory/".$value["trans_no"])?>">
+            							 		<li><a target="_blank" href="<?php echo base_url("client/pcs/rates_history/".$value["trans_no"])?>">
             							 			<i class="icon-print"></i> Rate History</a></li>
             							 	    <?php if (!$value["is_approved"]) : ?>
                                                 <li>    

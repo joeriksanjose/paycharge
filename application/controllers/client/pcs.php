@@ -8,6 +8,7 @@ class Pcs extends CI_Controller {
         $this->load->model("tbl_modern_award", "md");
         $this->load->model("libraries/tbl_contacts", "cont");
 		$this->load->model("reports/tbl_paycharge_rate", "pr");
+        $this->load->model("tbl_print_defaults", "pd");
         $this->load->library("user_session");
         
         $this->client_session = $this->user_session->checkClientSession();
@@ -41,11 +42,21 @@ class Pcs extends CI_Controller {
         $this->load->view("client/client_index_view", $this->data);
     }
 	
-	public function termsAndCondition($trans_no, $modern_no){
+	public function terms_conditions($trans_no)
+	{
+	    $charge_rate = $this->pr->getCharge($trans_no);
+        if (!$charge_rate) {
+            show_404();
+        }
+        
+        if ($charge_rate["trans_type"] == 1) {
+            $trans_no = $charge_rate["modern_award_no"];
+        }
+        
 	    $this->data["header"] = $this->load->view("client/header", $this->data, true);
         $this->data["footer"] = $this->load->view("client/footer", $this->data, true);
         
-        $this->data["calcu"] = $this->pr->getCalc($modern_no);
+        $this->data["calcu"] = $this->pd->getPrintsByTransNo($trans_no);
         if($this->data["calcu"]["print_company_no"] == 1){
             $this->data["company"] = "Labourpower Recruitment Services";
         } else if($this->data["calcu"]["print_company_no"] == 2){
@@ -55,7 +66,7 @@ class Pcs extends CI_Controller {
         $this->load->view("client/terms_and_conditions_view", $this->data);
 	}
     
-	public function getChargeRate($trans_no, $modern_no){
+	public function charge_rate($trans_no, $modern_no){
 		$this->data["header"] = $this->load->view("client/header", $this->data, true);
         $this->data["footer"] = $this->load->view("client/footer", $this->data, true);
         
@@ -452,7 +463,7 @@ class Pcs extends CI_Controller {
 		$this->load->view("reports/print_paycharge_rate", $this->data);
 	}
 	
-    public function print_client($trans_no){
+    public function charge_rate_client($trans_no){
         $this->data["header"] = $this->load->view("client/header", $this->data, true);
         $this->data["footer"] = $this->load->view("client/footer", $this->data, true);
         
@@ -871,24 +882,36 @@ class Pcs extends CI_Controller {
         redirect($_SERVER["HTTP_REFERER"]);
     }
 	
-	public function getUpcomingRates($trans_no)
+	public function upcoming_rates($trans_no)
 	{
+	    $charge_rate = $this->pr->getCharge($trans_no);
+        if (!$charge_rate) {
+            show_404();
+        } 
+	    
 		$this->data["header"] = $this->load->view("client/header", $this->data, true);
         $this->data["footer"] = $this->load->view("client/footer", $this->data, true);
         
-		$this->data["rates"] = $this->cont->getUpcomingRates($trans_no);
-		
-		$this->load->view("reports/upcoming_rates", $this->data);
+        $this->data["charge_rate"] = $charge_rate;
+		$this->data["upcoming_rate"] = $this->md->getUpcomingRateIncrease($trans_no);
+        
+        $this->load->view("client/upcoming_rates_view", $this->data);
 	}
 	
-	public function getRateHistory($trans_no)
+	public function rates_history($trans_no)
 	{
-		$this->data["header"] = $this->load->view("client/header", $this->data, true);
+		$charge_rate = $this->pr->getCharge($trans_no);
+        if (!$charge_rate) {
+            show_404();
+        } 
+        
+        $this->data["header"] = $this->load->view("client/header", $this->data, true);
         $this->data["footer"] = $this->load->view("client/footer", $this->data, true);
         
-		$this->data["rates"] = $this->cont->getRateHistory($trans_no);
-		
-		$this->load->view("reports/print_rate_history", $this->data);
+        $this->data["charge_rate"] = $charge_rate;
+        $this->data["rates_history"] = $this->md->getRateIncreaseHistory($trans_no);
+        
+        $this->load->view("client/rate_history_view", $this->data);
 	}
 }
 
