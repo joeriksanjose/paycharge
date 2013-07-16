@@ -14,6 +14,8 @@ class Home extends CI_Controller {
         $this->load->model("tbl_sales_modern_award", "sma");
         $this->load->model("sales/tbl_sales_trans", "st");
         $this->load->model("tbl_client_agreement", "ca");
+        $this->load->model("reports/tbl_paycharge_rate", "pr");
+        $this->load->model("tbl_modern_award", "md");
         $this->load->library("user_session");
         $this->user_sess = $this->user_session->checkUserSession();
         $this->data["date_slash"] = mdate("%d/%m/%Y");
@@ -120,7 +122,6 @@ class Home extends CI_Controller {
     public function updateContact()
     {
         $data = $this->input->post(null, true);
-        $data["e_date_of_birth"] = $this->convertToYMD($data["e_date_of_birth"]);
         
         if (!isset($data["e_can_view"]) && !isset($data["e_can_approve"]) && !isset($data["e_can_forecast"])) {
             $this->session->set_userdata("error", "<b>Error!</b> Please choose at least one access level.");
@@ -135,14 +136,13 @@ class Home extends CI_Controller {
             "pref_first_name"  => $data["e_pref_first_name"],
             "last_name"        => $data["e_last_name"],
             "middle_name"      => $data["e_middle_name"],
-            "date_of_birth"    => $data["e_date_of_birth"],
             "position"         => $data["e_position"],
             "contact_phone_no" => $data["e_contact_phone_no"],
             "email"            => $data["e_email"],
             "first_name"       => $data["e_first_name"],
             "can_view"         => $data["e_can_view"],
-            "can_approve"      => $data["e_can_approve"],
-            "can_forecast"     => $data["e_can_forecast"]
+            "can_approve"      => isset($data["e_can_approve"]) ? $data["e_can_approve"] : 0,
+            "can_forecast"     => isset($data["e_can_forecast"]) ? $data["e_can_forecast"] : 0 
         );
         
         try {
@@ -275,8 +275,147 @@ class Home extends CI_Controller {
     }
     // END CLIENT AGREEMENT
     
-    // AJAX
+    // RATE INCREASE
+    public function saveRate()
+    {
+        $post = $this->input->post(null, true);
+        
+        $pd_no = $post["pd_no"];
+        
+        $post["created_at"] = $this->convertToYMD($post["created_at"]);
+        
+        $company = $this->md->getCompany($pd_no);
+        if($company["print_company_no"] == 1){
+            $post["company"] = "Labourpower Recruitment Services";  
+        } else {
+            $post["company"] = "LP Consulting Services";
+        }
+        
+        unset($post["pd_no"]);
+        unset($post["hid-edit-id"]);
+        
+        if (!$this->md->saveRate($post)) {
+            show_error("Database Error");
+        }
+                   
+        redirect($_SERVER["HTTP_REFERER"]);
+    }
     
+    public function updateRate()
+    {
+        $post = $this->input->post(null, true);
+        $id = $post["hid-edit-id"];
+        $post["created_at"] = $this->convertToYMD($post["created_at"]);
+        
+        unset($post["pd_no"]);
+        unset($post["hid-edit-id"]);
+        if (!$this->md->updateRate($id, $post)) {
+             $this->data["status"] = 0;
+                $this->data["status_msg"] = "<b>Error! </b> Cannot update rate.";
+        } else {
+            $this->data["status"] = 1;
+                $this->data["status_msg"] = "<b>Done! </b> Rate was successfully updated.";
+        }
+        
+        redirect($_SERVER["HTTP_REFERER"]);
+    }
+    
+    public function upcoming_rates($trans_no)
+    {
+        $charge_rate = $this->pr->getCharge($trans_no);
+        if (!$charge_rate) {
+            show_404();
+        }
+        
+        if ($charge_rate["modern_award_no"]) {
+            $trans_no = $charge_rate["modern_award_no"];
+        } 
+        
+        $this->data["header"] = $this->load->view("sales/sales_header", $this->data, true);
+        $this->data["footer"] = $this->load->view("sales/sales_footer", $this->data, true);
+        
+        $this->data["charge_rate"] = $charge_rate;
+        $this->data["upcoming_rate"] = $this->md->getUpcomingRateIncrease($trans_no);
+        
+        if ($charge_rate["modern_award_no"]) {
+            $this->load->view("client/upcoming_rates_view", $this->data);
+        } else {
+            $this->load->view("sales/rate_increase_add_view", $this->data);
+        }
+    }
+    
+    public function rates_history($trans_no)
+    {
+        $charge_rate = $this->pr->getCharge($trans_no);
+        if (!$charge_rate) {
+            show_404();
+        }
+        
+        if ($charge_rate["modern_award_no"]) {
+            $trans_no = $charge_rate["modern_award_no"];
+        }
+        
+        $this->data["header"] = $this->load->view("sales/sales_header", $this->data, true);
+        $this->data["footer"] = $this->load->view("sales/sales_footer", $this->data, true);
+        
+        $this->data["charge_rate"] = $charge_rate;
+        $this->data["rates_history"] = $this->md->getRateIncreaseHistory($trans_no);
+        
+        $this->load->view("client/rate_history_view", $this->data);
+    }
+    
+    public function ajaxGetRateInfo()
+    {
+        $params = array();
+        $params["status"] = true;
+        $id = $this->input->post("edit_id");
+        
+        $res = $this->md->getRateById($id);
+        if (!$res) {
+            $params["status"] = false;
+            echo json_encode($params);
+            return;
+        }
+        
+        $res["created_at"] = date("d/m/Y", strtotime($res["created_at"]));
+        
+        $params["rate_info"] = $res;
+        
+        echo json_encode($params);
+        return;
+    }
+    
+    function checkRateTransNo(){
+        
+        $post = $this->input->post(null, true);
+        if($this->md->checkRateTransno($post)){
+            $this->data["status"] = 0;
+            $this->data["status_msg"] = "<b>Error! </b> Transaction number already exists.";
+        } else {
+            $this->data["status"] = 1;
+        }
+        
+        echo json_encode($this->data);  
+    }
+    
+    public function ajaxDeleteRate()
+    {
+        $params = array();
+        $params["status"] = true;
+        $id = $this->input->post("del_id", true);
+        
+        if (!$this->md->deleteRate($id)) {
+            $params["status"] = false;
+            echo json_encode($params);
+            return;
+        }
+        
+        echo json_encode($params);
+        return;
+    }
+    // END RATE INCREASE
+    
+    // AJAX
     public function ajaxSearchClient()
     {
         $params = array();

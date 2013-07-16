@@ -69,8 +69,8 @@ class Sales_transaction extends CI_Controller
 		echo json_encode($params);
 	}
 	
-	public function get_workcover_info(){
-			
+	public function get_workcover_info()
+	{
 		$where = $this->input->post(null, true);
 		$params = $this->smd->get_workcover_info($where);
 		

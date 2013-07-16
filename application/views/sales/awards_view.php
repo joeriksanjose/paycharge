@@ -1081,6 +1081,16 @@
                                             </a>
                                         </li>
                                         <li>
+                                            <a target="_blank" href="<?php echo base_url("sales/home/upcoming_rates/".$award["trans_no"]) ?>">
+                                                <i class="icon-print"></i> Upcoming Rates
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a target="_blank" href="<?php echo base_url("sales/home/rates_history/".$award["trans_no"]) ?>">
+                                                <i class="icon-print"></i> Rates History
+                                            </a>
+                                        </li>
+                                        <li>
                                             <a href="#" del-id="<?php echo $award["trans_no"] ?>" class="delete-award-btn">
                                                 <i class="icon-trash"></i> Delete   
                                             </a>

@@ -453,9 +453,9 @@ $(document).ready(function(){
             str = str + "<option></option>";
             $.each(json_data.work_cover, function(i, item){
                 if(work_cover == item.work_cover) {
-                    str = str + "<option selected='selected' value="+item.work_cover+">("+item.work_cover_code+") - "+item.work_cover+"</option>";
+                    str = str + "<option work-cover-no="+item.work_cover_no+" selected='selected' value="+item.work_cover+">("+item.work_cover_code+") - "+item.work_cover+"</option>";
                 } else {
-                    str = str + "<option value="+item.work_cover+">("+item.work_cover_code+") - "+item.work_cover+"</option>";    
+                    str = str + "<option work-cover-no="+item.work_cover_no+" value="+item.work_cover+">("+item.work_cover_code+") - "+item.work_cover+"</option>";    
                 }
                 
             });

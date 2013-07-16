@@ -1207,6 +1207,16 @@
                                             </a>
                                         </li>
                                         <li>
+                                            <a target="_blank" href="<?php echo base_url("sales/home/upcoming_rates/".$agreement["trans_no"]) ?>">
+                                                <i class="icon-print"></i> Upcoming Rates
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a target="_blank" href="<?php echo base_url("sales/home/rates_history/".$agreement["trans_no"]) ?>">
+                                                <i class="icon-print"></i> Rates History
+                                            </a>
+                                        </li>
+                                        <li>
                                             <a href="#" class="delete-award-btn" del-id="<?php echo $agreement["trans_no"] ?>"><i class="icon-trash"></i> Delete</a>
                                         </li>
                                     </ul>

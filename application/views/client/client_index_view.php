@@ -49,7 +49,7 @@
     				</a> 
     			</li>
     			<li>
-    				<a data-toggle="tab" href="#client">
+    				<a href="<?php echo base_url("client/pcs/client_application/".$company_no)?>">
     					Client Application
     				</a> 
     			</li>
@@ -72,6 +72,11 @@
     				 		</tr>
     			 		</thead>
     			 		<tbody>
+    			 		    <?php if (!$get_award) : ?>
+    			 		        <tr>
+    			 		            <td colspan="4">Empty record.</td>
+    			 		        </tr>
+    			 		    <?php else : ?>
     			 			<?php foreach ($get_award as $value) :?>
     							 <tr>
     							 	<td><?php echo $value["trans_no"]?></td>
@@ -110,16 +115,26 @@
                                                     </a>
                                                 </li>
                                                 <?php endif ?>
+                                                <?php if ($value["trans_type"] == "1") : ?>
                                                 <li>
-                                                    <a href="#">
+                                                    
+                                                    <a target="_blank"  href="<?php echo base_url("client/pcs/forecast_award/".$value["trans_no"]."/".$value["modern_award_no"])?>">
                                                         <i class="icon-list-alt"></i> Forecast
                                                     </a>
                                                 </li>
+                                                <?php else : ?>
+                                                <li>
+                                                    <a target="_blank" href="<?php echo base_url("client/pcs/forecast_agreement/".$value["trans_no"])?>">
+                                                        <i class="icon-list-alt"></i> Forecast
+                                                    </a>
+                                                </li>
+                                                <?php endif;?>
         							 		</ul>
     							 		</div>
     							 	</td>
     							 </tr
     						<?php endforeach; ?>
+    						<?php endif ?>
     			 		</tbody>
     			 	</table>
     				

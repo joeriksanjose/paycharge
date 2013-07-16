@@ -70,6 +70,11 @@ class Tbl_modern_award extends CI_Model
     }
     
     /* RATE INCREASE */
+    public function getAllRatesByTransNo($trans_no)
+    {
+        $this->db->where(array("trans_no" => $trans_no));
+        $rates = $this->db->get($this->table_rate_increase)->result_array();
+    }
     
     public function checkRateTransno($post)
     {
@@ -97,18 +102,6 @@ class Tbl_modern_award extends CI_Model
         }
         
         return $upcoming_rate_increase;    
-    }
-    
-    public function getCompany($trans_no)
-    {
-        $this->db->where(array("trans_no" => $trans_no, "trans_type" => "Admin"));
-        $rates = $this->db->get("tbl_print_dialog_default_values")->row_array();
-        
-        if (!$rates) {
-            return array();
-        }
-        
-        return $rates;    
     }
     
     public function getRateIncreaseHistory($modern_award_no)
@@ -155,4 +148,16 @@ class Tbl_modern_award extends CI_Model
     }
     
     /* END RATE INCREASE */
+    
+    public function getCompany($trans_no)
+    {
+        $this->db->where(array("trans_no" => $trans_no, "trans_type" => "Admin"));
+        $rates = $this->db->get("tbl_print_dialog_default_values")->row_array();
+        
+        if (!$rates) {
+            return array();
+        }
+        
+        return $rates;    
+    }
 }
