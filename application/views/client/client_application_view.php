@@ -48,6 +48,16 @@
                         Current Rate
                     </a> 
                 </li>
+                <li>
+                    <a data-toggle="tab" href="#cur_rate">
+                        Pending Approval
+                    </a>
+                </li>
+                <li>
+                    <a data-toggle="tab" href="#cur_rate">
+                        History Rate
+                    </a>
+                </li>
                 <li class="active">
                     <a data-toggle="tab" href="#client">
                         Client Application

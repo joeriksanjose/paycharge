@@ -112,7 +112,16 @@ class Tbl_rate_confirmation extends CI_Model
 		$this->db->where(array("trans_no" => $trans_no, "grade" => $grade));
 		return $this->db->get("tbl_payrate")->row_array();
 	}
-	
+
+    public function saveForecast($post){
+        $this->db->insert("tbl_forecasting", $post);
+    }
+
+    public function getML($trans_no, $calc, $grade){
+        $this->db->where(array("trans_no" => $trans_no, "calc_no" => $calc, "cell_no" => "13"));
+        return $this->db->get("tbl_ml".$grade)->row_array();
+    }
+
 	public function getML1($trans_no, $calc)
 	{
 		$this->db->where(array("trans_no" => $trans_no, "calc_no" => $calc));

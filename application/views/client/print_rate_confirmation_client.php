@@ -1,125 +1,39 @@
 <?php echo $header;?>
 
 <?php
-    function generate_tr($value, $print, $x)
-    {
-        $color="";
-        $tr1 = "<tr><td>".$value["description"]."</td>";
-        $tr2 = "<tr><td>Number of Hours</td>";
-        $tr3 = "<tr><td>Number of Employees</td>";
-        $tr4 = "<tr><td>Total</td>";
-        if($x<=4):
-            $color = "#FCF8E3";
-        elseif($x==14):
-            $color = "#F2DEDE";
-        endif;
-        $x++;
-        if ($print["normal"]) {
-            $tr1 .= '<td style="background-color: '.$color.'">'.$value["normal"].'</td>';
-            $tr2 .= '<td><input type="text" class="input-mini" style="width:50px"/></td>';
-            $tr3 .= '<td><input type="text" class="input-mini" style="width:50px"/></td>';
-            $tr4 .= '<td><input type="text" class="input-mini" style="width:50px"/></td>';
-        }
-        
-        if ($print["early"]) {
-            $tr1 .= '<td style="background-color: '.$color.'">'.$value["early"].'</td>';
-            $tr2 .= '<td><input type="text" class="input-mini" style="width:50px"/></td>';
-            $tr3 .= '<td><input type="text" class="input-mini" style="width:50px"/></td>';
-            $tr4 .= '<td><input type="text" class="input-mini" style="width:50px"/></td>';
-        }
-        
-        if ($print["afternoon"]) {
-            $tr1 .= '<td style="background-color: '.$color.'">'.$value["afternoon"].'</td>';
-            $tr2 .= '<td><input type="text" class="input-mini" style="width:50px"/></td>';
-            $tr3 .= '<td><input type="text" class="input-mini" style="width:50px"/></td>';
-            $tr4 .= '<td><input type="text" class="input-mini" style="width:50px"/></td>';
-        }
-        
-        if ($print["night"]) {
-            $tr1 .= '<td style="background-color: '.$color.'">'.$value["night"].'</td>';
-            $tr2 .= '<td><input type="text" class="input-mini" style="width:50px"/></td>';
-            $tr3 .= '<td><input type="text" class="input-mini" style="width:50px"/></td>';
-            $tr4 .= '<td><input type="text" class="input-mini" style="width:50px"/></td>';
-        }
-        
-        if ($print["50_shift"]) {
-            $tr1 .= '<td style="background-color: '.$color.'">'.$value["50%Shift"].'</td>';
-            $tr2 .= '<td><input type="text" class="input-mini" style="width:50px"/></td>';
-            $tr3 .= '<td><input type="text" class="input-mini" style="width:50px"/></td>';
-            $tr4 .= '<td><input type="text" class="input-mini" style="width:50px"/></td>';
-        }
-        
-        if ($print["t_14"]) {
-            $tr1 .= '<td style="background-color: '.$color.'">'.$value["T1/4"].'</td>';
-            $tr2 .= '<td><input type="text" class="input-mini" style="width:50px"/></td>';
-            $tr3 .= '<td><input type="text" class="input-mini" style="width:50px"/></td>';
-            $tr4 .= '<td><input type="text" class="input-mini" style="width:50px"/></td>';
-        }
-        
-        if ($print["t_12"]) {
-            $tr1 .= '<td style="background-color: '.$color.'">'.$value["T1/2"].'</td>';
-            $tr2 .= '<td><input type="text" class="input-mini" style="width:50px"/></td>';
-            $tr3 .= '<td><input type="text" class="input-mini" style="width:50px"/></td>';
-            $tr4 .= '<td><input type="text" class="input-mini" style="width:50px"/></td>';
-        }
-        
-        if ($print["double"]) {
-            $tr1 .= '<td style="background-color: '.$color.'">'.$value["double"].'</td>';
-            $tr2 .= '<td><input type="text" class="input-mini" style="width:50px"/></td>';
-            $tr3 .= '<td><input type="text" class="input-mini" style="width:50px"/></td>';
-            $tr4 .= '<td><input type="text" class="input-mini" style="width:50px"/></td>';
-        }
-        
-        if ($print["dt_12"]) {
-            $tr1 .= '<td style="background-color: '.$color.'">'.$value["DT1/2"].'</td>';
-            $tr2 .= '<td><input type="text" class="input-mini" style="width:50px"/></td>';
-            $tr3 .= '<td><input type="text" class="input-mini" style="width:50px"/></td>';
-            $tr4 .= '<td><input type="text" class="input-mini" style="width:50px"/></td>';
-        }
-        
-        if ($print["triple"]) {
-            $tr1 .= '<td style="background-color: '.$color.'">'.$value["triple"].'</td>';
-            $tr2 .= '<td><input type="text" class="input-mini" style="width:50px"/></td>';
-            $tr3 .= '<td><input type="text" class="input-mini" style="width:50px"/></td>';
-            $tr4 .= '<td><input type="text" class="input-mini" style="width:50px"/></td>';
-        }
-        
-        $tr1 .= "</tr>";
-        
-        return array($tr1, $tr2, $tr3, $tr4, $x);
-    }
+    require_once("forecast_helper.php");
 
-   $th = "<th></th>";
-   if ($print["normal"]) {
-       $th .= '<th>Normal</th>';
-   }
-   if ($print["early"]) {
-       $th .= '<th>Early</th>';
-   }
-   if ($print["afternoon"]) {
-       $th .= '<th>Afternoon</th>';
-   }
-   if ($print["night"]) {
-       $th .= '<th>Night</th>';
-   }
-   if ($print["50_shift"]) {
-       $th .= '<th>50% Shift</th>';
-   }
-   if ($print["t_14"]) {
-       $th .= '<th>T 1/4</th>';
-   }
-   if ($print["t_12"]) {
-       $th .= '<th>T 1/2</th>';
-   }
-   if ($print["double"]) {
-       $th .= '<th>Double</th>';
-   }
-   if ($print["dt_12"]) {
-       $th .= '<th>DT 1/2</th>';
-   }
-   if ($print["triple"]) {
-       $th .= '<th>Triple</th>';
-   }
+    $th = "<th></th>";
+    if ($print["normal"]) {
+        $th .= '<th>Normal</th>';
+    }
+    if ($print["early"]) {
+        $th .= '<th>Early</th>';
+    }
+    if ($print["afternoon"]) {
+        $th .= '<th>Afternoon</th>';
+    }
+    if ($print["night"]) {
+        $th .= '<th>Night</th>';
+    }
+    if ($print["50_shift"]) {
+        $th .= '<th>50% Shift</th>';
+    }
+    if ($print["t_14"]) {
+        $th .= '<th>T 1/4</th>';
+    }
+    if ($print["t_12"]) {
+        $th .= '<th>T 1/2</th>';
+    }
+    if ($print["double"]) {
+        $th .= '<th>Double</th>';
+    }
+    if ($print["dt_12"]) {
+        $th .= '<th>DT 1/2</th>';
+    }
+    if ($print["triple"]) {
+        $th .= '<th>Triple</th>';
+    }
 ?>
 
 <div class="topmargin"></div>
@@ -247,7 +161,7 @@
 				        <?php 
                             $x=1;
                             foreach($ml1 as $value):
-                                list($tr1, $tr2, $tr3, $tr4, $x) = generate_tr($value, $print, $x);
+                                list($tr1, $tr2, $tr3, $tr4, $x) = generate_tr($value, $print, $x, 1);
                                 echo $tr1;
                             endforeach;?>
                         <?php 
@@ -340,7 +254,7 @@
 				        <?php 
                             $x=1;
                             foreach($ml2 as $value):
-                                list($tr1, $tr2, $tr3, $tr4, $x) = generate_tr($value, $print, $x);
+                                list($tr1, $tr2, $tr3, $tr4, $x) = generate_tr($value, $print, $x, 2);
                                 echo $tr1;
                             endforeach;?>
                         <?php 
@@ -434,7 +348,7 @@
 				        <?php 
                             $x=1;
                             foreach($ml3 as $value):
-                                list($tr1, $tr2, $tr3, $tr4, $x) = generate_tr($value, $print, $x);
+                                list($tr1, $tr2, $tr3, $tr4, $x) = generate_tr($value, $print, $x, 3);
                                 echo $tr1;
                             endforeach;?>
                         <?php 
@@ -528,7 +442,7 @@
 				        <?php 
                             $x=1;
                             foreach($ml4 as $value):
-                                list($tr1, $tr2, $tr3, $tr4, $x) = generate_tr($value, $print, $x);
+                                list($tr1, $tr2, $tr3, $tr4, $x) = generate_tr($value, $print, $x, 4);
                                 echo $tr1;
                             endforeach;?>
                         <?php 
@@ -621,7 +535,7 @@
 				        <?php 
                             $x=1;
                             foreach($ml5 as $value):
-                                list($tr1, $tr2, $tr3, $tr4, $x) = generate_tr($value, $print, $x);
+                                list($tr1, $tr2, $tr3, $tr4, $x) = generate_tr($value, $print, $x, 5);
                                 echo $tr1;
                             endforeach;?>
                         <?php 
@@ -714,7 +628,7 @@
 				        <?php 
                             $x=1;
                             foreach($ml6 as $value):
-                                list($tr1, $tr2, $tr3, $tr4, $x) = generate_tr($value, $print, $x);
+                                list($tr1, $tr2, $tr3, $tr4, $x) = generate_tr($value, $print, $x, 6);
                                 echo $tr1;
                             endforeach;?>
                         <?php 
@@ -807,7 +721,7 @@
 				        <?php 
                             $x=1;
                             foreach($ml7 as $value):
-                                list($tr1, $tr2, $tr3, $tr4, $x) = generate_tr($value, $print, $x);
+                                list($tr1, $tr2, $tr3, $tr4, $x) = generate_tr($value, $print, $x, 7);
                                 echo $tr1;
                             endforeach;?>
                         <?php 
@@ -898,7 +812,7 @@
 				        <?php 
                             $x=1;
                             foreach($ml8 as $value):
-                                list($tr1, $tr2, $tr3, $tr4, $x) = generate_tr($value, $print, $x);
+                                list($tr1, $tr2, $tr3, $tr4, $x) = generate_tr($value, $print, $x, 8);
                                 echo $tr1;
                             endforeach;?>
                         <?php 
@@ -991,7 +905,7 @@
 				        <?php 
                             $x=1;
                             foreach($ml9 as $value):
-                                list($tr1, $tr2, $tr3, $tr4, $x) = generate_tr($value, $print, $x);
+                                list($tr1, $tr2, $tr3, $tr4, $x) = generate_tr($value, $print, $x, 9);
                                 echo $tr1;
                             endforeach;?>
                         <?php 
@@ -1084,7 +998,7 @@
 				        <?php 
                             $x=1;
                             foreach($ml10 as $value):
-                                list($tr1, $tr2, $tr3, $tr4, $x) = generate_tr($value, $print, $x);
+                                list($tr1, $tr2, $tr3, $tr4, $x) = generate_tr($value, $print, $x, 10);
                                 echo $tr1;
                             endforeach;?>
                         <?php 
@@ -1102,3 +1016,4 @@
 	
 </div>
 <?php echo $footer;?>
+<script src="<?php echo base_url("public/js/client/forecast.js")?>"></script>

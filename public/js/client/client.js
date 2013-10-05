@@ -34,4 +34,14 @@ $(document).ready(function(){
 	 		$("#cur_rate").html(str);
 	 	});
 	 });
+	 
+	 $(".company-link").click(function(){
+        var clicked_client_no = $(this).attr("client-no");
+        if($("#"+clicked_client_no).is(':visible')) {
+            $("#"+clicked_client_no).slideUp();
+        } else {
+            $("#"+clicked_client_no).slideDown();
+        }
+        return false;
+	 });
 });

@@ -26,28 +26,50 @@
 <div class="row">
     <div class="span3">
     	<h4>Client/s</h4>
-        <ul class="nav nav-tabs nav-stacked" style="overflow: auto; height: 500px;">
+        
         <?php foreach ($get_company as $company) : ?>
-            <li>
-                <a href="<?php echo base_url("client/pcs/rates/".$company["client_no"]."")?>">
-                    <?php echo $company["client_no"]." - ".$company["company_name"] ?>
-                </a>
-            </li>
-            <li class="divider"></li>
+            <ul class="nav nav-tabs nav-stacked" style="margin-bottom: 10px;">
+                <li>
+                    <!-- <a href="<?php echo base_url("client/pcs/rates/".$company["client_no"]."")?>">
+                        <?php echo $company["client_no"]." - ".$company["company_name"] ?>
+                    </a> -->
+                    <a href="#" class="company-link" client-no="<?php echo $company["client_no"] ?>">
+                        <?php echo $company["client_no"]." - ".$company["company_name"] ?>
+                    </a>
+                </li>
+                <li id="<?php echo $company["client_no"] ?>" style="display:none;">
+                    <ul class="nav nav-tabs nav-stacked" style="margin-bottom: 0px;">
+                        <li><a href="<?php echo base_url("client/pcs/current_rate/".$company["client_no"]."")?>">Current Rate</a></li>
+                        <li><a href="<?php echo base_url("client/pcs/pending_rates/".$company["client_no"]."")?>">Pending Approval</a></li>
+                        <li><a href="<?php echo base_url("client/pcs/history_rates/".$company["client_no"]."")?>">History Rate</a></li>
+                        <li><a href="#">Client Application</a></li>
+                    </ul>
+                </li>
+            </ul>
         <?php endforeach ?>
-    	</ul>
+
     </div>
     
     <div class="span9">
     	
     	<?php if($ok): ?>
     	<div class="tabbable">
-    		<ul class="nav nav-tabs">
-    			<li class="active">
-    				<a data-toggle="tab" href="#cur_rate">
-    					Current Rate
-    				</a> 
-    			</li>
+    		<!-- <ul class="nav nav-tabs">
+                <li class="active">
+                    <a data-toggle="tab" href="#cur_rate">
+                        Current Rate
+                    </a>
+                </li>
+                <li>
+                    <a data-toggle="tab" href="#cur_rate">
+                        Pending Approval
+                    </a>
+                </li>
+                <li>
+                    <a data-toggle="tab" href="#cur_rate">
+                        History Rate
+                    </a>
+                </li>
     			<li>
     				<a href="<?php echo base_url("client/pcs/client_application/".$company_no)?>">
     					Client Application
@@ -58,9 +80,10 @@
     					Forecasting
     				</a> 
     			</li>
-    		</ul>
+    		</ul> -->
     		
     		<div>
+                <h3><?php echo $company_info["client_no"]." - ".$company_info["company_name"] ?></h3>
     			<div class="tab-pane fade in active" id="cur_rate">
     				<table class='table table-bordered table-condesed table-stripped' style="font-size: 12px">
     					<thead>

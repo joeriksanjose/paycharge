@@ -8,6 +8,7 @@ class Pcs extends CI_Controller {
         $this->load->model("reports/tbl_rate_confirmation", "rc");
         $this->load->model("tbl_modern_award", "md");
         $this->load->model("libraries/tbl_contacts", "cont");
+        $this->load->model("libraries/tbl_clients", "cli");
 		$this->load->model("reports/tbl_paycharge_rate", "pr");
         $this->load->model("tbl_print_defaults", "pd");
         $this->load->library("user_session");
@@ -16,6 +17,11 @@ class Pcs extends CI_Controller {
         
         $this->data["title"] = "Client";
         $this->data["name"] = $this->client_session["contact_name"];
+    }
+
+    public function forecast($trans_no)
+    {
+
     }
     
     public function forecast_agreement($trans_no){
@@ -403,6 +409,193 @@ class Pcs extends CI_Controller {
         $this->load->view("client/print_rate_confirmation", $this->data);
     }
 
+    public function save(){
+
+        $post = $this->input->post(null, true);
+        $this->rc->saveForecast($post);
+    }
+
+    public function getRate(){
+
+        $trans_no = $_POST["trans_no"];
+        $grade = $_POST["grade"];
+
+        $this->data["params"]["print"] = $this->rc->getPrint($trans_no);
+
+        $this->data["params"]["print"]["_50_shift"] = $this->data["params"]["print"]["50_shift"];
+        if($grade == "1"){
+            if( $this->data["params"]["print"]["grade1"] ){
+                $this->data["params"]["payrate"] = $this->rc->getPayrate($trans_no, "Grade 1");
+                $this->data["params"]["ml"] = $this->rc->getML($trans_no, substr($this->data["params"]["print"]["calculator"], -1, 1), $grade);
+                $this->data["params"]["ml"]["_50_shift"] = $this->data["params"]["ml"]["50%Shift"];
+                $this->data["params"]["ml"]["T_12"] = $this->data["params"]["ml"]["T1/2"];
+                $this->data["params"]["ml"]["DT_12"] = $this->data["params"]["ml"]["DT1/2"];
+                $this->data["params"]["ml"]["T_14"] = $this->data["params"]["ml"]["T1/4"];
+            }
+        }
+        elseif($grade == "2"){
+            if( $this->data["params"]["print"]["grade2"] ){
+                $this->data["params"]["payrate"] = $this->rc->getPayrate($trans_no, "Grade 2");
+                $this->data["params"]["ml"] = $this->rc->getML($trans_no, substr($this->data["params"]["print"]["calculator"], -1, 1), $grade);
+                $this->data["params"]["ml"]["_50_shift"] = $this->data["params"]["ml"]["50%Shift"];
+                $this->data["params"]["ml"]["T_12"] = $this->data["params"]["ml"]["T1/2"];
+                $this->data["params"]["ml"]["DT_12"] = $this->data["params"]["ml"]["DT1/2"];
+                $this->data["params"]["ml"]["T_14"] = $this->data["params"]["ml"]["T1/4"];
+            }
+        }
+        elseif($grade == "3"){
+            if( $this->data["params"]["print"]["grade3"] ){
+                $this->data["params"]["payrate"] = $this->rc->getPayrate($trans_no, "Grade 3");
+                $this->data["params"]["ml"] = $this->rc->getML($trans_no, substr($this->data["params"]["print"]["calculator"], -1, 1), $grade);
+                $this->data["params"]["ml"]["_50_shift"] = $this->data["params"]["ml"]["50%Shift"];
+                $this->data["params"]["ml"]["T_12"] = $this->data["params"]["ml"]["T1/2"];
+                $this->data["params"]["ml"]["DT_12"] = $this->data["params"]["ml"]["DT1/2"];
+                $this->data["params"]["ml"]["T_14"] = $this->data["params"]["ml"]["T1/4"];
+            }
+        }
+        elseif($grade == "4"){
+            if( $this->data["params"]["print"]["grade4"] ){
+                $this->data["params"]["ml"] = $this->rc->getML4($trans_no, substr($this->data["params"]["print"]["calculator"], -1, 1));
+                $this->data["params"]["payrate"] = $this->rc->getPayrate($trans_no, "Grade 4");
+                $this->data["params"]["ml"] = $this->rc->getML($trans_no, substr($this->data["params"]["print"]["calculator"], -1, 1), $grade);
+                $this->data["params"]["ml"]["_50_shift"] = $this->data["params"]["ml"]["50%Shift"];
+                $this->data["params"]["ml"]["T_12"] = $this->data["params"]["ml"]["T1/2"];
+                $this->data["params"]["ml"]["DT_12"] = $this->data["params"]["ml"]["DT1/2"];
+                $this->data["params"]["ml"]["T_14"] = $this->data["params"]["ml"]["T1/4"];
+            }
+        }
+        elseif($grade == "5"){
+            if( $this->data["params"]["print"]["grade5"] ){
+                $this->data["params"]["payrate"] = $this->rc->getPayrate($trans_no, "Grade 5");
+                $this->data["params"]["ml"] = $this->rc->getML($trans_no, substr($this->data["params"]["print"]["calculator"], -1, 1), $grade);
+                $this->data["params"]["ml"]["_50_shift"] = $this->data["params"]["ml"]["50%Shift"];
+                $this->data["params"]["ml"]["T_12"] = $this->data["params"]["ml"]["T1/2"];
+                $this->data["params"]["ml"]["DT_12"] = $this->data["params"]["ml"]["DT1/2"];
+                $this->data["params"]["ml"]["T_14"] = $this->data["params"]["ml"]["T1/4"];
+            }
+        }
+        elseif($grade == "6"){
+            if( $this->data["params"]["print"]["grade6"] ){
+                $this->data["params"]["payrate"] = $this->rc->getPayrate($trans_no, "Grade 6");
+                $this->data["params"]["ml"] = $this->rc->getML($trans_no, substr($this->data["params"]["print"]["calculator"], -1, 1), $grade);
+                $this->data["params"]["ml"]["_50_shift"] = $this->data["params"]["ml"]["50%Shift"];
+                $this->data["params"]["ml"]["T_12"] = $this->data["params"]["ml"]["T1/2"];
+                $this->data["params"]["ml"]["DT_12"] = $this->data["params"]["ml"]["DT1/2"];
+                $this->data["params"]["ml"]["T_14"] = $this->data["params"]["ml"]["T1/4"];
+            }
+        }
+        elseif($grade == "7"){
+            if( $this->data["params"]["print"]["grade7"] ){
+                $this->data["params"]["payrate"] = $this->rc->getPayrate($trans_no, "Grade 7");
+                $this->data["params"]["ml"] = $this->rc->getML($trans_no, substr($this->data["params"]["print"]["calculator"], -1, 1), $grade);
+                $this->data["params"]["ml"]["_50_shift"] = $this->data["params"]["ml"]["50%Shift"];
+                $this->data["params"]["ml"]["T_12"] = $this->data["params"]["ml"]["T1/2"];
+                $this->data["params"]["ml"]["DT_12"] = $this->data["params"]["ml"]["DT1/2"];
+                $this->data["params"]["ml"]["T_14"] = $this->data["params"]["ml"]["T1/4"];
+            }
+        }
+        elseif($grade == "8"){
+            if( $this->data["params"]["print"]["grade8"] ){
+                $this->data["params"]["payrate"] = $this->rc->getPayrate($trans_no, "Grade 8");
+                $this->data["params"]["ml"] = $this->rc->getML($trans_no, substr($this->data["params"]["print"]["calculator"], -1, 1), $grade);
+                $this->data["params"]["ml"]["_50_shift"] = $this->data["params"]["ml"]["50%Shift"];
+                $this->data["params"]["ml"]["T_12"] = $this->data["params"]["ml"]["T1/2"];
+                $this->data["params"]["ml"]["DT_12"] = $this->data["params"]["ml"]["DT1/2"];
+                $this->data["params"]["ml"]["T_14"] = $this->data["params"]["ml"]["T1/4"];
+            }
+        }
+        elseif($grade == "9"){
+            if( $this->data["params"]["print"]["grade9"] ){
+                $this->data["params"]["payrate"] = $this->rc->getPayrate($trans_no, "Grade 9");
+                $this->data["params"]["ml"] = $this->rc->getML($trans_no, substr($this->data["params"]["print"]["calculator"], -1, 1), $grade);
+                $this->data["params"]["ml"]["_50_shift"] = $this->data["params"]["ml"]["50%Shift"];
+                $this->data["params"]["ml"]["T_12"] = $this->data["params"]["ml"]["T1/2"];
+                $this->data["params"]["ml"]["DT_12"] = $this->data["params"]["ml"]["DT1/2"];
+                $this->data["params"]["ml"]["T_14"] = $this->data["params"]["ml"]["T1/4"];
+            }
+        }
+        elseif($grade == "10"){
+            if( $this->data["params"]["print"]["grade10"] ){
+                $this->data["params"]["payrate"] = $this->rc->getPayrate($trans_no, "Grade 10");
+                $this->data["params"]["ml"] = $this->rc->getML($trans_no, substr($this->data["params"]["print"]["calculator"], -1, 1), $grade);
+                $this->data["params"]["ml"]["_50_shift"] = $this->data["params"]["ml"]["50%Shift"];
+                $this->data["params"]["ml"]["T_12"] = $this->data["params"]["ml"]["T1/2"];
+                $this->data["params"]["ml"]["DT_12"] = $this->data["params"]["ml"]["DT1/2"];
+                $this->data["params"]["ml"]["T_14"] = $this->data["params"]["ml"]["T1/4"];
+            }
+        }
+
+        echo json_encode($this->data["params"]);
+    }
+    public function forecast_award_new($trans_no, $moder_no){
+        $this->data["header"] = $this->load->view("client/header", $this->data, true);
+        $this->data["footer"] = $this->load->view("client/footer", $this->data, true);
+
+
+        $this->data["print"] = $this->rc->getPrint($moder_no);
+        $this->data["charge_rate"] = $this->rc->getChargeRate($trans_no);
+        $this->data["modern"] = $this->rc->getModern($moder_no);
+
+        $this->data["trans_no"] = $trans_no;
+        $this->data["modern_no"] = $moder_no;
+
+
+
+
+        if( $this->data["print"]["grade1"] ){
+            $this->data["ml1"] = $this->rc->getML1($trans_no, substr($this->data["print"]["calculator"], -1, 1));
+            $this->data["payrate_1"] = $this->rc->getPayrate($trans_no, "Grade 1");
+        }
+
+        if( $this->data["print"]["grade2"] ){
+            $this->data["ml2"] = $this->rc->getML2($trans_no, substr($this->data["print"]["calculator"], -1, 1));
+            $this->data["payrate_2"] = $this->rc->getPayrate($trans_no, "Grade 2");
+        }
+
+        if( $this->data["print"]["grade3"] ){
+            $this->data["ml3"] = $this->rc->getML3($trans_no, substr($this->data["print"]["calculator"], -1, 1));
+            $this->data["payrate_3"] = $this->rc->getPayrate($trans_no, "Grade 3");
+        }
+
+        if( $this->data["print"]["grade4"] ){
+            $this->data["ml4"] = $this->rc->getML4($trans_no, substr($this->data["print"]["calculator"], -1, 1));
+            $this->data["payrate_4"] = $this->rc->getPayrate($trans_no, "Grade 4");
+        }
+
+        if( $this->data["print"]["grade5"] ){
+            $this->data["ml5"] = $this->rc->getML5($trans_no, substr($this->data["print"]["calculator"], -1, 1));
+            $this->data["payrate_5"] = $this->rc->getPayrate($trans_no, "Grade 5");
+        }
+
+        if( $this->data["print"]["grade6"] ){
+            $this->data["ml6"] = $this->rc->getML6($trans_no, substr($this->data["print"]["calculator"], -1, 1));
+            $this->data["payrate_6"] = $this->rc->getPayrate($trans_no, "Grade 6");
+        }
+
+        if( $this->data["print"]["grade7"] ){
+            $this->data["ml7"] = $this->rc->getML7($trans_no, substr($this->data["print"]["calculator"], -1, 1));
+            $this->data["payrate_7"] = $this->rc->getPayrate($trans_no, "Grade 7");
+        }
+
+        if( $this->data["print"]["grade8"] ){
+            $this->data["ml8"] = $this->rc->getML8($trans_no, substr($this->data["print"]["calculator"], -1, 1));
+            $this->data["payrate_8"] = $this->rc->getPayrate($trans_no, "Grade 8");
+        }
+
+        if( $this->data["print"]["grade9"] ){
+            $this->data["ml9"] = $this->rc->getML9($trans_no, substr($this->data["print"]["calculator"], -1, 1));
+            $this->data["payrate_9"] = $this->rc->getPayrate($trans_no, "Grade 9");
+        }
+
+        if( $this->data["print"]["grade10"] ){
+            $this->data["ml10"] = $this->rc->getML10($trans_no, substr($this->data["print"]["calculator"], -1, 1));
+            $this->data["payrate_10"] = $this->rc->getPayrate($trans_no, "Grade 10");
+        }
+
+
+        $this->load->view("client/print_rate_confirmation_new", $this->data);
+    }
+
     public function index()
     {
         $this->data["header"] = $this->load->view("client/header", $this->data, true);
@@ -413,19 +606,48 @@ class Pcs extends CI_Controller {
         $this->load->view("client/client_index_view", $this->data);
     }
 	
-	public function rates($company)
+    public function current_rate($company)
     {
         $this->data["header"] = $this->load->view("client/header", $this->data, true);
         $this->data["footer"] = $this->load->view("client/footer", $this->data, true);
-		
-		$this->data["get_company"] = $this->cont->getCompany($this->client_session["contact_no"]);
-		
-        $post["company_no"] = $company;
-        $post["swi_process"] = 1;
+        
+        $this->data["get_company"] = $this->cont->getCompany($this->client_session["contact_no"]);
+        
         $this->data["company_no"] = $company;
-		$this->data["get_award"] = $this->cont->getAward($post);
-		$this->data["ok"] = 1;
-		
+        $this->data["company_info"] = $this->cli->getClientByClientNo($company);
+        $this->data["get_award"] = $this->cont->getCurrentRates($company);
+        $this->data["ok"] = 1;
+        
+        $this->load->view("client/client_index_view", $this->data);
+    }
+    
+    public function history_rates($company)
+    {
+        $this->data["header"] = $this->load->view("client/header", $this->data, true);
+        $this->data["footer"] = $this->load->view("client/footer", $this->data, true);
+        
+        $this->data["get_company"] = $this->cont->getCompany($this->client_session["contact_no"]);
+        
+        $this->data["company_no"] = $company;
+        $this->data["company_info"] = $this->cli->getClientByClientNo($company);
+        $this->data["get_award"] = $this->cont->getHistoryRates($company);
+        $this->data["ok"] = 1;
+        
+        $this->load->view("client/client_index_view", $this->data);
+    }
+    
+    public function pending_rates($company)
+    {
+        $this->data["header"] = $this->load->view("client/header", $this->data, true);
+        $this->data["footer"] = $this->load->view("client/footer", $this->data, true);
+        
+        $this->data["get_company"] = $this->cont->getCompany($this->client_session["contact_no"]);
+        
+        $this->data["company_no"] = $company;
+        $this->data["company_info"] = $this->cli->getClientByClientNo($company);
+        $this->data["get_award"] = $this->cont->getPendingRates($company);
+        $this->data["ok"] = 1;
+        
         $this->load->view("client/client_index_view", $this->data);
     }
 	
@@ -1324,6 +1546,17 @@ class Pcs extends CI_Controller {
         
         $this->load->view("client/rate_history_view", $this->data);
 	}
+    
+    /**
+     * FORECASTING
+     */
+     
+     public function saveForecast()
+     {
+         $post = $this->input->post(null, true);
+     }
+     
+     /* END FORECASTING */
 }
 
 /* End of file pcs.php */

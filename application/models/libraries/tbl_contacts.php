@@ -157,6 +157,27 @@ class Tbl_contacts extends CI_model{
         return $this->db->get("tbl_charge_rate")->result_array();
     }
     
+    public function getCurrentRates($company_no)
+    {
+        $sql = "SELECT * FROM tbl_charge_rate WHERE company_no = ? and swi_process = 1 and is_approved = 1 ORDER BY date_of_quotation DESC LIMIT 1";
+        return $this->db->query($sql, array($company_no))->result_array();
+    }
+    
+    public function getPendingRates($company_no)
+    {
+        $sql = "SELECT * FROM tbl_charge_rate WHERE company_no = ? and swi_process = 1 and is_approved = 0 ORDER BY date_of_quotation DESC";
+        return $this->db->query($sql, array($company_no))->result_array();
+    }
+    
+    public function getHistoryRates($company_no)
+    {
+        $sql = "SELECT * FROM tbl_charge_rate WHERE company_no = ? and swi_process = 1 and is_approved = 1 ORDER BY date_of_quotation DESC";
+        $res = $this->db->query($sql, array($company_no))->result_array();
+        array_shift($res);
+        
+        return $res;
+    }
+    
     public function getUpcomingRates($trans_no)
     {
         $date = date("Y-m-d");

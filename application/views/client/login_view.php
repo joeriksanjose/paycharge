@@ -13,9 +13,7 @@
 <div class="container">
     <div class="navbar navbar-fixed-top">
         <div class="navbar-inner">
-            <div class="container">
-                <a href="#" class="brand pull-right">LP Paycharge System</a>
-            </div>
+
         </div>
     </div>
     <div class="row">

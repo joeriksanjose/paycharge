@@ -30,8 +30,6 @@
     <div class="navbar navbar-fixed-top">
         <div class="navbar-inner">
             <div class="container">
-                <a href="<?php echo base_url("clients") ?>" class="brand pull-right">PCS (Client)</a>
-                
                 <div class="pull-right" style="margin-top: 10px; margin-left: 5px;">
                     <a href="<?php echo base_url("client/home/logout") ?>">Logout</a>
                 </div>
