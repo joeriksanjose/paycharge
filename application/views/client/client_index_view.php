@@ -1,24 +1,12 @@
+<?php
+function formatDate($date)
+{
+    return date("d/m/Y", strtotime($date));
+}
+
+?>
 <?php echo $header ?>
 <script src="<?php echo base_url("public/js/client/client.js")?>"></script>
-
-<!-- APPROVE MODAL -->
-<div id="approveModal" class="modal hide fade" tabindex="-1" role="dialog">
-    <form style="margin: 0px;" action="<?php echo base_url("client/pcs/approve_rate") ?>" method="post">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3 id="myModalLabel">Approval Confirmation</h3>
-        </div>
-        <input type="hidden" name="approve_trans_no" id="hid-approve-id">
-        <div class="modal-body">
-            <p>Are you sure you want to approve this rate?</p>
-        </div>
-        <div class="modal-footer">
-            <button type="submit" class="btn btn-primary" id="approve-btn-modal">Confirm</button>
-            </form>
-            <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-        </div>
-</div>
-<!-- END APPROVE MODAL -->
 
 <div class="topmargin"></div>
 
@@ -42,7 +30,8 @@
                         <li><a href="<?php echo base_url("client/pcs/current_rate/".$company["client_no"]."")?>">Current Rate</a></li>
                         <li><a href="<?php echo base_url("client/pcs/pending_rates/".$company["client_no"]."")?>">Pending Approval</a></li>
                         <li><a href="<?php echo base_url("client/pcs/history_rates/".$company["client_no"]."")?>">History Rate</a></li>
-                        <li><a href="#">Client Application</a></li>
+                        <li><a href="<?php echo base_url("client/pcs/client_application/".$company["client_no"]."")?>">Client Application</a></li>
+                        <li><a target="_blank" href="<?php echo base_url("client/pcs/forecasting/".$company["client_no"]."")?>">Forecasting</a></li>
                     </ul>
                 </li>
             </ul>
@@ -90,8 +79,9 @@
     				 		<tr>
     					 		<th>Trans. No.</th>
     					 		<th>Trans. Name</th>
+    					 		<th>Date of Quotation</th>
     					 		<th>Status</th>
-    					 		<th>Action</th>
+    					 		<!-- <th>Action</th> -->
     				 		</tr>
     			 		</thead>
     			 		<tbody>
@@ -103,9 +93,14 @@
     			 			<?php foreach ($get_award as $value) :?>
     							 <tr>
     							 	<td><?php echo $value["trans_no"]?></td>
-    							 	<td><?php echo $value["transaction_name"]?></td>
+    							 	<?php if ($value["trans_type"] == "1") : ?>
+    							 	<td><a href="<?php echo base_url("client/pcs/charge_rate/".$value["trans_no"]."/".$value["modern_award_no"])?>" target="_blank"><?php echo $value["transaction_name"]?></a></td>
+    							 	<?php else : ?>
+    							 	<td><a href="<?php echo base_url("client/pcs/charge_rate_client/".$value["trans_no"])?>" target="_blank"><?php echo $value["transaction_name"]?></a></td>
+    							 	<?php endif ?>
+    							 	<td><?php echo $value["date_of_quotation"] ?></td>  
     							 	<td><?php echo ($value["is_approved"]) ? "Approved" : "Pending for approval" ?></td>
-    							 	<td>
+    							 	<!-- <td>
     							 	    <div class="btn-group">
                                             <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">
                                                 Action <span class="caret"></span>
@@ -154,8 +149,8 @@
                                                 <?php endif;?>
         							 		</ul>
     							 		</div>
-    							 	</td>
-    							 </tr
+    							 	</td> -->
+    							 </tr>
     						<?php endforeach; ?>
     						<?php endif ?>
     			 		</tbody>
@@ -175,15 +170,3 @@
 
 </div>
 <?php echo $footer ?>
-<script>
-    $(".approve-rate").click(function(){
-        $("#hid-approve-id").val($(this).attr("a-id"));
-        $("#approveModal").modal("show");
-        return false;
-    });
-    
-    $("#approve-btn-modal").click(function(){
-        $("#approveModal").modal("hide");
-        $("#loadingModal").modal("show");
-    })
-</script>

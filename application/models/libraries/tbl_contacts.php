@@ -208,6 +208,12 @@ class Tbl_contacts extends CI_model{
     
     public function approveRate($trans_no)
     {
+        $check_charge_rate = "SELECT is_approved FROM tbl_charge_rate WHERE trans_no = ?";
+        $res = $this->db->query($check_charge_rate, array($trans_no));
+        if ($res["is_approved"]) {
+            return false;
+        }
+        
         $sql = "UPDATE tbl_charge_rate set is_approved = 1 WHERE trans_no = ?";
         if ($this->db->query($sql, array($trans_no))) {
             $sql2 = "SELECT company_no FROM tbl_charge_rate WHERE trans_no = ?";

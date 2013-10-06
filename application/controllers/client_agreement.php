@@ -296,6 +296,7 @@ class Client_agreement extends CI_Controller
     public function save()
     {
         $post = $this->input->post(null, true);
+        $post["date_of_quotation"] = $this->convertToYMD($post["date_of_quotation"]);
 		$swi_process = isset($post["swi_process"]) ? $post["swi_process"] : 0;
 		unset($post["swi_process"]);
         

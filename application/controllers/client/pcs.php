@@ -18,395 +18,16 @@ class Pcs extends CI_Controller {
         $this->data["title"] = "Client";
         $this->data["name"] = $this->client_session["contact_name"];
     }
-
-    public function forecast($trans_no)
-    {
-
-    }
     
-    public function forecast_agreement($trans_no){
-        $this->data["header"] = $this->load->view("client/header", $this->data, true);
-        $this->data["footer"] = $this->load->view("client/footer", $this->data, true);
+    public function saveClientApplication(){
         
-        $this->data["print"] = $this->rc->getPrint($trans_no);
-        $this->data["charge_rate"] = $this->rc->getChargeRate($trans_no);
-        
-        
-        if( $this->data["print"]["grade1"] ){
-            $this->data["ml1"] = $this->rc->getML1($trans_no, substr($this->data["print"]["calculator"], -1, 1));
-            $this->data["payrate_1"] = $this->rc->getPayrate($trans_no, "Grade 1");
-        } 
-        
-        if( $this->data["print"]["grade2"] ){
-            $this->data["ml2"] = $this->rc->getML2($trans_no, substr($this->data["print"]["calculator"], -1, 1));
-            $this->data["payrate_2"] = $this->rc->getPayrate($trans_no, "Grade 2");
-        } 
-        
-        if( $this->data["print"]["grade3"] ){
-            $this->data["ml3"] = $this->rc->getML3($trans_no, substr($this->data["print"]["calculator"], -1, 1));
-            $this->data["payrate_3"] = $this->rc->getPayrate($trans_no, "Grade 3");
-        } 
-        
-        if( $this->data["print"]["grade4"] ){
-            $this->data["ml4"] = $this->rc->getML4($trans_no, substr($this->data["print"]["calculator"], -1, 1));
-            $this->data["payrate_4"] = $this->rc->getPayrate($trans_no, "Grade 4");
-        } 
-        
-        if( $this->data["print"]["grade5"] ){
-            $this->data["ml5"] = $this->rc->getML5($trans_no, substr($this->data["print"]["calculator"], -1, 1));
-            $this->data["payrate_5"] = $this->rc->getPayrate($trans_no, "Grade 5");
-        } 
-        
-        if( $this->data["print"]["grade6"] ){
-            $this->data["ml6"] = $this->rc->getML6($trans_no, substr($this->data["print"]["calculator"], -1, 1));
-            $this->data["payrate_6"] = $this->rc->getPayrate($trans_no, "Grade 6");
-        } 
-        
-        if( $this->data["print"]["grade7"] ){
-            $this->data["ml7"] = $this->rc->getML7($trans_no, substr($this->data["print"]["calculator"], -1, 1));
-            $this->data["payrate_7"] = $this->rc->getPayrate($trans_no, "Grade 7");
-        } 
-        
-        if( $this->data["print"]["grade8"] ){
-            $this->data["ml8"] = $this->rc->getML8($trans_no, substr($this->data["print"]["calculator"], -1, 1));
-            $this->data["payrate_8"] = $this->rc->getPayrate($trans_no, "Grade 8");
-        } 
-        
-        if( $this->data["print"]["grade9"] ){
-            $this->data["ml9"] = $this->rc->getML9($trans_no, substr($this->data["print"]["calculator"], -1, 1));   
-            $this->data["payrate_9"] = $this->rc->getPayrate($trans_no, "Grade 9");
-        } 
-        
-        if( $this->data["print"]["grade10"] ){
-            $this->data["ml10"] = $this->rc->getML10($trans_no, substr($this->data["print"]["calculator"], -1, 1));
-            $this->data["payrate_10"] = $this->rc->getPayrate($trans_no, "Grade 10");
+        $post = $this->input->post(null, true);
+        if(isset($post["txt_others"])){
+            $post["business_type"] = $post["txt_others"];
         }
-        
-        if( $this->data["print"]["grade1"] ){
-            $this->data["grade1_active"] = "active";
-            $this->data["grade2_active"] = "";
-            $this->data["grade3_active"] = "";
-            $this->data["grade4_active"] = "";
-            $this->data["grade5_active"] = "";
-            $this->data["grade6_active"] = "";
-            $this->data["grade7_active"] = "";
-            $this->data["grade8_active"] = "";
-            $this->data["grade9_active"] = "";
-            $this->data["grade10_active"] = ""; 
-        } 
-        
-        elseif( $this->data["print"]["grade2"] ){
-            $this->data["grade1_active"] = "";
-            $this->data["grade2_active"] = "active";
-            $this->data["grade3_active"] = "";
-            $this->data["grade4_active"] = "";
-            $this->data["grade5_active"] = "";
-            $this->data["grade6_active"] = "";
-            $this->data["grade7_active"] = "";
-            $this->data["grade8_active"] = "";
-            $this->data["grade9_active"] = "";
-            $this->data["grade10_active"] = "";
-        } 
-        
-        elseif( $this->data["print"]["grade3"] ){
-            $this->data["grade1_active"] = "";
-            $this->data["grade2_active"] = "";
-            $this->data["grade3_active"] = "active";
-            $this->data["grade4_active"] = "";
-            $this->data["grade5_active"] = "";
-            $this->data["grade6_active"] = "";
-            $this->data["grade7_active"] = "";
-            $this->data["grade8_active"] = "";
-            $this->data["grade9_active"] = "";
-            $this->data["grade10_active"] = "";
-        } 
-        
-        elseif( $this->data["print"]["grade4"] ){
-            $this->data["grade1_active"] = "";
-            $this->data["grade2_active"] = "";
-            $this->data["grade3_active"] = "";
-            $this->data["grade4_active"] = "active";
-            $this->data["grade5_active"] = "";
-            $this->data["grade6_active"] = "";
-            $this->data["grade7_active"] = "";
-            $this->data["grade8_active"] = "";
-            $this->data["grade9_active"] = "";
-            $this->data["grade10_active"] = "";
-        } 
-        
-        elseif( $this->data["print"]["grade5"] ){
-            $this->data["grade1_active"] = "";
-            $this->data["grade2_active"] = "";
-            $this->data["grade3_active"] = "";
-            $this->data["grade4_active"] = "";
-            $this->data["grade5_active"] = "active";
-            $this->data["grade6_active"] = "";
-            $this->data["grade7_active"] = "";
-            $this->data["grade8_active"] = "";
-            $this->data["grade9_active"] = "";
-            $this->data["grade10_active"] = "";
-        } 
-        
-        elseif( $this->data["print"]["grade6"] ){
-            $this->data["grade1_active"] = "";
-            $this->data["grade2_active"] = "";
-            $this->data["grade3_active"] = "";
-            $this->data["grade4_active"] = "";
-            $this->data["grade5_active"] = "";
-            $this->data["grade6_active"] = "active";
-            $this->data["grade7_active"] = "";
-            $this->data["grade8_active"] = "";
-            $this->data["grade9_active"] = "";
-            $this->data["grade10_active"] = ""; 
-        } 
-        
-        elseif( $this->data["print"]["grade7"] ){
-            $this->data["grade1_active"] = "";
-            $this->data["grade2_active"] = "";
-            $this->data["grade3_active"] = "";
-            $this->data["grade4_active"] = "";
-            $this->data["grade5_active"] = "";
-            $this->data["grade6_active"] = "";
-            $this->data["grade7_active"] = "active";
-            $this->data["grade8_active"] = "";
-            $this->data["grade9_active"] = "";
-            $this->data["grade10_active"] = ""; 
-        } 
-        
-        elseif( $this->data["print"]["grade8"] ){
-            $this->data["grade1_active"] = "";
-            $this->data["grade2_active"] = "";
-            $this->data["grade3_active"] = "";
-            $this->data["grade4_active"] = "";
-            $this->data["grade5_active"] = "";
-            $this->data["grade6_active"] = "";
-            $this->data["grade7_active"] = "";
-            $this->data["grade8_active"] = "active";
-            $this->data["grade9_active"] = "";
-            $this->data["grade10_active"] = "";
-        } 
-        
-        elseif( $this->data["print"]["grade9"] ){
-            $this->data["grade1_active"] = "";
-            $this->data["grade2_active"] = "";
-            $this->data["grade3_active"] = "";
-            $this->data["grade4_active"] = "";
-            $this->data["grade5_active"] = "";
-            $this->data["grade6_active"] = "";
-            $this->data["grade7_active"] = "";
-            $this->data["grade8_active"] = "";
-            $this->data["grade9_active"] = "active";
-            $this->data["grade10_active"] = ""; 
-        } 
-        
-        elseif( $this->data["print"]["grade10"] ){
-            $this->data["grade1_active"] = "";
-            $this->data["grade2_active"] = "";
-            $this->data["grade3_active"] = "";
-            $this->data["grade4_active"] = "";
-            $this->data["grade5_active"] = "";
-            $this->data["grade6_active"] = "";
-            $this->data["grade7_active"] = "";
-            $this->data["grade8_active"] = "";
-            $this->data["grade9_active"] = "";
-            $this->data["grade10_active"] = "active";   
-        }
-        
-        $this->load->view("client/print_rate_confirmation_client", $this->data);
-    }
-
-    public function forecast_award($trans_no, $moder_no){
-        $this->data["header"] = $this->load->view("client/header", $this->data, true);
-        $this->data["footer"] = $this->load->view("client/footer", $this->data, true);
-        
-        
-        $this->data["print"] = $this->rc->getPrint($moder_no);
-        $this->data["charge_rate"] = $this->rc->getChargeRate($trans_no);
-        $this->data["modern"] = $this->rc->getModern($moder_no);
-        
-        
-        
-        
-        if( $this->data["print"]["grade1"] ){
-            $this->data["ml1"] = $this->rc->getML1($trans_no, substr($this->data["print"]["calculator"], -1, 1));
-            $this->data["payrate_1"] = $this->rc->getPayrate($trans_no, "Grade 1");
-        } 
-        
-        if( $this->data["print"]["grade2"] ){
-            $this->data["ml2"] = $this->rc->getML2($trans_no, substr($this->data["print"]["calculator"], -1, 1));
-            $this->data["payrate_2"] = $this->rc->getPayrate($trans_no, "Grade 2");
-        } 
-        
-        if( $this->data["print"]["grade3"] ){
-            $this->data["ml3"] = $this->rc->getML3($trans_no, substr($this->data["print"]["calculator"], -1, 1));
-            $this->data["payrate_3"] = $this->rc->getPayrate($trans_no, "Grade 3");
-        } 
-        
-        if( $this->data["print"]["grade4"] ){
-            $this->data["ml4"] = $this->rc->getML4($trans_no, substr($this->data["print"]["calculator"], -1, 1));
-            $this->data["payrate_4"] = $this->rc->getPayrate($trans_no, "Grade 4");
-        } 
-        
-        if( $this->data["print"]["grade5"] ){
-            $this->data["ml5"] = $this->rc->getML5($trans_no, substr($this->data["print"]["calculator"], -1, 1));
-            $this->data["payrate_5"] = $this->rc->getPayrate($trans_no, "Grade 5");
-        } 
-        
-        if( $this->data["print"]["grade6"] ){
-            $this->data["ml6"] = $this->rc->getML6($trans_no, substr($this->data["print"]["calculator"], -1, 1));
-            $this->data["payrate_6"] = $this->rc->getPayrate($trans_no, "Grade 6");
-        } 
-        
-        if( $this->data["print"]["grade7"] ){
-            $this->data["ml7"] = $this->rc->getML7($trans_no, substr($this->data["print"]["calculator"], -1, 1));
-            $this->data["payrate_7"] = $this->rc->getPayrate($trans_no, "Grade 7");
-        } 
-        
-        if( $this->data["print"]["grade8"] ){
-            $this->data["ml8"] = $this->rc->getML8($trans_no, substr($this->data["print"]["calculator"], -1, 1));
-            $this->data["payrate_8"] = $this->rc->getPayrate($trans_no, "Grade 8");
-        } 
-        
-        if( $this->data["print"]["grade9"] ){
-            $this->data["ml9"] = $this->rc->getML9($trans_no, substr($this->data["print"]["calculator"], -1, 1));   
-            $this->data["payrate_9"] = $this->rc->getPayrate($trans_no, "Grade 9");
-        } 
-        
-        if( $this->data["print"]["grade10"] ){
-            $this->data["ml10"] = $this->rc->getML10($trans_no, substr($this->data["print"]["calculator"], -1, 1));
-            $this->data["payrate_10"] = $this->rc->getPayrate($trans_no, "Grade 10");
-        }
-        
-        if( $this->data["print"]["grade1"] ){
-            $this->data["grade1_active"] = "active";
-            $this->data["grade2_active"] = "";
-            $this->data["grade3_active"] = "";
-            $this->data["grade4_active"] = "";
-            $this->data["grade5_active"] = "";
-            $this->data["grade6_active"] = "";
-            $this->data["grade7_active"] = "";
-            $this->data["grade8_active"] = "";
-            $this->data["grade9_active"] = "";
-            $this->data["grade10_active"] = ""; 
-        } 
-        
-        elseif( $this->data["print"]["grade2"] ){
-            $this->data["grade1_active"] = "";
-            $this->data["grade2_active"] = "active";
-            $this->data["grade3_active"] = "";
-            $this->data["grade4_active"] = "";
-            $this->data["grade5_active"] = "";
-            $this->data["grade6_active"] = "";
-            $this->data["grade7_active"] = "";
-            $this->data["grade8_active"] = "";
-            $this->data["grade9_active"] = "";
-            $this->data["grade10_active"] = "";
-        } 
-        
-        elseif( $this->data["print"]["grade3"] ){
-            $this->data["grade1_active"] = "";
-            $this->data["grade2_active"] = "";
-            $this->data["grade3_active"] = "active";
-            $this->data["grade4_active"] = "";
-            $this->data["grade5_active"] = "";
-            $this->data["grade6_active"] = "";
-            $this->data["grade7_active"] = "";
-            $this->data["grade8_active"] = "";
-            $this->data["grade9_active"] = "";
-            $this->data["grade10_active"] = "";
-        } 
-        
-        elseif( $this->data["print"]["grade4"] ){
-            $this->data["grade1_active"] = "";
-            $this->data["grade2_active"] = "";
-            $this->data["grade3_active"] = "";
-            $this->data["grade4_active"] = "active";
-            $this->data["grade5_active"] = "";
-            $this->data["grade6_active"] = "";
-            $this->data["grade7_active"] = "";
-            $this->data["grade8_active"] = "";
-            $this->data["grade9_active"] = "";
-            $this->data["grade10_active"] = "";
-        } 
-        
-        elseif( $this->data["print"]["grade5"] ){
-            $this->data["grade1_active"] = "";
-            $this->data["grade2_active"] = "";
-            $this->data["grade3_active"] = "";
-            $this->data["grade4_active"] = "";
-            $this->data["grade5_active"] = "active";
-            $this->data["grade6_active"] = "";
-            $this->data["grade7_active"] = "";
-            $this->data["grade8_active"] = "";
-            $this->data["grade9_active"] = "";
-            $this->data["grade10_active"] = "";
-        } 
-        
-        elseif( $this->data["print"]["grade6"] ){
-            $this->data["grade1_active"] = "";
-            $this->data["grade2_active"] = "";
-            $this->data["grade3_active"] = "";
-            $this->data["grade4_active"] = "";
-            $this->data["grade5_active"] = "";
-            $this->data["grade6_active"] = "active";
-            $this->data["grade7_active"] = "";
-            $this->data["grade8_active"] = "";
-            $this->data["grade9_active"] = "";
-            $this->data["grade10_active"] = ""; 
-        } 
-        
-        elseif( $this->data["print"]["grade7"] ){
-            $this->data["grade1_active"] = "";
-            $this->data["grade2_active"] = "";
-            $this->data["grade3_active"] = "";
-            $this->data["grade4_active"] = "";
-            $this->data["grade5_active"] = "";
-            $this->data["grade6_active"] = "";
-            $this->data["grade7_active"] = "active";
-            $this->data["grade8_active"] = "";
-            $this->data["grade9_active"] = "";
-            $this->data["grade10_active"] = ""; 
-        } 
-        
-        elseif( $this->data["print"]["grade8"] ){
-            $this->data["grade1_active"] = "";
-            $this->data["grade2_active"] = "";
-            $this->data["grade3_active"] = "";
-            $this->data["grade4_active"] = "";
-            $this->data["grade5_active"] = "";
-            $this->data["grade6_active"] = "";
-            $this->data["grade7_active"] = "";
-            $this->data["grade8_active"] = "active";
-            $this->data["grade9_active"] = "";
-            $this->data["grade10_active"] = "";
-        } 
-        
-        elseif( $this->data["print"]["grade9"] ){
-            $this->data["grade1_active"] = "";
-            $this->data["grade2_active"] = "";
-            $this->data["grade3_active"] = "";
-            $this->data["grade4_active"] = "";
-            $this->data["grade5_active"] = "";
-            $this->data["grade6_active"] = "";
-            $this->data["grade7_active"] = "";
-            $this->data["grade8_active"] = "";
-            $this->data["grade9_active"] = "active";
-            $this->data["grade10_active"] = ""; 
-        } 
-        
-        elseif( $this->data["print"]["grade10"] ){
-            $this->data["grade1_active"] = "";
-            $this->data["grade2_active"] = "";
-            $this->data["grade3_active"] = "";
-            $this->data["grade4_active"] = "";
-            $this->data["grade5_active"] = "";
-            $this->data["grade6_active"] = "";
-            $this->data["grade7_active"] = "";
-            $this->data["grade8_active"] = "";
-            $this->data["grade9_active"] = "";
-            $this->data["grade10_active"] = "active";   
-        }
-        $this->load->view("client/print_rate_confirmation", $this->data);
+        unset($post["rdo_others"]);
+        unset($post["txt_others"]);
+        $this->cli->saveClientApplication($post);
     }
 
     public function save(){
@@ -527,10 +148,24 @@ class Pcs extends CI_Controller {
 
         echo json_encode($this->data["params"]);
     }
-    public function forecast_award_new($trans_no, $moder_no){
+
+    public function forecasting($company_no){
+        
         $this->data["header"] = $this->load->view("client/header", $this->data, true);
         $this->data["footer"] = $this->load->view("client/footer", $this->data, true);
 
+        $post["company_no"] = $company_no;
+        $post["swi_process"] = 1;
+        
+        $this->data["get_award"] = $this->cont->getAward($post);
+                    
+        $this->load->view("client/print_rate_confirmation_new", $this->data); 
+    }
+        
+
+
+    public function get_award_new($trans_no, $moder_no){
+        
 
         $this->data["print"] = $this->rc->getPrint($moder_no);
         $this->data["charge_rate"] = $this->rc->getChargeRate($trans_no);
@@ -539,8 +174,7 @@ class Pcs extends CI_Controller {
         $this->data["trans_no"] = $trans_no;
         $this->data["modern_no"] = $moder_no;
 
-
-
+        
 
         if( $this->data["print"]["grade1"] ){
             $this->data["ml1"] = $this->rc->getML1($trans_no, substr($this->data["print"]["calculator"], -1, 1));
@@ -591,9 +225,7 @@ class Pcs extends CI_Controller {
             $this->data["ml10"] = $this->rc->getML10($trans_no, substr($this->data["print"]["calculator"], -1, 1));
             $this->data["payrate_10"] = $this->rc->getPayrate($trans_no, "Grade 10");
         }
-
-
-        $this->load->view("client/print_rate_confirmation_new", $this->data);
+        
     }
 
     public function index()
@@ -694,7 +326,8 @@ class Pcs extends CI_Controller {
 	public function charge_rate($trans_no, $modern_no){
 		$this->data["header"] = $this->load->view("client/header", $this->data, true);
         $this->data["footer"] = $this->load->view("client/footer", $this->data, true);
-        
+        $this->data["is_approved"] = $this->session->userdata("is_approved");
+        $this->session->unset_userdata("is_approved");
 		$this->data["calcu"] = $this->pr->getCalc($modern_no);
         $this->data["modern"] = $this->pr->getModern($modern_no);
         $this->data["mallow"] = $this->pr->getMAllow($trans_no);
@@ -1085,13 +718,14 @@ class Pcs extends CI_Controller {
                 }
             }
         }
-		$this->load->view("reports/print_paycharge_rate", $this->data);
+		$this->load->view("client/rate_view", $this->data);
 	}
 	
     public function charge_rate_client($trans_no){
         $this->data["header"] = $this->load->view("client/header", $this->data, true);
         $this->data["footer"] = $this->load->view("client/footer", $this->data, true);
-        
+        $this->data["is_approved"] = $this->session->userdata("is_approved");
+        $this->session->unset_userdata("is_approved");
         $this->data["calcu"] = $this->pr->getCalc($trans_no);
         if($this->data["calcu"]["print_company_no"] == 1){
             $this->data["company"] = "Labourpower Recruitment Services";
@@ -1481,13 +1115,14 @@ class Pcs extends CI_Controller {
                 }
             }
         }
-        $this->load->view("reports/print_paycharge_rate_client", $this->data);
+        $this->load->view("client/rate_view_client", $this->data);
 	}
 	
 	public function approve_rate()
     {
         $trans_no = $this->input->post("approve_trans_no", true);
         $rate_info = $this->cont->approveRate($trans_no);
+        $this->session->set_userdata("is_approved", true);
         
         if ($rate_info) {
             $sql = "SELECT company_name FROM tbl_company WHERE client_no = ?";
@@ -1502,6 +1137,8 @@ class Pcs extends CI_Controller {
                       ."Client No : ".$rate_info["company_no"]."<br>"; 
             
             $this->user_session->notifEmail($subject, $message, $to);
+        } else {
+            $this->session->set_userdata("is_approved", false);
         }
         
         redirect($_SERVER["HTTP_REFERER"]);
@@ -1553,8 +1190,96 @@ class Pcs extends CI_Controller {
      
      public function saveForecast()
      {
-         $post = $this->input->post(null, true);
-     }
+         $grade = $_POST["grade"];
+         $type = $_POST["type"];
+         $data = $_POST["data"];
+         $trans_no = $_POST["trans_no"];
+         $trans_name = $_POST["trans_name"];
+         // $days = $_POST["days"];
+         
+         $count = sizeof($data);
+         
+         $x=0;
+         
+         for ( $i = 0; $i < $count; $i++){
+            
+            if($x==10){
+                $x = 0;
+            }
+            
+            $arr_grade[$grade[$i]] = $grade[$i];
+            
+            if($type[$i] == "emp"){
+                $arr_emp[$grade[$i]][$x] = $data[$i];
+            } elseif($type[$i] == "hrs"){
+                $arr_hrs[$grade[$i]][$x] = $data[$i];
+            } elseif($type[$i] == "days"){
+                $arr_days[$grade[$i]][$x] = $data[$i];
+            } 
+            
+            $x++;
+                
+         }
+         
+         $post["trans_no"] = $trans_no;
+         $post["trans_name"] = $trans_name;
+         
+         foreach($arr_grade as $key_grade => $grade){
+            $post["grade"] = $grade;
+            $post["type"] = "emp";
+            $post["normal"] = $arr_emp[$key_grade][0];  
+            $post["early"] = $arr_emp[$key_grade][1];  
+            $post["afternoon"] = $arr_emp[$key_grade][2];  
+            $post["night"] = $arr_emp[$key_grade][3];  
+            $post["50_shift"] = $arr_emp[$key_grade][4];  
+            $post["t_14"] = $arr_emp[$key_grade][5];  
+            $post["t_12"] = $arr_emp[$key_grade][6];  
+            $post["double"] = $arr_emp[$key_grade][7];  
+            $post["dt_12"] = $arr_emp[$key_grade][8];  
+            $post["triple"] = $arr_emp[$key_grade][9];  
+            $emp = $this->rc->saveForecast($post);
+         }
+         
+         foreach($arr_grade as $key_grade => $grade){
+            $post["grade"] = $grade;
+            $post["type"] = "hrs";
+            $post["normal"] = $arr_hrs[$key_grade][0];  
+            $post["early"] = $arr_hrs[$key_grade][1];  
+            $post["afternoon"] = $arr_hrs[$key_grade][2];  
+            $post["night"] = $arr_hrs[$key_grade][3];  
+            $post["50_shift"] = $arr_hrs[$key_grade][4];  
+            $post["t_14"] = $arr_hrs[$key_grade][5];  
+            $post["t_12"] = $arr_hrs[$key_grade][6];  
+            $post["double"] = $arr_hrs[$key_grade][7];  
+            $post["dt_12"] = $arr_hrs[$key_grade][8];  
+            $post["triple"] = $arr_hrs[$key_grade][9];  
+            $hrs = $this->rc->saveForecast($post);
+         }
+         
+         foreach($arr_grade as $key_grade => $grade){
+            $post["grade"] = $grade;
+            $post["type"] = "days";
+            $post["normal"] = $arr_days[$key_grade][0];  
+            $post["early"] = $arr_days[$key_grade][1];  
+            $post["afternoon"] = $arr_days[$key_grade][2];  
+            $post["night"] = $arr_days[$key_grade][3];  
+            $post["50_shift"] = $arr_days[$key_grade][4];  
+            $post["t_14"] = $arr_days[$key_grade][5];  
+            $post["t_12"] = $arr_days[$key_grade][6];  
+            $post["double"] = $arr_days[$key_grade][7];  
+            $post["dt_12"] = $arr_days[$key_grade][8];  
+            $post["triple"] = $arr_days[$key_grade][9];  
+            $days =  $this->rc->saveForecast($post);
+         }
+         
+         if($emp && $hrs && $days){
+            echo json_encode(1);
+         } else {
+            echo json_encode(0);
+         }
+         
+         
+    }
      
      /* END FORECASTING */
 }

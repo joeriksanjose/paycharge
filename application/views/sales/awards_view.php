@@ -109,7 +109,7 @@
                   <div class="control-group">
                     <label class="control-label" for="date_of_quotation">Date of Quotation</label>
                     <div class="controls controls-row">
-                      <input type="text" readonly="true" id="date_of_quotation" name="date_of_quotation" value="<?php echo date("d/m/Y", time()) ?>">
+                      <input type="text" readonly="true" id="date_of_quotation" name="date_of_quotation" value="<?php echo date("d/m/Y") ?>">
                     </div>
                   </div>
                  </div>

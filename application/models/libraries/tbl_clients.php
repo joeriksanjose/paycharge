@@ -9,6 +9,10 @@ class Tbl_clients extends CI_model{
         parent::__construct();
     }
     
+    public function saveClientApplication($post){
+        return $this->db->insert("tbl_client_application", $post);
+    }
+    
     public function getAssignedClientsByStateNos($state_nos)
     {
         $sql = "SELECT comp.*, s.state_name FROM tbl_company as comp"

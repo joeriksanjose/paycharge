@@ -114,7 +114,7 @@ class Tbl_rate_confirmation extends CI_Model
 	}
 
     public function saveForecast($post){
-        $this->db->insert("tbl_forecasting", $post);
+        return $this->db->insert("tbl_forecasting", $post);
     }
 
     public function getML($trans_no, $calc, $grade){
