@@ -191,6 +191,7 @@ $(document).ready(function(){
                               
                $("#transaction_name").val(res.charge_rate.transaction_name);
                $("#B_16").val(res.charge_rate.B_15).attr("selected", "selected");
+               $("#B_17").val(res.charge_rate.B_17);
                $("#B_16").val(res.charge_rate.B_16);
                $("#B_18").val(res.charge_rate.B_18);
                $("#B_20").val(res.charge_rate.B_20).attr("selected", "selected");
@@ -420,12 +421,6 @@ $(document).ready(function(){
 				var json_data = $.parseJSON(data);
 				$("#effective_date").val(json_data.effective_date);
 			});
-		
-			$.post(base_url+"client_agreement/get_workcover_info", {work_cover_no:work_cover}, function(data){
-				var json_data = $.parseJSON(data);
-				$("#B_17").val(json_data.work_cover_code);
-			});
-		
 		
         });
         

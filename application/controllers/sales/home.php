@@ -146,12 +146,9 @@ class Home extends CI_Controller {
         );
         
         try {
+            $this->cc->delete(array("contact_no" => $update_data["contact_no"]));
             foreach ($data["e_client_nos"] as $client) {
                 $cc_data = array("company_no" => $client, "contact_no" => $update_data["contact_no"]);
-                if ($this->cc->getClientInfo($cc_data["company_no"], $cc_data["contact_no"])) {
-                    continue;
-                }
-                
                 $this->cc->save($cc_data);
             }
         } catch (Exception $e) {

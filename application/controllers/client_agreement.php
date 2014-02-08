@@ -392,6 +392,8 @@ class Client_agreement extends CI_Controller
 	public function update()
     {
         $post = $this->input->post(null, true);
+        $post["date_of_quotation"] = $this->convertToYMD($post["date_of_quotation"]);
+        $swi_process = 0;
         if(isset($post["swi_process"])){
             $swi_process = 1;
             unset($post["swi_process"]);    

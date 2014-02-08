@@ -249,7 +249,7 @@ class Sales_transaction extends CI_Controller
         
         $this->smd->save($post);
         
-        if ($post["swi_process"] == 1) {
+        if (isset($post["swi_process"]) && $post["swi_process"] == 1) {
             $print_def = $this->pd->getPrintsByTransNo($post["modern_award_no"]);
             if($print_def["print_company_no"] == 1){
                 $company = "Labourpower Recruitment Services";

@@ -16,6 +16,7 @@ $(document).ready(function(){
     var type;
     var grade;
     var x = 0;
+    var z = 0;
     var base_url = $("#hid-base-url").val();
     
     var trans_name;
@@ -62,24 +63,36 @@ $(document).ready(function(){
     
     
     $("#btnReset").click(function(){
+        grade_entered = [];
         $("#div").html("");
+        $("#div_all").html("");
         $("#cmbRate").removeAttr("disabled");
         $("#btnSave").attr("disabled", "disabled");
         $("#txtGrade").val("");
-        
+        x = 0;
+        z = 0;
+        $("#div-error").css("display", "none");
+        $("#div-success").css("display", "none");
     });
     
     $("#btnGo").click(function(){
         
-        $("#loadingModal").modal("show");
-        $("#div-error").css("display", "none");
+        
         var grade = $("#txtGrade").val();
+        $("#txtGrade").val("");
         trans_no = $("#cmbRate").val();
         var grd = "grade" + grade;
         trans_name = $("#cmbRate").find(":selected").attr("trans_name");
         
+        if($("#cmbRate").val() == ""){
+            return false;
+        }
+        
+        $("#loadingModal").modal("show");
+        $("#div-error").css("display", "none");
         if ($.inArray(grade, grade_entered) == -1){
             grade_entered.push(grade);
+            $("#div").css("margin-top", "150px")
         } else {
             $("#loadingModal").modal("hide");
             $("#div-error").css("display", "");
@@ -276,23 +289,25 @@ $(document).ready(function(){
 
                 // str += "<input type='button' class='btn btn-primary' id='btnSaveForecast' value='Save'/>";
                 
-                if(x>0){
-                    str += "<table  class='table table-bordered table-condensed'>";
-                    str += "<thead>";
-                    str += "<tr>";
-                    str += "<th>All Grades</th>";
-                    str += thx;
-                    str += "<th>Total</th>";
-                    str += "</tr>";
-                    str += "</thead>"
-                    str += "<tbody>";
-                    str += "<tr>";
-                    str += "<td>Total</td>";
-                    str += th;
-                    str += "<td><input type='text' id='txtTotal_xy' class='input-mini'/></td>";
-                    str += "</tr>";
-                    str += "</tbody>";
-                    str += "</table>";
+                if(x==1){
+                    var str1 = "";
+                    str1 += "<table  class='table table-bordered table-condensed'>";
+                    str1 += "<thead>";
+                    str1 += "<tr>";
+                    str1 += "<th>All Grades</th>";
+                    str1 += thx;
+                    str1 += "<th>Total</th>";
+                    str1 += "</tr>";
+                    str1 += "</thead>"
+                    str1 += "<tbody>";
+                    str1 += "<tr>";
+                    str1 += "<td>Total</td>";
+                    str1 += th;
+                    str1 += "<td><input type='text' id='txtTotal_xy' class='input-mini'/></td>";
+                    str1 += "</tr>";
+                    str1 += "</tbody>";
+                    str1 += "</table>";
+                    $("#div_all").append(str1);
                 }
 
                

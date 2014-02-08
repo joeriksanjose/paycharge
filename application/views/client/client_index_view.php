@@ -72,7 +72,7 @@ function formatDate($date)
     		</ul> -->
     		
     		<div>
-                <h3><?php echo $company_info["client_no"]." - ".$company_info["company_name"] ?></h3>
+                <h3><?php echo $company_info["client_no"]." - ".$company_info["company_name"]." (".$header_title.") " ?></h3>
     			<div class="tab-pane fade in active" id="cur_rate">
     				<table class='table table-bordered table-condesed table-stripped' style="font-size: 12px">
     					<thead>
@@ -98,7 +98,7 @@ function formatDate($date)
     							 	<?php else : ?>
     							 	<td><a href="<?php echo base_url("client/pcs/charge_rate_client/".$value["trans_no"])?>" target="_blank"><?php echo $value["transaction_name"]?></a></td>
     							 	<?php endif ?>
-    							 	<td><?php echo $value["date_of_quotation"] ?></td>  
+    							 	<td><?php echo formatDate($value["date_of_quotation"]) ?></td>  
     							 	<td><?php echo ($value["is_approved"]) ? "Approved" : "Pending for approval" ?></td>
     							 	<!-- <td>
     							 	    <div class="btn-group">

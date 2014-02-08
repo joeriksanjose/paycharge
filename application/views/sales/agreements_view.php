@@ -164,7 +164,7 @@
                       <div class="control-group">
                         <label class="control-label" for="modern_award_no">WIC Code and Description</label>
                         <div class="controls controls-row">
-                          <input type="text" id="B_17" readonly="true" name="B_17">
+                          <input type="text" id="B_17" name="B_17">
                         </div>
                       </div>
                       <div class="control-group">

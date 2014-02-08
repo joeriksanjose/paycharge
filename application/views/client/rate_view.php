@@ -2179,9 +2179,11 @@
     <p>15.7 Neither party shall be liable for any default due to any act of God, terrorism, war, strike, lock out, industrial action, fire, flood, drought, storm, or other events beyond the reasonable control of either party.</p>
     <p>15.8 Neither this agreement nor any rights or obligations hereunder may be assigned or otherwise transferred by either party without the prior written permission of the other.</p>
 
-    <?php if ($charge["is_approved"]) : ?>
+    <?php if (!$client_application) : ?>
+    <button class="btn btn-block btn-warning approve-rate" disabled="disabled">Please fill in the client application form</button>
+    <?php elseif ($charge["is_approved"]) : ?>
     <button class="btn btn-block btn-primary approve-rate" disabled="disabled"><i class="icon-ok icon-white"></i> Rate already approved</button>
-    <?php else : ?>
+    <?php elseif ($client["can_approve"]) : ?>
     <button type="submit" class="btn btn-block btn-primary approve-rate">Approve this rate</button>
     <?php endif ?>
     

@@ -58,6 +58,7 @@
             <div>
                 <form method='post' action='<?php echo base_url("client/pcs/saveClientApplication")?>'>
                 <div class="tab-pane fade in active" id="client">
+                    <input type="hidden" name="client_no" value="<?php echo $company_no ?>">
                     <h4>Application for Credit Account</h4>
                     
                     <div id="div1">

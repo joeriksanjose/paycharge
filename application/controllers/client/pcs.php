@@ -16,6 +16,7 @@ class Pcs extends CI_Controller {
         $this->client_session = $this->user_session->checkClientSession();
         
         $this->data["title"] = "Client";
+        $this->data["client"] = $this->client_session;
         $this->data["name"] = $this->client_session["contact_name"];
     }
     
@@ -28,6 +29,7 @@ class Pcs extends CI_Controller {
         unset($post["rdo_others"]);
         unset($post["txt_others"]);
         $this->cli->saveClientApplication($post);
+        redirect($_SERVER["HTTP_REFERRER"]);
     }
 
     public function save(){
@@ -169,6 +171,11 @@ class Pcs extends CI_Controller {
 
         $this->data["print"] = $this->rc->getPrint($moder_no);
         $this->data["charge_rate"] = $this->rc->getChargeRate($trans_no);
+        
+        if (!$this->data["charge_rate"]) {
+            show_404();
+        }
+        
         $this->data["modern"] = $this->rc->getModern($moder_no);
 
         $this->data["trans_no"] = $trans_no;
@@ -242,12 +249,18 @@ class Pcs extends CI_Controller {
     {
         $this->data["header"] = $this->load->view("client/header", $this->data, true);
         $this->data["footer"] = $this->load->view("client/footer", $this->data, true);
+        $this->data["header_title"] = "Current Rate";
         
         $this->data["get_company"] = $this->cont->getCompany($this->client_session["contact_no"]);
         
         $this->data["company_no"] = $company;
         $this->data["company_info"] = $this->cli->getClientByClientNo($company);
         $this->data["get_award"] = $this->cont->getCurrentRates($company);
+        
+        if (!$this->data["company_info"]) {
+            show_404();
+        }
+        
         $this->data["ok"] = 1;
         
         $this->load->view("client/client_index_view", $this->data);
@@ -257,12 +270,18 @@ class Pcs extends CI_Controller {
     {
         $this->data["header"] = $this->load->view("client/header", $this->data, true);
         $this->data["footer"] = $this->load->view("client/footer", $this->data, true);
+        $this->data["header_title"] = "History Rates";
         
         $this->data["get_company"] = $this->cont->getCompany($this->client_session["contact_no"]);
         
         $this->data["company_no"] = $company;
         $this->data["company_info"] = $this->cli->getClientByClientNo($company);
         $this->data["get_award"] = $this->cont->getHistoryRates($company);
+        
+        if (!$this->data["company_info"]) {
+            show_404();
+        }
+        
         $this->data["ok"] = 1;
         
         $this->load->view("client/client_index_view", $this->data);
@@ -272,12 +291,18 @@ class Pcs extends CI_Controller {
     {
         $this->data["header"] = $this->load->view("client/header", $this->data, true);
         $this->data["footer"] = $this->load->view("client/footer", $this->data, true);
+        $this->data["header_title"] = "Pending Rates";
         
         $this->data["get_company"] = $this->cont->getCompany($this->client_session["contact_no"]);
         
         $this->data["company_no"] = $company;
         $this->data["company_info"] = $this->cli->getClientByClientNo($company);
         $this->data["get_award"] = $this->cont->getPendingRates($company);
+        
+        if (!$this->data["company_info"]) {
+            show_404();
+        }
+        
         $this->data["ok"] = 1;
         
         $this->load->view("client/client_index_view", $this->data);
@@ -294,6 +319,7 @@ class Pcs extends CI_Controller {
         $post["swi_process"] = 1;
         $post["company_no"] = $company;
         $this->data["get_award"] = $this->cont->getAward($post);
+        
         $this->data["ok"] = 1;
         
         $this->load->view("client/client_application_view", $this->data);
@@ -332,6 +358,14 @@ class Pcs extends CI_Controller {
         $this->data["modern"] = $this->pr->getModern($modern_no);
         $this->data["mallow"] = $this->pr->getMAllow($trans_no);
         $this->data["charge"] = $this->pr->getCharge($trans_no);
+        
+        if (!$this->data["charge"] || !$this->data["modern"]) {
+            show_404();
+        }
+        
+        $sql = "SELECT id FROM tbl_client_application WHERE client_no = ?";
+        $check_client_application = $this->db->query($sql, array($this->data["charge"]["company_no"]))->row_array();
+        $this->data["client_application"] = ($check_client_application) ? true : false;
         
         if($this->data["calcu"]["print_company_no"] == 1){
             $this->data["company"] = "Labourpower Recruitment Services";
@@ -726,6 +760,14 @@ class Pcs extends CI_Controller {
         $this->data["footer"] = $this->load->view("client/footer", $this->data, true);
         $this->data["is_approved"] = $this->session->userdata("is_approved");
         $this->session->unset_userdata("is_approved");
+        
+        $this->data["mallow"] = $this->pr->getMAllow($trans_no);
+        $this->data["charge"] = $this->pr->getCharge($trans_no);
+        
+        if (!$this->data["charge"]) {
+            show_404();
+        }
+        
         $this->data["calcu"] = $this->pr->getCalc($trans_no);
         if($this->data["calcu"]["print_company_no"] == 1){
             $this->data["company"] = "Labourpower Recruitment Services";
@@ -733,8 +775,9 @@ class Pcs extends CI_Controller {
             $this->data["company"] = "LP Consulting Services";
         }
         
-        $this->data["mallow"] = $this->pr->getMAllow($trans_no);
-        $this->data["charge"] = $this->pr->getCharge($trans_no);
+        $sql = "SELECT id FROM tbl_client_application WHERE client_no = ?";
+        $check_client_application = $this->db->query($sql, array($this->data["charge"]["company_no"]))->row_array();
+        $this->data["client_application"] = ($check_client_application) ? true : false;
         
         foreach ($this->data["mallow"] as $key => $value) {
             if($value["description"]=="Allowance Pay"){
