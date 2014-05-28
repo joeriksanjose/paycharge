@@ -247,6 +247,12 @@ class Sales_transaction extends CI_Controller
         $post["transaction_name"] = $award_info["modern_award_name"];
         $post["date_of_quotation"] = $this->convertToYMD($post["date_of_quotation"]);
         
+        if(isset($post["chkExisting"])){
+            $post["swi_process"] = 1;
+            $post["is_approved"] = 1;
+            unset($post["chkExisting"]);
+        }
+        
         $this->smd->save($post);
         
         if (isset($post["swi_process"]) && $post["swi_process"] == 1) {

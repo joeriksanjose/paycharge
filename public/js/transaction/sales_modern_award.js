@@ -3,6 +3,12 @@ $(document).ready(function(){
 	var base_url = $("#base-url").val();
 	var client_no = $("#hid_client_no").val();
 	
+	$("#add-existing-rate").click(function(){
+		$("#showExistingRate").modal('show');
+    });
+	
+	
+	
 	$("#btn_gen").click(function(){
         $.post(base_url+"sales_transaction/getTransNo", function(data){
             var json_data = $.parseJSON(data);

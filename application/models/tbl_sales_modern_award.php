@@ -9,6 +9,34 @@ class Tbl_sales_modern_award extends CI_Model
         parent::__construct();
     }
     
+	public function getAllModernAwards(){
+		$sql = "select distinct trans_no, transaction_name ";
+		$sql .= "from tbl_charge_rate where trans_type = 1 order by trans_no";
+		
+		return $this->db->query($sql)->result_array();
+	}
+	
+	public function getAllModernAwardsPerCompany($company_no){
+		$sql = "select trans_no, transaction_name ";
+		$sql .= "from tbl_charge_rate where trans_type = 1 and company_no = '$company_no' order by trans_no";
+		
+		return $this->db->query($sql)->result_array();
+	}
+		
+	public function getAllClientAgreement(){
+		$sql = "select distinct trans_no, transaction_name ";
+		$sql .= "from tbl_charge_rate where trans_type = 2 order by trans_no";
+		
+		return $this->db->query($sql)->result_array();
+	}
+	
+	public function getAllClientAgreementPerCompany($company_no){
+		$sql = "select distinct trans_no, transaction_name ";
+		$sql .= "from tbl_charge_rate where trans_type = 2 and company_no = '$company_no' order by trans_no";
+		
+		return $this->db->query($sql)->result_array();
+	}
+	
     public function processSalesModern($where){
         
         $this->db->where($where);

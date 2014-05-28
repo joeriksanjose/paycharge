@@ -221,6 +221,21 @@ class Home extends CI_Controller {
             $this->data["header"] = $this->load->view("sales/sales_header", $this->data, true);
             $this->data["footer"] = $this->load->view("sales/sales_footer", $this->data, true);
             $this->data["side_nav"] = $this->load->view("sales/sales_side_nav", $this->data, true);
+			
+			$this->data["available_existing_rate"] = $this->smd->getAllModernAwards();
+			$this->data["existing_rate"] = $this->smd->getAllModernAwardsPerCompany($client_no);
+			
+			if(count($this->data["existing_rate"])){			
+				foreach ($this->data["available_existing_rate"] as $key => $value) {
+					foreach ($this->data["existing_rate"] as $k => $value_exisitng) {
+						if($value["trans_no"] == $value_exisitng["trans_no"]){
+							unset($this->data["available_existing_rate"][$key]);
+						}						
+					}
+				}
+			}
+			
+			
         } catch (Exception $e) {
             log_message("error", $e->getMessage());
             die("Something went wrong. Please try again.");
@@ -229,6 +244,34 @@ class Home extends CI_Controller {
         $this->load->view("sales/awards_view", $this->data);
     }
     // END AWARDS
+    
+    public function addExistingRate(){
+    	
+		$client_no = $_POST["company_no"];
+		$rates = $_POST["trans_nos"];
+		$trx = $_POST["trx"]; 
+		
+		foreach($rates as $rate){
+			
+			$charge_rate = $this->smd->get_charge_rate_info(array("trans_no" => $rate));
+			
+			$charge_rate["company_no"] = $client_no;
+            $charge_rate["is_approved"] = 0;
+            $charge_rate["swi_process"] = 0;
+            
+			unset($charge_rate["id"]);
+			$this->smd->save($charge_rate);
+
+		}
+		
+		if($trx == "ma"){
+			redirect("sales/home/awards/".$client_no);	
+		} else {
+			redirect("sales/home/agreements/".$client_no);
+		}
+		
+		
+    } 
     
     // CLIENT AGREEMENT
     public function agreements($client_no)
@@ -251,6 +294,19 @@ class Home extends CI_Controller {
         $this->data["admin"] = $this->ca->getAdmin();
         $this->data["position"] = $this->ca->getPosition();
         
+		$this->data["available_existing_rate"] = $this->smd->getAllClientAgreement();
+		$this->data["existing_rate"] = $this->smd->getAllClientAgreementPerCompany($client_no);
+		
+		if(count($this->data["existing_rate"])){			
+			foreach ($this->data["available_existing_rate"] as $key => $value) {
+				foreach ($this->data["existing_rate"] as $k => $value_exisitng) {
+					if($value["trans_no"] == $value_exisitng["trans_no"]){
+						unset($this->data["available_existing_rate"][$key]);
+					}						
+				}
+			}
+		}
+			
         $this->data["error"] = false;
         $this->data["ok"] = false;
         

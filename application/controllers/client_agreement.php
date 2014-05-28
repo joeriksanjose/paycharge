@@ -299,8 +299,15 @@ class Client_agreement extends CI_Controller
         $post["date_of_quotation"] = $this->convertToYMD($post["date_of_quotation"]);
 		$swi_process = isset($post["swi_process"]) ? $post["swi_process"] : 0;
 		unset($post["swi_process"]);
+		
         
 		$charge_rate_data = array();
+		$charge_rate_data["swi_process"] = $swi_process;
+		if(isset($post["chkExisting"])){
+            $charge_rate_data["swi_process"] = 1;
+            $charge_rate_data["is_approved"] = 1;
+            unset($post["chkExisting"]);
+        }
 		$print_defaults_data = array();
 		$ctr = 1;
 		foreach ($post as $key => $v) {
@@ -359,9 +366,10 @@ class Client_agreement extends CI_Controller
 		
         unset($post["allowance_caption12"]);
         $charge_rate_data["trans_type"] = '2';
-        $charge_rate_data["swi_process"] = $swi_process;
+        
 		$print_defaults_data["trans_type"] = 'Client';
 		$print_defaults_data["trans_no"] = $charge_rate_data["trans_no"];
+        
         
         
         $sql1 = $this->ca->save($charge_rate_data);

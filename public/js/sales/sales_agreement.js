@@ -1,6 +1,10 @@
 $(document).ready(function(){
     base_url = $("#base_url").val();
     
+    $("#add-existing-rate").click(function(){
+		$("#showExistingRate").modal('show');
+    });
+    
     $("#searchAgreementInput").keypress(function(event){
         if (event.keyCode == 13) {
             $("#searchAgreementBtn").click();

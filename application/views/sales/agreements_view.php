@@ -22,6 +22,42 @@
 </div>
 <!-- END DELETE MODAL -->
 
+<!-- SHOW ADD EXISTING MODAL -->
+<div id="showExistingRate" class="modal hide fade" tabindex="-1" role="dialog">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Add existing rate</h3>
+    </div>
+    <div class="modal-body">
+        <div class="alert alert-error" id="div-edit-error" style="display:none;"></div>
+        <div class="alert alert-success" id="edit-success-box" style="display:none;"></div>
+        <form class="centerDiv" method="post" action="<?php echo base_url("sales/home/addExistingRate") ?>">
+        	<table class="table">
+        		<tr>
+        			<td><label>Rates</label></td>
+        			<td>
+	        			<input type="hidden" name="company_no" id="hid_company_no" value="<?php echo $client_info["client_no"] ?>">
+	        			<input type="hidden" name="trx" value="ca">
+	                    <select name="trans_nos[]" class="span5" multiple="multiple" style="min-height: 100px; max-height: 300px;">
+	                        <?php foreach ($available_existing_rate as $rate) : ?>
+	                            <option value="<?php echo $rate["trans_no"] ?>">
+	                                <?php echo $rate["transaction_name"]?>
+	                            </option>
+	                        <?php endforeach ?>
+	                    </select>
+                    </td>
+        		</tr>
+        	</table>
+        
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-info">Add rate</button>
+        <button class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    </div>
+   </form>
+</div>
+<!-- END SHOW ADD EXISTING MODAL -->
+
 <div class="topmargin"></div>
 
 <div class="row">
@@ -44,6 +80,10 @@
                             <input type="button" class="btn btn-inverse pull-right" style="margin-left: 3px; display: none;" id="btn-save-update" value="Update Only"/> 
                             <input type="button" class="btn btn-inverse pull-right" style="margin-left: 3px;" id="btn-save-process" value="Save and Process"/>
                             <input type="button" class="btn btn-inverse pull-right" id="btn-save-only" value="Save Only"/>
+                        </li>
+                        <li class="divider-vertical"></li>
+                        <li>
+                            <label class="checkbox" style="margin-top: 10px"><input type="checkbox" name="chkExisting"/>Save as existing rate</label>
                         </li>
                     </ul>
                     </div>
@@ -1147,6 +1187,7 @@
         <div id="myTabContent">
             <div class="tab-pane fade active in" id="con">
                 <button type="button" id="add-new-modern" class="btn"><i class="icon-plus"></i> Add new client agreement</button>
+                <button type="button" id="add-existing-rate" class="btn"><i class="icon-plus"></i> Add existing rate</button>
                 <div class="input-append pull-right">
                     <input id="searchAgreementInput" type="text" style="width: 250px;" placeholder="Search by Agreement Name">
                     <button class="btn" id="searchAgreementBtn" type="button"><i class="icon-search"></i></button>

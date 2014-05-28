@@ -111,6 +111,7 @@
 	<p>14.9 The Consultant may replace a Temporary Candidate at any time with another Temporary Candidate of comparable qualifications without notice to you, however the Consultant shall endeavour to notify the Client before doing so.</p>
 	<p>14.10 In the event of any disputes or claims, you must notify the Consultant within thirty (30) days of any such occurrence. If the Client shall fail to comply with this provision the Services shall be conclusively presumed to be in accordance with the terms and conditions and free from any disputes or claims.</p>
     
+          
     <p><b>15. General</b></p>
 	<p>15.1 If any provision of these terms and conditions shall be invalid, void, illegal or unenforceable the validity, existence, legality and enforceability of the remaining provisions shall not be affected, prejudiced or impaired.</p>
 	<p>15.2 All Services supplied by the Consultant are subject to the laws of New South Wales and the Consultant takes no responsibility for changes in the law which affect the Services supplied.</p>

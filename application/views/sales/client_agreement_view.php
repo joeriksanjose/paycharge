@@ -41,6 +41,7 @@
 	                        <button type="button" class="btn pull-right" style="margin-left: 3px;" id="close-modern-form">Cancel</button>
 	                        <input type="submit" class="btn btn-inverse pull-right" id="btn-save" value="SAVE">
 	                    </li>
+	                   
 	                </ul>
 	                </div>
 	            </div>

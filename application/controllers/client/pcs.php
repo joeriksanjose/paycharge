@@ -18,6 +18,7 @@ class Pcs extends CI_Controller {
         $this->data["title"] = "Client";
         $this->data["client"] = $this->client_session;
         $this->data["name"] = $this->client_session["contact_name"];
+        $this->data["contact_no"] = $this->client_session["contact_no"];
     }
     
     public function saveClientApplication(){
@@ -1320,11 +1321,33 @@ class Pcs extends CI_Controller {
          } else {
             echo json_encode(0);
          }
-         
-         
     }
      
      /* END FORECASTING */
+     
+    public function change_password()
+    {
+        $post_data = $this->input->post(NULL, true);
+        $update_data = array(
+            'contact_no' => $post_data['contact_no'],
+            'password'   => $post_data['newPass']
+        );
+        
+        $contact_details = $this->cont->getContactByContactNo($post_data['contact_no']);
+        
+        if ($contact_details["password"] != $post_data['currPass']) {
+            redirect($_SERVER['HTTP_REFERER']);
+            return;
+        }
+        
+        if ($post_data['newPass'] != $post_data['reNewPass']) {
+            redirect($_SERVER['HTTP_REFERER']);
+            return;
+        }
+        
+        $this->cont->updateContactByContactNo($update_data);
+        redirect($_SERVER['HTTP_REFERER']);
+    }
 }
 
 /* End of file pcs.php */
