@@ -15,6 +15,7 @@ class Home extends CI_Controller {
         $this->load->model("sales/tbl_sales_trans", "st");
         $this->load->model("tbl_client_agreement", "ca");
         $this->load->model("reports/tbl_paycharge_rate", "pr");
+        $this->load->model("tbl_m_allow", "ma");
         $this->load->model("tbl_modern_award", "md");
         $this->load->library("user_session");
         $this->user_sess = $this->user_session->checkUserSession();
@@ -254,8 +255,36 @@ class Home extends CI_Controller {
 		foreach($rates as $rate){
 			
 			$charge_rate = $this->smd->get_charge_rate_info(array("trans_no" => $rate));
+            $new_trans_no = $this->smd->getTransNo();
+            
+            // save to tbl_ml
+            for ($i = 1; $i <= 10; $i++) {
+                $ml = $this->smd->getMl($i, $rate);
+                foreach ($ml as $ml_data) {
+                    unset($ml_data["id"]);
+                    $ml_data['trans_no'] = $new_trans_no;
+                    $this->smd->saveTblMl($i, $ml_data);
+                }    
+            }
+            
+            // save to payrate
+            $payrates = $this->smd->getPayRate($rate);
+            foreach ($payrates as $pay_rate) {
+                unset($pay_rate["id"]);
+                $pay_rate["trans_no"] = $new_trans_no;
+                $this->smd->savePayRate($pay_rate);
+            }
+            
+            // save to m_allow
+            $m_allow = $this->ma->getMAllow($rate);
+            foreach ($m_allow as $allow_data) {
+                unset($allow_data["id"]);
+                $allow_data["trans_no"] = $new_trans_no;
+                $this->ma->saveMAllow($allow_data);
+            }
 			
 			$charge_rate["company_no"] = $client_no;
+            $charge_rate["trans_no"] = $new_trans_no;
             $charge_rate["is_approved"] = 0;
             $charge_rate["swi_process"] = 0;
             

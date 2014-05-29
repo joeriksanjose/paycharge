@@ -19,4 +19,10 @@ class Tbl_m_allow extends CI_Model
         $this->db->where(array("trans_no" => $trans_no));
         return $this->db->delete($this->table_name);
     }
+    
+    public function getMAllow($trans_no)
+    {
+        $sql = "select * from tbl_m_allow where trans_no = {$trans_no}";
+        return $this->db->query($sql)->result_array();
+    }
 }

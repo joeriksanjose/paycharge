@@ -255,4 +255,16 @@ class Tbl_sales_modern_award extends CI_Model
               
         return $this->db->query($sql)->result_array();
     }
+    
+    public function getMl($index, $trans_no)
+    {
+        $sql = "select * from tbl_ml{$index} where trans_no = {$trans_no}";
+        return $this->db->query($sql)->result_array();
+    }
+    
+    public function getPayRate($trans_no)
+    {
+        $sql = "select * from tbl_payrate where trans_no = {$trans_no}";
+        return $this->db->query($sql)->result_array();
+    }
 }
