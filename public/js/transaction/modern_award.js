@@ -190,6 +190,7 @@ $(document).ready(function(){
            res = $.parseJSON(data);
            if (res.status) {
                // modern award
+               $("#modernAwardNoForEdit").val(edit_id);
                $("#modern_award_name").val(res.award_info.modern_award_name);
                $("#B_26").val(res.award_info.B_26);
                $("#B_27").val(res.award_info.B_27);

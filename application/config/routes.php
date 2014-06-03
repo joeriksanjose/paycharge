@@ -46,5 +46,6 @@ $route['login'] = "home/login";
 $route['logout'] = "home/logout";
 $route['utilities/business-company/company-1'] = "utilities1/business_company/company1";
 $route['utilities/business-company/company-2'] = "utilities1/business_company/company2";
+$route['utilities/payroll_email_address'] = "utilities1/payroll_email_address";
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

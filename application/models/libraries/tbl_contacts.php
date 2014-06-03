@@ -222,6 +222,19 @@ class Tbl_contacts extends CI_model{
         
         return false;
     }
+    
+    public function resetPassword($contact_no)
+    {
+        $string_to_shuffle = "aAbBcCDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890";
+        $shuffled_string = substr(str_shuffle($string_to_shuffle), 0, 5);
+        
+        $sql = "UPDATE tbl_contacts SET password = ? WHERE contact_no = ?";
+        if (!$this->db->query($sql, array($shuffled_string, $contact_no))) {
+            return "Reset password failed.";
+        }
+        
+        return "New system-generated password : {$shuffled_string}";
+    }
     /* end log in clients */
 }
 

@@ -291,6 +291,9 @@
                                 <td><?php echo $contact["contact_phone_no"] ?></td>
                                 <td><?php echo $contact["email"] ?></td>
                                 <td>
+                                    <button type="button" class="btn btn-mini btnResetPass" id="<?php echo $contact["contact_no"] ?>">
+                                        Reset Password
+                                    </button>
                                     <button type="button" class="btn btn-mini btnEditContact" id="<?php echo $contact["contact_no"] ?>">
                                         <i class="icon-edit"></i>
                                     </button>
@@ -316,5 +319,15 @@
     </div>
     
 </div>
+
+<script>
+    $(".btnResetPass").click(function(){
+        client_no = $(this).attr("id");
+        $.post("<?php echo base_url() ?>sales/home/ajaxResetPassword", {contact_no:client_no}, function(data){
+          res = $.parseJSON(data);
+          alert(res.new_pass);
+        });
+    })
+</script>
 
 <?php echo $footer ?>

@@ -245,7 +245,7 @@ $(document).ready(function(){
 		});
 	});
 	
-	$("#cmb-workcover").change(function(){
+	$("#cmb-workcover").live("change", function(){
 		$.post(base_url+"sales_transaction/get_workcover_info", {work_cover_no:$('option:selected', this).attr('work-cover-no')}, function(data){
 			var json_data = $.parseJSON(data);
 			$("#wic_code").val(json_data.work_cover_code);

@@ -30,7 +30,7 @@
         <div class="alert alert-error" id="div-edit-error" style="display:none;"></div>
         <form class="form-horizontal centerDiv" id="frm-edit" style="width: 500px;">
             <input type="hidden" name="id" id="id"/>
-            <div class="control-group">
+         <div class="control-group">
             <label class="control-label">Workcover No.</label>
             <div class="controls controls-row">
               <input type="text" id="e_work_cover_no" name="e_work_cover_no" class="input-medium" disabled>

@@ -43,7 +43,7 @@
                         <li><a href="<?php echo base_url("client/pcs/pending_rates/".$company["client_no"]."")?>">Pending Approval</a></li>
                         <li><a href="<?php echo base_url("client/pcs/history_rates/".$company["client_no"]."")?>">History Rate</a></li>
                         <li><a href="<?php echo base_url("client/pcs/client_application/".$company["client_no"]."")?>">Client Application</a></li>
-                        <li><a target="_blank" href="<?php echo base_url("client/pcs/forecasting/".$company["client_no"]."")?>">Forecasting</a></li>
+                        <li><a href="<?php echo base_url("client/pcs/forecasting/".$company["client_no"]."")?>">Forecasting</a></li>
                     </ul>
                 </li>
             </ul>

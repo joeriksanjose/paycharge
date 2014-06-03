@@ -36,7 +36,7 @@
 	                <td><?php echo $modern_award["company_name"] ?></td>
 	                <td><?php echo $modern_award["date_of_quotation"] ?></td>
 	                <td>
-	                    <a target="_blank" class="btn edit-award-btn" href="<?php echo base_url("reports/paycharge_rate/print_modern/".$modern_award["trans_no"]."/".$modern_award["modern_award_no"]); ?>"><i class="icon-print"></i></a>
+	                    <a class="btn edit-award-btn" href="<?php echo base_url("reports/paycharge_rate/print_modern/".$modern_award["trans_no"]."/".$modern_award["modern_award_no"]); ?>"><i class="icon-print"></i></a>
 	                </td>
 	            </tr>
 	            <?php endforeach ; ?>

@@ -38,7 +38,7 @@ class Home extends CI_Controller {
             redirect(base_url("client"));
         } else {
             $client_session = array(
-                "contact_name" => $client["last_name"].", ".$client["first_name"],
+                "contact_name" => $client["first_name"],
                 "contact_no"   => $client["contact_no"],
                 "username"     => $client["username"],
                 "can_view"     => $client["can_view"],

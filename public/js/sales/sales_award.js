@@ -107,6 +107,74 @@ $(document).ready(function(){
         return false;
     });
     
+    $("#btn-gen-workcover").click(function(){
+        $.post(base_url+"sales/home/get_last_id_workcover", function(data){
+            var json_data = $.parseJSON(data);
+            
+            $("#work_cover_no").val(json_data);
+            $("#error_div").css("display", "none");
+        });
+        return;
+    });
+    
+    $(".add_workcover").click(function(){
+        $("#success_div_wc").css("display", "none");
+        $("#error_div_wc").css("display", "none");
+        $("#workcoverModal").modal("show");
+        return false;
+    });
+    
+    $("#btn-add-workcover").click(function(){
+        
+        var workcoverno = $("#work_cover_no").val();
+        var workcover = $("#work_cover").val();
+        var workcovercode = $("#work_cover_code").val();
+        var stateno = $("#state_no").val();
+        
+        var cmb = {};
+        $.post(base_url+"sales/home/save_workcover", {work_cover_no : workcover,
+            work_cover : workcover, work_cover_code : workcovercode, 
+            state_no : stateno}, 
+        
+        function(data){
+            
+            var json_data = $.parseJSON(data);
+            
+            if(json_data.status == false){
+                $("#success_div_wc").css("display", "none");
+                $("#error_div_wc").css("display", "");
+                $("#error_div_wc").html("<b>Error!</b> Please contact IT Administrator.");
+            } else {
+                $("#error_div_wc").css("display", "none");
+                $("#success_div_wc").css("display", "");
+                $("#success_div_wc").html("<b>Successful!</b> New Workcover has successfully added to the database.");
+            }
+           
+                var str1 = "";
+                var str = "<option></option>";
+                $.each(json_data.data, function(i, item){
+                    if($("#cmb-workcover").find(":selected").attr("work-cover-no") == item.work_cover_no){
+                        str1 = str1 + "<option work-cover-no="+item.work_cover_no+" selected='selected' value="+item.work_cover_no+">("+item.work_cover_code+") - "+item.work_cover+"</option>";   
+                    } else {
+                        str1 = str1 + "<option work-cover-no="+item.work_cover_no+" value="+item.work_cover_no+">("+item.work_cover_code+") - "+item.work_cover+"</option>";
+                    }                           
+                    
+                });
+                
+                $("#cmb-workcover").html(str +str1);
+                $("#work_cover_no").val("");
+                $("#work_cover").val("");
+                $("#work_cover_code").val("");
+                
+                
+        });
+        
+        
+
+        
+    });
+
+    
     $("#btn-add-position").click(function(){
         
         var position = $("#position").val();

@@ -36,7 +36,7 @@
 	                <td><?php echo $charge["company_name"] ?></td>
 	                <td><?php echo $charge["date_of_quotation"] ?></td>
 	                <td>
-	                    <a target="_blank" class="btn edit-award-btn" href="<?php echo base_url("reports/paycharge_rate/print_client/".$charge["trans_no"]); ?>"><i class="icon-print"></i></a>
+	                    <a class="btn edit-award-btn" href="<?php echo base_url("reports/paycharge_rate/print_client/".$charge["trans_no"]); ?>"><i class="icon-print"></i></a>
 	                </td>
 	            </tr>
 	            <?php endforeach ; ?>

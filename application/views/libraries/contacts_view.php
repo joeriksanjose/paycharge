@@ -314,7 +314,7 @@
                         <td><?php echo $value["last_name"].", ".$value["first_name"]." ".$value["middle_name"] ?></td>
                         <td><?php echo $value["contact_phone_no"] ?></td>
                         <td>
-                            <a target="_blank" href="<?php echo base_url("libraries/contacts/client_info/".$value["contact_no"]) ?>" class="btn btn-mini">CLIENT</a>
+                            <a href="<?php echo base_url("libraries/contacts/client_info/".$value["contact_no"]) ?>" class="btn btn-mini">CLIENT</a>
                             <button type="button" class="btn btn-mini edit-state-btn" show-id="<?php echo $value["contact_no"] ?>"><i class="icon-edit"></i></button>
                             <button type="button" class="btn btn-mini btn-danger delete-state-btn" del-id="<?php echo $value["id"] ?>">
                                 <i class="icon-trash icon-white"></i>

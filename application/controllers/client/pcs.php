@@ -1171,7 +1171,7 @@ class Pcs extends CI_Controller {
         if ($rate_info) {
             $sql = "SELECT company_name FROM tbl_company WHERE client_no = ?";
             $company = $this->db->query($sql, array($rate_info["company_no"]))->row_array();
-            $to = "jesanjose@gmail.com";
+            $to = trim(file_get_contents(realpath("./public/uploads/email.txt")));
             $subject = "Notice to Payroll of rates being signed by a Client";
    
             $message = "The below client has approved their rates." 

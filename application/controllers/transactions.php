@@ -35,6 +35,7 @@ class Transactions extends CI_Controller
     public function save()
     {
         $post = $this->input->post(null, true);
+        unset($post["modernAwardNoForEdit"]);
 
         $modern_award_data = array();
         $print_defaults_data = array();
@@ -70,6 +71,8 @@ class Transactions extends CI_Controller
     public function update()
     {
         $post = $this->input->post(null, true);
+        $edit_id = $post["modernAwardNoForEdit"];
+        unset($post["modernAwardNoForEdit"]);
         
         $modern_award_data = array();
         $print_defaults_data = array(
@@ -121,8 +124,8 @@ class Transactions extends CI_Controller
         unset($modern_award_data["allowance_caption12"]);
         
         if (
-            $this->md->update($post["modern_award_no"], $modern_award_data) && 
-            $this->pd->update($post["modern_award_no"], $print_defaults_data)
+            $this->md->update($edit_id, $modern_award_data) && 
+            $this->pd->update($edit_id, $print_defaults_data)
             ) {
             $this->session->set_userdata("status", 1);
             $this->session->set_userdata("status_message", "Modern award was successfully updated.");

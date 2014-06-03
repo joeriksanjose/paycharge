@@ -117,7 +117,7 @@
                             <option></option>
                             <?php foreach ($company as $value) : ?>
                                 <option value="<?php echo $value["client_no"]?>"><?php echo $value["company_name"]?></option>
-                            <?php endforeach;?>
+                            <?php endforeach; ?>
                           </select>
                           <input type="hidden" id="state_no"/>
                         </div>
@@ -179,7 +179,7 @@
                             <option></option>
                             <?php foreach ($super as $value) : ?>
                                 <option super-no="<?php echo $value["super_no"] ?>" value="<?php echo $value["super"]?>"><?php echo $value["super"]?></option>
-                            <?php endforeach;?>
+                            <?php endforeach; ?>
                           </select>
                           <input type="text" id="effective_date" />
                         </div>
@@ -191,8 +191,9 @@
                             <option></option>
                             <?php foreach ($workcover as $value) : ?>
                                 <option work-cover-no="<?php echo $value["work_cover_no"] ?>" value="<?php echo $value["work_cover"]?>"><?php echo $value["work_cover"]?></option>
-                            <?php endforeach;?>
+                            <?php endforeach; ?>
                           </select>
+                          <button class="btn add_workcover"><i class="icon-plus"></i></button>
                         </div>
                       </div>
                       <div class="control-group">
@@ -229,7 +230,7 @@
                             <option></option>
                             <?php foreach ($public_liability as $value) : ?>
                                 <option value="<?php echo $value["public_value"]?>"><?php echo $value["public_value"]?></option>
-                            <?php endforeach;?>
+                            <?php endforeach; ?>
                           </select>
                         </div>
                       </div>
@@ -240,7 +241,7 @@
                             <option></option>
                             <?php foreach ($insurance as $value) : ?>
                                 <option value="<?php echo $value["insurance"]?>"><?php echo $value["insurance"]?></option>
-                            <?php endforeach;?>
+                            <?php endforeach; ?>
                           </select>
                         </div>
                       </div>
@@ -251,7 +252,7 @@
                             <option></option>
                             <?php foreach ($long_service as $value) : ?>
                                 <option value="<?php echo $value["long_services"]?>"><?php echo $value["long_services"]?></option>
-                            <?php endforeach;?>
+                            <?php endforeach; ?>
                           </select>
                         </div>
                       </div>
@@ -262,7 +263,7 @@
                             <option></option>
                             <?php foreach ($admin as $value) : ?>
                                 <option value="<?php echo $value["admin"]?>"><?php echo $value["admin"]?></option>
-                            <?php endforeach;?>
+                            <?php endforeach; ?>
                           </select>
                         </div>
                       </div>
@@ -292,7 +293,7 @@
                         <option></option>
                         <?php foreach ($position as $value) : ?>
                             <option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
-                        <?php endforeach;?>
+                        <?php endforeach; ?>
                       </select>
                     </div>
                   </div>
@@ -303,7 +304,7 @@
                         <option></option>
                         <?php foreach ($position as $value) : ?>
                             <option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
-                        <?php endforeach;?>
+                        <?php endforeach; ?>
                       </select>
                     </div>
                   </div>
@@ -314,7 +315,7 @@
                         <option></option>
                         <?php foreach ($position as $value) : ?>
                             <option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
-                        <?php endforeach;?>
+                        <?php endforeach; ?>
                       </select>
                     </div>
                   </div>
@@ -325,7 +326,7 @@
                         <option></option>
                         <?php foreach ($position as $value) : ?>
                             <option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
-                        <?php endforeach;?>
+                        <?php endforeach; ?>
                       </select>
                     </div>
                   </div>
@@ -336,7 +337,7 @@
                         <option></option>
                         <?php foreach ($position as $value) : ?>
                             <option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
-                        <?php endforeach;?>
+                        <?php endforeach; ?>
                       </select>
                     </div>
                   </div>
@@ -347,7 +348,7 @@
                         <option></option>
                         <?php foreach ($position as $value) : ?>
                             <option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
-                        <?php endforeach;?>
+                        <?php endforeach; ?>
                       </select>
                     </div>
                   </div>
@@ -358,7 +359,7 @@
                         <option></option>
                         <?php foreach ($position as $value) : ?>
                             <option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
-                        <?php endforeach;?>
+                        <?php endforeach; ?>
                       </select>
                     </div>
                   </div>
@@ -369,7 +370,7 @@
                         <option></option>
                         <?php foreach ($position as $value) : ?>
                             <option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
-                        <?php endforeach;?>
+                        <?php endforeach; ?>
                       </select>
                     </div>
                   </div>
@@ -380,7 +381,7 @@
                         <option></option>
                         <?php foreach ($position as $value) : ?>
                             <option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
-                        <?php endforeach;?>
+                        <?php endforeach; ?>
                       </select>
                     </div>
                   </div>
@@ -391,7 +392,7 @@
                         <option></option>
                         <?php foreach ($position as $value) : ?>
                             <option value="<?php echo $value["id"]?>"><?php echo $value["position"]?></option>
-                        <?php endforeach;?>
+                        <?php endforeach; ?>
                       </select>
                     </div>
                   </div>
@@ -1197,7 +1198,7 @@
                 <div class="alert alert-success" style="margin-top: 10px">
                     <?php echo $success_msg ?>
                 </div>
-                <?php endif;?>
+                <?php endif; ?>
                 <table class="table table-bordered table-condensed table-hover" id="tblAgreement" style="font-size: 12px;">
                     <thead>
                         <tr>
@@ -1230,30 +1231,30 @@
                                                 <i class="icon-ok"></i> Process
                                             </a>
                                           </li>
-                                        <?php endif;?>
+                                        <?php endif; ?>
                                         <li><a href="#" class="edit-award-btn" edit-id="<?php echo $agreement["trans_no"] ?>"><i class="icon-edit"></i> Edit</a></li>
                                         <li>
-                                            <a target="_blank" href="<?php echo base_url("reports/rate_confirmation/print_client/".$agreement["trans_no"]) ?>">
+                                            <a href="<?php echo base_url("reports/rate_confirmation/print_client/".$agreement["trans_no"]) ?>">
                                                 <i class="icon-print"></i> Rate Confirmation
                                             </a>
                                         </li>
                                         <li>
-                                            <a target="_blank" href="<?php echo base_url("reports/allowance/print_client/".$agreement["trans_no"]) ?>">
+                                            <a href="<?php echo base_url("reports/allowance/print_client/".$agreement["trans_no"]) ?>">
                                                 <i class="icon-print"></i> Allowance
                                             </a>
                                         </li>
                                         <li>
-                                            <a target="_blank" href="<?php echo base_url("reports/paycharge_rate/print_client/".$agreement["trans_no"]) ?>">
+                                            <a href="<?php echo base_url("reports/paycharge_rate/print_client/".$agreement["trans_no"]) ?>">
                                                 <i class="icon-print"></i> Pay and Charge Rate Schedule
                                             </a>
                                         </li>
                                         <li>
-                                            <a target="_blank" href="<?php echo base_url("sales/home/upcoming_rates/".$agreement["trans_no"]) ?>">
+                                            <a href="<?php echo base_url("sales/home/upcoming_rates/".$agreement["trans_no"]) ?>">
                                                 <i class="icon-print"></i> Upcoming Rates
                                             </a>
                                         </li>
                                         <li>
-                                            <a target="_blank" href="<?php echo base_url("sales/home/rates_history/".$agreement["trans_no"]) ?>">
+                                            <a href="<?php echo base_url("sales/home/rates_history/".$agreement["trans_no"]) ?>">
                                                 <i class="icon-print"></i> Rates History
                                             </a>
                                         </li>
@@ -1295,4 +1296,56 @@
 </div>
 <!-- END DELETE MODAL -->
 
+<!-- WORKCOVER MODAL -->
+<div id="workcoverModal" class="modal hide fade" tabindex="-1" role="dialog">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Add Workcover</h3>
+    </div>
+    <div class="modal-body">
+       
+            <div class="alert alert-error" style="display: none" id="error_div_wc"></div>
+            <div class="alert alert-success" style="display: none" id="success_div_wc"></div>
+            
+            <div class="form-horizontal">
+              <div class="control-group">
+            <label class="control-label">Workcover No.</label>
+            <div class="controls controls-row">
+              <input type="text" id="work_cover_no" name="work_cover_no" class="input-medium"/>
+              <button class="btn btn-inverse" id="btn-gen-workcover">Generate No.</button>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="username">Workcover</label>
+            <div class="controls">
+              <input type="text" id="work_cover" name="work_cover" class="input-medium">
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="password">Workcover Code</label>
+            <div class="controls">
+              <input type="text" id="work_cover_code" name="work_cover_code" class="input-medium">
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">State</label>
+            <div class="controls">
+              <select id="state_no" name="state_no" class="input-medium">
+                  <?php foreach ($data_state as $key => $value) : ?>
+                    <option value="<?php echo $value["state_no"]?>"><?php echo $value["state_name"]?></option>    
+                  <?php endforeach; ?>
+                  
+              </select>
+            </div>
+          </div>
+            </div>
+            <hr>
+       
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" id="btn-add-workcover">Add</button>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    </div>
+</div>
+<!-- END POSITION MODAL -->
 <?php echo $footer ?>

@@ -17,7 +17,8 @@ class Home extends CI_Controller {
         $this->load->model("reports/tbl_paycharge_rate", "pr");
         $this->load->model("tbl_m_allow", "ma");
         $this->load->model("tbl_modern_award", "md");
-        $this->load->library("user_session");
+        $this->load->model("libraries/tbl_workcover", "wc");
+        $this->load->library("user_session");        
         $this->user_sess = $this->user_session->checkUserSession();
         $this->data["date_slash"] = mdate("%d/%m/%Y");
         if ($this->user_sess["is_admin"]) {
@@ -194,6 +195,29 @@ class Home extends CI_Controller {
     // END CONTACTS
     
     // AWARDS
+    public function get_last_id_workcover()
+    {
+        $sql = $this->wc->get_last_id();
+        if (!$sql) {
+            echo json_encode(0+1);    
+        } else {
+            echo json_encode($sql["work_cover_no"]+1);
+        }
+        
+    }
+    
+    public function save_workcover()
+    {
+        $data=$this->input->post(null, true);
+        $sql=$this->wc->save($data);
+        $params["data"] = $this->wc->select_all();
+        if ($sql) {
+            echo json_encode(array("status" => true, "data" => $params["data"]));
+        } else {
+            echo json_encode(false);
+        }
+    }
+    
     public function awards($client_no)
     {
         $state_nos = $this->user_data["state_no"];
@@ -204,6 +228,7 @@ class Home extends CI_Controller {
         
         try {
             // side navigation
+            $this->data["data_state"] = $this->wc->get_state();
             $this->data["states_assigned"] = $this->state->getStateByStateNos($this->user_data["state_no"]);
             $this->data["clients_assigned"] = $this->clients->getAssignedClientsByStateNos($state_nos);
             
@@ -308,6 +333,7 @@ class Home extends CI_Controller {
         $state_nos = $this->user_data["state_no"];
         
         // side navigation
+        $this->data["data_state"] = $this->wc->get_state();
         $this->data["states_assigned"] = $this->state->getStateByStateNos($this->user_data["state_no"]);
         $this->data["clients_assigned"] = $this->clients->getAssignedClientsByStateNos($state_nos);
         
@@ -645,6 +671,14 @@ class Home extends CI_Controller {
         $params["result"] = $result;
         echo json_encode($params);
         return;
+    }
+    
+    public function ajaxResetPassword()
+    {
+        $contact_no = $this->input->post('contact_no', true);
+        $new_pass = $this->contacts->resetPassword($contact_no);
+        
+        echo json_encode(array("new_pass" => $new_pass));
     }
     
     // END AJAX

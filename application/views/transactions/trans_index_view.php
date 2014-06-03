@@ -27,6 +27,7 @@
 	</div>
 	<div class="span12">	
 		<form class="form-horizontal" id="frm-modern" action="<?php echo base_url("transactions/save") ?>" method="post">
+		    <input type="hidden" id="modernAwardNoForEdit" name="modernAwardNoForEdit" value="">  
 		    <div class="navbar navbar-fixed-bottom" id="nav-tabs" style="display: none;">
             <div class="navbar-inner">
                 <div class="container">
@@ -684,8 +685,8 @@
 				<td><?php echo $modern_award["modern_award_name"] ?></td>
 				<td><?php echo date("d/m/Y", strtotime($modern_award["created_at"])) ?></td>
 				<td>
-				    <a target="_blank" href="<?php echo base_url("transactions/upcoming_rate_increase/".$modern_award["modern_award_no"]) ?>" class="btn btn-mini">Upcoming Rate Increase</a>
-				    <a target="_blank" href="<?php echo base_url("transactions/rate_increase_history/".$modern_award["modern_award_no"]) ?>" class="btn btn-mini">Rate Increase History</a>
+				    <a href="<?php echo base_url("transactions/upcoming_rate_increase/".$modern_award["modern_award_no"]) ?>" class="btn btn-mini">Upcoming Rate Increase</a>
+				    <a href="<?php echo base_url("transactions/rate_increase_history/".$modern_award["modern_award_no"]) ?>" class="btn btn-mini">Rate Increase History</a>
 				    <button type="button" class="btn edit-award-btn btn-mini" edit-id="<?php echo $modern_award["modern_award_no"] ?>"><i class="icon-edit"></i></button>
 				    <button type="button" class="btn btn-danger delete-award-btn btn-mini" del-id="<?php echo $modern_award["modern_award_no"] ?>"><i class="icon-trash icon-white"></i></button>
 				</td>

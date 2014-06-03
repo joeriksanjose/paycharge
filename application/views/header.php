@@ -79,7 +79,7 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="dropdown-submenu">
+                            <!-- <li class="dropdown-submenu">
                                 <a href="">Others</a>
                                 <ul class="dropdown-menu">
                                     <li>
@@ -89,7 +89,7 @@
                                         <a href="">Terms and LP Consulting Service</a>
                                     </li>
                                 </ul>
-                            </li>
+                            </li> -->
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -148,11 +148,13 @@
                         </a>
                         <ul class="dropdown-menu">
                           <li><a href="<?php echo base_url("utilities/user_access") ?>">User Access</a></li>
+                          <li><a href="<?php echo base_url("utilities/payroll_email_address") ?>">Payroll Email Address</a></li>
                           <li class="dropdown-submenu">
                               <a href="#">Business Info</a>
                               <ul class="dropdown-menu">
                                 <li><a href="<?php echo base_url("utilities/business-company/company-1") ?>">Company 1</a></li>
                                 <li><a href="<?php echo base_url("utilities/business-company/company-2") ?>">Company 2</a></li>
+                                
                               </ul>
                           </li>
                           

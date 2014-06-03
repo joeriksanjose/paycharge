@@ -31,7 +31,7 @@ function formatDate($date)
                         <li><a href="<?php echo base_url("client/pcs/pending_rates/".$company["client_no"]."")?>">Pending Approval</a></li>
                         <li><a href="<?php echo base_url("client/pcs/history_rates/".$company["client_no"]."")?>">History Rate</a></li>
                         <li><a href="<?php echo base_url("client/pcs/client_application/".$company["client_no"]."")?>">Client Application</a></li>
-                        <li><a target="_blank" href="<?php echo base_url("client/pcs/forecasting/".$company["client_no"]."")?>">Forecasting</a></li>
+                        <li><a href="<?php echo base_url("client/pcs/forecasting/".$company["client_no"]."")?>">Forecasting</a></li>
                     </ul>
                 </li>
             </ul>
@@ -94,9 +94,9 @@ function formatDate($date)
     							 <tr>
     							 	<td><?php echo $value["trans_no"]?></td>
     							 	<?php if ($value["trans_type"] == "1") : ?>
-    							 	<td><a href="<?php echo base_url("client/pcs/charge_rate/".$value["trans_no"]."/".$value["modern_award_no"])?>" target="_blank"><?php echo $value["transaction_name"]?></a></td>
+    							 	<td><a href="<?php echo base_url("client/pcs/charge_rate/".$value["trans_no"]."/".$value["modern_award_no"])?>"><?php echo $value["transaction_name"]?></a></td>
     							 	<?php else : ?>
-    							 	<td><a href="<?php echo base_url("client/pcs/charge_rate_client/".$value["trans_no"])?>" target="_blank"><?php echo $value["transaction_name"]?></a></td>
+    							 	<td><a href="<?php echo base_url("client/pcs/charge_rate_client/".$value["trans_no"])?>"><?php echo $value["transaction_name"]?></a></td>
     							 	<?php endif ?>
     							 	<td><?php echo formatDate($value["date_of_quotation"]) ?></td>  
     							 	<td><?php echo ($value["is_approved"]) ? "Approved" : "Pending for approval" ?></td>

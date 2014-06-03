@@ -89,8 +89,8 @@
                                 <td><?php echo $clients["state_name"] ?></td>
                                 <td>
                                     <button type="button" class="btn btn-mini show-info" show-id="<?php echo $clients["client_no"] ?>">Info</button>
-                                    <a target="_blank" href="<?php echo base_url("sales/home/contacts/".$clients["client_no"]) ?>" type="button" class="btn btn-mini">Contacts </a>
-                                    <a target="_blank" href="" type="button" class="btn btn-mini">Transactions </a>
+                                    <a href="<?php echo base_url("sales/home/contacts/".$clients["client_no"]) ?>" type="button" class="btn btn-mini">Contacts </a>
+                                    <a href="" type="button" class="btn btn-mini">Transactions </a>
                                 </td>
                             </tr>
                         <?php endforeach ; ?>

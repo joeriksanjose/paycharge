@@ -165,7 +165,7 @@ class Sales_transaction extends CI_Controller
         }
         $contacts = $this->cc->getAllContactInfo($post["company_no"]);
         foreach ($contacts as $contact) {
-            $to = "jesanjose@gmail.com";
+            $to = $contact["email"];
             $subject = "Notice to client of rates being submitted for approval";
             $message = "Dear ".$contact["first_name"]." ".$contact["last_name"]."\n\n";
             $message .= "Thank you for giving ".$company." the opportunity to provide you with this quotation for the supply of Labour Hire & Recruitment Services.\n\n";
